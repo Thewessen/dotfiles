@@ -1,0 +1,206 @@
+"==================================================================
+"================ Samuel Thewessen vimrc-file =====================
+"==================================================================
+
+"=================================
+" Start Vundle vim configuration
+"=================================
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
+filetype off		"required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Utility
+Plugin 'scrooloose/nerdtree'
+Plugin 'pangloss/vim-javascript'
+" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'leafgarland/typescript-vim'
+" Plugin 'Quramy/vim-js-pretty-template'
+Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Townk/vim-autoclose'
+" Plugin 'ludovicchabant/vim-gutentags'
+" Line comments with gcc command
+Plugin 'tpope/vim-commentary'
+" Add surroundings with cs"' (change surrounding from " to ')
+" Or cst" (change surrounding too ")
+Plugin 'tpope/vim-surround'
+" Latex plugin
+Plugin 'vim-latex/vim-latex'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Put your non-Plugin stuff after this line
+
+set nocompatible    " Unlock vim functionality (not Vi)
+set encoding=utf8
+
+"=================================
+"            Colors
+"=================================
+
+syntax enable       " syntax highlighting
+set hlsearch        " highlight searched words
+set incsearch		" search 'looped'
+
+" Own colorschema adapted from monokai-colors
+colorscheme sthew
+
+" Press Space to turn off highlighting and clear any message already displayed.
+nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+"=================================
+"           Statusline
+"=================================
+au InsertEnter * hi User3 ctermfg=232 ctermbg=1 guifg=black guibg=#d7afff
+au InsertLeave * hi User3 ctermfg=232 ctermbg=22 guifg=black guibg=#8fbfdc
+
+" au CmdlineEnter * hi statusline guifg=black guibg=#d7afff ctermfg=237 ctermbg=yellow
+" au CmdlineLeave * hi statusline guifg=black guibg=#d7afff ctermfg=28 ctermbg=black
+
+" default: set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
+
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'Nor OP',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+set laststatus=2
+
+" These statusline settings are used in one-line on WinEnter/WinLeave
+set statusline=
+set statusline+=%3*\ %n\                                   " Buffer number
+set statusline+=%2*\ %Y\                                   " FileType
+set statusline+=%1*\ (%{&ff})                              " FileFormat (dos/unix..)
+set statusline+=%1*\ %{''.(&fenc!=''?&fenc:&enc).''}\      " Encoding
+set statusline+=%0*\ %<%f%m%r%h%w\                         " File path, modified, readonly, helpfile, preview
+set statusline+=%=                                         " Right Side
+set statusline+=%1*\ col:\ %02v\                           " Colomn number
+set statusline+=%2*\ ln:\ %02l/%L\ (%3p%%)\                " Line number / total lines, percentage of document
+set statusline+=%3*\ %{toupper(g:currentmode[mode()])}\    " The current mode 
+
+"=================================
+"         Configurations
+"=================================
+
+set nowrap          " No linebreaks when window-width is too small
+set noshowmode      " Not showing mode in message bar
+
+" Enable latex-suite on empty tex-files
+let g:tex_flavor='latex'
+" Enable <alt>-key macro's for latex-suite
+" like: 
+let g:Tex_AdvancedMath = 1
+" Set standard output of compiler to PDF (iso DVI)
+" :TTarget pdf
+"
+"
+" Enable 'fuzzy' filesearch
+set path+=**
+
+" Display all matching files when completing
+set wildmenu
+
+" OSX stupid backspace fix
+" set backspace=indent,eol,start
+
+" Show linenumbers
+set ruler
+set number relativenumber   " Relative numberline (only the current line has absolute linenumber
+set cursorline              " Highlight line of the cursor
+
+" Active Window more visible by changing ruler
+au WinEnter * set number relativenumber foldcolumn=0
+au WinLeave * set nonumber norelativenumber foldcolumn=4
+
+" These don't work (sadly!)
+" au WinEnter * set statusline=%3*\ %n\ %2*\ %Y\ %1*\ (%{&ff})%1*\ %{''.(&fenc!=''?&fenc:&enc).''}\ %0*\ %<%f%m%r%h%w\ %=%1*\ col:\ %02v\ %2*\ ln:\ %02l/%L\ (%3p%%)\ %3*\ %{toupper(g:currentmode[mode()])}\ 
+" au WinLeave * set statusline=%4*\ %n\ %0*\ %<%f%m%r%h%w\ %=%1*\ col:\ %02v\ %2*\ ln:\ %02l/%L\ (%3p%%)\ 
+
+" Set Proper Tabs
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+
+" Always last three lines visible when scroling to EOF
+set scrolloff=3
+
+" NERDTree configurations
+let NERDTreeWinSize=40
+let NERDTreeQuitOnOpen=1
+map <C-d> :NERDTreeToggle<CR>
+
+" YMC (YouCompleteMe) configurations
+" Start autocompletion after 4 chars
+let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_enable_diagnostic_highlighting = 0
+" Don't show YCM's preview window
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 1
+
+
+"=================================
+"		 Usefull mappings
+"=================================
+
+" Different leader key
+let mapleader=","
+
+" Reload this config file
+nno <leader>R :source ~/.vim/vimrc<CR> :!echo "Vimrc configuration reloaded..."<CR>
+
+" Window movement and tiling
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-h> <C-W>h
+nmap <C-l> <C-W>l
+
+" Make ctrl-c act like esc (just to make 'InsertLeave' work)
+ino <C-c> <Esc>
+
+" Check syntax highlighting group under the cursor
+nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+"Een random number in vim met f2
+"":map <f2> :py import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+
+" Snippits (read from .vim/skeletons) like html tags etc.
+nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
+nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
+nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
