@@ -20,7 +20,22 @@ alias h='history' # Bash history
 
 # a history grep function
 hg() {
+    # Make sure a whitespace excludes a command from history
+    if [ -z "$HISTCONTROL" ]; then
+        echo "Adding \$HISTCONTROL=ignoreboth\n"
+        HISTCONTROL=ignoreboth
+    fi
     history | grep $1
+}
+
+# =================================
+#  Show all 256 colors in terminal
+# =================================
+
+colors256() {
+    for i in {0..255}; do 
+        printf "\x1b[38;5;${i}mcolour${i}\x1b[0m\n"; 
+    done
 }
 
 # =================================

@@ -25,6 +25,19 @@
 # %S --> Seconds (09)
 # %p --> AM/PM (AM)
 
+# Possible field value options.
+
+# #(shell-command) First line of the command's output
+# #[attributes] Colour or attribute change
+# #H Hostname of local host
+# #h Hostname of local host without the domain name
+# #F Current window flag
+# #I Current window index
+# #P Current pane index
+# #S Session name
+# #T Current window title
+# #W Current window name
+
 # For a more complete list view: https://linux.die.net/man/3/strftime
 
 
@@ -58,20 +71,6 @@
 # base0D='#6A9FB5' # - Functions, Methods, Attribute IDs, Headings
 # base0E='#AA759F' # - Keywords, Storage, Selector, Markup Italic, Diff Changed
 # base0F='#8F5536' # - Deprecated, Opening/Closing Embedded Language Tags, e.g. <? php ?>
-
-# Possible field value options.
-
-# #(shell-command) First line of the command's output
-# #[attributes] Colour or attribute change
-# #H Hostname of local host
-# #h Hostname of local host without the domain name
-# #F Current window flag
-# #I Current window index
-# #P Current pane index
-# #S Session name
-# #T Current window title
-# #W Current window name
-
 
 # Reload this config file
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
