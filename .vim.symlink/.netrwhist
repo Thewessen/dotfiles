@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/sthewessen/Websites/telraam/src/app'
-let g:netrw_dirhist_2='/home/sthewessen/Websites/telraam/src/app/telraam'
-let g:netrw_dirhist_3='/home/sthewessen/.dotfiles/.vim.symlink'
-let g:netrw_dirhist_4='/home/sthewessen/.dotfiles'
-let g:netrw_dirhist_5='/home/sthewessen/Websites/telraam/src/app'
-let g:netrw_dirhist_6='/home/sthewessen/Websites/telraam/src/app/telraam'

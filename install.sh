@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 if [ $( uname ) -ne 'Linux' ]; then
     echo "Your current OS is not supported.\nThis script is made for Linux and not tested on other OS.\n Run every script in ./install individualy and check for errors. \n Aborting..."
@@ -9,6 +9,9 @@ else
 
     # Install most wanted programs (root passw needed)
     source install/apt_install.sh
+
+    # Install shell default font/keyboard
+    source install/shell_install.sh
 
     # Install vim-plugins
     vim +PluginInstall +qall

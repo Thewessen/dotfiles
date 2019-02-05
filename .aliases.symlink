@@ -1,0 +1,56 @@
+# ==================================================================
+#       S. Thewessen
+#       Personal: ~/.oh-my-zsh/custom/aliases
+
+#       Last modified: Mo 28 Jan 2019
+# ==================================================================
+
+# =================================
+#             General
+# =================================
+#
+# Dir STACK, zsh and csh only
+alias dh='dirs -v'
+
+alias c='clear' # Clear the screen
+alias j='jobs' # Current running jobs
+
+# =================================
+#               Vim
+# =================================
+
+alias v='vim'
+alias vim='vim'
+
+alias vundle='vim +PluginInstall +qall'
+alias vundle-clean='vim +PluginClean +qall'
+
+# vundle-add() {
+#     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")
+#     local vimrc=''
+#     for vimrc in $vimrc_locations; do
+#         if [ -f $vimrc ]; then
+#             echo $vimrc
+#             while [ $# -gt 0 ]; do
+#                 sed -i "s/\" New plugins here/\0\nPlugin '$1'/" "$vimrc"
+#                 echo "Added Plugin '$1' to $vimrc"
+#                 shift
+#             done
+#             return 0
+#         fi
+#     done
+# return 1
+# }
+# =================================
+#            History
+# =================================
+
+alias h='history' # Bash history
+
+# =================================
+#          System-Monitor
+# =================================
+
+# Watch the current temps of core and fanspeed. Usefull for stresstesting.
+#alias wtch='watch -t -n1 "(lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"' 
+alias wtch='watch -t -n1 "printf '"'"'GPU MHz:       '"'"' && (nvidia-settings -tq GPUCurrentClockFreqs | head -1) && echo && ((printf '"'"'GPU Temp:      +\c'"'"' && nvidia-settings -tq GPUCoreTemp) | head -1) && printf '"'"'.0°C'"'"' && echo && (lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"'
