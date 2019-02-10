@@ -30,9 +30,9 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'vim-syntastic/syntastic'
-Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing
-Plugin 'tpope/vim-surround'             " Change <name class='tpope'>{{surroundings}}</name> (command: cs)
+Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
+Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
+Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
 Plugin 'tpope/vim-fugitive'             " Git from inside vim
 Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
@@ -43,7 +43,7 @@ Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim
+Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
@@ -68,7 +68,7 @@ filetype plugin indent on    " required
 "=================================
 
 " Use dark 256 colors
-set t_Co=256
+" set t_Co=256
 set background=dark
 
 " Source statusline and tabline
@@ -93,8 +93,6 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
-set ignorecase
-
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -155,13 +153,17 @@ set textwidth=0     " as nowrap
 " =================================
 "       Plugin Configurations
 " =================================
-" Angular-cli configurations
+
+" Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
 
 " Latex-Suite configurations
 let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
 let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 " :TTarget pdf              " Set standard output of compiler to PDF (iso DVI)
+
+" Unimpaired-like keybindings
+" nno ]g i<CR><esc>k$
 
 " YMC (YouCompleteMe) configurations
 " Start autocompletion after 3 chars
@@ -214,7 +216,7 @@ augroup END
 " Auto reload this configfile on change
 augroup reload_vimrc
     autocmd!
-    autocmd BufWritePost vimrc,*.vim normal ,R
+    autocmd BufWritePost vimrc,.vimrc,*.vim normal ,R
 augroup END
 
 augroup skeletons
@@ -239,14 +241,16 @@ let mapleader=','
 " Search and destroy
 nno \ :Abolish -search 
 nno ? :Abolish! -search 
-nno s :s/
-nno S :S/
+nno s :%s/
+vno s :s/
+nno S :%S/
+vno S :S/
 
 " Help file vsplit on search
-nmap <S-K> <S-K><C-W><S-L>
+nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Reload this config file
-nno <leader>R :source ~/.vim/vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
+nno <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
 
 " Save file
 nmap <leader>, :w<CR>
@@ -268,6 +272,8 @@ nmap <Leader>. <C-^>
 
 " Buffers
 nmap <Leader>b :b 
+" Arguments-list
+nmap <Leader>a :arg 
 
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
@@ -275,13 +281,16 @@ ino <C-U> <C-G>u<C-U>
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>
 
+" Start Vimgolf
+nno <leader>G :call GolfStart()<CR>
+
 " Syntax checking command (syntastic)
-nno <leader>ss :SyntasticCheck<CR>
-nno <leader>sr :SyntasticReset<CR>
-nno <leader>si :SyntasticInfo<CR>
-nno <leader>se :Errors<CR>
-nno <leader>so :lopen<CR>
-nno <leader>st :SyntasticToggleMode<CR>
+nno <leader>cs :SyntasticCheck<CR>
+nno <leader>cr :SyntasticReset<CR>
+nno <leader>ci :SyntasticInfo<CR>
+nno <leader>ce :Errors<CR>
+nno <leader>co :lopen<CR>
+nno <leader>ct :SyntasticToggleMode<CR>
 
 " Git commands (vim-fugitive)
 nno <leader>gs :Gstatus<CR>
@@ -301,12 +310,14 @@ nno <C-W>s <C-W><C-S><C-W>j
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
 
-" Commandline
+" Command & Insert-mode mapping
 cmap <C-D> <Del>
+imap <C-D> <Del>
+imap <C-B> <ESC>0i
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
-nmap <leader>ev :e ~/.vim/vimrc<CR>
+nmap <leader>ev :e ~/.vimrc<CR>
 nmap <leader>ec :e ~/.vim/colors/sthew.vim<CR>
 nmap <leader>eg :e ~/.gitconfig<CR>
 nmap <leader>et :e ~/.tmux.conf<CR>
@@ -315,7 +326,7 @@ nmap <leader>eb :e ~/.bashrc<CR>
 nmap <leader>ea :e ~/.aliases<CR>
 nmap <leader>en :new<CR>:only<CR>
 " In new tab
-nmap <leader>tv :tabe ~/.vim/vimrc<CR>
+nmap <leader>tv :tabe ~/.vimrc<CR>
 nmap <leader>tc :tabe ~/.vim/colors/sthew.vim<CR>
 nmap <leader>tg :tabe ~/.gitconfig<CR>
 nmap <leader>tt :tabe ~/.tmux.conf<CR>
@@ -329,8 +340,8 @@ nmap <leader>tn :tabnew<CR>
 nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 " Remove extra whitespace
-" nmap <leader><space> :%s/\s\+$<cr>
-" nmap <leader><space><space> :%s/\n\{2,}/\r\r/g<cr>
+nmap <leader><space> :%s/\s\+$<cr>
+" nmap <leader><space><space> :%s/\s*\n//g<cr>
 
 " Check syntax highlighting group under the cursor
 nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -346,28 +357,27 @@ nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentar
 nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
 "==================================================================
+" USE THE ARGUMENT LIST!!
+" autocmd BufWinEnter * argadd %
+" tocmdau BufWinLeave * if getbufvar('%','&modified') | argadd % | endif
+" Word length
+function! String_Length()
+    let start = col('.')
+    normal E
+    let end = col('.')
+    echo (end - start)
+    return (end - start)
+endfunction
 
-"imap <buffer> <silent> <expr> <F12> echo 'hey'
+" reesrev word at cursor
+function! String_Reverse()
+    let remain = (String_Length() + 1)
+    while remain > 1
+        normal x
+        let remain = (remain - 1)
+        let move = (col('.') - remain)
+        call cursor(line('.'),move)
+        normal PE
+    endwhile
+endfunction
 
-"function! Double(mymap)
-"    echo getchar()
-"    try
-"        let char = getchar()
-"    catch /^Vim:Interrupt$/
-"        let char = "\<Esc>"
-"    endtry
-"    exec BPBreakIf(char == 32, 1)
-"    if char == '^\d\+$' || type(char) == 0
-"        let char = nr2char(char)
-"    endif " It is the ascii code.
-"    if char == "\<Esc>"
-"        return ''
-"    endif
-"    redraw
-"    return char.char."\<C-R>=Redraw()\<CR>".a:mymap
-"endfunction
-
-"function! Redraw()
-"    redraw
-"    return ''
-"endfunction

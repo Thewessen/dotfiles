@@ -63,7 +63,8 @@
 # Here are some more fance characters:
 # 🔌 🔍 🔎 🔏 🔊 🔉 🔈 🔇 🔆 🔅 🔄 🔃 🔂 🔁 🔀 📿 📾
 # ≡
-
+# Use a 256 color scheme
+set -g default-terminal "screen-256color"
 
 # Reload this config file
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
@@ -80,14 +81,15 @@ wg_seperator="#[fg=colour3]⌇#[default]"
 # Statusbar configuration
 set -g status on
 set -g status-interval 5
+set -g status-position top
 set -g status-justify "left"
 set -g status-left-length 60
 set -g status-right-length 90
 set -g status-bg default
-set -g status-fg default
+set -g status-fg colour8
 set -g status-attr default
-set -g status-right "$wg_cpu  $wg_seperator $wg_mem $wg_seperator $wg_volm $wg_seperator $wg_batt #[reverse,bg=default,fg=colour4] $wg_date #[bold,bg=default,fg=colour4] %R "
-set -g status-left "#[reverse,bg=default,fg=colour4] #S "
+set -g status-right "$wg_cpu  $wg_seperator $wg_mem $wg_seperator $wg_volm $wg_seperator $wg_batt #[bg=default,fg=colour4] $wg_date #[bold,bg=default,fg=colour4] %R "
+set -g status-left "#[bg=default,fg=colour4] #S "
 
 # make window/pane index start with 1
 set -g base-index 1
@@ -103,14 +105,14 @@ set-option -g set-titles on
 set-option -g set-titles-string "#T - #W"
 
 # active window title colors
-set-window-option -g window-status-current-fg colour7
-set-window-option -g window-status-current-bg colour8 
-set-window-option -g window-status-current-format " #I.#W "
+set-window-option -g window-status-current-fg default
+set-window-option -g window-status-current-bg default 
+set-window-option -g window-status-current-format " #[bold]#I #W#[default] "
  
 # inactive widow title colors
-set-window-option -g window-status-fg default
+set-window-option -g window-status-fg colour5
 set-window-option -g window-status-bg default 
-set -g window-status-format " #I.#W "
+set -g window-status-format " #I #W "
 
 # Bindings configuration
 set -g prefix C-a
