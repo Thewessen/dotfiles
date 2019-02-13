@@ -41,7 +41,7 @@ Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and 
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
-Plugin 'kien/ctrlp.vim'                     " Search anything and everything!
+Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
@@ -147,13 +147,7 @@ set textwidth=0     " as nowrap
 " let g:SignatureMarkTextHL = 
 " hi link SignatureMarkText User1
 
-" nno ' :call Jump_Pending()<CR>
-
-function! Jump_Pending()
-    hi link SignatureMarkText Normal
-    normal '
-    au CursorMoved hi link SignatureMarkText NumberLine
-endfunction
+hi SignatureMarkText ctermfg=22 ctermbg=NONE cterm=underline
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -162,6 +156,9 @@ autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angu
 let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
 let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 " :TTarget pdf              " Set standard output of compiler to PDF (iso DVI)
+
+" Dispatch no keybindings
+let g:dispatch_no_maps = 1
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -294,7 +291,7 @@ ino <C-C> <ESC>
 nno <leader>G :call GolfStart()<CR>
 
 " Run compiler for current file
-nno <leader>m :Make<CR>
+nno <leader>m :Make!<CR>
 
 " Syntax checking command (syntastic)
 nno <leader>cs :SyntasticCheck<CR>
