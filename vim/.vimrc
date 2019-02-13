@@ -368,4 +368,19 @@ nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commenta
 nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
+" =================================
+"       Source vim-scripts
+" =================================
+
+" Source statusline and tabline
+source $DOTFILES/vim/sthew_custom_tabline.vim
+source $DOTFILES/vim/sthew_custom_statusline.vim
+
+" Source color links (from Plugins syntax)
+source $DOTFILES/vim/sthew_link_color_groups.vim
+
+" Source statusline toggle mode
+source $DOTFILES/vim/sthew_mode_echo.vim
+autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
+
 "==================================================================
