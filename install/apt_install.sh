@@ -1,7 +1,7 @@
 #!/bin/sh zsh
 
-programs=("zsh" "terminator" "tmux" "vim" "npm" "git" "nodejs" "js" "haskell-platform" "python" "ctags" "ttf-mscorefonts-installer" "fonts-inconsolata")
-utilities=("texlive-base" "writer2latex")
+programs=("zsh" "terminator" "tmux" "vim" "npm" "git" "nodejs" "js" "rhino" "haskell-platform" "python" "ctags" "ttf-mscorefonts-installer" "fonts-inconsolata")
+utilities=("lynx" "texlive-base" "writer2latex")
 # For use of syntastic vim-plugin
 # Add closurecompiler (google) manually
 npm=("standard" "jshint" "jsxhint" "jsl" "jslint" "eslint" "csslint")

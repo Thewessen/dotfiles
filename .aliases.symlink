@@ -14,14 +14,72 @@ alias dh='dirs -v'
 
 alias c='clear' # Clear the screen
 alias j='jobs' # Current running jobs
+alias p='ps -f'
+alias sortnr='sort -n -r'
+
+alias grep='grep --color'
+alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+
+alias h='history' # Bash history
+alias hgrep='fc -El 0 | grep'
+alias help='man'
+alias t='tail -f'
+
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+alias l='ls -lFh'
+alias ll='ls -l'
+alias la='ls -lAFh'
+alias lr='ls -tRFh'
+alias lt='ls -ltFh'
+alias ldot='ls -d .*'
+
+alias zshrc="$EDITOR ~/.zshrc"
+alias bashrc="$EDITOR ~/.bashrc"
+alias tmuxrc="$EDITOR ~/.tmux.conf"
+alias vimrc="$EDITOR ~/.vimrc"
+
+#read documents on Linux Mint/Ubuntu from commandline
+if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
+    alias o="xdg-open 2> /dev/null"
+
+    _www_fts=(de org net com at io nl se dk)
+    _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX)
+    _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
+    _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
+    _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
+    _sht_fts=(ods ODS xls XLS xlsm XLSM)
+
+    for ft in $_www_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    for ft in $_img_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    for ft in $_aud_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    for ft in $_pres_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    for ft in $_doc_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    for ft in $_sht_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+fi
+
+# =================================
+#               Pipes
+# =================================
+
+alias -g G="| grep"
+alias -g T="| tail"
+alias -g H="| head"
+alias -g S="| sort"
+alias -g L="| less"
+alias -g M="| most"
+alias -g LL="2>&1 | less"
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
 
 # =================================
 #               Vim
 # =================================
 
 alias v='vim'
-alias vim='vim'
-
 alias vundle='vim +PluginInstall +qall'
 alias vundle-clean='vim +PluginClean +qall'
 
@@ -45,7 +103,6 @@ alias vundle-clean='vim +PluginClean +qall'
 #            History
 # =================================
 
-alias h='history' # Bash history
 
 # =================================
 #          System-Monitor

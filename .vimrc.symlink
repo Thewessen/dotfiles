@@ -41,6 +41,8 @@ Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and 
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
+Plugin 'kien/ctrlp.vim'                     " Search anything and everything!
+Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
@@ -121,23 +123,25 @@ set showcmd         " Pending commands in right corner
 " Show linenumbers
 set ruler
 set number relativenumber   " Relative numberline (only the current line has absolute linenumber
-set cursorline              " Highlight line of the cursor
 
-" Folds common files
-set foldmethod=syntax     " Automatic folding depending on syntax
+" Indention and formatting
+set textwidth=79
+set fileformat=unix
+set expandtab
+set autoindent
+set smarttab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" Folds
+set foldmethod=indent     " Automatic folding depending on syntax
 set foldlevelstart=99     " Start with all folds open
 
 " Invisible chars
 set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
-
-" Set Proper Tabs
-set autoindent
-set tabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
 
 " Lines and scrolling
 if !&scrolloff          " Always last three lines visible when scroling to EOF
@@ -153,6 +157,18 @@ set textwidth=0     " as nowrap
 " =================================
 "       Plugin Configurations
 " =================================
+
+" Signature highlights
+" let g:SignatureMarkTextHL = 
+" hi link SignatureMarkText User1
+
+" nno ' :call Jump_Pending()<CR>
+
+function! Jump_Pending()
+    hi link SignatureMarkText Normal
+    normal '
+    au CursorMoved hi link SignatureMarkText NumberLine
+endfunction
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -205,13 +221,14 @@ endfunction
 
 " Save folds of some files
 " When mkview is saving manual folds, set foldmethod,foldlevelstart auto(?!?)
-augroup load_save_folds
-    autocmd!
-    autocmd BufWinLeave vimrc,*.conf mkview
-    autocmd BufWinEnter vimrc,*.conf silent loadview
-    autocmd BufWinEnter vimrc,*.conf setlocal foldmethod=manual foldlevel=0
-
-augroup END
+" augroup load_save_folds
+"     autocmd!
+"     autocmd BufLeave vimrc,.vimrc,*.conf mkview
+"     autocmd BufRead vimrc,.vimrc,*.conf 
+"         \ silent loadview
+"         \ setlocal foldmethod=manual
+"         \ setlocal foldlevel=0
+" augroup END
 
 " Auto reload this configfile on change
 augroup reload_vimrc
@@ -219,6 +236,13 @@ augroup reload_vimrc
     autocmd BufWritePost vimrc,.vimrc,*.vim normal ,R
 augroup END
 
+" Use compiler for latex files
+augroup latex_compiler
+    autocmd!
+    autocmd BufWinEnter *.tex let &makeprg="pdflatex -interaction nonstopmode -file-line-error %"
+    autocmd BufWinEnter *.tex set textwidth=78
+augroup END
+" Add shebang to shell scripts
 augroup skeletons
     autocmd!
     autocmd BufNewFile *.sh,*.bash,*.zsh if !empty(&filetype) | execute 'silent! 1s/.*/#!\/usr\/bin\/env ' . &filetype . '\r\r'| :startinsert | endif
@@ -227,8 +251,8 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufWinEnter,WinEnter * setlocal number relativenumber cursorline foldcolumn=0
-    autocmd BufWinLeave,WinLeave * setlocal nonumber norelativenumber nocursorline foldcolumn=4
+    autocmd BufWinEnter,WinEnter * setlocal number relativenumber foldcolumn=0
+    autocmd BufWinLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
 augroup END
 
 "=================================
@@ -283,6 +307,9 @@ ino <C-C> <ESC>
 
 " Start Vimgolf
 nno <leader>G :call GolfStart()<CR>
+
+" Run compiler for current file
+nno <leader>m :Make<CR>
 
 " Syntax checking command (syntastic)
 nno <leader>cs :SyntasticCheck<CR>
@@ -356,11 +383,15 @@ nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commenta
 nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
-"==================================================================
+" =================================
+"          Highly custom
+" =================================
+
 " USE THE ARGUMENT LIST!!
 " autocmd BufWinEnter * argadd %
 " tocmdau BufWinLeave * if getbufvar('%','&modified') | argadd % | endif
 " Word length
+
 function! String_Length()
     let start = col('.')
     normal E
@@ -381,3 +412,33 @@ function! String_Reverse()
     endwhile
 endfunction
 
+" Is prime function
+function! IsPrime(n)
+    let i = 2
+    while i < a:n
+        if (a:n % i == 0)
+            return 0
+        endif
+        let i += 1
+    endwhile
+    return 1
+endfunction
+
+function! DeletIfNotPrime()
+    normal yw
+    if !(IsPrime('@"'))
+        normal dd
+    endif
+endfunction
+
+function! Start_Tmux_Silent_Split(command)
+    silent exec "!tmux split-window -l 3 -d"
+    " let current_file = expand("%:t")
+    silent exec "!tmux send-keys -t 2 '".a:command."' Enter"
+endfunction
+
+function! Run_Tmux_Split_Command(command)
+    silent exec "!tmux send-keys -t 2 '".a:command."' Enter"
+endfunction
+
+"==================================================================
