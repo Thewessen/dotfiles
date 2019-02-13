@@ -69,23 +69,8 @@ filetype plugin indent on    " required
 "         Vim Configurations
 "=================================
 
-" Use dark 256 colors
-" set t_Co=256
+" Use dark background
 set background=dark
-
-" Source statusline and tabline
-source ~/.vim/sthew_custom_tabline.vim
-source ~/.vim/sthew_custom_statusline.vim
-
-" Source color links (from Plugins syntax)
-source ~/.vim/sthew_link_color_groups.vim
-
-" Source statusline toggle mode
-source ~/.vim/sthew_mode_echo.vim
-autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
-
-" Play VimGolf offline!
-source ~/test/vimgolf/vimgolf.vim
 
 " Basic
 set autoread            " If file changed outside vim, while inside vim
@@ -382,63 +367,5 @@ nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> tran
 nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
 nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
-
-" =================================
-"          Highly custom
-" =================================
-
-" USE THE ARGUMENT LIST!!
-" autocmd BufWinEnter * argadd %
-" tocmdau BufWinLeave * if getbufvar('%','&modified') | argadd % | endif
-" Word length
-
-function! String_Length()
-    let start = col('.')
-    normal E
-    let end = col('.')
-    echo (end - start)
-    return (end - start)
-endfunction
-
-" reesrev word at cursor
-function! String_Reverse()
-    let remain = (String_Length() + 1)
-    while remain > 1
-        normal x
-        let remain = (remain - 1)
-        let move = (col('.') - remain)
-        call cursor(line('.'),move)
-        normal PE
-    endwhile
-endfunction
-
-" Is prime function
-function! IsPrime(n)
-    let i = 2
-    while i < a:n
-        if (a:n % i == 0)
-            return 0
-        endif
-        let i += 1
-    endwhile
-    return 1
-endfunction
-
-function! DeletIfNotPrime()
-    normal yw
-    if !(IsPrime('@"'))
-        normal dd
-    endif
-endfunction
-
-function! Start_Tmux_Silent_Split(command)
-    silent exec "!tmux split-window -l 3 -d"
-    " let current_file = expand("%:t")
-    silent exec "!tmux send-keys -t 2 '".a:command."' Enter"
-endfunction
-
-function! Run_Tmux_Split_Command(command)
-    silent exec "!tmux send-keys -t 2 '".a:command."' Enter"
-endfunction
 
 "==================================================================
