@@ -194,6 +194,8 @@ let g:syntastic_typescript_checkers = ["eslint"]
 "           Autocommands
 " =================================
 
+au FileType netrw set foldcolumn=4
+
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
 function! Wincmd_help()
@@ -303,6 +305,7 @@ nno <leader>ct :SyntasticToggleMode<CR>
 
 " Git commands (vim-fugitive)
 nno <leader>gs :Gstatus<CR>
+nno <leader>gp :Gpush<CR>
 nno <leader>ga :Gwrite<CR>
 nno <leader>gr :Gread<CR>
 nno <leader>gc :Gcommit<CR>
