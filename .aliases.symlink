@@ -47,7 +47,7 @@ if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
     alias o="xdg-open 2> /dev/null"
 
     _www_fts=(de org net com at io nl se dk)
-    _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX)
+    _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX heic HEIC heif HEIF)
     _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
     _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
     _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
@@ -79,9 +79,9 @@ alias -g NUL="> /dev/null 2>&1"
 #               Vim
 # =================================
 
-alias v='vim'
-alias vundle='vim +PluginInstall +qall'
-alias vundle-clean='vim +PluginClean +qall'
+alias vi='nvim'
+alias vundle='nvim +PluginInstall +qall'
+alias vundle-clean='nvim +PluginClean +qall'
 
 # vundle-add() {
 #     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")

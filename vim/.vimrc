@@ -50,12 +50,7 @@ Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and 
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'ivalkeen/nerdtree-execute'
-" Plugin 'jelera/vim-javascript-syntax'
 " Plugin 'Quramy/vim-js-pretty-template'
-" Plugin 'Townk/vim-autoclose'
-" Plugin 'ludovicchabant/vim-gutentags'
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -144,7 +139,7 @@ set textwidth=0     " as nowrap
 " =================================
 
 " Signature highlights
-" let g:SignatureMarkTextHL = 
+" let g:SignatureMarkTextHL =
 " hi link SignatureMarkText User1
 
 hi SignatureMarkText ctermfg=22 ctermbg=NONE cterm=underline
@@ -208,7 +203,7 @@ endfunction
 " augroup load_save_folds
 "     autocmd!
 "     autocmd BufLeave vimrc,.vimrc,*.conf mkview
-"     autocmd BufRead vimrc,.vimrc,*.conf 
+"     autocmd BufRead vimrc,.vimrc,*.conf
 "         \ silent loadview
 "         \ setlocal foldmethod=manual
 "         \ setlocal foldlevel=0
@@ -248,8 +243,8 @@ augroup END
 let mapleader=','
 
 " Search and destroy
-nno \ :Abolish -search 
-nno ? :Abolish! -search 
+nno \ :Abolish -search
+nno ? :Abolish! -search
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -259,25 +254,25 @@ vno S :S/
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Reload this config file
-nno <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
+nno <silent> <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
 
 " Save file
-nmap <leader>, :w<CR>
+nmap <silent> <leader>, :w<CR>
 
 " Save&Close file
-nmap <leader>w :x<CR>
+nmap <silent> <leader>w :x<CR>
 
 " Hide window
-nno <leader>h :hide<CR>
+nno <silent> <leader>h :hide<CR>
 
 " Hide other windows
-nno <leader>o :only<CR>
+nno <silent> <leader>o :only<CR>
 
 " Quit!
-nmap <leader>q :q!<CR>
+nmap <silent> <leader>q :q!<CR>
 
 " Switch between current and last buffer
-nmap <Leader>. <C-^>
+nmap <silent> <Leader>. <C-^>
 
 " Buffers
 nmap <Leader>b :b 
@@ -288,31 +283,31 @@ nmap <Leader>a :arg
 ino <C-U> <C-G>u<C-U>
 
 " Make C-C act like esc in Insertmode
-ino <C-C> <ESC>
+ino <C-C> <ESC>:echo<CR>
 
 " Start Vimgolf
-nno <leader>G :call GolfStart()<CR>
+nno <silent> <leader>G :call GolfStart()<CR>
 
 " Run compiler for current file
-nno <leader>m :Make!<CR>
+nno <silent> <leader>m :Make!<CR>
 
 " Syntax checking command (syntastic)
-nno <leader>cs :SyntasticCheck<CR>
-nno <leader>cr :SyntasticReset<CR>
-nno <leader>ci :SyntasticInfo<CR>
-nno <leader>ce :Errors<CR>
-nno <leader>co :lopen<CR>
-nno <leader>ct :SyntasticToggleMode<CR>
+nno <silent> <leader>cs :SyntasticCheck<CR>
+nno <silent> <leader>cr :SyntasticReset<CR>
+nno <silent> <leader>ci :SyntasticInfo<CR>
+nno <silent> <leader>ce :Errors<CR>
+nno <silent> <leader>co :lopen<CR>
+nno <silent> <leader>ct :SyntasticToggleMode<CR>
 
 " Git commands (vim-fugitive)
-nno <leader>gs :Gstatus<CR>
-nno <leader>gp :Gpush<CR>
-nno <leader>ga :Gwrite<CR>
-nno <leader>gr :Gread<CR>
-nno <leader>gc :Gcommit<CR>
-nno <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove<CR>
-nno <leader>gm :Gmove<CR>
+nno <silent> <leader>gs :Gstatus<CR>
+nno <silent> <leader>gp :Gpush<CR>
+nno <silent> <leader>ga :Gwrite<CR>
+nno <silent> <leader>gr :Gread<CR>
+nno <silent> <leader>gc :Gcommit<CR>
+nno <silent> <leader>gb :Gblame!<CR>
+nno <silent> <leader>gd :Gremove<CR>
+nno <silent> <leader>gm :Gmove<CR>
 
 " Window movement and tiling
 nmap <C-H> <C-W>W
@@ -353,31 +348,31 @@ nmap <leader>tn :tabnew<CR>
 nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 " Remove extra whitespace
-nmap <leader><space> :%s/\s\+$<cr>
+nmap <silent> <leader><space> :%s/\s\+$<cr>
 " nmap <leader><space><space> :%s/\s*\n//g<cr>
 
 " Check syntax highlighting group under the cursor
 
 " Map function key's
-nmap <f1> :G<CR>
-nmap <f2>
-nmap <f3>
-nmap <f4> :Gcommit<CR>
-nmap <f5> :SyntasticCheck<CR>
-nmap <f6>
-nmap <f7>
-nmap <f8> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-nmap <f9>
-nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+nmap <silent> <f1> :G<CR>
+nmap <silent> <f2> :0Glog<CR>
+" nmap <silent> <f3>
+nmap <silent> <f4> :Gcommit<CR>
+nmap <silent> <f5> :SyntasticCheck<CR>
+" nmap <silent> <f6>
+" nmap <silent> <f7>
+nmap <silent> <f8> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+" nmap <silent> <f9>
+nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-nmap <f11>
-nmap <f12>
+" nmap <silent> <f11>
+" nmap <silent> <f12>
 
 " Snippits (read from .vim/skeletons) like html tags etc.
-nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
-nno <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
-nno <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
+nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
+nno <silent> <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
+nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
 " =================================
 "       Source vim-scripts

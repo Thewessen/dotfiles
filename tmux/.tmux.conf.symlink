@@ -65,6 +65,7 @@
 # ≡
 # Use a 256 color scheme
 set -g default-terminal "screen-256color"
+set-option -sg escape-time 10
 
 # Reload this config file
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."

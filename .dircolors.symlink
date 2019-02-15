@@ -272,6 +272,8 @@ EXEC 04;37
 .EMF 01;35
 .3gp 01;35
 .3GP 01;35
+.heic 01;35
+.HEIC 01;35
 # https://wiki.xiph.org/MIME_Types_and_File_Extensions
 .ogv 01;35
 .OGV 01;35
