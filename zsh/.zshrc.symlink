@@ -105,9 +105,10 @@ elif [ -f ~/.bash_aliases ]; then
 fi
 
 # Source some functions
-if [ -d ~/.sh_scripts ]; then
-    for script in /home/sthewessen/.sh_scripts/*(.)
+if [ -d ~/Scripts/Shell ]; then
+    for script in $HOME/Scripts/Shell/*.sh; do
         source $script
+    done
 fi
 
 # launch tmux terminal multiplexer

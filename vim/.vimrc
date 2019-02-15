@@ -223,8 +223,9 @@ augroup END
 " Use compiler for latex files
 augroup latex_compiler
     autocmd!
-    autocmd BufWinEnter *.tex let &makeprg="pdflatex -interaction nonstopmode -file-line-error %"
-    autocmd BufWinEnter *.tex set textwidth=78
+    autocmd BufWinEnter *.tex let &makeprg="pdflatex -output-directory %:p:h -interaction nonstopmode -file-line-error %"
+    autocmd BufWinEnter *.tex set textwidth=79
+    autocmd BufWinLeave *.tex let &makeprg=""
 augroup END
 " Add shebang to shell scripts
 augroup skeletons
@@ -356,12 +357,22 @@ nmap <leader><space> :%s/\s\+$<cr>
 " nmap <leader><space><space> :%s/\s*\n//g<cr>
 
 " Check syntax highlighting group under the cursor
+
+" Map function key's
+nmap <f1> :G<CR>
+nmap <f2>
+nmap <f3>
+nmap <f4> :Gcommit<CR>
+nmap <f5> :SyntasticCheck<CR>
+nmap <f6>
+nmap <f7>
+nmap <f8> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f9>
 nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-"Een random number in vim met f2
-"":map <f2> :py import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f11>
+nmap <f12>
 
 " Snippits (read from .vim/skeletons) like html tags etc.
 nno <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
