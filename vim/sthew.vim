@@ -33,7 +33,7 @@ if &t_Co > 255
     hi WarningMsg ctermfg=232 ctermbg=3 cterm=NONE
 
     if &background == 'dark'
-        hi Normal ctermfg=230 ctermbg=16
+        hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=235
         hi CursorLine ctermbg=233 cterm=underline
         hi CursorLineNr ctermfg=242 ctermbg=NONE
@@ -83,7 +83,7 @@ if &t_Co > 255
         hi SpellRare ctermbg=93
         hi SpellLocal ctermbg=3
     else
-        hi Normal ctermfg=232 ctermbg=231
+        hi Normal ctermfg=232 ctermbg=NONE
         hi Visual ctermbg=252
         hi CursorLine ctermbg=255 cterm=underline
         hi CursorLineNr ctermfg=245 ctermbg=NONE
