@@ -20,13 +20,16 @@ alias sortnr='sort -n -r'
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
+alias chf='find . -type f -exec chmod 644 {} \;'
+alias chd='find . -type d -exec chmod 755 {} \;'
+
 alias h='history' # Bash history
 alias hgrep='fc -El 0 | grep'
 alias help='man'
 alias t='tail -f'
 
 alias dud='du -d 1 -h'
-alias duf='du -sh *'
+alias duf='du -cksh *'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 
@@ -40,7 +43,7 @@ alias ldot='ls -d .* --group-directories-first'
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.vimrc"
+alias vimrc="$EDITOR ~/.dotfiles/vim/.vimrc ~/.vimrc ~/.dotfiles/vim/*"
 
 #read documents on Linux Mint/Ubuntu from commandline
 if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
