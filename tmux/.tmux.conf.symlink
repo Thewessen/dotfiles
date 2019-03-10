@@ -67,9 +67,6 @@
 set -g default-terminal "screen-256color"
 set-option -sg escape-time 10
 
-# Reload this config file
-bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
-
 # Some widget variables for statusbar
 wg_cpu="#(lscpu | grep 'CPU MHz' | grep -oE '\ +[0-9]+' | tail -c 5)Mhz⏱️"
 wg_session="#[fg=colour2] [#S]:#I #W"
@@ -121,10 +118,22 @@ set -g pane-active-border-style fg=colour3
 # set -g pane-border-status top
 # set -g pane-border-format "<#P>- #(pwd) "
 
+# Mouse scroll enters copymode (and enable scroll)
+set -g mouse on
+
+
+# =================================
+#             Bindings
+# =================================
+
+unbind C-j
+
 # Bindings configuration
 set -g prefix C-a
 
-unbind C-j
+# Reload this config file
+bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
 # pane movement shortcuts
 bind -r h select-pane -L
 bind -r j select-pane -D

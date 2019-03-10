@@ -7,11 +7,13 @@ if [[ `uname` -eq Linux ]]; then
     #1e array of programs
     programs=("zsh" "terminator" "tmux" "vim" "npm" "git" "nodejs" "js" "rhino" "haskell-platform" "python-dev" "ctags" "ttf-mscorefonts-installer" "fonts-inconsolata")
     for com in ${programs[@]}; do
+        echo "Installing $com..."
         command -v $com || sudo apt install $com
     done
     #2e array of programs
     utilities=("latex-cjk-common" "lynx" "texlive-base" "writer2latex")
     for util in ${utilities[@]}; do
+        echo "Installing $util..."
         command -v $util || sudo apt install $util
     done
     # NPM

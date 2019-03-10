@@ -114,9 +114,9 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
 set foldmethod=indent     " Automatic folding depending on syntax
@@ -150,6 +150,7 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
+let g:angular_cli_use_dispatch = 1
 
 " Latex-Suite configurations
 let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
@@ -169,7 +170,7 @@ let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_enable_diagnostic_highlighting = 0
 " Don't show YCM's preview window
 set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_add_preview_to_completeopt = 0
 
 " Syntastic filechecker and maker config
 " Behavior
@@ -395,7 +396,7 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 
 " Snippits (read from .vim/skeletons) like html tags etc.
 nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
-" nno <silent> <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
+nno <silent> <leader>ht :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
 " =================================
@@ -403,14 +404,14 @@ nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 " =================================
 
 " Source statusline and tabline
-source $DOTFILES/vim/sthew_custom_tabline.vim
-source $DOTFILES/vim/sthew_custom_statusline.vim
+source $HOME/.dotfiles/vim/sthew_custom_tabline.vim
+source $HOME/.dotfiles/vim/sthew_custom_statusline.vim
 
 " Source color links (from Plugins syntax)
-source $DOTFILES/vim/sthew_link_color_groups.vim
+source $HOME/.dotfiles/vim/sthew_link_color_groups.vim
 
 " Source statusline toggle mode
-source $DOTFILES/vim/sthew_mode_echo.vim
+source $HOME/.dotfiles/vim/sthew_mode_echo.vim
 autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
 
 "==================================================================
