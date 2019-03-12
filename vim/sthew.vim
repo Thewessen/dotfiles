@@ -157,7 +157,7 @@ else
     hi VertSplit ctermfg=8 ctermbg=0 cterm=NONE
     hi Title ctermfg=7 ctermbg=NONE cterm=bold
     hi MatchParen ctermfg=1 ctermbg=NONE cterm=underline
-    hi PmenuSel ctermfg=NONE ctermbg=59 cterm=NONE
+    hi PmenuSel ctermfg=NONE ctermbg=3 cterm=reverse
     hi Keyword ctermfg=1
     hi Type ctermfg=7
     hi Directory ctermfg=3
