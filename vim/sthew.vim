@@ -147,7 +147,7 @@ else
     hi WarningMsg ctermfg=0 ctermbg=3 cterm=NONE
 
     hi Normal ctermfg=7
-    hi Visual ctermbg=8
+    hi Visual cterm=reverse
     hi CursorLine ctermbg=0 cterm=underline
     hi CursorLineNr ctermfg=3
     hi ColorColumn ctermbg=0
@@ -159,13 +159,13 @@ else
     hi MatchParen ctermfg=1 ctermbg=NONE cterm=underline
     hi PmenuSel ctermfg=NONE ctermbg=59 cterm=NONE
     hi Keyword ctermfg=1
-    hi Type ctermfg=12
+    hi Type ctermfg=7
     hi Directory ctermfg=3
-    hi Boolean ctermfg=5
-    hi Character ctermfg=5
+    hi Boolean ctermfg=13
+    hi Character ctermfg=13
     hi String ctermfg=15
-    hi Number ctermfg=5
-    hi Float ctermfg=5
+    hi Number ctermfg=13
+    hi Float ctermfg=13
     hi Comment ctermfg=8
     hi Noise ctermfg=8
     hi NonText ctermfg=0
@@ -187,9 +187,9 @@ else
     hi DiffDelete ctermfg=1 cterm=NONE
     hi DiffChange ctermfg=3 cterm=NONE
     hi DiffText ctermfg=2 cterm=bold
-    hi Special ctermfg=5 ctermbg=NONE cterm=NONE
+    hi Special ctermfg=13 ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=8 ctermbg=NONE cterm=NONE
-    hi StorageClass ctermfg=12 ctermbg=NONE cterm=NONE
+    hi StorageClass ctermfg=7 ctermbg=NONE cterm=NONE
     hi Error ctermfg=1 ctermbg=NONE cterm=bold
     hi Todo ctermfg=3 ctermbg=NONE cterm=bold
 endif
