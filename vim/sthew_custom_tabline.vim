@@ -48,7 +48,7 @@ function! CustomTabline()
         else
           let s .= '%#TabLine# '
           " set the tab page number
-          let s .= (i + 1) . ') '
+          let s .= (i + 1) . ' '
         endif
 
         " the label is made by CustomTablabel()

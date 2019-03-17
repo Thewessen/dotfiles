@@ -82,6 +82,10 @@ if !empty(&viminfo)
 endif
 set sessionoptions-=options
 set sessionoptions-=blank
+set switchbuf+=useopen
+set switchbuf+=usetab
+set switchbuf-=split
+set switchbuf+=vsplit
 
 " Colors
 syntax enable       " syntax highlighting
@@ -102,7 +106,7 @@ set showcmd         " Pending commands in right corner
 
 " Show linenumbers
 set ruler
-set number relativenumber   " Relative numberline (only the current line has absolute linenumber
+" set number relativenumber   " Relative numberline (only the current line has absolute linenumber
 
 " Indention and formatting
 set textwidth=79
@@ -110,29 +114,28 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
 set foldmethod=indent     " Automatic folding depending on syntax
 set foldlevelstart=99     " Start with all folds open
 
 " Invisible chars
-set list
+" set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 
 " Lines and scrolling
 if !&scrolloff          " Always last three lines visible when scroling to EOF
-  set scrolloff=3
+  set scrolloff=5
 endif
 if !&sidescrolloff      " Always last five columns visible when scroling to EOL
   set sidescrolloff=5
 endif
 set nowrap          " No linebreaks when window-width is too small
 set wrapmargin=0    " No linebreaks in Insert mode
-set textwidth=0     " as nowrap
 
 " =================================
 "       Plugin Configurations
@@ -142,10 +145,12 @@ set textwidth=0     " as nowrap
 " let g:SignatureMarkTextHL =
 " hi link SignatureMarkText User1
 
-hi SignatureMarkText ctermfg=22 ctermbg=NONE cterm=underline
+" let g:SignatureMarkTextHL =
+" hi link SignatureMarkText User1
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
+let g:angular_cli_use_dispatch = 1
 
 " Latex-Suite configurations
 let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
@@ -195,7 +200,7 @@ au FileType netrw set foldcolumn=4
 autocmd FileType help call Wincmd_help()
 function! Wincmd_help()
     wincmd L
-    wincmd |
+    " wincmd |
 endfunction
 
 " Save folds of some files
@@ -231,9 +236,16 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufWinEnter,WinEnter * setlocal number relativenumber foldcolumn=0
-    autocmd BufWinLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if &buftype != 'terminal' | setlocal number relativenumber foldcolumn=0 | else | exec "normal! i" | endif
+    autocmd TermOpen * setlocal nonumber norelativenumber foldcolumn=4 | exec "normal! i"
+    autocmd BufLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
 augroup END
+
+" augroup terminal_numberline
+"     autocmd!
+"     autocmd BufWinEnter,WinEnter term://* setlocal nonumber norelativenumber
+"     autocmd BufWinEnter,WinEnter term://* startinsert
+" augroup END
 
 "=================================
 "		    Mappings
@@ -249,6 +261,9 @@ nno s :%s/
 vno s :s/
 nno S :%S/
 vno S :S/
+
+" Terminal Normal Mode
+tno <C-N> <C-\><C-N>
 
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|
@@ -270,14 +285,24 @@ nno <silent> <leader>o :only<CR>
 
 " Quit!
 nmap <silent> <leader>q :q!<CR>
+nno <silent> <C-D> :q!<CR>
+
+" New tab
+nmap <silent> <leader>t :tabe %<CR>
+
+" Open terminal
+nmap <silent> <leader>z :terminal<CR>
 
 " Switch between current and last buffer
 nmap <silent> <Leader>. <C-^>
 
 " Buffers
-nmap <Leader>b :b 
+nmap <Leader>b :sb 
 " Arguments-list
 nmap <Leader>a :arg 
+
+" Semi-colon to colon in Normal Mode
+nno ; :
 
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
@@ -289,7 +314,7 @@ ino <C-C> <ESC>:echo<CR>
 nno <silent> <leader>G :call GolfStart()<CR>
 
 " Run compiler for current file
-nno <silent> <leader>m :Make!<CR>
+nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (syntastic)
 nno <silent> <leader>cs :SyntasticCheck<CR>
@@ -334,14 +359,14 @@ nmap <leader>eb :e ~/.bashrc<CR>
 nmap <leader>ea :e ~/.aliases<CR>
 nmap <leader>en :new<CR>:only<CR>
 " In new tab
-nmap <leader>tv :tabe ~/.vimrc<CR>
-nmap <leader>tc :tabe ~/.vim/colors/sthew.vim<CR>
-nmap <leader>tg :tabe ~/.gitconfig<CR>
-nmap <leader>tt :tabe ~/.tmux.conf<CR>
-nmap <leader>tz :tabe ~/.zshrc<CR>
-nmap <leader>tb :tabe ~/.bashrc<CR>
-nmap <leader>ta :tabe ~/.aliases<CR>
-nmap <leader>tn :tabnew<CR>
+" nmap <leader>tv :tabe ~/.vimrc<CR>
+" nmap <leader>tc :tabe ~/.vim/colors/sthew.vim<CR>
+" nmap <leader>tg :tabe ~/.gitconfig<CR>
+" nmap <leader>tt :tabe ~/.tmux.conf<CR>
+" nmap <leader>tz :tabe ~/.zshrc<CR>
+" nmap <leader>tb :tabe ~/.bashrc<CR>
+" nmap <leader>ta :tabe ~/.aliases<CR>
+" nmap <leader>tn :tabnew<CR>
 
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
@@ -354,14 +379,14 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 " Check syntax highlighting group under the cursor
 
 " Map function key's
-nmap <silent> <f1> :G<CR>
-nmap <silent> <f2> :0Glog<CR>
+nmap <f1> :Gstatus<CR>
+nmap <f2> :0Glog<CR>
 " nmap <silent> <f3>
-nmap <silent> <f4> :Gcommit<CR>
-nmap <silent> <f5> :SyntasticCheck<CR>
-" nmap <silent> <f6>
-" nmap <silent> <f7>
-nmap <silent> <f8> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f4> :Gcommit<CR>
+nmap <f5> :SyntasticCheck<CR>
+nmap <f6> :SyntasticReset<CR>
+nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f8> :set invpaste<CR>
 " nmap <silent> <f9>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
@@ -371,7 +396,7 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 
 " Snippits (read from .vim/skeletons) like html tags etc.
 nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
-nno <silent> <leader>tt :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
+nno <silent> <leader>ht :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
 " =================================
