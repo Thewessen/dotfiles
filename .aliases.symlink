@@ -9,6 +9,9 @@
 #             General
 # =================================
 #
+# List processes
+alias pstree='pstree -aclp'
+
 # Dir STACK, zsh and csh only
 alias dh='dirs -v'
 

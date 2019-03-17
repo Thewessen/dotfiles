@@ -165,7 +165,7 @@ let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_enable_diagnostic_highlighting = 0
 " Don't show YCM's preview window
 set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_add_preview_to_completeopt = 0
 
 " Syntastic filechecker and maker config
 " Behavior
@@ -379,14 +379,14 @@ nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 " =================================
 
 " Source statusline and tabline
-source $DOTFILES/vim/sthew_custom_tabline.vim
-source $DOTFILES/vim/sthew_custom_statusline.vim
+source $HOME/.dotfiles/vim/sthew_custom_tabline.vim
+source $HOME/.dotfiles/vim/sthew_custom_statusline.vim
 
 " Source color links (from Plugins syntax)
-source $DOTFILES/vim/sthew_link_color_groups.vim
+source $HOME/.dotfiles/vim/sthew_link_color_groups.vim
 
 " Source statusline toggle mode
-source $DOTFILES/vim/sthew_mode_echo.vim
+source $HOME/.dotfiles/vim/sthew_mode_echo.vim
 autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
 
 "==================================================================
