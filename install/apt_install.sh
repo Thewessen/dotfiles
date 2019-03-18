@@ -3,9 +3,11 @@
 # For use of syntastic vim-plugin
 # Add closurecompiler (google) manually
 
-if [[ `uname` -eq Linux ]]; then
+if [[ -z $(command -v zsh) ]]; then
+  echo "ZSH should be installed first!! Aborting!"
+elif [[ `uname` -eq Linux ]]; then
     #1e array of programs
-    programs=("zsh" "terminator" "tmux" "vim" "npm" "git" "nodejs" "js" "rhino" "haskell-platform" "python-dev" "ctags" "ttf-mscorefonts-installer" "fonts-inconsolata")
+    programs=("cmake" "terminator" "tmux" "vim" "npm" "git" "nodejs" "js" "rhino" "haskell-platform" "python-dev" "ctags" "ttf-mscorefonts-installer" "fonts-inconsolata")
     for com in ${programs[@]}; do
         echo "Installing $com..."
         command -v $com || sudo apt install $com
@@ -17,12 +19,10 @@ if [[ `uname` -eq Linux ]]; then
         command -v $util || sudo apt install $util
     done
     # NPM
-    npm=("standard" "jshint" "jsxhint" "jsl" "jslint" "eslint" "csslint")
+    npm=("live-server" "standard" "jshint" "jsxhint" "jsl" "jslint" "eslint" "csslint")
     for npm in ${npm[@]}; do
         sudo npm -g install $n
     done
-    # Change shell
-    chsh -s $(command -v zsh)
     exit 0
 else
     echo "Not the correct operatingsystem! Aborting..."
