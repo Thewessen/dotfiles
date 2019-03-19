@@ -18,7 +18,7 @@ function! CustomTablabel(n)
       let tabname .= '/'
   endif
   " Append the number of windows in the tab page if more than one
-  let wincount = tabpagewinnr(bufnr, '$')
+  let wincount = tabpagewinnr(a:n, '$')
   if wincount > 1
     let tabname .= ' [' . wincount . ']'
   endif
