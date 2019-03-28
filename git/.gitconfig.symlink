@@ -1,7 +1,0 @@
-[user]
-	email = sthewessen@gmail.com
-	name = Thewessen
-[core]
-	editor = nvim
-[credential]
-	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
