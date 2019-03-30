@@ -107,13 +107,6 @@ elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Source some functions
-if [ -d ~/Scripts/Shell ]; then
-    for script in $HOME/Scripts/Shell/*.sh; do
-        source $script
-    done
-fi
-
 # launch tmux terminal multiplexer
 # only if tmux is installed
 if command -v tmux >/dev/null 2>&1; then
@@ -125,3 +118,10 @@ if command -v tmux >/dev/null 2>&1; then
         tmux attach || break
     done
 fi
+
+# Populate the dir stack
+cd /home/sthewessen/Scripts/CTF/OverTheWire/natas/ 2>/dev/null
+cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
+cd /home/sthewessen/Websites/Website\ Iris/ 2>/dev/null
+cd ~
+
