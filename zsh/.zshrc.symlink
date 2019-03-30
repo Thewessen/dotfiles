@@ -121,11 +121,17 @@ fi
 
 # Populate the dir stack
 <<<<<<< HEAD
+<<<<<<< HEAD
 cd /home/sthewessen/Scripts/CTF/OverTheWire/natas/ 2>/dev/null
 cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
 cd /home/sthewessen/Websites/Website\ Iris/ 2>/dev/null
 cd ~
 
+=======
+cd /home/sthewessen/Scripts/CTF/OverTheWire/bandit/ 2>/dev/null
+cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
+cd ~
+>>>>>>> 4f275142cdc99e639547633fe3afcb9060d0a501
 =======
 cd /home/sthewessen/Scripts/CTF/OverTheWire/bandit/ 2>/dev/null
 cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
