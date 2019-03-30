@@ -62,7 +62,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(tmux git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(tmux git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -120,8 +120,14 @@ if command -v tmux >/dev/null 2>&1; then
 fi
 
 # Populate the dir stack
+<<<<<<< HEAD
 cd /home/sthewessen/Scripts/CTF/OverTheWire/natas/ 2>/dev/null
 cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
 cd /home/sthewessen/Websites/Website\ Iris/ 2>/dev/null
 cd ~
 
+=======
+cd /home/sthewessen/Scripts/CTF/OverTheWire/bandit/ 2>/dev/null
+cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
+cd ~
+>>>>>>> 4f275142cdc99e639547633fe3afcb9060d0a501
