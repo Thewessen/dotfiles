@@ -5,6 +5,14 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
+# Simple watch filechange and run file command (needs notify-tools)
+notify() {
+  echo
+  while inotifywait "$1" 2>/dev/null 1>/dev/null; do
+    sleep 0.1 && "$1"
+  done
+}
+
 # =================================
 #             General
 # =================================
