@@ -343,6 +343,10 @@ nno <C-W>s <C-W><C-S><C-W>j
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
 
+" Scroll faster with C-E and C-Y
+nno <C-E> 2<C-E>
+nno <C-Y> 2<C-Y>
+
 " Command & Insert-mode mapping
 cmap <C-D> <Del>
 imap <C-D> <Del>
