@@ -237,7 +237,6 @@ augroup END
 augroup activewin_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype != 'terminal' | setlocal number relativenumber foldcolumn=0 | else | exec "normal! i" | endif
-    autocmd TermOpen * setlocal nonumber norelativenumber foldcolumn=4 | exec "normal! i"
     autocmd BufLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
 augroup END
 

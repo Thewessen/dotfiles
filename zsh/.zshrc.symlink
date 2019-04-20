@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
- export ZSH="/home/sthewessen/.oh-my-zsh"
+ export ZSH="/home/anonymous/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -119,8 +119,11 @@ if command -v tmux >/dev/null 2>&1; then
     done
 fi
 
+# Xmodmap change capslock behaviour
+if [ -f ~/.xmodmap ]; then
+  xmodmap .xmodmap
+fi
+
 # Populate the dir stack
-cd /home/sthewessen/Scripts/CTF/OverTheWire/natas/ 2>/dev/null
-cd /home/sthewessen/Sites/Website\ Iris/ 2>/dev/null
-cd /home/sthewessen/Websites/Website\ Iris/ 2>/dev/null
+cd /home/anonymous/Scripts/CTF/OverTheWire/krypton/ 2>/dev/null
 cd ~
