@@ -16,9 +16,16 @@ notify() {
 # =================================
 #             General
 # =================================
-#
+# John the Ripper (Jumbo)
+alias john="$HOME/.local/share/JohnTheRipper/run/john"
+alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
+alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
+
 # List processes
 alias pstree='pstree -aclp'
+
+# Copy to clipboard
+alias xclip='xclip -selection clipboard'
 
 # Dir STACK, zsh and csh only
 alias dh='dirs -v'
