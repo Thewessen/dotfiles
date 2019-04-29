@@ -37,7 +37,8 @@ setw -g pane-base-index 1
 set -g renumber-windows on
 
 # automatically rename tmux windows
-# set-window-option -g automatic-rename
+set-window-option -g automatic-rename off
+set-option -g allow-rename off
 
 set-option -g set-titles on
 set-option -g set-titles-string "#T - #W"
