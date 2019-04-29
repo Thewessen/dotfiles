@@ -8,11 +8,11 @@ result=$volume_lvl_perc
 if [ "$volume_mixer" -eq "off" ]; then
     result+=🔇
 elif [ "$volume_lvl_perc" -eq "100%" ] || [ $volume_lvl_perc_number -gt 75 ]; then
-    result+=🔊
+    result+=🕪
 elif [ $volume_lvl_perc_number -gt 10 ]; then
-    result+=🔉
+    result+=🕩
 else
-    result+=🔈
+    result+=🕨
 fi
 
 echo $result

@@ -8,9 +8,9 @@ set -g default-terminal "screen-256color"
 set-option -sg escape-time 10
 
 # Some widget variables for statusbar
-wg_cpu="#(lscpu | grep 'CPU MHz' | grep -oE '\ +[0-9]+' | tail -c 5)Mhz⏱️"
+wg_cpu="#(lscpu | grep 'CPU MHz' | grep -oE '\ +[0-9]+' | tail -c 5)Mhz🖸"
 wg_session="#[fg=colour2] [#S]:#I #W"
-wg_mem="#(free --mega | grep -E Mem | awk '{print $3}')MB⌗"
+wg_mem="#(free --mega | grep -E Mem | awk '{print $3}')MB🖴"
 wg_batt="#(zsh $DOTFILES/tmux/battery_status.sh)"
 wg_volm="#(zsh $DOTFILES/tmux/get_volume_level.sh)"
 wg_date="%A %d %b"
