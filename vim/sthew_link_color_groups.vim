@@ -2,6 +2,9 @@
 " =============== S. Thewessen vim-color links =====================
 " ==================================================================
 
+" netrew
+hi link netrwClassify Noise
+
 " Tmux
 hi link tmuxOptions Identifier
 hi link tmuxFlags Type
@@ -12,7 +15,14 @@ hi link shVariable Normal
 hi link shCommandSub Statement
 hi link shOption Type
 hi link shRange Noise
+hi link shQuote String
 hi link shDerefSimple String
+
+" zsh
+hi link zshDeref Directory 
+hi link zshPreproc Comment 
+hi link zshSubstDelim Noise 
+hi link zshPrecommand zshCommands 
 
 " Latex
 hi link Delimiter Noise
