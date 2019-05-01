@@ -1,65 +1,5 @@
 # TMUX configuration file
 
-###############################################################################
-############# Date/Time values that can be displayed in the status line
-###############################################################################
-
-# $(echo $USER) - shows the current username
-# %a --> Day of week (Mon)
-# %A --> Day of week Expanded (Monday)
-
-# %b --> Month (Jan)
-# %d --> Day (31)
-# %Y --> Year (2017)
-
-# %D --> Month/Day/Year (12/31/2017)
-# %v --> Day-Month-Year (31-Dec-2017)
-
-# %r --> Hour:Min:Sec AM/PM (12:30:27 PM)
-# %T --> 24 Hour:Min:Sec (16:30:27)
-# %X --> Hour:Min:Sec (12:30:27)
-# %R --> 24 Hour:Min (16:30)
-# %H --> 24 Hour (16)
-# %l --> Hour (12)
-# %M --> Mins (30)
-# %S --> Seconds (09)
-# %p --> AM/PM (AM)
-
-# Possible field value options.
-
-# #(shell-command) First line of the command's output
-# #[attributes] Colour or attribute change
-# #H Hostname of local host
-# #h Hostname of local host without the domain name
-# #F Current window flag
-# #I Current window index
-# #P Current pane index
-# #S Session name
-# #T Current window title
-# #W Current window name
-
-# For a more complete list view: https://linux.die.net/man/3/strftime
-
-
-# Base16 Styling Guidelines:
-# Maybe some better colors?
-# base00=default   # - Default
-# base01='#151515' # - Lighter Background (Used for status bars)
-# base02='#202020' # - Selection Background
-# base03='#303030' # - Comments, Invisibles, Line Highlighting
-# base04='#505050' # - Dark Foreground (Used for status bars)
-# base05='#D0D0D0' # - Default Foreground, Caret, Delimiters, Operators
-# base06='#E0E0E0' # - Light Foreground (Not often used)
-# base07='#F5F5F5' # - Light Background (Not often used)
-# base08='#AC4142' # - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-# base09='#D28445' # - Integers, Boolean, Constants, XML Attributes, Markup Link Url
-# base0A='#F4BF75' # - Classes, Markup Bold, Search Text Background
-# base0B='#90A959' # - Strings, Inherited Class, Markup Code, Diff Inserted
-# base0C='#75B5AA' # - Support, Regular Expressions, Escape Characters, Markup Quotes
-# base0D='#6A9FB5' # - Functions, Methods, Attribute IDs, Headings
-# base0E='#AA759F' # - Keywords, Storage, Selector, Markup Italic, Diff Changed
-# base0F='#8F5536' # - Deprecated, Opening/Closing Embedded Language Tags, e.g. <? php ?>
-
 # Here are some more fance characters:
 # 🔌 🔍 🔎 🔏 🔊 🔉 🔈 🔇 🔆 🔅 🔄 🔃 🔂 🔁 🔀 📿 📾
 # ≡
@@ -71,8 +11,6 @@ set-option -sg escape-time 10
 wg_cpu="#(lscpu | grep 'CPU MHz' | grep -oE '\ +[0-9]+' | tail -c 5)Mhz⏱️"
 wg_session="#[fg=colour2] [#S]:#I #W"
 wg_mem="#(free --mega | grep -E Mem | awk '{print $3}')MB⌗"
-wg_batt="#(zsh $DOTFILES/tmux/.battery_status.sh)"
-wg_volm="#(zsh $DOTFILES/tmux/.get_volume_level.sh)"
 wg_date="%A %d %b"
 wg_seperator="#[fg=colour3]⌇#[default]"
 
@@ -97,7 +35,8 @@ setw -g pane-base-index 1
 set -g renumber-windows on
 
 # automatically rename tmux windows
-set-window-option -g automatic-rename
+set-window-option -g automatic-rename off
+set-option -g automatic-rename off
 
 set-option -g set-titles on
 set-option -g set-titles-string "#T - #W"
