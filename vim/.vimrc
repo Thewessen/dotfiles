@@ -31,6 +31,7 @@ Plugin 'VundleVim/Vundle.vim'
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
 Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
+Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
