@@ -68,6 +68,15 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# Use wildcard in history search
+bindkey "^R" history-incremental-pattern-search-backward
+bindkey "^S" history-incremental-pattern-search-forward
+
+# Use zman for the manualpage of zsh and search
+zman() {
+  PAGER="less -g -s '+/^       "$1"'" man zshall
+}
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -97,8 +106,18 @@ LS_COLORS='rs=0:di=00;33:ln=01;36:mh=00:pi=00;34:so=00;35:do=00;35:bd=40;33;01:c
 export LS_COLORS
 
 # Use the dir stack!
-DIRSTACKSIZE=8
 setopt autopushd pushdminus pushdsilent pushdtohome
+DIRSTACKSIZE=11
+
+# Keep the dirstack saved
+DIRSTACKFILE=~/.zdirs
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
 
 # Add some aliases
 if [ -f ~/.aliases ]; then
@@ -118,29 +137,3 @@ fi
 #        tmux attach || break
 #    done
 #fi
-
-# Xmodmap change capslock behaviour
-if [ -f ~/.xmodmap ]; then
-  xmodmap .xmodmap
-fi
-
-# launch tmux terminal multiplexer
-# only if tmux is installed
-#if command -v tmux >/dev/null 2>&1; then
-#    #if not inside a tmux session, and if no session is started, start a new session
-#    test -z "$TMUX" && (tmux attach || tmux new-session)
-
-#    #try to attach too a detached session when killing a session
-#    while test -z ${TMUX}; do
-#        tmux attach || break
-#    done
-#fi
-
-if [ -f ~/.xmodmap ]; then
-  xmodmap .xmodmap 2>/dev/null
-fi
-
-# Populate the dirstack
-cd /home/Anonymous/Programming/CTF/OverTheWire/natas 2>/dev/null
-cd $HOME/Scripts/CTF/OverTheWire/krypton/ 2>/dev/null
-cd ~
