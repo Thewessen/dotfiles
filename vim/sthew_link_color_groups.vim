@@ -24,6 +24,10 @@ hi link zshPreproc Comment
 hi link zshSubstDelim Noise 
 hi link zshPrecommand zshCommands 
 
+" Python
+hi link pythonDecorator Special
+hi link pythonDecoratorName Label
+
 " Latex
 hi link Delimiter Noise
 hi link texBeginEndName Type
