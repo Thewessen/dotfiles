@@ -1,8 +1,5 @@
 # TMUX configuration file
 
-# Here are some more fance characters:
-# 🔌 🔍 🔎 🔏 🔊 🔉 🔈 🔇 🔆 🔅 🔄 🔃 🔂 🔁 🔀 📿 📾
-# ≡
 # UTF8 encoding (not working)
 # set -g utf8 on
 # set -g status-utf8 on
@@ -29,9 +26,7 @@ set -g status-fg colour8
 set -g status-attr default
 set -g status-right "\
 #(lscpu | grep 'CPU MHz' | grep -oE '\ +[0-9]+' | tail -c 5)Mhz⏱️  \
-#[fg=colour3]⌇#[default] \
 #(free --mega | grep -E Mem | awk '{print $3}')MB⌗ \
-#[fg=colour3]⌇#[default] \
 #[bg=default,fg=colour4] %A %d %b\
 #[bold,bg=default,fg=colour4] %R "
 set -g status-left "#[bg=default,fg=colour4] #S "
