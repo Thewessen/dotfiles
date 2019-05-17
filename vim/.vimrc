@@ -115,9 +115,9 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " Folds
 set foldmethod=indent     " Automatic folding depending on syntax
@@ -189,6 +189,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_javascript_checkers = ["closurecompiler","standard","eslint","jslint","jsl"]
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190121.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
+let g:syntastic_python_checkers = ["pep8"]
 
 
 " =================================
