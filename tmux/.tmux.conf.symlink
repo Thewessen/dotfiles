@@ -6,7 +6,7 @@
 
 # Use a 256 color scheme
 set -g default-terminal "screen-256color"
-set-option -sg escape-time 0
+set-option -g escape-time 0
 
 # Increase scrollback buffer
 set -g history-limit 50000
@@ -40,10 +40,11 @@ set -g renumber-windows on
 
 # automatically rename tmux windows
 set allow-rename off
-set-option allow-rename off
-set-window-option -g automatic-rename off
-set-option -g automatic-rename off
+set -g allow-rename off
+set-option -g allow-rename off
 set -g automatic-rename off
+set-option -g automatic-rename off
+set-window-option -g automatic-rename off
 
 set-option -g set-titles on
 set-option -g set-titles-string "#T - #W"
@@ -104,6 +105,7 @@ bind -r C-l next-window
 # new window
 bind -r C-c new-window -n "~" \; set allow-rename off
 bind-key c new-window \; command-prompt -p "(rename-window)" "rename-window '%%'" \; set allow-rename off
+bind-key , command-prompt -p "(rename-window)" "rename-window '%%'" \; set allow-rename off
 
 # synchronize all panes in a window
 bind g setw synchronize-panes

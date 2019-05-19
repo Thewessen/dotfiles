@@ -133,7 +133,7 @@ if command -v tmux >/dev/null 2>&1; then
   test -z "$TMUX" && (tmux attach -t SH || tmux new-session -s SH)
 
   #try to attach too a detached session when killing a session
-  while test -z ${TMUX}; do
-      tmux attach || break
-  done
+  # while test -z ${TMUX}; do
+  #     tmux attach || break
+  # done
 fi

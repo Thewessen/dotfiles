@@ -189,7 +189,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_javascript_checkers = ["closurecompiler","standard","eslint","jslint","jsl"]
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190121.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
-let g:syntastic_python_checkers = ["pep8"]
+let g:syntastic_python_checkers = ["flake8","pep8"]
 
 
 " =================================
