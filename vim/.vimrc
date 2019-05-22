@@ -30,6 +30,7 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
+Plugin 'christoomey/vim-tmux-navigator' " Navigate seemlesly through vim and tmux
 Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
@@ -263,9 +264,6 @@ vno s :s/
 nno S :%S/
 vno S :S/
 
-" Terminal Normal Mode
-tno <C-N> <C-\><C-N>
-
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
@@ -308,8 +306,9 @@ nno ; :
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
 
-" Make C-C act like esc in Insertmode
+" Make C-C act like esc in Insertmode (terminal also)
 ino <C-C> <ESC>:echo<CR>
+tno <C-c> <C-\><C-N>
 
 " Start Vimgolf
 nno <silent> <leader>G :call GolfStart()<CR>
@@ -338,8 +337,12 @@ nno <silent> <leader>gm :Gmove<CR>
 " Window movement and tiling
 nmap <C-H> <C-W>W
 nmap <C-L> <C-W>w
+tmap <C-H> <C-c><C-W>W
+tmap <C-L> <C-c><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
 nno <C-W>s <C-W><C-S><C-W>j
+tmap <C-W><C-V> <C-c><C-W><C-V>
+tmap <C-W><C-S> <C-c><C-W><C-S>
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
