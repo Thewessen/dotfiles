@@ -126,6 +126,9 @@ elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# own plugins
+. $HOME/.dotfiles/zsh/auto-ls.zsh
+
 ## launch tmux terminal multiplexer
 ## only if tmux is installed
 #if command -v tmux >/dev/null 2>&1; then
