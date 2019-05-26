@@ -26,7 +26,7 @@ hi link zshPrecommand zshCommands
 
 " Python
 hi link pythonDecorator Special
-hi link pythonDecoratorName Label
+hi link pythonDecoratorName Special
 
 " Latex
 hi link Delimiter Noise
