@@ -386,14 +386,14 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 
 " Map function key's
 nmap <f1> :Gstatus<CR>
-nmap <f2> :0Glog<CR>
-" nmap <silent> <f3>
-nmap <f4> :Gcommit<CR>
-nmap <f5> :SyntasticCheck<CR>
-nmap <f6> :SyntasticReset<CR>
-nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-nmap <f8> :set invpaste<CR>
-" nmap <silent> <f9>
+nmap <f2> :Gcommit<CR>
+nmap <f3> :Gpush<CR>
+nmap <f4> :Gpull<CR>
+nmap <f5> :0Glog<CR>
+nmap <f7> :SyntasticCheck<CR>
+nmap <f8> :SyntasticReset<CR>
+" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
