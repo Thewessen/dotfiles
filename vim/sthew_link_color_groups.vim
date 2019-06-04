@@ -52,6 +52,12 @@ hi link javaScriptBraces Noise
 hi link typescriptBraces Noise
 hi link typescriptParens Noise
 
+" JSX
+hi link xmlTagName Tag
+hi link xmlTag Tag
+hi link xmlAttrib Normal
+hi link xmlEndTag Tag
+
 " CSS (Damn those groups!!)
 hi link cssClassName Type
 hi link cssPseudoClassId Function
