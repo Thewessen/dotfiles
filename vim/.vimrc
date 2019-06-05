@@ -46,6 +46,7 @@ Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
@@ -116,9 +117,9 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
 set foldmethod=indent     " Automatic folding depending on syntax
@@ -184,10 +185,10 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_mode_map = {
     \ "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": ["javascript","typescript"] }
+    \ "active_filetypes": ["javascript","typescript"],
+    \ "passive_filetypes": [] }
 " Checkers
-let g:syntastic_javascript_checkers = ["closurecompiler","standard","eslint","jslint","jsl"]
+let g:syntastic_javascript_checkers = ["closurecompiler","standard"]
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190121.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_python_checkers = ["flake8","pep8"]
