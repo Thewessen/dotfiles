@@ -151,6 +151,11 @@ set wrapmargin=0    " No linebreaks in Insert mode
 " let g:SignatureMarkTextHL =
 " hi link SignatureMarkText User1
 
+" CtrlP options
+let g:ctrlp_by_filename = 1
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
+let g:ctrlp_show_hidden = 1
+
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
 let g:angular_cli_use_dispatch = 1
@@ -189,7 +194,7 @@ let g:syntastic_mode_map = {
     \ "passive_filetypes": [] }
 " Checkers
 let g:syntastic_javascript_checkers = ["closurecompiler","standard"]
-let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190121.jar"
+let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_python_checkers = ["flake8","pep8"]
 
@@ -389,13 +394,14 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 
 " Map function key's
 nmap <f1> :Gstatus<CR>
-nmap <f2> :0Glog<CR>
-" nmap <silent> <f3>
-nmap <f4> :Gcommit<CR>
-nmap <f5> :SyntasticCheck<CR>
-nmap <f6> :SyntasticReset<CR>
-nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-nmap <f8> :set invpaste<CR>
+nmap <f2> :Gcommit -v<CR>
+nmap <f3> :Gpush<CR>
+nmap <f4> :Gpull<CR>
+nmap <f5> :0Glog<CR>
+nmap <f7> :SyntasticReset<CR>
+nmap <f8> :SyntasticCheck<CR>
+" nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+" nmap <f8> :set invpaste<CR>
 " nmap <silent> <f9>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
