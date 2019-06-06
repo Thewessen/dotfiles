@@ -179,12 +179,12 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_mode_map = {
     \ "mode": "active",
-    \ "active_filetypes": ["javascript","typescript"],
+    \ "active_filetypes": [],
     \ "passive_filetypes": [] }
 " Checkers
 let g:syntastic_javascript_checkers = ["standard","closurecompiler"]
@@ -319,19 +319,19 @@ nno <silent> <leader>G :call GolfStart()<CR>
 nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (syntastic)
-nno <silent> <leader>cs :SyntasticCheck<CR>
-nno <silent> <leader>cr :SyntasticReset<CR>
-nno <silent> <leader>ci :SyntasticInfo<CR>
-nno <silent> <leader>ce :Errors<CR>
-nno <silent> <leader>co :lopen<CR>
-nno <silent> <leader>ct :SyntasticToggleMode<CR>
+nno <silent> <leader>ss :SyntasticCheck<CR>
+nno <silent> <leader>sr :SyntasticReset<CR>
+nno <silent> <leader>si :SyntasticInfo<CR>
+nno <silent> <leader>se :Errors<CR>
+nno <silent> <leader>so :lopen<CR>
+nno <silent> <leader>st :SyntasticToggleMode<CR>
 
 " Git commands (vim-fugitive)
 nno <silent> <leader>gs :Gstatus<CR>
 nno <silent> <leader>gp :Gpush<CR>
 nno <silent> <leader>ga :Gwrite<CR>
 nno <silent> <leader>gr :Gread<CR>
-nno <silent> <leader>gc :Gcommit<CR>
+nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
 nno <silent> <leader>gd :Gremove<CR>
 nno <silent> <leader>gm :Gmove<CR>
@@ -385,13 +385,13 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 " Check syntax highlighting group under the cursor
 
 " Map function key's
-nmap <f1> :Gstatus<CR>
-nmap <f2> :Gcommit -v<CR>
-nmap <f3> :Gpush<CR>
-nmap <f4> :Gpull<CR>
-nmap <f5> :0Glog<CR>
-nmap <f7> :SyntasticCheck<CR>
-nmap <f8> :SyntasticReset<CR>
+" nmap <f1> :Gstatus<CR>
+" nmap <f2> :Gcommit -v<CR>
+" nmap <f3> :Gpush<CR>
+" nmap <f4> :Gpull<CR>
+" nmap <f5> :0Glog<CR>
+" nmap <f7> :SyntasticCheck<CR>
+" nmap <f8> :SyntasticReset<CR>
 " nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
 nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
