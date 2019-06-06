@@ -44,9 +44,11 @@ hi link htmlEndTag Comment
 hi link jsObjectKey Normal
 hi link jsFunction Statement
 hi link jsFunctionKey Function
+hi link jsArrowFunction Statement
 hi link javaScriptFunction Type
 hi link javaScriptRailsFunction Type
 hi link javaScriptBraces Noise
+hi link jsLabel Conditional
 
 " Typescript
 hi link typescriptBraces Noise

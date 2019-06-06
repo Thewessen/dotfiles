@@ -187,7 +187,7 @@ let g:syntastic_mode_map = {
     \ "active_filetypes": ["javascript","typescript"],
     \ "passive_filetypes": [] }
 " Checkers
-let g:syntastic_javascript_checkers = ["closurecompiler","standard"]
+let g:syntastic_javascript_checkers = ["standard","closurecompiler"]
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_python_checkers = ["flake8"]
@@ -386,7 +386,7 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 
 " Map function key's
 nmap <f1> :Gstatus<CR>
-nmap <f2> :Gcommit<CR>
+nmap <f2> :Gcommit -v<CR>
 nmap <f3> :Gpush<CR>
 nmap <f4> :Gpull<CR>
 nmap <f5> :0Glog<CR>
