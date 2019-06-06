@@ -26,7 +26,7 @@ hi link zshPrecommand zshCommands
 
 " Python
 hi link pythonDecorator Special
-hi link pythonDecoratorName Label
+hi link pythonDecoratorName Special
 
 " Latex
 hi link Delimiter Noise
@@ -44,13 +44,21 @@ hi link htmlEndTag Comment
 hi link jsObjectKey Normal
 hi link jsFunction Statement
 hi link jsFunctionKey Function
+hi link jsArrowFunction Statement
 hi link javaScriptFunction Type
 hi link javaScriptRailsFunction Type
 hi link javaScriptBraces Noise
+hi link jsLabel Conditional
 
 " Typescript
 hi link typescriptBraces Noise
 hi link typescriptParens Noise
+
+" JSX
+hi link xmlTagName Tag
+hi link xmlTag Tag
+hi link xmlAttrib Normal
+hi link xmlEndTag Tag
 
 " CSS (Damn those groups!!)
 hi link cssClassName Type
