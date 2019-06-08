@@ -65,7 +65,7 @@ function! CustomTabline()
 
     " Show fullpathname on the right-side
     let s .= '%='
-    let s .= '%<%{expand("%:.")}'
+    let s .= '%<%{expand("%:.:h")}/'
 
     return s
 endfunction
