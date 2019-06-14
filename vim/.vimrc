@@ -341,9 +341,12 @@ nno <silent> <leader>gb :Gblame!<CR>
 nno <silent> <leader>gd :Gremove<CR>
 nno <silent> <leader>gm :Gmove<CR>
 
-" NPM dispatch commands
+" NPM and nodejs dispatch commands
+" nno <silent> <leader>nn :Start nodejs -i %<CR>
+nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+nno <silent> <leader>ni :exec "bo 10split term://nodejs"<CR>
 nno <silent> <leader>ns :Start! npm start<CR>
-nno <silent> <leader>nb :Dispatch npm run build<CR>
+nno <silent> <leader>nb :Start npm run build<CR>
 nno <silent> <leader>nt :Start npm run test<CR>
 
 " Window movement and tiling
