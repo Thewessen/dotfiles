@@ -30,6 +30,7 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
+" Plugin 'christoomey/vim-tmux-navigator' " Navigate seemlesly through vim and tmux
 Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
@@ -45,7 +46,7 @@ Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'mxw/vim-jsx'                    " JSX highligthing for React html in Javascript
+Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
@@ -116,9 +117,9 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
 set foldmethod=indent     " Automatic folding depending on syntax
@@ -149,6 +150,11 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 " let g:SignatureMarkTextHL =
 " hi link SignatureMarkText User1
+
+" CtrlP options
+let g:ctrlp_by_filename = 1
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
+let g:ctrlp_show_hidden = 1
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -185,10 +191,10 @@ let g:syntastic_enable_balloons = 0
 let g:syntastic_mode_map = {
     \ "mode": "active",
     \ "active_filetypes": [],
-    \ "passive_filetypes": ["javascript","typescript"] }
+    \ "passive_filetypes": [] }
 " Checkers
-let g:syntastic_javascript_checkers = ["closurecompiler","standard","eslint","jslint","jsl"]
-let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190121.jar"
+let g:syntastic_javascript_checkers = [ "eslint", "standard"] " closurecompiler
+let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_python_checkers = ["flake8"]
 
@@ -264,9 +270,6 @@ vno s :s/
 nno S :%S/
 vno S :S/
 
-" Terminal Normal Mode
-tno <C-N> <C-\><C-N>
-
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
@@ -311,36 +314,60 @@ ino <C-U> <C-G>u<C-U>
 
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
+tno <C-N> <C-\><C-N>
+
+" Make C-L act like del in InsertMode
+ino <C-L> <DEL>
+
+" Jump word in Insertmode
+ino <C-E> <ESC>ea
+ino <C-B> <ESC>bi
 
 " Start Vimgolf
 nno <silent> <leader>G :call GolfStart()<CR>
+
+" Exercism submit current file (need to be in root dir!)
+nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
 nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (syntastic)
-nno <silent> <leader>cs :SyntasticCheck<CR>
-nno <silent> <leader>cr :SyntasticReset<CR>
-nno <silent> <leader>ci :SyntasticInfo<CR>
-nno <silent> <leader>ce :Errors<CR>
-nno <silent> <leader>co :lopen<CR>
-nno <silent> <leader>ct :SyntasticToggleMode<CR>
+nno <silent> <leader>ss :SyntasticCheck<CR>
+nno <silent> <leader>sr :SyntasticReset<CR>
+nno <silent> <leader>si :SyntasticInfo<CR>
+nno <silent> <leader>se :Errors<CR>
+nno <silent> <leader>so :lopen<CR>
+nno <silent> <leader>st :SyntasticToggleMode<CR>
 
 " Git commands (vim-fugitive)
 nno <silent> <leader>gs :Gstatus<CR>
 nno <silent> <leader>gp :Gpush<CR>
+nno <silent> <leader>gl :Gpull<CR>
 nno <silent> <leader>ga :Gwrite<CR>
 nno <silent> <leader>gr :Gread<CR>
-nno <silent> <leader>gc :Gcommit<CR>
+nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
 nno <silent> <leader>gd :Gremove<CR>
 nno <silent> <leader>gm :Gmove<CR>
 
+" NPM and nodejs dispatch commands
+nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+nno <silent> <leader>nh :exec "bo 10split term://nodejs"<CR>
+nno <silent> <leader>ni :Dispatch npm install<CR>
+nno <silent> <leader>ns :Start! npm start<CR>
+nno <silent> <leader>nb :Start npm run build<CR>
+nno <silent> <leader>nt :Start npm run test && read<CR>
+
 " Window movement and tiling
 nmap <C-H> <C-W>W
 nmap <C-L> <C-W>w
+tmap <C-H> <C-c><C-W>W
+tmap <C-L> <C-c><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
 nno <C-W>s <C-W><C-S><C-W>j
+tmap <C-W><C-V> <C-c><C-W><C-V>
+tmap <C-W><C-S> <C-c><C-W><C-S>
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
@@ -352,7 +379,12 @@ nno <C-Y> 2<C-Y>
 " Command & Insert-mode mapping
 cmap <C-D> <Del>
 imap <C-D> <Del>
-imap <C-B> <ESC>0i
+imap <C-B> <ESC>bi
+imap <C-L> <ESC>li
+imap <C-E> <ESC>ea
+" instead of Isurround
+imap <C-S> <Plug>Isurround
+ino <C-G><C-M> <CR><ESC>O
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
@@ -386,13 +418,15 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 
 " Map function key's
 nmap <f1> :Gstatus<CR>
-nmap <f2> :0Glog<CR>
-" nmap <silent> <f3>
-nmap <f4> :Gcommit<CR>
-nmap <f5> :SyntasticCheck<CR>
-nmap <f6> :SyntasticReset<CR>
-nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-nmap <f8> :set invpaste<CR>
+nmap <f2> :Gcommit -v<CR>
+nmap <f3> :Gpush<CR>
+nmap <f4> :Gpull<CR>
+nmap <f5> :0Glog<CR>
+" nmap <f7> :SyntasticReset<CR>
+" nmap <f8> :SyntasticCheck<CR>
+" nmap <f9> :SyntasticToggleMode<CR>
+" nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+" nmap <f8> :set invpaste<CR>
 " nmap <silent> <f9>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
