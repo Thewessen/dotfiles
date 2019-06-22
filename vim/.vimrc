@@ -30,7 +30,7 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'christoomey/vim-tmux-navigator' " Navigate seemlesly through vim and tmux
+" Plugin 'christoomey/vim-tmux-navigator' " Navigate seemlesly through vim and tmux
 Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
@@ -196,7 +196,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_javascript_checkers = [ "eslint", "standard"] " closurecompiler
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
-let g:syntastic_python_checkers = ["flake8","pep8"]
+let g:syntastic_python_checkers = ["flake8"]
 
 
 " =================================
@@ -312,9 +312,16 @@ nno ; :
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
 
-" Make C-C act like esc in Insertmode (terminal also)
+" Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
-tno <C-c> <C-\><C-N>
+tno <C-N> <C-\><C-N>
+
+" Make C-L act like del in InsertMode
+ino <C-L> <DEL>
+
+" Jump word in Insertmode
+ino <C-E> <ESC>ea
+ino <C-B> <ESC>bi
 
 " Start Vimgolf
 nno <silent> <leader>G :call GolfStart()<CR>
@@ -345,7 +352,6 @@ nno <silent> <leader>gd :Gremove<CR>
 nno <silent> <leader>gm :Gmove<CR>
 
 " NPM and nodejs dispatch commands
-" nno <silent> <leader>nn :Start nodejs -i %<CR>
 nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
 nno <silent> <leader>nh :exec "bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :Dispatch npm install<CR>
