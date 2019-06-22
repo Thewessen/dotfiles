@@ -193,7 +193,7 @@ let g:syntastic_mode_map = {
     \ "active_filetypes": [],
     \ "passive_filetypes": [] }
 " Checkers
-let g:syntastic_javascript_checkers = ["closurecompiler","standard"]
+let g:syntastic_javascript_checkers = [ "eslint", "standard"] " closurecompiler
 let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
 let g:syntastic_typescript_checkers = ["eslint"]
 let g:syntastic_python_checkers = ["flake8","pep8"]
@@ -319,6 +319,9 @@ tno <C-c> <C-\><C-N>
 " Start Vimgolf
 nno <silent> <leader>G :call GolfStart()<CR>
 
+" Exercism submit current file (need to be in root dir!)
+nno <leader>E :!exercism submit %<CR>
+
 " Run compiler for current file
 nno <silent> <leader>m :Dispatch!<CR>
 
@@ -344,10 +347,11 @@ nno <silent> <leader>gm :Gmove<CR>
 " NPM and nodejs dispatch commands
 " nno <silent> <leader>nn :Start nodejs -i %<CR>
 nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
-nno <silent> <leader>ni :exec "bo 10split term://nodejs"<CR>
+nno <silent> <leader>nh :exec "bo 10split term://nodejs"<CR>
+nno <silent> <leader>ni :Dispatch npm install<CR>
 nno <silent> <leader>ns :Start! npm start<CR>
 nno <silent> <leader>nb :Start npm run build<CR>
-nno <silent> <leader>nt :Start npm run test<CR>
+nno <silent> <leader>nt :Start npm run test && read<CR>
 
 " Window movement and tiling
 nmap <C-H> <C-W>W
@@ -369,7 +373,12 @@ nno <C-Y> 2<C-Y>
 " Command & Insert-mode mapping
 cmap <C-D> <Del>
 imap <C-D> <Del>
-imap <C-B> <ESC>0i
+imap <C-B> <ESC>bi
+imap <C-L> <ESC>li
+imap <C-E> <ESC>ea
+" instead of Isurround
+imap <C-S> <Plug>Isurround
+ino <C-G><C-M> <CR><ESC>O
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window

@@ -33,6 +33,9 @@ alias dh='dirs -v'
 # http-server
 alias http='live-server -V'
 
+# NPM
+alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
+
 alias c='clear' # Clear the screen
 alias j='jobs' # Current running jobs
 alias p='ps -f'
