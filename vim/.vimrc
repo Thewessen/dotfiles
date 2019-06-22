@@ -30,7 +30,6 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-" Plugin 'christoomey/vim-tmux-navigator' " Navigate seemlesly through vim and tmux
 Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
@@ -362,12 +361,8 @@ nno <silent> <leader>nt :Start npm run test && read<CR>
 " Window movement and tiling
 nmap <C-H> <C-W>W
 nmap <C-L> <C-W>w
-tmap <C-H> <C-c><C-W>W
-tmap <C-L> <C-c><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
 nno <C-W>s <C-W><C-S><C-W>j
-tmap <C-W><C-V> <C-c><C-W><C-V>
-tmap <C-W><C-S> <C-c><C-W><C-S>
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
@@ -379,9 +374,8 @@ nno <C-Y> 2<C-Y>
 " Command & Insert-mode mapping
 cmap <C-D> <Del>
 imap <C-D> <Del>
-imap <C-B> <ESC>bi
-imap <C-L> <ESC>li
-imap <C-E> <ESC>ea
+imap <C-B> <ESC>0i
+
 " instead of Isurround
 imap <C-S> <Plug>Isurround
 ino <C-G><C-M> <CR><ESC>O
@@ -417,17 +411,15 @@ nmap <silent> <leader><space> :%s/\s\+$<cr>
 " Check syntax highlighting group under the cursor
 
 " Map function key's
-nmap <f1> :Gstatus<CR>
-nmap <f2> :Gcommit -v<CR>
-nmap <f3> :Gpush<CR>
-nmap <f4> :Gpull<CR>
-nmap <f5> :0Glog<CR>
-" nmap <f7> :SyntasticReset<CR>
-" nmap <f8> :SyntasticCheck<CR>
-" nmap <f9> :SyntasticToggleMode<CR>
-" nmap <silent> <f7> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-" nmap <f8> :set invpaste<CR>
-" nmap <silent> <f9>
+" nmap <f1> :Gstatus<CR>
+" nmap <f2> :Gcommit -v<CR>
+" nmap <f3> :Gpush<CR>
+" nmap <f4> :Gpull<CR>
+" nmap <f5> :0Glog<CR>
+" nmap <f7> :SyntasticCheck<CR>
+" nmap <f8> :SyntasticReset<CR>
+" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
