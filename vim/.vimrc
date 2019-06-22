@@ -312,6 +312,13 @@ ino <C-U> <C-G>u<C-U>
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
 
+" Make C-L act like del in InsertMode
+ino <C-L> <DEL>
+
+" Jump word in Insertmode
+ino <C-E> <ESC>ea
+ino <C-B> <ESC>bi
+
 " Start Vimgolf
 nno <silent> <leader>G :call GolfStart()<CR>
 
