@@ -30,7 +30,12 @@ Plugin 'VundleVim/Vundle.vim'
 " =================================
 " New plugins here
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
+" Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
+" Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
+Plugin 'w0rp/ale'                       " Async linter and completer
+Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
+Plugin 'roxma/nvim-yarp'                " Deoplete dependency
+Plugin 'roxma/vim-hug-neovim-rpc'       " Deoplete dependency
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -50,7 +55,6 @@ Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
-Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 " Plugin 'Quramy/vim-js-pretty-template'
 
@@ -170,32 +174,45 @@ let g:dispatch_no_maps = 1
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
 
+" Use Deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" Ale
+set omnifunc=ale#completion#OmniFunc
+
+
 " YMC (YouCompleteMe) configurations
 " Start autocompletion after 3 chars
-let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_enable_diagnostic_highlighting = 0
-" Don't show YCM's preview window
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
+" let g:ycm_min_num_of_chars_for_completion = 3
+" let g:ycm_min_num_identifier_candidate_chars = 3
+" let g:ycm_enable_diagnostic_highlighting = 0
+" " Don't show YCM's preview window
+" set completeopt-=preview
+" let g:ycm_add_preview_to_completeopt = 0
 
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
 " Syntastic filechecker and maker config
 " Behavior
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_enable_balloons = 0
-let g:syntastic_mode_map = {
-    \ "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": [] }
-" Checkers
-let g:syntastic_javascript_checkers = [ "eslint", "standard"] " closurecompiler
-let g:syntastic_javascript_closurecompiler_path = "$HOME/.vim/compilers/closure-compiler-v20190528.jar"
-let g:syntastic_typescript_checkers = ["eslint"]
-let g:syntastic_python_checkers = ["flake8"]
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_enable_balloons = 0
+" let g:syntastic_mode_map = {
+"     \ 'mode': 'active',
+"     \ 'active_filetypes': [],
+"     \ 'passive_filetypes': [] }
+" " Checkers
+" let g:syntastic_javascript_checkers = [ 'eslint', 'standard'] " closurecompiler
+" let g:syntastic_javascript_closurecompiler_path = '$HOME/.vim/compilers/closure-compiler-v20190528.jar'
+" let g:syntastic_typescript_checkers = ["eslint"]
+" let g:syntastic_python_checkers = ["flake8"]
 
 
 " =================================
@@ -258,8 +275,8 @@ augroup END
 "		    Mappings
 "=================================
 
-" Different leader key
-let mapleader=','
+" Help file vsplit on search
+nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
 nno \ :Abolish -search
@@ -269,17 +286,47 @@ vno s :s/
 nno S :%S/
 vno S :S/
 
-" Help file vsplit on search
-nmap <S-K> <S-K><C-W><S-L><C-W>|
+" Quit
+nno <silent> <C-D> :q<CR>
+
+" Make C-U act like u
+ino <C-U> <C-G>u<C-U>
+
+" Make C-C act like esc in Insertmode
+ino <C-C> <ESC>:echo<CR>
+tno <C-N> <C-\><C-N>
+
+" Make C-L go right in insertmode
+ino <C-L> <ESC>la
+
+" Jump word in Insertmode
+ino <C-E> <ESC>ea
+ino <C-B> <ESC>bi
+
+" Map function key's
+" nmap <f1> :Gstatus<CR>
+" nmap <f2> :Gcommit -v<CR>
+" nmap <f3> :Gpush<CR>
+" nmap <f4> :Gpull<CR>
+" nmap <f5> :0Glog<CR>
+" nmap <f7> :SyntasticCheck<CR>
+" nmap <f8> :SyntasticReset<CR>
+" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
+nmap <f9> :set invpaste<CR>
+nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" nmap <silent> <f11>
+" nmap <silent> <f12>
+
+" =================================
+"       Leaders
+" =================================
+" Different leader key
+let mapleader=','
 
 " Reload this config file
 nno <silent> <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
-
-" Save file
-nmap <silent> <leader>, :w<CR>
-
-" Save&Close file
-nmap <silent> <leader>w :x<CR>
 
 " Hide window
 nno <silent> <leader>h :hide<CR>
@@ -289,61 +336,48 @@ nno <silent> <leader>o :only<CR>
 
 " Quit!
 nmap <silent> <leader>q :q!<CR>
-nno <silent> <C-D> :q!<CR>
 
 " New tab
 nmap <silent> <leader>t :tabe %<CR>
 
 " Open terminal
-nmap <silent> <leader>z :terminal<CR>
+nmap <silent> <leader>z :bo10 term<CR>A
 
 " Switch between current and last buffer
-nmap <silent> <Leader>. <C-^>
+nmap <silent> <leader>. <C-^>
 
 " Buffers
-nmap <Leader>b :sb 
+nmap <leader>b :sb 
 " Arguments-list
-nmap <Leader>a :arg 
+nmap <leader>a :arg 
 
-" Semi-colon to colon in Normal Mode
-nno ; :
-
-" Make C-U act like u
-ino <C-U> <C-G>u<C-U>
-
-" Make C-C act like esc in Insertmode
-ino <C-C> <ESC>:echo<CR>
-tno <C-N> <C-\><C-N>
-
-" Make C-L act like del in InsertMode
-ino <C-L> <DEL>
-
-" Jump word in Insertmode
-ino <C-E> <ESC>ea
-ino <C-B> <ESC>bi
-
-" Start Vimgolf
+" Run
 nno <silent> <leader>G :call GolfStart()<CR>
-
-" Exercism submit current file (need to be in root dir!)
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
 nno <silent> <leader>m :Dispatch!<CR>
 
-" Syntax checking command (syntastic)
-nno <silent> <leader>ss :SyntasticCheck<CR>
-nno <silent> <leader>sr :SyntasticReset<CR>
-nno <silent> <leader>si :SyntasticInfo<CR>
-nno <silent> <leader>se :Errors<CR>
-nno <silent> <leader>so :lopen<CR>
-nno <silent> <leader>st :SyntasticToggleMode<CR>
+" Syntax checking command (ale)
+nno <silent> <leader>ss :ALEReset<CR>
+nno <silent> <leader>sd :ALEGoToTypeDefinition<CR>
+nno <silent> <leader>sr :ALEFindReferences<CR>
+nno <silent> <leader>sn :ALEDetail<CR>
+nno <silent> <leader>si :ALEInfo<CR>
+nno <silent> <leader>sl :ALELint<CR>
+nno <silent> <leader>st :ALEToggle<CR>
 
 " Git commands (vim-fugitive)
+" Save file
+nno <silent> <leader>, :Gwrite<CR>
+" Save&Close file
+nno <silent> <leader>w :Gwq<CR>
+" Rest of great git commands
 nno <silent> <leader>gs :Gstatus<CR>
-nno <silent> <leader>gp :Gpush<CR>
+nno <silent> <leader>gg :Gpush<CR>
 nno <silent> <leader>gl :Gpull<CR>
-nno <silent> <leader>ga :Gwrite<CR>
+nno <silent> <leader>gm :Gmerge<CR>
+nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gr :Gread<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
@@ -353,32 +387,11 @@ nno <silent> <leader>gm :Gmove<CR>
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
 nno <silent> <leader>nh :exec "bo 10split term://nodejs"<CR>
-nno <silent> <leader>ni :Dispatch npm install<CR>
-nno <silent> <leader>ns :Start! npm start<CR>
-nno <silent> <leader>nb :Start npm run build<CR>
-nno <silent> <leader>nt :Start npm run test && read<CR>
-
-" Window movement and tiling
-nmap <C-H> <C-W>W
-nmap <C-L> <C-W>w
-nno <C-W>v <C-W><C-V><C-W>l
-nno <C-W>s <C-W><C-S><C-W>j
-
-" Increment with C-K (iso C-A tmux)
-nno <C-K> <C-A>
-
-" Scroll faster with C-E and C-Y
-nno <C-E> 2<C-E>
-nno <C-Y> 2<C-Y>
-
-" Command & Insert-mode mapping
-cmap <C-D> <Del>
-imap <C-D> <Del>
-imap <C-B> <ESC>0i
-
-" instead of Isurround
-imap <C-S> <Plug>Isurround
-ino <C-G><C-M> <CR><ESC>O
+nno <silent> <leader>ni :Start! -title=install -wait=error npm install<CR>
+nno <silent> <leader>ns :Start! -title=start npm start<CR>
+nno <silent> <leader>nb :Start -title=build npm run build<CR>
+nno <silent> <leader>nt :Start -title=test -wait=always npm run test<CR>
+nno <silent> <leader>nl :Start -title=lint -wait=always npm run lint<CR>
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
@@ -407,24 +420,6 @@ nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
 " Remove extra whitespace
 nmap <silent> <leader><space> :%s/\s\+$<cr>
 " nmap <leader><space><space> :%s/\s*\n//g<cr>
-
-" Check syntax highlighting group under the cursor
-
-" Map function key's
-" nmap <f1> :Gstatus<CR>
-" nmap <f2> :Gcommit -v<CR>
-" nmap <f3> :Gpush<CR>
-" nmap <f4> :Gpull<CR>
-" nmap <f5> :0Glog<CR>
-" nmap <f7> :SyntasticCheck<CR>
-" nmap <f8> :SyntasticReset<CR>
-" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
-nmap <f9> :set invpaste<CR>
-nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-" nmap <silent> <f11>
-" nmap <silent> <f12>
 
 " Snippits (read from .vim/skeletons) like html tags etc.
 nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
