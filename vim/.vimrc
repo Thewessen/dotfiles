@@ -29,7 +29,6 @@ Plugin 'VundleVim/Vundle.vim'
 "             Plugins
 " =================================
 " New plugins here
-Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
 " Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
 " Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'w0rp/ale'                       " Async linter and completer
@@ -48,9 +47,11 @@ Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
+Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
+Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
@@ -180,6 +181,10 @@ let g:deoplete#enable_at_startup = 1
 " Ale
 set omnifunc=ale#completion#OmniFunc
 
+" vim-rooter (lcd)
+let g:rooter_patterns = ['package.json', 'venv/', '.git/']
+let g:rooter_use_lcd = 1
+let g:rooter_silent_chdir = 1
 
 " YMC (YouCompleteMe) configurations
 " Start autocompletion after 3 chars
@@ -252,6 +257,7 @@ augroup latex_compiler
     autocmd BufWinEnter *.tex set textwidth=79
     autocmd BufWinLeave *.tex let &makeprg=""
 augroup END
+
 " Add shebang to shell scripts
 augroup skeletons
     autocmd!
@@ -261,15 +267,15 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype != 'terminal' | setlocal number relativenumber foldcolumn=0 | else | exec "normal! i" | endif
+    autocmd BufEnter,WinEnter * setlocal number relativenumber foldcolumn=0
     autocmd BufLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
 augroup END
 
-" augroup terminal_numberline
-"     autocmd!
-"     autocmd BufWinEnter,WinEnter term://* setlocal nonumber norelativenumber
-"     autocmd BufWinEnter,WinEnter term://* startinsert
-" augroup END
+augroup no_numberline
+    autocmd!
+    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+augroup END
+
 
 "=================================
 "		    Mappings
@@ -294,10 +300,14 @@ ino <C-U> <C-G>u<C-U>
 
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
-tno <C-N> <C-\><C-N>
+tno <C-[> <C-\><C-N>
 
 " Make C-L go right in insertmode
 ino <C-L> <ESC>la
+
+" Window movement C-L C-H
+nno <C-L> <C-W>w
+nno <C-H> <C-W>W
 
 " Jump word in Insertmode
 ino <C-E> <ESC>ea
@@ -338,10 +348,10 @@ nno <silent> <leader>o :only<CR>
 nmap <silent> <leader>q :q!<CR>
 
 " New tab
-nmap <silent> <leader>t :tabe %<CR>
+nmap <silent> <leader>t <C-W>T
 
 " Open terminal
-nmap <silent> <leader>z :bo10 term<CR>A
+nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
@@ -352,46 +362,50 @@ nmap <leader>b :sb
 nmap <leader>a :arg 
 
 " Run
-nno <silent> <leader>G :call GolfStart()<CR>
+nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
 nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (ale)
-nno <silent> <leader>ss :ALEReset<CR>
-nno <silent> <leader>sd :ALEGoToTypeDefinition<CR>
-nno <silent> <leader>sr :ALEFindReferences<CR>
-nno <silent> <leader>sn :ALEDetail<CR>
-nno <silent> <leader>si :ALEInfo<CR>
-nno <silent> <leader>sl :ALELint<CR>
-nno <silent> <leader>st :ALEToggle<CR>
+nno <leader>ss :ALEReset<CR>
+nno <leader>sd :ALEGoToTypeDefinition<CR>
+nno <leader>sr :ALEFindReferences<CR>
+nno <leader>sn :ALEDetail<CR>
+nno <leader>si :ALEInfo<CR>
+nno <leader>sl :ALELint<CR>
+nno <leader>st :ALEToggle<CR>
 
 " Git commands (vim-fugitive)
+" CD too repository root
+nno <leader>cd :Gcd<CR>
 " Save file
-nno <silent> <leader>, :Gwrite<CR>
+nno <leader>, :Gwrite<CR>
 " Save&Close file
-nno <silent> <leader>w :Gwq<CR>
+nno <leader>w :Gwq<CR>
 " Rest of great git commands
-nno <silent> <leader>gs :Gstatus<CR>
-nno <silent> <leader>gg :Gpush<CR>
-nno <silent> <leader>gl :Gpull<CR>
-nno <silent> <leader>gm :Gmerge<CR>
-nno <silent> <leader>gf :Gfetch<CR>
-nno <silent> <leader>gr :Gread<CR>
-nno <silent> <leader>gc :Gcommit -v<CR>
-nno <silent> <leader>gb :Gblame!<CR>
-nno <silent> <leader>gd :Gremove<CR>
-nno <silent> <leader>gm :Gmove<CR>
+nno <leader>gs :Gstatus<CR>
+" nno <leader>gg :Gpush<CR>
+nno <leader>gg :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
+nno <leader>gL :0Glog<CR>
+nno <leader>gl :Gpull<CR>
+nno <leader>gm :Gmerge 
+nno <leader>gf :Gfetch<CR>
+nno <leader>gc :Gcommit -v<CR>
+nno <leader>gb :Gblame!<CR>
+nno <leader>gd :Gremove<CR>
+nno <leader>gn :Gmove 
 
 " NPM and nodejs dispatch commands
-nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
-nno <silent> <leader>nh :exec "bo 10split term://nodejs"<CR>
-nno <silent> <leader>ni :Start! -title=install -wait=error npm install<CR>
-nno <silent> <leader>ns :Start! -title=start npm start<CR>
-nno <silent> <leader>nb :Start -title=build npm run build<CR>
-nno <silent> <leader>nt :Start -title=test -wait=always npm run test<CR>
-nno <silent> <leader>nl :Start -title=lint -wait=always npm run lint<CR>
+nno <silent> <leader>nn :exec ':tabe term://nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
+nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
+nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
+nno <silent> <leader>ns :Start! -title=server npm start<CR>
+nno <silent> <leader>nb :Start! -title=build npm run build<CR>
+nno <silent> <leader>nt :tabe term://npm run test<CR>
+nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
