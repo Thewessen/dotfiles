@@ -344,6 +344,11 @@ nno <silent> <leader>h :hide<CR>
 " Hide other windows
 nno <silent> <leader>o :only<CR>
 
+" Save file
+nno <leader>, :w<CR>
+" Save&Close file
+nno <leader>w :wq<CR>
+
 " Quit!
 nmap <silent> <leader>q :q!<CR>
 
@@ -361,6 +366,8 @@ nmap <leader>b :sb
 " Arguments-list
 nmap <leader>a :arg 
 
+" Split line on match
+ino <C-G><C-M> <CR><ESC>O
 " Run
 nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
@@ -380,30 +387,27 @@ nno <leader>st :ALEToggle<CR>
 " Git commands (vim-fugitive)
 " CD too repository root
 nno <leader>cd :Gcd<CR>
-" Save file
-nno <leader>, :Gwrite<CR>
-" Save&Close file
-nno <leader>w :Gwq<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
-nno <leader>gg :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
-nno <leader>gL :0Glog<CR>
-nno <leader>gl :Gpull<CR>
+nno <leader>gg :Git 
+nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
+nno <silent> <leader>gL :0Glog<CR>
+nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
 nno <leader>gm :Gmerge 
-nno <leader>gf :Gfetch<CR>
-nno <leader>gc :Gcommit -v<CR>
-nno <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove<CR>
+nno <silent> <leader>gf :Gfetch<CR>
+nno <silent> <leader>gc :Gcommit -v<CR>
+nno <silent> <leader>gb :Gblame!<CR>
+nno <leader>gd :Gremove 
 nno <leader>gn :Gmove 
 
 " NPM and nodejs dispatch commands
-nno <silent> <leader>nn :exec ':tabe term://nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
-nno <silent> <leader>ns :Start! -title=server npm start<CR>
-nno <silent> <leader>nb :Start! -title=build npm run build<CR>
+nno <silent> <leader>ns :Start -title=server npm start<CR>
+nno <silent> <leader>nb :Start -title=build npm run build<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
