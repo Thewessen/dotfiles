@@ -33,6 +33,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'w0rp/ale'                       " Async linter and completer
 Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
+Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
 Plugin 'roxma/nvim-yarp'                " Deoplete dependency
 Plugin 'roxma/vim-hug-neovim-rpc'       " Deoplete dependency
 Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
@@ -177,6 +178,55 @@ let g:dispatch_no_maps = 1
 
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+\ 'auto_complete_delay': 200,
+\ 'smart_case': v:true,
+\ })
+
+" Setup javascript ternjs
+let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
+let g:deoplete#sources#ternjs#timeout = 1
+let g:deoplete#sources#ternjs#types = 1
+" When on, only completions that match the current word at the given point will
+" be returned. Turn this off to get all results, so that you can filter on the 
+" client side. Default: 1
+let g:deoplete#sources#ternjs#filter = 1
+
+" Whether to use a case-insensitive compare between the current word and 
+" potential completions. Default 0
+let g:deoplete#sources#ternjs#case_insensitive = 1
+
+" When completing a property and no completions are found, Tern will use some 
+" heuristics to try and return some properties anyway. Set this to 0 to 
+" turn that off. Default: 1
+let g:deoplete#sources#ternjs#guess = 0
+
+" Determines whether the result set will be sorted. Default: 1
+let g:deoplete#sources#ternjs#sort = 0
+
+" When disabled, only the text before the given position is considered part of 
+" the word. When enabled (the default), the whole variable name that the cursor
+" is on will be included. Default: 1
+let g:deoplete#sources#ternjs#expand_word_forward = 0
+
+" Whether to ignore the properties of Object.prototype unless they have been 
+" spelled out by at least two characters. Default: 1
+let g:deoplete#sources#ternjs#omit_object_prototype = 0
+
+" Whether to include JavaScript keywords when completing something that is not 
+" a property. Default: 0
+let g:deoplete#sources#ternjs#include_keywords = 1
+
+" If completions should be returned when inside a literal. Default: 1
+let g:deoplete#sources#ternjs#in_literal = 0
+
+
+"Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+\ 'jsx',
+\ 'javascript.jsx',
+\ 'vue'
+\ ]
 
 " Ale
 set omnifunc=ale#completion#OmniFunc
@@ -413,13 +463,13 @@ nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
-nmap <leader>ev :e ~/.vimrc<CR>
-nmap <leader>ec :e ~/.vim/colors/sthew.vim<CR>
-nmap <leader>eg :e ~/.gitconfig<CR>
-nmap <leader>et :e ~/.tmux.conf<CR>
-nmap <leader>ez :e ~/.zshrc<CR>
-nmap <leader>eb :e ~/.bashrc<CR>
-nmap <leader>ea :e ~/.aliases<CR>
+nmap <leader>ev :vsplit ~/.vimrc<CR>
+nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
+nmap <leader>eg :vsplit ~/.gitconfig<CR>
+nmap <leader>et :vsplit ~/.tmux.conf<CR>
+nmap <leader>ez :vsplit ~/.zshrc<CR>
+nmap <leader>eb :vsplit ~/.bashrc<CR>
+nmap <leader>ea :vsplit ~/.aliases<CR>
 nmap <leader>en :new<CR>:only<CR>
 " In new tab
 " nmap <leader>tv :tabe ~/.vimrc<CR>

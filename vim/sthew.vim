@@ -20,7 +20,7 @@ hi link vimParenSep Noise
 " Global
 hi Search term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE
 hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE
-hi Pmenu ctermfg=NONE ctermbg=NONE cterm=NONE
+hi PmenuSel ctermfg=NONE ctermbg=NONE cterm=reverse
 hi Underlined cterm=underline
 
 
@@ -34,17 +34,17 @@ if &t_Co > 255
 
     if &background == 'dark'
         hi Normal ctermfg=230 ctermbg=NONE
-        hi Visual ctermbg=235
+        hi Visual ctermbg=239
         hi CursorLine ctermbg=233 cterm=underline
         hi CursorLineNr ctermfg=242 ctermbg=NONE
         hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=102 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
-        hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=underline
-        hi VertSplit ctermfg=241 ctermbg=NONE cterm=NONE
+        hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=NONE
+        hi VertSplit ctermfg=102 ctermbg=NONE cterm=NONE
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=203 ctermbg=NONE cterm=underline
-        hi PmenuSel ctermfg=NONE ctermbg=237 cterm=NONE
+        hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
         hi Keyword ctermfg=203 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81
         hi Boolean ctermfg=99
@@ -54,7 +54,7 @@ if &t_Co > 255
         hi String ctermfg=186
         hi Comment ctermfg=242
         hi Noise ctermfg=94
-        hi NonText ctermfg=19
+        hi NonText ctermfg=2
         hi Function ctermfg=148
         hi Operator ctermfg=203
         hi Conditional ctermfg=203
@@ -82,19 +82,21 @@ if &t_Co > 255
         hi SpellCap ctermbg=22
         hi SpellRare ctermbg=93
         hi SpellLocal ctermbg=3
-    else
+        hi SignatureMarkText ctermfg=221 cterm=underline
+
+    else " background == 'light'
         hi Normal ctermfg=232 ctermbg=NONE
         hi Visual ctermbg=252
         hi CursorLine ctermbg=255 cterm=underline
-        hi CursorLineNr ctermfg=245 ctermbg=NONE
-        hi ColorColumn ctermbg=250
+        hi CursorLineNr ctermfg=240 ctermbg=NONE
+        hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=52 ctermbg=NONE cterm=NONE
         hi StatusLine ctermfg=52 ctermbg=NONE cterm=underline
         hi StatusLineNC ctermfg=245 ctermbg=NONE cterm=underline
-        hi VertSplit ctermfg=246 ctermbg=NONE cterm=NONE
+        hi VertSplit ctermfg=52 ctermbg=NONE cterm=NONE
         hi Title ctermfg=232 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=88 ctermbg=NONE cterm=underline
-        hi PmenuSel ctermfg=NONE ctermbg=255 cterm=NONE
+        hi Pmenu ctermfg=NONE ctermbg=255 cterm=NONE
         hi Keyword ctermfg=88
         hi Type ctermfg=21
         hi Directory ctermfg=144
@@ -103,9 +105,9 @@ if &t_Co > 255
         hi String ctermfg=166
         hi Number ctermfg=57
         hi Float ctermfg=57
-        hi Comment ctermfg=245
+        hi Comment ctermfg=240
         hi Noise ctermfg=102
-        hi NonText ctermfg=228
+        hi NonText ctermfg=2
         hi Function ctermfg=22
         hi Operator ctermfg=88
         hi Conditional ctermfg=88
@@ -114,8 +116,8 @@ if &t_Co > 255
         hi Tag ctermfg=88
         hi Statement ctermfg=88
         hi Folded ctermfg=235 ctermbg=252
-        hi FoldColumn ctermbg=NONE ctermfg=NONE
-        hi SignColumn ctermfg=NONE ctermbg=250 cterm=NONE
+        hi FoldColumn ctermbg=NONE ctermfg=189
+        hi SignColumn ctermbg=NONE
         hi Define ctermfg=88
         hi TabLine ctermfg=52 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=52 ctermbg=NONE cterm=underline
@@ -129,9 +131,9 @@ if &t_Co > 255
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=231 cterm=bold
         hi Todo ctermfg=3 ctermbg=231 cterm=bold
+        hi SignatureMarkText ctermfg=202 cterm=underline
     endif
-else
-    " For 16 color terminal
+else " For 16 color terminal
     set background=dark
 
     " Allow color schemes to do bright colors without forcing bold.
@@ -154,10 +156,10 @@ else
     hi LineNr ctermfg=8 ctermbg=NONE cterm=NONE
     hi StatusLine ctermfg=7 ctermbg=NONE cterm=underline
     hi StatusLineNC ctermfg=8 ctermbg=NONE cterm=NONE
-    hi VertSplit ctermfg=8 ctermbg=0 cterm=NONE
+    hi VertSplit ctermfg=7 ctermbg=0 cterm=NONE
     hi Title ctermfg=7 ctermbg=NONE cterm=bold
     hi MatchParen ctermfg=1 ctermbg=NONE cterm=underline
-    hi PmenuSel ctermfg=NONE ctermbg=59 cterm=NONE
+    hi Pmenu ctermfg=NONE ctermbg=59 cterm=NONE
     hi Keyword ctermfg=1
     hi Type ctermfg=12
     hi Directory ctermfg=3
@@ -168,7 +170,7 @@ else
     hi Float ctermfg=5
     hi Comment ctermfg=8
     hi Noise ctermfg=8
-    hi NonText ctermfg=0
+    hi NonText ctermfg=2
     hi Function ctermfg=10
     hi Operator ctermfg=1
     hi Conditional ctermfg=1
@@ -182,7 +184,7 @@ else
     hi Define ctermfg=1
     hi TabLine ctermfg=8 ctermbg=NONE cterm=underline
     hi TabLineFill ctermfg=7 ctermbg=NONE cterm=underline
-    hi TabLineSel ctermfg=7 ctermbg=0 cterm=NONE
+    hi TabLineSel ctermfg=7 ctermbg=NONE cterm=bold
     hi DiffAdd ctermfg=7 ctermbg=3
     hi DiffDelete ctermfg=1 cterm=NONE
     hi DiffChange ctermfg=3 cterm=NONE
