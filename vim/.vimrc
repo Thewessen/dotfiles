@@ -302,8 +302,8 @@ augroup END
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search
-nno ? :Abolish! -search
+nno \ :Abolish -search 
+nno ? :Abolish! -search 
 nno s :%s/
 vno s :s/
 nno S :%S/

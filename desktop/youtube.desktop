@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=YouTube
+Comment=Launch YouTube in firefox
+Exec=firefox https://youtube.com/
+Icon=firefox
+Terminal=True
+Type=Application
+Categories=Network;Movies;Online

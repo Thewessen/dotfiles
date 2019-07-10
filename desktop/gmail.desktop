@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Gmail web
+Comment=Launch Gmail in firefox
+Exec=firefox https://gmail.com/
+Icon=firefox
+Terminal=True
+Type=Application
+Categories=Network;Communication;Online
