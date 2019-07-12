@@ -2,15 +2,21 @@
 
 level=$(cat /sys/class/power_supply/BAT0/capacity)
 charging=$(cat /sys/class/power_supply/BAT0/status)
-symbol="🔋"
+# symbol="🔋"
+symbol=" bat"
+
+if [[ "$charging" = "Charging" ]]; then
+    # symbol="🔌"
+    symbol=" chr"
+fi
 
 case $level in
 [0-9])
-    level="<span color='red'>$level</span>"
+    result="<span background='red'><b> $level%$symbol </b></span>"
     ;;
-1[0-9])
-    level="<span color='red'>$level</span>"
-    ;;
+# 1[0-9])
+#     result="<span background='red'><b> $level%$symbol</b></span>"
+#     ;;
 # # [2-3][0-9])
 # #     symbol=""
 # #     ;;
@@ -27,12 +33,8 @@ case $level in
 #     level="<span color='red'>$level%</span>"
 #     ;;
 *)
-    level="$level%"
+    result="<span background='#005f00'> $level%$symbol </span>"
     ;;
 esac
 
-if [[ "$charging" = "Charging" ]]; then
-    symbol="🔌"
-fi
-
-echo "$level$symbol"
+echo "$result"

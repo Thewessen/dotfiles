@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=YouTube
-Comment=Launch YouTube in firefox
-Exec=firefox https://www.youtube.com/
-Icon=firefox
+Comment=Launch YouTube in qutebrowser
+Exec=qutebrowser https://www.youtube.com/
+Icon=qutebrowser
 Terminal=True
 Type=Application
 Categories=Network;Movies;Online

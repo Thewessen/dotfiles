@@ -172,6 +172,7 @@ let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
+let g:dispatch_terminal_exec = 'terminator'
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -291,6 +292,7 @@ augroup END
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
 
@@ -325,6 +327,10 @@ ino <C-L> <ESC>la
 " Window movement C-L C-H
 nno <C-L> <C-W>w
 nno <C-H> <C-W>W
+ino <C-L> <C-[><C-W>w
+ino <C-H> <C-[><C-W>W
+" tno <C-L> <C-[><C-W>w
+" tno <C-H> <C-[><C-W>W
 
 " Jump word in Insertmode
 ino <C-E> <ESC>ea
@@ -371,6 +377,18 @@ nmap <silent> <leader>q :q!<CR>
 
 " New tab
 nmap <silent> <leader>t <C-W>T
+
+" " Copy to clipboard
+vno <leader>y  "+y
+nno <leader>Y  "+yg_
+nno <leader>y  "+y
+nno <leader>yy  "+yy
+
+" " Paste from clipboard
+nno <leader>p "+p
+nno <leader>P "+P
+vno <leader>p "+p
+vno <leader>P "+P
 
 " Open terminal
 nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
@@ -419,7 +437,8 @@ nno <leader>gd :Gremove
 nno <leader>gn :Gmove 
 
 " NPM and nodejs dispatch commands
-nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+" nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
+nno <silent> <leader>nn :!node %:p<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>

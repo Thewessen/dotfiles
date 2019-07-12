@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Gmail web
-Comment=Launch Gmail in firefox
-Exec=firefox https://gmail.com/
-Icon=firefox
+Comment=Launch Gmail in qutebrowser
+Exec=qutebrowser https://gmail.com/
+Icon=qutebrowser
 Terminal=True
 Type=Application
 Categories=Network;Communication;Online
