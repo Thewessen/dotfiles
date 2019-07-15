@@ -292,7 +292,7 @@ augroup END
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
-    autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
+    " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
 

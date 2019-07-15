@@ -172,6 +172,9 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 # finds out, if available)
 bar {
         status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
+        position bottom
+        mode hide
+        modifier $alt
         colors {
           separator #212121
           background #000000
@@ -180,7 +183,11 @@ bar {
 }
 
 # Don't use title on windows
-new_window 1pixel
+# new_window 1pixel
+
+# Window borders
+new_window none
+bindsym $super+b border toggle
 
 # Colors
 # class                 border  backgr. text    indicator child_border
