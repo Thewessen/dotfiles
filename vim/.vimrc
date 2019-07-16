@@ -29,8 +29,6 @@ Plugin 'VundleVim/Vundle.vim'
 "             Plugins
 " =================================
 " New plugins here
-" Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
-" Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'w0rp/ale'                       " Async linter and completer
 Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
 Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
@@ -54,11 +52,8 @@ Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-" Plugin 'Quramy/vim-js-pretty-template'
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -127,7 +122,7 @@ set softtabstop=2
 set shiftwidth=2
 
 " Folds
-set foldmethod=indent     " Automatic folding depending on syntax
+set foldmethod=manual     " Automatic folding depending on syntax
 set foldlevelstart=99     " Start with all folds open
 
 " Invisible chars
@@ -206,9 +201,11 @@ let g:rooter_silent_chdir = 1
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
 \}
 
 
@@ -266,6 +263,7 @@ augroup END
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
 "=================================
@@ -290,12 +288,14 @@ vno s :s/
 nno S :%S/
 vno S :S/
 
+" Yank till end of line
+nno Y y$
+
 " Quit
 nno <silent> <C-D> :q<CR>
 
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
-
 
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
@@ -420,6 +420,7 @@ nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".ex
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
+nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ns :Start -title=server npm start<CR>
 nno <silent> <leader>nb :Start -title=build npm run build<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
