@@ -1,0 +1,17 @@
+#!/usr/bin/zsh
+
+repos=(
+  "$HOME/.dotfiles"
+  "$HOME/Websites/Website Iris"
+  "$HOME/Websites/telraam"
+  "$HOME/Scripts/GIT/BeetsPi/beets-db-webapi/beets-db-webapi"
+  "$HOME/Scripts/GIT/BeetsPi/beets-genremanager"
+  "$HOME/Scripts/GIT/hello-world"
+  "$HOME/Scripts/GIT/NestedTables"
+)
+
+for dir in $repos; do
+  if [ -d "$dir/.git" ]; then
+    cd $dir && git pull
+  fi
+done

@@ -200,7 +200,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/']
+let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 
