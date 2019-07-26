@@ -447,6 +447,11 @@ nno <silent> <leader>nb :Start -title=build npm run build<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
+" Python dispatch commands
+nno <silent> <leader>pp :!python3 %:p<CR>
+nno <silent> <leader>ph :bo 10split term://python3<CR>
+nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
