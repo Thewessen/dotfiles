@@ -167,6 +167,7 @@ let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
+let g:dispatch_terminal_exec = 'terminator'
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -194,7 +195,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/']
+let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 
@@ -270,9 +271,6 @@ augroup END
 "		    Mappings
 "=================================
 
-" Semi-colon to colon in Normal Mode
-nno ; :
-
 " Scroll faster with C-E and C-Y
 nno <C-E> 2<C-E>
 nno <C-Y> 2<C-Y>
@@ -281,8 +279,8 @@ nno <C-Y> 2<C-Y>
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search
-nno ? :Abolish! -search
+nno \ :Abolish -search 
+nno ? :Abolish! -search 
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -371,6 +369,18 @@ nmap <silent> <leader>q :q!<CR>
 " New tab
 nmap <silent> <leader>t <C-W>T
 
+" " Copy to clipboard
+vno <leader>y  "+y
+nno <leader>Y  "+yg_
+nno <leader>y  "+y
+nno <leader>yy  "+yy
+
+" " Paste from clipboard
+nno <leader>p "+p
+nno <leader>P "+P
+vno <leader>p "+p
+vno <leader>P "+P
+
 " Open terminal
 nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
@@ -382,6 +392,8 @@ nmap <leader>b :sb
 " Arguments-list
 nmap <leader>a :arg 
 
+" Split line on match
+ino <C-G><C-M> <CR><ESC>O
 " Run
 nno <silent> <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
@@ -426,6 +438,10 @@ nno <silent> <leader>nb :Start -title=build npm run build<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
+" Python dispatch commands
+nno <silent> <leader>pp :!python3 %:p<CR>
+nno <silent> <leader>ph :bo 10split term://python3<CR>
+nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
