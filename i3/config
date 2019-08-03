@@ -69,9 +69,9 @@ bindsym $alt+Right focus right
 
 # move focused window
 bindsym $alt+Shift+h move left
-bindsym $alt+Shift+t move down
-bindsym $alt+Shift+n move up
-bindsym $alt+Shift+s move right
+bindsym $alt+Shift+j move down
+bindsym $alt+Shift+k move up
+bindsym $alt+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $alt+Shift+Left move left
@@ -87,6 +87,10 @@ bindsym $alt+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $alt+u fullscreen toggle
+
+# scratchpad
+bindsym $alt+m move scratchpad
+bindsym $alt+e scratchpad show
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $alt+o layout stacking
@@ -130,7 +134,7 @@ bindsym $alt+Shift+9 move container to workspace 9
 bindsym $alt+Shift+0 move container to workspace 10
 
 # reload the configuration file
-bindsym $alt+Shift+j reload
+bindsym $alt+Shift+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $alt+Shift+p restart
 # exit i3 (logs you out of your X session)
