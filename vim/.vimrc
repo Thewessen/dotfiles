@@ -58,6 +58,8 @@ Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts wh
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
+Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plugin 'mattn/emmet-vim'                " Super fast html skeletons
 " Plugin 'Quramy/vim-js-pretty-template'
 
 " all of your Plugins must be added before the following line
@@ -155,6 +157,16 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 " let g:SignatureMarkTextHL =
 " hi link SignatureMarkText User1
+
+" HTML skeletons and more...
+let g:user_emmet_leader_key=','
+
+" Blade php highlighting
+let g:blade_custom_directives = ['yield', 'method', 'csrf']
+let g:blade_custom_directives_pairs = {
+      \ 'section': 'endsection',
+      \ 'foreach': 'endforeach',
+      \}
 
 " CtrlP options
 let g:ctrlp_by_filename = 1
@@ -292,6 +304,7 @@ augroup END
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufEnter,WinEnter * if &filetype == 'netrw' | setlocal nonumber norelativenumber foldcolumn=1 | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
@@ -397,7 +410,7 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-nmap <leader>b :sb 
+nmap <leader>b :buffer 
 " Arguments-list
 nmap <leader>a :arg 
 
@@ -451,6 +464,16 @@ nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>pp :!python3 %:p<CR>
 nno <silent> <leader>ph :bo 10split term://python3<CR>
 nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+
+" PHP artisan commands
+nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
+nno <silent> <leader>arl :!php artisan route:list<CR>
+nno <leader>amc :!php artisan make:controller 
+nno <leader>amm :!php artisan make:model 
+nno <silent> <leader>aMM :!php artisan migrate<CR>
+nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
+nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
+nno <silent> <leader>aMs :!php artisan migrate:status<CR>
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
