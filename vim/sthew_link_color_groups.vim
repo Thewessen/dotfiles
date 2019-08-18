@@ -54,6 +54,13 @@ hi link jsLabel Conditional
 hi link typescriptBraces Noise
 hi link typescriptParens Noise
 
+" PHP
+hi link phpVarSelector Noise
+
+" Blade PHP
+hi link bladeDelimiter Normal
+hi link bladeKeyword Special
+
 " JSX
 hi link xmlTagName Tag
 hi link xmlTag Tag
