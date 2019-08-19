@@ -451,7 +451,7 @@ nno <leader>gn :Gmove
 
 " NPM and nodejs dispatch commands
 " nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
-nno <silent> <leader>nn :!node %:p<CR>
+nno <silent> <leader>nn :!nodejs %:p<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
