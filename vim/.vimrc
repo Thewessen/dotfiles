@@ -95,7 +95,7 @@ set switchbuf+=vsplit
 " Colors
 syntax enable       " syntax highlighting
 set hlsearch        " highlight searched words
-set incsearch		" search 'looped'
+set incsearch       " search 'looped'
 colorscheme sthew   " Own colorscheme adapted from monokai-colors
 
 " Speed thing up
@@ -119,9 +119,9 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
+set tabstop=8
+set softtabstop=4
+set shiftwidth=4
 
 " Folds
 set foldmethod=manual     " Automatic folding depending on syntax
@@ -226,7 +226,7 @@ let g:ale_fixers = {
 "           Autocommands
 " =================================
 
-au FileType netrw set foldcolumn=4
+au FileType netrw set nonumber norelativenumber foldcolumn=1
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -269,14 +269,13 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * setlocal number relativenumber foldcolumn=0
-    autocmd BufLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if $filetype != 'netrw' | setlocal number relativenumber foldcolumn=0
+    autocmd BufLeave,WinLeave * if $filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4
 augroup END
 
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
-    autocmd BufEnter,WinEnter * if &filetype == 'netrw' | setlocal nonumber norelativenumber foldcolumn=1 | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
@@ -401,9 +400,10 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-nmap <leader>b :sb 
-" Arguments-list
-nmap <leader>a :arg 
+nmap <leader>b :buffer 
+
+" Arguments-list (currently held by artisan commands)
+" nmap <leader>a :args 
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
@@ -447,7 +447,8 @@ nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
 nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ns :Start -title=server npm start<CR>
-nno <silent> <leader>nb :Start -title=build npm run build<CR>
+nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
+nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
@@ -458,9 +459,14 @@ nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
-nno <silent> <leader>arl :!php artisan route:list<CR>
+nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
+nno <leader>arl :!php artisan route:list \| grep 
 nno <leader>amc :!php artisan make:controller 
 nno <leader>amm :!php artisan make:model 
+nno <leader>amr :!php artisan make:migration 
+nno <leader>amp :!php artisan make:policy  
+nno <leader>ame :!php artisan make:event 
+nno <leader>aml :!php artisan make:listener 
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>

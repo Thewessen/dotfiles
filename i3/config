@@ -17,6 +17,8 @@ set $super Mod4
 font pango:Inconsolata 15
 
 # Desktop background default
+exec --no-startup-id xrandr --output DVI-D-0 --right-of DP-4 --rotate left
+exec --no-startup-id xrandr --output DP-4 --primary
 exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/"Hubbel stars"/"Galaxy M106 2560x1440.jpg"
 exec --no-startup-id xmodmap ~/.xmodmap
 
