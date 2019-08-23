@@ -29,8 +29,6 @@ Plugin 'VundleVim/Vundle.vim'
 "             Plugins
 " =================================
 " New plugins here
-" Plugin 'vim-syntastic/syntastic'        " Filecheck plugin (checks js,ts,css,html,...: starts with <leader>cs (see mappings))
-" Plugin 'Valloric/YouCompleteMe'         " Code completion engine (req. Python)
 Plugin 'w0rp/ale'                       " Async linter and completer
 Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
 Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
@@ -60,7 +58,6 @@ Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-" Plugin 'Quramy/vim-js-pretty-template'
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -100,7 +97,7 @@ set switchbuf+=vsplit
 " Colors
 syntax enable       " syntax highlighting
 set hlsearch        " highlight searched words
-set incsearch		" search 'looped'
+set incsearch       " search 'looped'
 colorscheme sthew   " Own colorscheme adapted from monokai-colors
 
 " Speed thing up
@@ -216,45 +213,22 @@ let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 
-" YMC (YouCompleteMe) configurations
-" Start autocompletion after 3 chars
-" let g:ycm_min_num_of_chars_for_completion = 3
-" let g:ycm_min_num_identifier_candidate_chars = 3
-" let g:ycm_enable_diagnostic_highlighting = 0
-" " Don't show YCM's preview window
-" set completeopt-=preview
-" let g:ycm_add_preview_to_completeopt = 0
-
+" ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
 \}
-" Syntastic filechecker and maker config
-" Behavior
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_aggregate_errors = 1
-" let g:syntastic_enable_balloons = 0
-" let g:syntastic_mode_map = {
-"     \ 'mode': 'active',
-"     \ 'active_filetypes': [],
-"     \ 'passive_filetypes': [] }
-" " Checkers
-" let g:syntastic_javascript_checkers = [ 'eslint', 'standard'] " closurecompiler
-" let g:syntastic_javascript_closurecompiler_path = '$HOME/.vim/compilers/closure-compiler-v20190528.jar'
-" let g:syntastic_typescript_checkers = ["eslint"]
-" let g:syntastic_python_checkers = ["flake8"]
 
 
 " =================================
 "           Autocommands
 " =================================
 
-au FileType netrw set foldcolumn=4
+au FileType netrw set nonumber norelativenumber foldcolumn=1
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -297,21 +271,23 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * setlocal number relativenumber foldcolumn=0
-    autocmd BufLeave,WinLeave * setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
 augroup END
 
 augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
-    autocmd BufEnter,WinEnter * if &filetype == 'netrw' | setlocal nonumber norelativenumber foldcolumn=1 | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
-
 
 "=================================
 "		    Mappings
 "=================================
+
+" Scroll faster with C-E and C-Y
+nno <C-E> 2<C-E>
+nno <C-Y> 2<C-Y>
 
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|
@@ -323,6 +299,9 @@ nno s :%s/
 vno s :s/
 nno S :%S/
 vno S :S/
+
+" Yank till end of line
+nno Y y$
 
 " Quit
 nno <silent> <C-D> :q<CR>
@@ -337,11 +316,11 @@ tno <C-[> <C-\><C-N>
 " Make C-L go right in insertmode
 ino <C-L> <ESC>la
 
-" Window movement C-L C-H
-nno <C-L> <C-W>w
+" Window movement and tiling
 nno <C-H> <C-W>W
-ino <C-L> <C-[><C-W>w
+nno <C-L> <C-W>w
 ino <C-H> <C-[><C-W>W
+ino <C-L> <C-[><C-W>w
 " tno <C-L> <C-[><C-W>w
 " tno <C-H> <C-[><C-W>W
 
@@ -382,8 +361,9 @@ nno <silent> <leader>o :only<CR>
 
 " Save file
 nno <leader>, :w<CR>
+
 " Save&Close file
-nno <leader>w :wq<CR>
+nno <leader>w :x<CR>
 
 " Quit!
 nmap <silent> <leader>q :q!<CR>
@@ -411,8 +391,9 @@ nmap <silent> <leader>. <C-^>
 
 " Buffers
 nmap <leader>b :buffer 
-" Arguments-list
-nmap <leader>a :arg 
+
+" Arguments-list (currently held by artisan commands)
+" nmap <leader>a :arg 
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
@@ -450,13 +431,14 @@ nno <leader>gd :Gremove
 nno <leader>gn :Gmove 
 
 " NPM and nodejs dispatch commands
-" nno <silent> <leader>nn :exec ':Start nodejs -i -e "const m = require('."'./".expand('%')."')".'"'<CR>
-nno <silent> <leader>nn :!nodejs %:p<CR>
+nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
+nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ns :Start -title=server npm start<CR>
-nno <silent> <leader>nb :Start -title=build npm run build<CR>
+nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
+nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 
@@ -467,9 +449,14 @@ nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
-nno <silent> <leader>arl :!php artisan route:list<CR>
+nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
+nno <leader>arl :!php artisan route:list \| grep 
 nno <leader>amc :!php artisan make:controller 
 nno <leader>amm :!php artisan make:model 
+nno <leader>amr :!php artisan make:migration 
+nno <leader>amp :!php artisan make:policy  
+nno <leader>ame :!php artisan make:event 
+nno <leader>aml :!php artisan make:listener 
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
@@ -485,15 +472,6 @@ nmap <leader>ez :vsplit ~/.zshrc<CR>
 nmap <leader>eb :vsplit ~/.bashrc<CR>
 nmap <leader>ea :vsplit ~/.aliases<CR>
 nmap <leader>en :new<CR>:only<CR>
-" In new tab
-" nmap <leader>tv :tabe ~/.vimrc<CR>
-" nmap <leader>tc :tabe ~/.vim/colors/sthew.vim<CR>
-" nmap <leader>tg :tabe ~/.gitconfig<CR>
-" nmap <leader>tt :tabe ~/.tmux.conf<CR>
-" nmap <leader>tz :tabe ~/.zshrc<CR>
-" nmap <leader>tb :tabe ~/.bashrc<CR>
-" nmap <leader>ta :tabe ~/.aliases<CR>
-" nmap <leader>tn :tabnew<CR>
 
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
