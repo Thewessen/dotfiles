@@ -269,8 +269,8 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if $filetype != 'netrw' | setlocal number relativenumber foldcolumn=0
-    autocmd BufLeave,WinLeave * if $filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4
 augroup END
 
 augroup no_numberline
