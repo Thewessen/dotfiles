@@ -67,6 +67,9 @@ hi link xmlTag Tag
 hi link xmlAttrib Normal
 hi link xmlEndTag Tag
 
+" Emberjs
+hi link hbsHandles Normal
+
 " CSS (Damn those groups!!)
 hi link cssClassName Type
 hi link cssPseudoClassId Function

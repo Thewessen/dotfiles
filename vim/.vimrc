@@ -58,6 +58,7 @@ Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
+Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -163,6 +164,7 @@ let g:blade_custom_directives = ['yield', 'method', 'csrf']
 let g:blade_custom_directives_pairs = {
       \ 'section': 'endsection',
       \ 'foreach': 'endforeach',
+      \ 'for'    : 'endfor',
       \}
 
 " CtrlP options
@@ -229,6 +231,7 @@ let g:ale_fixers = {
 " =================================
 
 au FileType netrw set nonumber norelativenumber foldcolumn=1
+au FileType php set tabstop=4 shiftwidth=4
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -366,7 +369,7 @@ nno <leader>, :w<CR>
 nno <leader>w :x<CR>
 
 " Quit!
-nmap <silent> <leader>q :q!<CR>
+nmap <silent> <leader>q :qall<CR>
 
 " New tab
 nmap <silent> <leader>t <C-W>T
