@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Windows10
+Comment=Start Windows 10 in VirtualBox
+Exec=virtualbox --startvm 'Windows 10' --normal
+Icon=VirtualBox
+Terminal=True
+Type=Application
+Categories=Network;Communication;Online
