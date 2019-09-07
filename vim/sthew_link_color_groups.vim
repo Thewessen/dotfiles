@@ -56,7 +56,6 @@ hi link typescriptParens Noise
 
 " PHP
 hi link phpVarSelector Noise
-hi link phpSpecialFunction Function
 
 " Blade PHP
 hi link bladeDelimiter Normal

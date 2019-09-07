@@ -56,6 +56,7 @@ Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
+Plugin 'joukevandermaas/vim-ember-hbs'  " Emberjs template highlighting
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -120,8 +121,8 @@ set expandtab
 set autoindent
 set smarttab
 set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
 set foldmethod=manual     " Automatic folding depending on syntax
@@ -311,9 +312,6 @@ ino <C-U> <C-G>u<C-U>
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
 
-" Make C-L go right in insertmode
-ino <C-L> <ESC>la
-
 " Window movement and tiling
 nmap <C-H> <C-W>W
 nmap <C-L> <C-W>w
@@ -328,11 +326,11 @@ tmap <C-W><C-S> <C-[><C-W><C-S>
 nno <C-K> <C-A>
 
 " Command & Insert-mode mapping
-cmap <C-D> <Del>
-imap <C-D> <Del>
-imap <C-B> <ESC>bi
-imap <C-L> <ESC>li
-imap <C-E> <ESC>ea
+cno <C-D> <Del>
+ino <C-D> <Del>
+ino <C-B> <ESC>bi
+ino <C-L> <ESC>li
+ino <C-E> <ESC>ea
 
 " instead of Isurround
 imap <C-S> <Plug>Isurround
