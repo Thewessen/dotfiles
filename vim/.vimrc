@@ -52,6 +52,7 @@ Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
+Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
