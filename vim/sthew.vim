@@ -73,7 +73,7 @@ if &t_Co > 255
         hi DiffDelete ctermbg=88 cterm=NONE
         hi DiffChange ctermbg=233 cterm=NONE
         hi DiffText ctermbg=22 cterm=NONE
-        hi Special ctermfg=141
+        hi Special ctermfg=141 cterm=italic
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=81 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=NONE cterm=bold
@@ -126,7 +126,7 @@ if &t_Co > 255
         hi DiffDelete ctermbg=203 cterm=NONE
         hi DiffChange ctermbg=255 cterm=NONE
         hi DiffText ctermbg=46 cterm=NONE
-        hi Special ctermfg=57 ctermbg=NONE cterm=NONE
+        hi Special ctermfg=57 ctermbg=NONE cterm=italic
         hi SpecialComment ctermfg=245 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=231 cterm=bold

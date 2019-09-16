@@ -48,17 +48,19 @@ Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
 Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
-Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
+Plugin 'leafgarland/typescript-vim'     " Typescript syntax
+Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
+Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
+Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
+Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -171,6 +173,7 @@ let g:blade_custom_directives_pairs = {
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_extensions = ['mixed', 'dir']
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -231,7 +234,9 @@ let g:ale_fixers = {
 " =================================
 
 au FileType netrw set nonumber norelativenumber foldcolumn=1
-au FileType php set tabstop=4 shiftwidth=4
+au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
+au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
