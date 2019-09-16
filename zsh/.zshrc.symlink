@@ -115,6 +115,9 @@ export LS_COLORS
 setopt autopushd pushdminus pushdsilent pushdtohome
 DIRSTACKSIZE=11
 
+# NODE nodejs path
+export NODE_PATH=/usr/lib/node_modules
+
 # Keep the dirstack saved
 DIRSTACKFILE=~/.zdirs
 if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
