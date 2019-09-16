@@ -48,16 +48,19 @@ Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
 Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
-Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
+Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-Plugin 'joukevandermaas/vim-ember-hbs'  " Emberjs template highlighting
+Plugin 'leafgarland/typescript-vim'     " Typescript syntax
+Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
+Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
+Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plugin 'posva/vim-vue'                  " Vue syntax highlighting
+Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
+Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -121,12 +124,12 @@ set fileformat=unix
 set expandtab
 set autoindent
 set smarttab
-set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " Folds
-set foldmethod=manual     " Automatic folding depending on syntax
+set foldmethod=indent     " Automatic folding depending on syntax
 set foldlevelstart=99     " Start with all folds open
 
 " Invisible chars
@@ -163,12 +166,14 @@ let g:blade_custom_directives = ['yield', 'method', 'csrf']
 let g:blade_custom_directives_pairs = {
       \ 'section': 'endsection',
       \ 'foreach': 'endforeach',
+      \ 'for'    : 'endfor',
       \}
 
 " CtrlP options
 let g:ctrlp_by_filename = 1
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_extensions = ['mixed', 'dir']
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -229,6 +234,9 @@ let g:ale_fixers = {
 " =================================
 
 au FileType netrw set nonumber norelativenumber foldcolumn=1
+au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
+au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -316,8 +324,8 @@ tno <C-[> <C-\><C-N>
 " Window movement and tiling
 nmap <C-H> <C-W>W
 nmap <C-L> <C-W>w
-tmap <C-H> <C-[><C-W>W
-tmap <C-L> <C-[><C-W>w
+tno <C-H> <C-[><C-W>W
+tno <C-L> <C-[><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
 nno <C-W>s <C-W><C-S><C-W>j
 tmap <C-W><C-V> <C-[><C-W><C-V>
@@ -407,7 +415,7 @@ nmap <leader>b :buffer
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
-nno <silent> <leader>G :call GolfStart()<CR>
+nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
@@ -480,7 +488,8 @@ nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
 nmap <leader>eb :vsplit ~/.bashrc<CR>
 nmap <leader>ea :vsplit ~/.aliases<CR>
-nmap <leader>en :new<CR>:only<CR>
+nmap <leader>en :tabnew<CR>
+
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
 nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
