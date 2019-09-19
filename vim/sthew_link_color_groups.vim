@@ -43,8 +43,9 @@ hi link htmlEndTag Comment
 " Javascript
 hi link jsObjectKey Normal
 hi link jsFunction Statement
-hi link jsFunctionKey Function
+hi link jsFunctionKey Normal
 hi link jsArrowFunction Statement
+hi link jsObjectFuncName Normal
 hi link javaScriptFunction Type
 hi link javaScriptRailsFunction Type
 hi link javaScriptBraces Noise
@@ -66,6 +67,13 @@ hi link xmlTagName Tag
 hi link xmlTag Tag
 hi link xmlAttrib Normal
 hi link xmlEndTag Tag
+
+" Emberjs
+hi link hbsHandles Normal
+
+" GraphQL
+hi link graphqlName Normal
+hi link graphqlFold Noise
 
 " CSS (Damn those groups!!)
 hi link cssClassName Type
