@@ -449,6 +449,7 @@ nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
+nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " Python dispatch commands
 nno <silent> <leader>pp :!python3 %:p<CR>
