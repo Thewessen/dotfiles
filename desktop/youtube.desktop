@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=YouTube
-Comment=Launch YouTube in qutebrowser
-Exec=qutebrowser https://www.youtube.com/
-Icon=qutebrowser
+Comment=Launch YouTube as chromium app
+Exec=chromium-browser --app="https://www.youtube.com/"
+Icon=chromium-browser
 Terminal=True
 Type=Application
 Categories=Network;Movies;Online
