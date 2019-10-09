@@ -186,6 +186,25 @@ bar {
 # Don't use title on windows
 # new_window 1pixel
 
+# Applications to workspace assignments
+assign [class="^Terminator$"] 1
+assign [class="^qutebrowser$"] 2
+assign [class="^Chromium-browser$" instance="web.whatsapp.com"] 7
+assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
+assign [class="^Chromium-browser$" instance="gmail.com"] 9
+assign [class="^Slack$"] 10
+
+# Custom window settings
+for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
+
+# Startup applications
+exec terminator --title="scratchpad" --classname="scratchpad"
+exec qutebrowser
+exec chromium-browser --app="https://web.whatsapp.com"
+exec chromium-browser --app="https://calendar.google.com"
+exec chromium-browser --app="https://gmail.com"
+exec slack
+
 # Window borders
 new_window none
 bindsym $super+b border toggle
