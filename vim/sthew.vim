@@ -35,7 +35,7 @@ if &t_Co > 255
     if &background == 'dark'
         hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=239
-        hi CursorLine ctermbg=233 cterm=underline
+        hi CursorLine ctermbg=NONE cterm=underline
         hi CursorLineNr ctermfg=242 ctermbg=NONE
         hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=102 ctermbg=NONE

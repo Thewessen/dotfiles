@@ -57,6 +57,7 @@ Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
+Plugin 'ianks/vim-tsx'                  " TSX Reacte typescript syntax highlighting
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
@@ -383,7 +384,7 @@ nmap <leader>, :w<CR>
 nmap <leader>w :x<CR>
 
 " Quit!
-nmap <silent> <leader>q :q!<CR>
+nmap <silent> <leader>q :qall!<CR>
 
 " New tab
 nmap <silent> <leader>t <C-W>T
