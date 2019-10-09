@@ -452,9 +452,9 @@ nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " Python dispatch commands
-nno <silent> <leader>pp :!python3 %:p<CR>
-nno <silent> <leader>ph :bo 10split term://python3<CR>
-nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+nno <silent> <leader>yy :!python3 %:p<CR>
+nno <silent> <leader>yh :bo 10split term://python3<CR>
+nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>

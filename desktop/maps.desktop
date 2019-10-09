@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Maps
+Comment=Launch Google Maps in chrome
+Exec=chromium-browser --app='https://maps.google.com/'
+Icon=chromium-browser
+Terminal=True
+Type=Application
+Categories=Travel;Map;Online

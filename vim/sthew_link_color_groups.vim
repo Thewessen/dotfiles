@@ -112,9 +112,12 @@ hi link cssColor Special
 hi link cssCommonAttr Special
 hi link cssUnitDecorators Special
 hi link cssAttrRegion Special
+hi link cssAttrComma Normal
 hi link cssTagName Tag
 hi link cssIdentifier Identifier
 hi link cssBraces Noise
+hi link cssSelectorOp Normal
+hi link cssSelectorOp2 Normal
 
 " Ruby 
 hi link rubyException Conditional

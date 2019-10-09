@@ -35,7 +35,7 @@ if &t_Co > 255
     if &background == 'dark'
         hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=239
-        hi CursorLine ctermbg=233 cterm=underline
+        hi CursorLine ctermbg=NONE cterm=underline
         hi CursorLineNr ctermfg=144 ctermbg=NONE
         hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=102 ctermbg=NONE
@@ -64,7 +64,7 @@ if &t_Co > 255
         hi Statement ctermfg=203
         hi Define ctermfg=203
         hi Folded ctermfg=252 ctermbg=235
-        hi FoldColumn ctermbg=NONE ctermfg=234
+        hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
