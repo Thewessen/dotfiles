@@ -440,6 +440,7 @@ nno <leader>gn :Gmove
 
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
