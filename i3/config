@@ -178,7 +178,7 @@ bar {
         modifier $alt
         colors {
           separator #212121
-          background #000000
+          background #2c292d
           statusline #839496
         }
 }
@@ -194,9 +194,6 @@ assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
 assign [class="^Chromium-browser$" instance="gmail.com"] 9
 assign [class="^Slack$"] 10
 
-# Custom window settings
-for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
-
 # Startup applications (reversed order of priority)
 exec chromium-browser --app="https://web.whatsapp.com"
 exec chromium-browser --app="https://calendar.google.com"
@@ -205,19 +202,19 @@ exec slack
 exec terminator --title="scratchpad" --classname="scratchpad"
 exec qutebrowser
 
+# Custom window settings
+for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
+
 # Window borders
 new_window none
 bindsym $super+b border toggle
 
 # Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #ffd866
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.urgent           #2f343a #900000 #ffffff #900000   #ff6188
+client.placeholder      #2c292d #0c0c0c #ffffff #2c292d   #0c0c0c
 
-client.background       #000000
-
-# Desktop background default
-exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/"Hubbel stars"/"Galaxy M106 2560x1440.jpg"
+client.background       #2c292d
