@@ -14,7 +14,7 @@ fi
 
 case $level in
 [0-9])
-    result="<span background=$red><b> $level%$symbol </b></span>"
+    result="<span background='$red'><b> $level%$symbol </b></span>"
     ;;
 # 1[0-9])
 #     result="<span background='red'><b> $level%$symbol</b></span>"

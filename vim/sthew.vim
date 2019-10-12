@@ -63,7 +63,7 @@ if &t_Co > 255
         hi Tag ctermfg=203
         hi Statement ctermfg=203
         hi Define ctermfg=203
-        hi Folded ctermfg=252 ctermbg=235
+        hi Folded ctermfg=252 ctermbg=NONE
         hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
