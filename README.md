@@ -1,2 +1,3 @@
 # dotfiles
-All my configuration files like vimrc and tmux
+
+The dotfiles I use for work (from the master branch)

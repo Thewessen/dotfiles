@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Gmail
-Comment=Launch Gmail in chrome
-Exec=chromium-browser --app='https://gmail.com/'
-Icon=chromium-browser
-Terminal=True
-Type=Application
-Categories=Network;Communication;Online

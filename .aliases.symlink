@@ -57,12 +57,12 @@ alias duf='du -cksh *'
 alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 
-alias l='ls -lFh --group-directories-first'
-alias ll='ls -l --group-directories-first'
-alias la='ls -lAFh --group-directories-first'
-alias lr='ls -tRFh --group-directories-first'
-alias lt='ls -ltFh --group-directories-first'
-alias ldot='ls -d .* --group-directories-first'
+alias l="ls -lFh"
+alias ll="ls -l"
+alias la="ls -lAFh"
+alias lr="ls -tRFh"
+alias lt="ls -lth"
+alias ldot="ls -d .*"
 
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
