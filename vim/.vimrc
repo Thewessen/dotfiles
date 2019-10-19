@@ -5,6 +5,13 @@
 set nocompatible    " Unlock vim functionality (not Vi)
 set encoding=utf8
 
+"  Index
+" =================================
+" - Vundle configuration
+" - Vim configuration
+" - Mappings
+" - Source
+
 "=================================
 " Start Vundle vim configuration
 "=================================
@@ -45,7 +52,8 @@ Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and 
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
-Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
+Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
 Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
@@ -61,6 +69,8 @@ Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
+Plugin 'honza/vim-snippets'             " Tons of code snippets for vim
+Plugin 'SirVer/ultisnips'               " A snippet engine for using snippets
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -147,6 +157,8 @@ endif
 set nowrap          " No linebreaks when window-width is too small
 set wrapmargin=0    " No linebreaks in Insert mode
 
+set wildignore=Session.vim
+
 " =================================
 "       Plugin Configurations
 " =================================
@@ -169,11 +181,15 @@ let g:blade_custom_directives_pairs = {
       \ 'for'    : 'endfor',
       \}
 
-" CtrlP options
-let g:ctrlp_by_filename = 1
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_extensions = ['mixed', 'dir']
+" UltiSnips config.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+"
+" FZF options
+let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_buffers_jump = 1
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -194,7 +210,7 @@ let g:dispatch_terminal_exec = 'terminator'
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-\ 'auto_complete_delay': 200,
+\ 'auto_complete_delay': 100,
 \ 'smart_case': v:true,
 \ })
 
@@ -211,7 +227,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 \ ]
 
 " Ale
-set omnifunc=ale#completion#OmniFunc
+" set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
@@ -398,7 +414,10 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-nmap <leader>b :buffer 
+" nmap <leader>b :buffer 
+" Location list
+nmap <silent> <leader>l :lopen<CR>
+nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
 " nmap <leader>a :arg 
@@ -422,8 +441,8 @@ nno <leader>sl :ALELint<CR>
 nno <leader>st :ALEToggle<CR>
 
 " Git commands (vim-fugitive)
-" CD too repository root
-nno <leader>cd :Gcd<CR>
+" CD to repository root
+" nno <leader>cd :Gcd<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
@@ -437,6 +456,25 @@ nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
 nno <leader>gd :Gremove 
 nno <leader>gn :Gmove 
+
+" FZF commands
+nno <silent> <C-P> :Files<CR>
+nno <silent> <leader>ff :GFiles<CR>
+nno <silent> <leader>/ :Lines<CR>
+nno <silent> <leader>fL :BLines<CR>
+nno <silent> <leader>fg :GFiles?<CR>
+nno <silent> <leader>fc :Commits<CR>
+nno <silent> <leader>fd :BCommits<CR>
+nno <silent> <leader>b :Buffer<CR>
+nno <silent> <leader>fw :Windows<CR>
+nno <silent> <leader>fm :Marks<CR>
+nno <silent> <leader>ft :Tags<CR>
+nno <silent> <leader>fT :Filetypes<CR>
+nno <silent> <leader>fM :Maps<CR>
+nno <silent> <leader>fh :History<CR>
+nno <silent> <leader>f? :Helptags<CR>
+nno <silent> <leader>fH :History:<CR>
+nno <silent> <leader>f/ :History/<CR>
 
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
@@ -496,9 +534,9 @@ nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+
 nno <silent> <leader>ht :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
 nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
-" =================================
+"=================================
 "       Source vim-scripts
-" =================================
+"=================================
 
 " Source statusline and tabline
 source $HOME/.dotfiles/vim/sthew_custom_tabline.vim
