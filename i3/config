@@ -188,7 +188,6 @@ bar {
 
 # Applications to workspace assignments
 assign [class="^qutebrowser$"] 1
-assign [class="^Terminator$"] 2
 assign [class="^Chromium-browser$" instance="web.whatsapp.com"] 7
 assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
 assign [class="^Chromium-browser$" instance="gmail.com"] 9
