@@ -44,7 +44,9 @@ alias p='ps -f'
 alias sortnr='sort -n -r'
 
 alias grep='grep --color'
-alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+# deprecated, use ag.
+# alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+
 
 # change permission of files and folders recursively in current dir
 alias cmf='find . -type f -exec chmod 644 {} \;'
@@ -97,6 +99,7 @@ fi
 # =================================
 
 alias -g G="| grep"
+alias -g F="| fzf"
 alias -g T="| tail"
 alias -g H="| head"
 alias -g S="| sort"

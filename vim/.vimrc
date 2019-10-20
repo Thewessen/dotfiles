@@ -54,6 +54,7 @@ Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
 Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plugin 'ludovicchabant/vim-gutentags'   " Auto tag generation.
 Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
@@ -69,8 +70,6 @@ Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
-Plugin 'honza/vim-snippets'             " Tons of code snippets for vim
-Plugin 'SirVer/ultisnips'               " A snippet engine for using snippets
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -181,12 +180,6 @@ let g:blade_custom_directives_pairs = {
       \ 'for'    : 'endfor',
       \}
 
-" UltiSnips config.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsEditSplit="vertical"
-"
 " FZF options
 let g:fzf_layout = { 'up': '~40%' }
 let g:fzf_buffers_jump = 1
