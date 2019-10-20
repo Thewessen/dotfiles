@@ -5,6 +5,13 @@
 set nocompatible    " Unlock vim functionality (not Vi)
 set encoding=utf8
 
+"  Index
+" =================================
+" - Vundle configuration
+" - Vim configuration
+" - Mappings
+" - Source
+
 "=================================
 " Start Vundle vim configuration
 "=================================
@@ -45,7 +52,9 @@ Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and 
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
 Plugin 'tpope/vim-vividchalk'           " Colorscheme
-Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
+Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plugin 'ludovicchabant/vim-gutentags'   " Auto tag generation.
 Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
@@ -148,6 +157,8 @@ endif
 set nowrap          " No linebreaks when window-width is too small
 set wrapmargin=0    " No linebreaks in Insert mode
 
+set wildignore=Session.vim
+
 " =================================
 "       Plugin Configurations
 " =================================
@@ -170,11 +181,9 @@ let g:blade_custom_directives_pairs = {
       \ 'for'    : 'endfor',
       \}
 
-" CtrlP options
-let g:ctrlp_by_filename = 1
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_extensions = ['mixed', 'dir']
+" FZF options
+let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_buffers_jump = 1
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -195,7 +204,7 @@ let g:dispatch_terminal_exec = 'terminator'
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-\ 'auto_complete_delay': 200,
+\ 'auto_complete_delay': 100,
 \ 'smart_case': v:true,
 \ })
 
@@ -280,8 +289,8 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
 augroup END
 
 augroup no_numberline
@@ -408,7 +417,10 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-nmap <leader>b :buffer 
+" nmap <leader>b :buffer 
+" Location list
+nmap <silent> <leader>l :lopen<CR>
+nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
 " nmap <leader>a :args 
@@ -449,8 +461,28 @@ nno <leader>gD :Gremove
 nno <leader>gd :Gdiffsplit 
 nno <leader>gn :Gmove 
 
+" FZF commands
+nno <silent> <C-P> :Files<CR>
+nno <silent> <leader>ff :GFiles<CR>
+nno <silent> <leader>/ :Lines<CR>
+nno <silent> <leader>fL :BLines<CR>
+nno <silent> <leader>fg :GFiles?<CR>
+nno <silent> <leader>fc :Commits<CR>
+nno <silent> <leader>fd :BCommits<CR>
+nno <silent> <leader>b :Buffer<CR>
+nno <silent> <leader>fw :Windows<CR>
+nno <silent> <leader>fm :Marks<CR>
+nno <silent> <leader>ft :Tags<CR>
+nno <silent> <leader>fT :Filetypes<CR>
+nno <silent> <leader>fM :Maps<CR>
+nno <silent> <leader>fh :History<CR>
+nno <silent> <leader>f? :Helptags<CR>
+nno <silent> <leader>fH :History:<CR>
+nno <silent> <leader>f/ :History/<CR>
+
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
@@ -460,11 +492,12 @@ nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
+nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " Python dispatch commands
-nno <silent> <leader>pp :!python3 %:p<CR>
-nno <silent> <leader>ph :bo 10split term://python3<CR>
-nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+nno <silent> <leader>yy :!python3 %:p<CR>
+nno <silent> <leader>yh :bo 10split term://python3<CR>
+nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
