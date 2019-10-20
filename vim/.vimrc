@@ -445,7 +445,8 @@ nno <leader>gm :Gmerge
 nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove 
+nno <leader>gD :Gremove 
+nno <leader>gd :Gdiffsplit 
 nno <leader>gn :Gmove 
 
 " NPM and nodejs dispatch commands
