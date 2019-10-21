@@ -137,3 +137,6 @@ fi
 PS1="${debian_chroot:+($debian_chroot)}\w > "
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[[ -e "$DOTFILES/fzf-extras/fzf-extras.sh" ]] \
+  && source $DOTFILES/fzf-extras/fzf-extras.sh

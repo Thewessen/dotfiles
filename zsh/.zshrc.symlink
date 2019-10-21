@@ -146,4 +146,11 @@ fi
 
 export NODE_PATH="/usr/local/lib/node_modules"
 
+# source fzf for zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# source fzf extra commands
+[[ -e "$DOTFILES/fzf-extras/fzf-extras.sh" ]] \
+  && source $DOTFILES/fzf-extras/fzf-extras.sh
+[[ -e "$DOTFILES/fzf-extras/fzf-extras.zsh" ]] \
+  && source $DOTFILES/fzf-extras/fzf-extras.zsh
