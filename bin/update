@@ -4,7 +4,7 @@
 # Run all updatecommands
 
 upgrade_oh_my_zsh
-nvim +PluginInstall +qall
+nvim +PluginUpdate +qall
 update-git-pull
 upgrade-npm
 update-apt

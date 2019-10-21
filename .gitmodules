@@ -1,6 +1,3 @@
 [submodule "fzf"]
 	path = fzf
 	url = ./fzf
-[submodule "fzf-extras"]
-	path = fzf-extras
-	url = ./fzf-extras

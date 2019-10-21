@@ -1,9 +1,12 @@
 #!/usr/bin/zsh
 
 repos=(
-  "$HOME/.dotfiles"
+  "$DOTFILES"
+  "$DOTFILES/fzf"
+  "$DOTFILES/fzf-extras"
   "$HOME/Websites/Website Iris"
   "$HOME/Websites/telraam"
+  "$HOME/Websites/profile-page"
   "$HOME/Scripts/GIT/BeetsPi/beets-db-webapi/beets-db-webapi"
   "$HOME/Scripts/GIT/BeetsPi/beets-genremanager"
   "$HOME/Scripts/GIT/hello-world"
