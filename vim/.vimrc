@@ -464,7 +464,8 @@ nno <leader>gm :Gmerge
 nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove 
+nno <leader>gd :Gdiff  
+nno <leader>gD :Gremove 
 nno <leader>gn :Gmove 
 
 " FZF commands
