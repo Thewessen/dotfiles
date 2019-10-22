@@ -146,3 +146,5 @@ fi
   #     tmux attach || break
   # done
 # fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
