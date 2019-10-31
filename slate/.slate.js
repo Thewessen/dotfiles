@@ -46,7 +46,7 @@ const screenLayouts = {
 // Applications definitions
 const myApps = {
   'Mail': { // App name as seen by slate. Check 'Current Windows Info' from the slate menu
-    key: sc1('e'),  // Shortcut to focus on the app
+    key: ctrl('e'),  // Shortcut to focus on the app
     position: { // layouts
       fourMonitors: screens.asus.bottomTwoThirds,  // layoutName: screens.screenName.poistion
       threeMonitors: screens.asus.bottomTwoThirds,
@@ -54,7 +54,7 @@ const myApps = {
     }
   },
   'Calendar': {
-    key: sc1('l'),
+    key: ctrl('l'),
     position: {
       fourMonitors: screens.samsung.topOneThird,
       threeMonitors: screens.asus.topOneThird,
@@ -62,7 +62,7 @@ const myApps = {
     }
   },
   'Code': {
-    key: sc1('c'),
+    key: ctrl('c'),
     position: {
       fourMonitors: screens.asus.bottomTwoThirds,
       threeMonitors: screens.asus.bottomOneThird,
@@ -70,7 +70,7 @@ const myApps = {
     }
   },
   'Terminal': {
-    key: sc1('t'),
+    key: ctrl('t'),
     position: {
       fourMonitors: screens.mac.leftHalf,
       threeMonitors: screens.mac.leftHalf,
@@ -78,7 +78,7 @@ const myApps = {
     }
   },
   'Telegram': {
-    key: sc1('r'),
+    key: ctrl('r'),
     position: {
       fourMonitors: screens.asus.leftOneHalfByOneThird,
       threeMonitors: screens.asus.leftOneThirdTopHalf,
@@ -86,7 +86,7 @@ const myApps = {
     }
   },
   'WhatsApp': {
-    key: sc1('w'),
+    key: ctrl('w'),
     position: {
       fourMonitors: screens.samsung.rightOneHalfByOneThird,
       threeMonitors: screens.asus.rightOneThirdTopHalf,
@@ -94,7 +94,7 @@ const myApps = {
     }
   },
   'Messages': {
-    key: sc1('m'),
+    key: ctrl('m'),
     position: {
       fourMonitors: screens.asus.rightOneHalfByOneThird,
       threeMonitors: screens.asus.rightOneThirdTopHalf,
@@ -102,7 +102,7 @@ const myApps = {
     }
   },
   'Google Chrome': {
-    key: sc1('b'),
+    key: ctrl('b'),
     position: {
       fourMonitors: screens.lg.rightOneThird,
       threeMonitors: screens.lg.rightOneThird,
@@ -110,7 +110,7 @@ const myApps = {
     }
   },
   'Safari': {
-    key: sc1('s'),
+    key: ctrl('s'),
     position: {
       fourMonitors: screens.lg.leftOneThird,
       threeMonitors: screens.lg.leftOneThird,
@@ -118,7 +118,7 @@ const myApps = {
     }
   },
   'Finder': {
-    key: sc1('f'),
+    key: ctrl('f'),
     position: {
       fourMonitors: screens.mac.rightHalf,
       threeMonitors: screens.mac.rightHalf,
@@ -126,7 +126,7 @@ const myApps = {
     }
   },
   'Microsoft Excel': {
-    key: sc1('x'),
+    key: ctrl('x'),
     position: {
       fourMonitors: screens.lg.rightTwoThirds,
       threeMonitors: screens.lg.rightTwoThirds,
@@ -136,7 +136,7 @@ const myApps = {
 }
 
 // Moves bound to shortcut 1
-bindKeys(sc1, {
+bindKeys(ctrl, {
   'right': slide('right'),
   'left': slide('left'),
   'up': slide('up'),
@@ -144,7 +144,7 @@ bindKeys(sc1, {
 })
 
 // Moves bound to shortcut 2
-bindKeys(sc2, {
+bindKeys(cmd, {
   'right': moveToScreen('right'),
   'left': moveToScreen('left'),
   'r': relaunch()
