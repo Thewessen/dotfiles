@@ -5,40 +5,18 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
-# Simple watch filechange and run file command (needs notify-tools)
-notify() {
-  echo
-  while inotifywait "$1" 2>/dev/null 1>/dev/null; do
-    sleep 0.1 && "$1"
-  done
-}
-
 # =================================
 #             General
 # =================================
-# John the Ripper (Jumbo)
-alias john="$HOME/.local/share/JohnTheRipper/run/john"
-alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
-alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
-
-
-# List processes
 alias pstree='pstree -aclp'
 
-# Copy to clipboard
 alias xclip='xclip -selection clipboard'
 
 # Dir STACK, zsh and csh only
 alias dh='dirs -v'
 
-# http-server
-alias http='live-server -V'
-
-# NPM
-alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
-
-alias c='clear' # Clear the screen
-alias j='jobs' # Current running jobs
+alias c='clear'
+alias j='jobs'
 alias p='ps -f'
 alias sortnr='sort -n -r'
 
@@ -49,7 +27,7 @@ alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
 alias chf='find . -type f -exec chmod 644 {} \;'
 alias chd='find . -type d -exec chmod 755 {} \;'
 
-alias h='history' # Bash history
+alias h='history'
 alias hgrep='fc -El 0 | grep'
 alias help='man'
 alias t='tail -f'
@@ -66,10 +44,78 @@ alias lr="ls -tRFh"
 alias lt="ls -lth"
 alias ldot="ls -d .*"
 
+# =================================
+#             Configs
+# =================================
+
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.dotfiles/vim/.vimrc ~/.vimrc ~/.dotfiles/vim/*"
+
+# =================================
+#             Programs
+# =================================
+alias gpi="git pimp"
+
+# John the Ripper (Jumbo)
+alias john="$HOME/.local/share/JohnTheRipper/run/john"
+alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
+alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
+
+alias http='live-server -V'
+
+alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
+
+# Simple watch filechange and run file command (needs notify-tools)
+notify() {
+  echo
+  while inotifywait "$1" 2>/dev/null 1>/dev/null; do
+    sleep 0.1 && "$1"
+  done
+}
+
+alias vi='nvim'
+alias vundle='nvim +PluginInstall +qall'
+alias vundle-clean='nvim +PluginClean +qall'
+
+# Start neovim with Obsession
+function nvim() {
+  if test $# -gt 0; then
+    env nvim "$@"
+  elif test -f Session.vim; then
+    env nvim -S
+  else
+    env nvim -c Obsession
+  fi
+}
+
+# vundle-add() {
+#     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")
+#     local vimrc=''
+#     for vimrc in $vimrc_locations; do
+#         if [ -f $vimrc ]; then
+#             echo $vimrc
+#             while [ $# -gt 0 ]; do
+#                 sed -i "s/\" New plugins here/\0\nPlugin '$1'/" "$vimrc"
+#                 echo "Added Plugin '$1' to $vimrc"
+#                 shift
+#             done
+#             return 0
+#         fi
+#     done
+# return 1
+# }
+
+# =================================
+#             Files
+# =================================
+# Monorepo
+alias bond='cd ~/hypotheekbond'
+alias mono='cd ~/hypotheekbond/monorepo'
+alias web='cd ~/hypotheekbond/monorepo/apps/web'
+alias devenv='cd ~/hypotheekbond/devenv'
+alias tools="cd ~/hypotheekbond/monorepo/apps/tools"
 
 #read documents on Linux Mint/Ubuntu from commandline
 if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
@@ -107,46 +153,6 @@ alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
 
 # =================================
-#               Vim
-# =================================
-
-alias vi='nvim'
-alias vundle='nvim +PluginInstall +qall'
-alias vundle-clean='nvim +PluginClean +qall'
-
-# Start neovim with Obsession
-function nvim() {
-  if test $# -gt 0; then
-    env nvim "$@"
-  elif test -f Session.vim; then
-    env nvim -S
-  else
-    env nvim -c Obsession
-  fi
-}
-
-# vundle-add() {
-#     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")
-#     local vimrc=''
-#     for vimrc in $vimrc_locations; do
-#         if [ -f $vimrc ]; then
-#             echo $vimrc
-#             while [ $# -gt 0 ]; do
-#                 sed -i "s/\" New plugins here/\0\nPlugin '$1'/" "$vimrc"
-#                 echo "Added Plugin '$1' to $vimrc"
-#                 shift
-#             done
-#             return 0
-#         fi
-#     done
-# return 1
-# }
-# =================================
-#            History
-# =================================
-
-
-# =================================
 #          System-Monitor
 # =================================
 
@@ -154,9 +160,3 @@ function nvim() {
 #alias wtch='watch -t -n1 "(lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"' 
 alias wtch='watch -t -n1 "printf '"'"'GPU MHz:       '"'"' && (nvidia-settings -tq GPUCurrentClockFreqs | head -1) && echo && ((printf '"'"'GPU Temp:      +\c'"'"' && nvidia-settings -tq GPUCoreTemp) | head -1) && printf '"'"'.0°C'"'"' && echo && (lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"'
 
-# Monorepo
-alias bond='cd ~/hypotheekbond'
-alias mono='cd ~/hypotheekbond/monorepo'
-alias web='cd ~/hypotheekbond/monorepo/apps/web'
-alias devenv='cd ~/hypotheekbond/devenv'
-alias tools="cd ~/hypotheekbond/monorepo/apps/tools"

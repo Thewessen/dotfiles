@@ -318,8 +318,8 @@ nno <C-Y> 2<C-Y>
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search 
-nno ? :Abolish! -search 
+nno \ :Abolish -search<space>
+nno ? :Abolish! -search<space>
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -424,13 +424,13 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-" nmap <leader>b :buffer 
+" nmap <leader>b :buffer<space>
 " Location list
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
-" nmap <leader>a :args 
+" nmap <leader>a :args<space>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
@@ -456,17 +456,17 @@ nno <leader>st :ALEToggle<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
-nno <leader>gg :Git 
+nno <leader>gg :Git<space>
 nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
 nno <silent> <leader>gL :0Glog<CR>
 nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
-nno <leader>gm :Gmerge 
+nno <leader>gm :Gmerge<space>
 nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gd :Gdiff  
-nno <leader>gD :Gremove 
-nno <leader>gn :Gmove 
+nno <leader>gd :Gdiff <space>
+nno <leader>gD :Gremove<space>
+nno <leader>gn :Gmove<space>
 
 " FZF commands
 nno <silent> <C-P> :Files<CR>
@@ -509,13 +509,13 @@ nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep 
-nno <leader>amc :!php artisan make:controller 
-nno <leader>amm :!php artisan make:model 
-nno <leader>amr :!php artisan make:migration 
-nno <leader>amp :!php artisan make:policy  
-nno <leader>ame :!php artisan make:event 
-nno <leader>aml :!php artisan make:listener 
+nno <leader>arl :!php artisan route:list \| grep<space>
+nno <leader>amc :!php artisan make:controller<space>
+nno <leader>amm :!php artisan make:model<space>
+nno <leader>amr :!php artisan make:migration<space>
+nno <leader>amp :!php artisan make:policy<space>
+nno <leader>ame :!php artisan make:event<space>
+nno <leader>aml :!php artisan make:listener<space>
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
@@ -534,7 +534,7 @@ nmap <leader>en :new<CR>:only<CR>
 
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
-nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
+nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 
 " Remove extra whitespace
 nmap <silent> <leader><space> :%s/\s\+$<cr>
