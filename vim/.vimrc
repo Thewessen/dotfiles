@@ -177,7 +177,7 @@ endif
 " =================================
 
 " NeovimSnippets settings
-let g:neosnippet#snippets_directory = ['~/.dotfiles/vim/snippets']
+let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
 let g:neosnippet#disable_runtime_snippets = {
     \ '_': 1,
     \}
