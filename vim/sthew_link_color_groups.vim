@@ -63,10 +63,7 @@ hi link bladeDelimiter Normal
 hi link bladeKeyword Special
 
 " JSX
-hi link xmlTagName Tag
-hi link xmlTag Tag
-hi link xmlAttrib Normal
-hi link xmlEndTag Tag
+hi link jsxComponentName Tag
 
 " Emberjs
 hi link hbsHandles Normal
@@ -112,12 +109,9 @@ hi link cssColor Special
 hi link cssCommonAttr Special
 hi link cssUnitDecorators Special
 hi link cssAttrRegion Special
-hi link cssAttrComma Normal
 hi link cssTagName Tag
 hi link cssIdentifier Identifier
 hi link cssBraces Noise
-hi link cssSelectorOp Normal
-hi link cssSelectorOp2 Normal
 
 " Ruby 
 hi link rubyException Conditional

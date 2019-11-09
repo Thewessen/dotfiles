@@ -66,12 +66,17 @@ Plugin 'mattn/emmet-vim'                " Super fast html skeletons
 Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
 Plugin 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
+Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
-Plugin 'posva/vim-vue'                  " Vue syntax highlighting
-Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
-Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
+Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
+"Snippets
+if !has('nvim')
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -171,12 +176,11 @@ endif
 "       Plugin Configurations
 " =================================
 
-" Signature highlights
-" let g:SignatureMarkTextHL =
-" hi link SignatureMarkText User1
-
-" let g:SignatureMarkTextHL =
-" hi link SignatureMarkText User1
+" NeovimSnippets settings
+let g:neosnippet#snippets_directory = ['~/.dotfiles/vim/snippets']
+let g:neosnippet#disable_runtime_snippets = {
+    \ '_': 1,
+    \}
 
 " HTML skeletons and more...
 let g:user_emmet_leader_key=','
@@ -307,9 +311,25 @@ augroup no_numberline
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
+augroup fugitive_window
+    autocmd!
+    autocmd filetype fugitive wincmd H
+augroup END
+
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
 "=================================
 "		    Mappings
 "=================================
+" Rebinding <C-L> (unbinding NetrwNetwork(?))
+function! NetrwMapping()
+    nunmap <buffer> <C-L>
+    nno <buffer> <C-L> <C-W>w
+    nno <buffer> <C-R> <Plug>(NetrwRefresh)
+endfunction
 
 " Scroll faster with C-E and C-Y
 nno <C-E> 2<C-E>
@@ -319,8 +339,8 @@ nno <C-Y> 2<C-Y>
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search 
-nno ? :Abolish! -search 
+nno \ :Abolish -search<space>
+nno ? :Abolish! -search<space>
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -347,12 +367,15 @@ nno <C-H> <C-W>W
 nno <C-L> <C-W>w
 ino <C-H> <C-[><C-W>W
 ino <C-L> <C-[><C-W>w
-" tno <C-L> <C-[><C-W>w
-" tno <C-H> <C-[><C-W>W
+tno <C-H> <C-[><C-W>W
+tno <C-L> <C-[><C-W>w
 
 " Jump word in Insertmode
-ino <C-E> <ESC>ea
+cno <C-D> <Del>
+ino <C-D> <Del>
 ino <C-B> <ESC>bi
+ino <C-L> <ESC>li
+ino <C-E> <ESC>ea
 
 " Map function key's
 " nmap <f1> :Gstatus<CR>
@@ -370,6 +393,13 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 " nmap <silent> <f11>
 " nmap <silent> <f12>
 
+" Press Space to turn off highlighted search
+" and clear any message already displayed.
+nno <silent> <Space> :nohlsearch<CR>:echo<CR>
+
+" Remove extra whitespace
+nmap <silent> <leader><space> :%s/\s\+$<cr>
+" nmap <leader><space><space> :%s/\s*\n//g<cr>
 " =================================
 "       Leaders
 " =================================
@@ -392,7 +422,7 @@ nno <leader>, :w<CR>
 nno <leader>w :x<CR>
 
 " Quit!
-nmap <silent> <leader>q :qall<CR>
+nmap <silent> <leader>q :qall!<CR>
 
 " New tab
 nmap <silent> <leader>t <C-W>T
@@ -416,13 +446,13 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-" nmap <leader>b :buffer 
+" nmap <leader>b :buffer<space>
 " Location list
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
-" nmap <leader>a :arg 
+" nmap <leader>a :args<space>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
@@ -448,20 +478,27 @@ nno <leader>st :ALEToggle<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
-nno <leader>gg :Git 
+nno <leader>gg :Git<space>
 nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
 nno <silent> <leader>gL :0Glog<CR>
 nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
-nno <leader>gm :Gmerge 
+nno <leader>gm :Gmerge<space>
 nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove 
-nno <leader>gn :Gmove 
+nno <leader>gd :Gvdiffsplit!<CR>
+nno <leader>gD :Gremove<space>
+nno <leader>gn :Gmove<space>
+nno <leader>gw :Gwrite!<CR>
+" Gdiff (3 way diff) solving merge conflicts
+" Used inside working file (mid file)
+nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
+nno <leader>g] :diffget //3<CR>:diffupdate<CR>
 
 " FZF commands
 nno <silent> <C-P> :Files<CR>
 nno <silent> <leader>ff :GFiles<CR>
+nno <leader>fa :Ag<space>
 nno <silent> <leader>/ :Lines<CR>
 nno <silent> <leader>fL :BLines<CR>
 nno <silent> <leader>fg :GFiles?<CR>
@@ -500,13 +537,13 @@ nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep 
-nno <leader>amc :!php artisan make:controller 
-nno <leader>amm :!php artisan make:model 
-nno <leader>amr :!php artisan make:migration 
-nno <leader>amp :!php artisan make:policy  
-nno <leader>ame :!php artisan make:event 
-nno <leader>aml :!php artisan make:listener 
+nno <leader>arl :!php artisan route:list \| grep<space>
+nno <leader>amc :!php artisan make:controller<space>
+nno <leader>amm :!php artisan make:model<space>
+nno <leader>amr :!php artisan make:migration<space>
+nno <leader>amp :!php artisan make:policy<space>
+nno <leader>ame :!php artisan make:event<space>
+nno <leader>aml :!php artisan make:listener<space>
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
@@ -521,24 +558,27 @@ nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
 nmap <leader>eb :vsplit ~/.bashrc<CR>
 nmap <leader>ea :vsplit ~/.aliases<CR>
+nmap <leader>es :NeoSnippetEdit-vertical<CR>
 nmap <leader>en :new<CR>:only<CR>
 
-" Press Space to turn off highlighted search
-" and clear any message already displayed.
-nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" neovim-snippets key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" Todo: Make different keybining (tmux)
+imap <C-a> <Plug>(neosnippet_expand_or_jump)
+smap <C-a> <Plug>(neosnippet_expand_or_jump)
+xmap <C-a> <Plug>(neosnippet_expand_target)
 
-" Remove extra whitespace
-nmap <silent> <leader><space> :%s/\s\+$<cr>
-" nmap <leader><space><space> :%s/\s*\n//g<cr>
-
-" Snippits (read from .vim/skeletons) like html tags etc.
-nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
-nno <silent> <leader>ht :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
-nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
-
-"=================================
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" =================================
 "       Source vim-scripts
-"=================================
+" =================================
 
 " Source statusline and tabline
 source $HOME/.dotfiles/vim/sthew_custom_tabline.vim
