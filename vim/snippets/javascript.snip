@@ -1,0 +1,432 @@
+# Note: Hard-tabs for JavaScript snippets is important
+# because of indention
+snippet console.log
+alias cl log con
+options head
+	console.log(${0:TARGET});
+
+snippet console.error
+alias ce error
+options head
+	console.error(${0:TARGET});
+
+snippet console.warn
+alias cw warn
+options head
+	console.warn(${0:TARGET});
+
+snippet if
+options head
+	if (${1:#:condition}) {
+		${2:#:do_stuff}
+	};
+	${0:TARGET}
+
+snippet if-else
+alias ife
+options head
+	if (${1:#:condition}) {
+		${2:#:do_stuff}
+	} else {
+		${3:#:do_more_stuff}
+	};
+	${0:TARGET}
+
+snippet if-else-if
+alias ifei
+options head
+	if (${1:#:condition}) {
+		${2:#:do_stuff}
+	} else if (${3:#:condition}) {
+		${4:#:do_more_stuff}
+	};
+	${0:TARGET}
+
+snippet try-catch
+alias tc
+options head
+	try {
+		${1:#:do_stuff}
+	} catch (${2:err}) {
+		${3:#:handle_error}
+	};
+	${0:TARGET}
+
+snippet try-finally
+alias tf
+options head
+	try {
+		${1:#:do_stuff}
+	} finally {
+		${2:#:do_more_stuff}
+	};
+	${0:TARGET}
+	
+snippet try-catch-finally
+alias tcf
+options head
+	try {
+		${1:#:do_stuff}
+	} catch (${2:err}) {
+		${3:#:handle_error}
+	} finally {
+		${4:#:do_more_stuff}
+	};
+	${0:TARGET}
+
+snippet for
+options head
+  for (let ${1:i} = 0; $1 < ${2:#:Things}.length; $1 += ${3:1}) {
+    ${0:TARGET}
+  }
+
+snippet for-in
+alias forin
+options head
+	for (const ${1:key} in ${2:obj}) {
+		if ($2.hasOwnProperty($1)) {
+			${0:TARGET}
+		};
+	};
+
+snippet for-of
+alias forof
+options head
+	for (const ${1:value} of ${2:#:iterable}) {
+		${0:TARGET}
+	};
+
+snippet arrow-function
+alias f
+options word
+	${1:argument} => {
+		${2:#:do_stuff}
+	}${0:TARGET}
+
+snippet full-arrow-function
+alias fa
+options head
+	const ${1:#:functionName} = ${2:#:argument} => {
+		${3:#:do_stuff}
+	};
+	${0:TARGET}
+
+snippet small-arrow-function
+alias fs
+options word
+	${1:#:argument} => ${0:#:TARGET}
+
+# Components
+# ========================================
+snippet functional-component
+alias cf
+options head
+	const ${1:MyComponent} = ${2:props} => {
+		${3}
+
+		return (
+			<>
+				${4:#:JSX}
+			</>
+		);
+	};
+	${0:TARGET}
+
+snippet styled-component
+alias cs
+options head
+	const ${1:MyStyledComponent} = styled.${2:div}((${3:props}) => \`
+		${4:#:styles}
+	\`;
+	${0:TARGET}
+
+# Hooks
+# ========================================
+snippet hook-state
+alias hs
+options head
+	const [${1:state}, ${2:setState}] = useState(${3:false});
+	${0:TARGET}
+
+snippet hook-effect
+alias he
+options head
+	useEffect(() => {
+		${1:#:do_stuff}
+	}${2:, []});
+	${0:TARGET}
+
+snippet hook-memo
+alias hm
+options head
+	useMemo(() => {
+		${1:#:do_stuff}
+	}, [${2:#:dependencies]}]);
+	${0:TARGET}
+
+# PropTypes
+# ========================================
+snippet proptype-array
+alias pa
+options word
+	PropType.array,
+	${0:TARGET}
+
+snippet proptype-array-required
+alias par
+options word
+	PropType.array.isRequired,
+	${0:TARGET}
+
+snippet proptype-arrayOf
+alias pao
+options word
+	PropType.arrayOf([
+		${1:#:proptypes},
+	]),
+	${0:TARGET}
+
+snippet proptype-arrayOf-required
+alias paor
+options word
+	PropType.arrayOf([
+		${1:#:proptypes},
+	]).isRequired,
+	${0:TARGET}
+
+snippet proptype-bool
+alias pb
+options word
+	PropType.bool,
+	${0:TARGET}
+
+snippet proptype-bool-required
+alias pbr
+options word
+	PropType.bool.isRequired,
+	${0:TARGET}
+
+snippet proptype-function
+alias pf
+options word
+	PropType.func,
+	${0:TARGET}
+
+snippet proptype-function-required
+alias pfr
+options word
+	PropType.func.isRequired,
+	${0:TARGET}
+
+snippet proptype-number
+alias pn
+options word
+	PropType.number,
+	${0:TARGET}
+
+snippet proptype-number-required
+alias pnr
+options word
+	PropType.number.isRequired,
+	${0:TARGET}
+
+snippet proptype-object
+alias po
+options word
+	PropType.object,
+	${0:TARGET}
+
+snippet proptype-object-required
+alias por
+options word
+	PropType.object.isRequired,
+	${0:TARGET}
+
+snippet proptype-objectOf
+alias po
+options word
+	PropType.objectOf([
+		${1:#:proptypes},
+	]),
+	${0:TARGET}
+
+snippet proptype-objectOf-required
+alias por
+options word
+	PropType.objectOf([
+		${1:#:proptypes},
+	]).isRequired,
+	${0:TARGET}
+
+snippet proptype-shape
+alias psh
+options word
+	PropType.shape({
+		${1:#:key}: ${2:#:proptype},
+		${3:#:more}
+	}),
+	${0:TARGET}
+
+snippet proptype-shape-required
+alias pshr
+options word
+	PropType.shape({
+		${1:#:key}: ${2:#:proptype},
+		${3:#:more}
+	}).isRequired,
+	${0:TARGET}
+
+snippet proptype-exact
+alias px
+options word
+	PropType.exact({
+		${1:#:key}: ${2:#:proptype},
+		${3:#:more}
+	}),
+	${0:TARGET}
+
+snippet proptype-exact-required
+alias pxr
+options word
+	PropType.exact({
+		${1:#:key}: ${2:#:proptype},
+		${3:#:more}
+	}).isRequired,
+	${0:TARGET}
+
+snippet proptype-string
+alias ps
+options word
+	PropType.string,
+	${0:TARGET}
+
+snippet proptype-string-required
+alias psr
+options word
+	PropType.string.isRequired,
+	${0:TARGET}
+
+snippet proptype-symbol
+alias pS
+options word
+	PropType.symbol,
+	${0:TARGET}
+
+snippet proptype-symbol-required
+alias pSr
+options word
+	PropType.symbol.isRequired,
+	${0:TARGET}
+
+snippet proptype-node
+alias pN
+options word
+	PropType.node,
+	${0:TARGET}
+
+snippet proptype-node-required
+alias pNr
+options word
+	PropType.node.isRequired,
+	${0:TARGET}
+
+snippet proptype-element
+alias pE
+options word
+	PropType.element,
+	${0:TARGET}
+
+snippet proptype-element-required
+alias pEr
+options word
+	PropType.element.isRequired,
+	${0:TARGET}
+
+snippet proptype-instanceOf
+alias pio
+options word
+	PropType.instanceOf(${1:#:constructor}),
+	${0:TARGET}
+
+snippet proptype-instanceOf-required
+alias pior
+options word
+	PropType.instanceOf(${1:#:constructor}).isRequired,
+	${0:TARGET}
+
+snippet proptype-oneOf
+alias p1
+options word
+	PropType.oneOf([
+		${1:#:values}
+	]),
+	${0:TARGET}
+
+snippet proptype-oneOf-required
+alias p1r
+options word
+	PropType.oneOf([
+		${1:#:values}
+	]).isRequired,
+	${0:TARGET}
+
+snippet proptype-oneOfType
+alias p1t
+options word
+	PropType.oneOfType([
+		${1:#:proptypes}
+	]),
+	${0:TARGET}
+
+snippet proptype-oneOfType-required
+alias p1tr
+options word
+	PropType.oneOfType([
+		${1:#:proptypes}
+	]).isRequired,
+	${0:TARGET}
+
+snippet proptype-any
+alias pany
+options word
+	PropType.any.isRequired,
+	${0:TARGET}
+
+# Files
+# ========================================
+snippet react-file-functional-component
+alias rfc
+options head
+	import react from 'react';
+
+	const ${1:`expand('%:t:r')`} = (${2:props}) => {
+		${3:#:constants}
+
+		return (
+			${0:TARGET}
+		);
+	};
+
+	export default $1;
+
+snippet react-functional-component-proptypes
+alias rfcp
+options head
+	import react from 'react';
+	import PropTypes from 'prop-types';
+
+	const ${1:`expand('%:t:r')`} = (${2:props}) => {
+		${3:#:constants}
+
+		return (
+			${0:TARGET}
+		);
+	};
+
+	$1.propTypes = {
+	};
+
+	$1.defaultProps = {
+	};
+
+	export default $1;

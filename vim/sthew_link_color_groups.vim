@@ -63,10 +63,7 @@ hi link bladeDelimiter Normal
 hi link bladeKeyword Special
 
 " JSX
-hi link xmlTagName Tag
-hi link xmlTag Tag
-hi link xmlAttrib Normal
-hi link xmlEndTag Tag
+hi link jsxComponentName Tag
 
 " Emberjs
 hi link hbsHandles Normal

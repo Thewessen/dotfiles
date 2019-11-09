@@ -64,14 +64,14 @@ if &t_Co > 255
         hi Statement ctermfg=203
         hi Define ctermfg=203
         hi Folded ctermfg=252 ctermbg=235
-        hi FoldColumn ctermbg=NONE ctermfg=234
+        hi FoldColumn ctermbg=NONE ctermfg=0
         hi SignColumn ctermbg=NONE
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
         hi TabLineSel ctermfg=102 ctermbg=NONE cterm=bold
-        hi DiffAdd ctermbg=64 cterm=NONE
+        hi DiffAdd ctermbg=22 cterm=NONE
         hi DiffDelete ctermbg=88 cterm=NONE
-        hi DiffChange ctermbg=233 cterm=NONE
+        hi DiffChange ctermbg=NONE cterm=NONE
         hi DiffText ctermbg=22 cterm=NONE
         hi Special ctermfg=141 cterm=italic
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE

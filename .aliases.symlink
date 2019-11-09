@@ -80,15 +80,15 @@ alias vundle='nvim +PluginInstall +qall'
 alias vundle-clean='nvim +PluginClean +qall'
 
 # Start neovim with Obsession
-function nvim() {
-  if test $# -gt 0; then
-    env nvim "$@"
-  elif test -f Session.vim; then
-    env nvim -S
-  else
-    env nvim -c Obsession
-  fi
-}
+# function nvim() {
+#   if test $# -gt 0; then
+#     env nvim "$@"
+#   elif test -f Session.vim; then
+#     env nvim -S
+#   else
+#     env nvim -c Obsession
+#   fi
+# }
 
 # vundle-add() {
 #     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")

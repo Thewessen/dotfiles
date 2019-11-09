@@ -1,159 +1,254 @@
 /**
  * Slate Javasript configuration file
  */
-slate.log('[SLATE] -------------- Started Loading Config from .slate.js --------------')
-// Slate configuration options
-slate.defaultToCurrentScreen = true
-slate.secondsBeforeRepeat = 0.4
-slate.secondsBetweenRepeat = 0.1
-slate.keyboardLayout = 'qwerty'
-slate.nudgePercentOf = 'screenSize'
-slate.resizePercentOf = 'screenSize'
+S.log('[SLATE] --- Started Loading config from .slate.js ---')
+// helpers
+const mod = key => `${key}:a,ctrl`
 
-slate.source('~/.dotfiles/slate/slate_utils.js')
-
-// Key helpers
-const cmd = key => `${key}:cmd`
-const ctrl = key => `${key}:ctrl`
-const alt = key => `${key}:alt`
-
-// Configure screens/monitors.
 const screens = {
   mac: {
     id: 0,
     resolution: '1650x1050',
-  }
+  },
+  main: {
+    id: 1,
+    resolution: '2560x1440',
+  },
+  right: {
+    id: 2,
+    resolution: '2560x1440',
+  },
 }
 
-// Need to call this after screen definition
-slate.source('~/.dotfiles/slate/standard_positions.js')
-
-
-// screen layout shortcuts
-const screenLayouts = {
-  fourMonitors: {
-    key: alt('4'),
-  },
-  threeMonitors: {
-    key: alt('3'),
-  },
-  twoMonitors: {
-    key: alt('2'),
-  }
+const applications = {
+  '1': 'iTerm2',
+  '2': 'PhpStorm',
+  '3': 'Google Chrome',
+  '4': 'Grud Hypotheekbond',
+  '5': 'WhatsApp',
+  '6': 'Avocode',
+  '7': 'Agenda Hypotheekbond',
+  '8': 'Mail Hypotheekbond',
+  '9': 'Slack',
+  '0': 'TimeChimp Hypotheekbond',
 }
 
-
-// Applications definitions
-const myApps = {
-  'Mail': { // App name as seen by slate. Check 'Current Windows Info' from the slate menu
-    key: ctrl('e'),  // Shortcut to focus on the app
-    position: { // layouts
-      fourMonitors: screens.asus.bottomTwoThirds,  // layoutName: screens.screenName.poistion
-      threeMonitors: screens.asus.bottomTwoThirds,
-      twoMonitors: screens.lg.rightOneThird
-    }
-  },
-  'Calendar': {
-    key: ctrl('l'),
-    position: {
-      fourMonitors: screens.samsung.topOneThird,
-      threeMonitors: screens.asus.topOneThird,
-      twoMonitors: screens.mac.bottomLeftCorner,
-    }
-  },
-  'Code': {
-    key: ctrl('c'),
-    position: {
-      fourMonitors: screens.asus.bottomTwoThirds,
-      threeMonitors: screens.asus.bottomOneThird,
-      twoMonitors: screens.lg.rightOneThird,
-    }
-  },
-  'Terminal': {
-    key: ctrl('t'),
-    position: {
-      fourMonitors: screens.mac.leftHalf,
-      threeMonitors: screens.mac.leftHalf,
-      twoMonitors: screens.mac.leftHalf,
-    }
-  },
-  'Telegram': {
-    key: ctrl('r'),
-    position: {
-      fourMonitors: screens.asus.leftOneHalfByOneThird,
-      threeMonitors: screens.asus.leftOneThirdTopHalf,
-      twoMonitors: screens.mac.topRightCorner
-    }
-  },
-  'WhatsApp': {
-    key: ctrl('w'),
-    position: {
-      fourMonitors: screens.samsung.rightOneHalfByOneThird,
-      threeMonitors: screens.asus.rightOneThirdTopHalf,
-      twoMonitors: screens.mac.bottomRightCorner
-    }
-  },
-  'Messages': {
-    key: ctrl('m'),
-    position: {
-      fourMonitors: screens.asus.rightOneHalfByOneThird,
-      threeMonitors: screens.asus.rightOneThirdTopHalf,
-      twoMonitors: screens.mac.rightHalf
-    }
-  },
-  'Google Chrome': {
-    key: ctrl('b'),
-    position: {
-      fourMonitors: screens.lg.rightOneThird,
-      threeMonitors: screens.lg.rightOneThird,
-      twoMonitors: screens.lg.rightOneThird
-    }
-  },
-  'Safari': {
-    key: ctrl('s'),
-    position: {
-      fourMonitors: screens.lg.leftOneThird,
-      threeMonitors: screens.lg.leftOneThird,
-      twoMonitors: screens.lg.leftOneThird
-    }
-  },
-  'Finder': {
-    key: ctrl('f'),
-    position: {
-      fourMonitors: screens.mac.rightHalf,
-      threeMonitors: screens.mac.rightHalf,
-      twoMonitors: screens.mac.rightHalf,
-    }
-  },
-  'Microsoft Excel': {
-    key: ctrl('x'),
-    position: {
-      fourMonitors: screens.lg.rightTwoThirds,
-      threeMonitors: screens.lg.rightTwoThirds,
-      twoMonitors: screens.lg.rightTwoThirds
-    }
-  }
+const pushedLeft = win => {
+  if (!win) return false
+  const winRect = win.rect()
+  const screen = win.screen().visibleRect()
+  return (
+    winRect.x === screen.x &&
+    winRect.y === screen.y &&
+    winRect.width === screen.width/2 &&
+    winRect.height === screen.height
+  )
 }
 
-// Moves bound to shortcut 1
-bindKeys(ctrl, {
-  'right': slide('right'),
-  'left': slide('left'),
-  'up': slide('up'),
-  'down': slide('down'),
+const pushedRight = win => {
+  if (!win) return false
+  const winRect = win.rect()
+  const screen = win.screen().visibleRect()
+  return (
+    winRect.x === screen.x + screen.width/2 &&
+    winRect.y === screen.y &&
+    winRect.width === screen.width/2 &&
+    winRect.height === screen.height
+  )
+}
+
+const isFullscreen = win => {
+  if (!win) return false
+  const winRect = win.rect()
+  const screen = win.screen().visibleRect()
+  return (
+    winRect.width === screen.width &&
+    winRect.height === screen.height
+  )
+}
+
+S.log('[SLATE] --- Setting slate global configuration options ---')
+S.configAll({
+  defaultToCurrentScreen: true,
+  secondsBeforeRepeat: 0.4,
+  secondsBetweenRepeat: 0.1,
+  keyboardLayout: 'dvorak',
+  nudgePercentOf: 'screenSize',
+  resizePercentOf: 'screenSize',
+  modalEscapeKey: 'c:ctrl',
 })
 
-// Moves bound to shortcut 2
-bindKeys(cmd, {
-  'right': moveToScreen('right'),
-  'left': moveToScreen('left'),
-  'r': relaunch()
+S.log('[SLATE] --- Defining slate operations ---')
+const hint = S.operation('hint', {
+  characters: 'AOEUIQJK',
+})
+// TODO: make unhide possible for all windows
+const hide = S.operation('hide', {
+  app: 'all',
+})
+const toggle = S.operation('toggle', {
+  app: 'Slack',
+})
+const show = S.operation('show', {
+  app: 'all',
+})
+const full = S.operation('move', {
+  x: 'screenOriginX',
+  y: 'screenOriginY',
+  width: 'screenSizeX',
+  height: 'screenSizeY',
+})
+const pushRight = S.operation('push', {
+  direction: 'right',
+  style: 'bar-resize:screenSizeX/2',
 })
 
-// Moves boud to shortcut 3
-//bindKeys(sc3, )
+const pushLeft = S.operation('push', {
+  direction: 'left',
+  style: 'bar-resize:screenSizeX/2',
+})
 
-// Bind all application shortcuts and create all layouts
-bindApps(myApps, screenLayouts)
+const throwNextLeft = S.operation('throw', {
+  width: 'screenSizeX/2',
+  height: 'screenSizeY',
+  screen: 'next',
+})
 
-slate.log('[SLATE] -------------- Finished Loading Config from .slate.js -------------')
+const throwNextRight = S.operation('throw', {
+  x: 'screenOriginX+(screenSizeX)/2',
+  y: 'screenOriginY',
+  width: 'screenSizeX/2',
+  height: 'screenSizeY',
+  screen: 'next',
+})
+
+const fullscreen = S.operation('move', {
+  x : 'screenOriginX',
+  y : 'screenOriginY',
+  width : 'screenSizeX',
+  height : 'screenSizeY',
+})
+
+const throwNextFullscreen = S.operation('throw', {
+  x: 'screenOriginX',
+  y: 'screenOriginY',
+  width: 'screenSizeX',
+  height: 'screenSizeY',
+  screen: 'next'
+})
+
+const throwNextTop = S.operation('throw', {
+  x: 'screenOriginX',
+  y: 'screenOriginY',
+  width: 'screenSizeX',
+  height: 'screenSizeY/2',
+  screen: 'next'
+})
+
+const throwNextBottom = S.operation('throw', {
+  x: 'screenOriginX',
+  y: 'screenOriginY + screenSizeY / 2',
+  width: 'screenSizeX',
+  height: 'screenSizeY/2',
+  screen: 'next'
+})
+
+const throwNext = function(win) {
+  if (!win) {
+    return
+  }
+  const winRect = win.rect()
+  const screen = win.screen().visibleRect()
+
+  const newX = (winRect.x - screen.x)/screen.width+'*screenSizeX+screenOriginX'
+  const newY = (winRect.y - screen.y)/screen.height+'*screenSizeY+screenOriginY'
+  const newWidth = winRect.width/screen.width+'*screenSizeX'
+  const newHeight = winRect.height/screen.height+'*screenSizeY'
+  const throwNext = S.operation('throw', {
+    x: newX,
+    y: newY,
+    width: newWidth,
+    height: newHeight,
+    screen: 'next'
+  })
+  win.doOperation(throwNext)
+}
+
+// S.bind('m:alt,cmd', function(win) {
+//   if (!win) {
+//     return
+//   }
+//   win.doOperation(fullscreen)
+// })
+
+
+// S.bind('h:ctrl', function(win) {
+//   if (!win) {
+//     return
+//   }
+//   if (pushedLeft(win)) {
+//     win.doOperation(throwNextLeft)
+//   } else {
+//     win.doOperation(pushLeft)
+//   }
+// })
+
+// S.bind('right:alt,cmd', function(win) {
+//   if (!win) {
+//     return
+//   }
+//   if (pushedRight(win)) {
+//     win.doOperation(throwNextRight)
+//   } else {
+//     win.doOperation(pushRight)
+//   }
+// })
+
+// S.bind('up:alt,cmd', function(win) {
+//   if (!win) {
+//     return
+//   }
+//   win.doOperation(throwNextTop)
+// })
+
+// S.bind('down:alt,cmd', function(win) {
+//   if (!win) {
+//     return
+//   }
+//   win.doOperation(throwNextBottom)
+// })
+S.log('[SLATE] --- Setting slate key bindings ---')
+// S.bindAll({
+  // [mod('g')]: S.op('grid'),
+  // [mod('h')]: hint,
+  // [mod('c')]: hide,
+  // [mod('t')]: toggle,
+  // [mod('s')]: show,
+  // [mod('f')]: full,
+  // [mod('r')]: S.op('relaunch'),
+  // [mod('u')]: S.op('undo'),
+  // 'h:cmd': win => {
+  //   if (!win) return
+  //   pushedRight(win)
+  //     ? win.doOperation(full)
+  //     : win.doOperation(pushLeft) 
+  // },
+  // 'l:cmd': win => {
+  //   if (!win) return
+  //   pushedLeft(win)
+  //     ? win.doOperation(full)
+  //     : win.doOperation(pushRight) 
+  // },
+  // '1:ctrl': focusLeftMonitor,
+  // '2:ctrl': focusMainMonitor,
+  // '3:ctrl': focusLeftMonitor,
+  // '1:ctrl,shift': moveLeftMonitor,
+  // '2:ctrl,shift': moveMainMonitor,
+  // '3:ctrl,shift': moveLeftMonitor,
+// })
+
+for (const [i, app] of Object.entries(applications)) {
+  S.bind(`${i}:ctrl`, S.op('focus', { app } ))
+}
+
+S.log('[SLATE] --- Finished Loading config from .slate.js ---')
