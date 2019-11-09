@@ -1,2 +1,8 @@
 # vim
 Session.vim
+
+# tags
+tags*
+
+# module
+fzf/
