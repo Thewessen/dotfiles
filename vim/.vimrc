@@ -9,6 +9,7 @@ set encoding=utf8
 " =================================
 " - Vundle configuration
 " - Vim configuration
+" - Neovim configuration
 " - Mappings
 " - Source
 
@@ -66,6 +67,7 @@ Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
+Plugin 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
@@ -158,6 +160,13 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 set wildignore=Session.vim
 
+"=================================
+"         Neovim Configurations
+"=================================
+if has('nvim')
+  set inccommand=split
+endif
+
 " =================================
 "       Plugin Configurations
 " =================================
@@ -203,7 +212,7 @@ let g:dispatch_terminal_exec = 'terminator'
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-\ 'auto_complete_delay': 100,
+\ 'auto_complete_delay': 300,
 \ 'smart_case': v:true,
 \ })
 
@@ -220,7 +229,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 \ ]
 
 " Ale
-" set omnifunc=ale#completion#OmniFunc
+set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']

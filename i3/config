@@ -97,7 +97,8 @@ bindsym $alt+period layout toggle split
 bindsym $alt+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $alt+space focus mode_toggle
+# bindsym $alt+space focus mode_toggle
+bindsym $super+space focus mode_toggle
 
 # focus the parent container
 bindsym $alt+a focus parent
@@ -194,6 +195,7 @@ assign [class="^Chromium-browser$" instance="gmail.com"] 9
 assign [class="^Slack$"] 10
 
 # Startup applications (reversed order of priority)
+exec --no-startup-id ulauncher --hide-window
 exec chromium-browser --app="https://web.whatsapp.com"
 exec chromium-browser --app="https://calendar.google.com"
 exec chromium-browser --app="https://gmail.com"
