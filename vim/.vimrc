@@ -70,6 +70,9 @@ Plugin 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
 Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
+Plugin 'posva/vim-vue'                  " Vue syntax highlighting
+Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
+Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
 "Snippets
 if !has('nvim')
   Plugin 'roxma/nvim-yarp'
@@ -82,7 +85,7 @@ Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+" filetype plugin on
 "
 " Put your non-Plugin stuff after this line
 
@@ -465,6 +468,7 @@ nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (ale)
 nno <leader>ss :ALEReset<CR>
+nmap <leader>sf <plug>(ale_fix)
 nno <leader>sd :ALEGoToTypeDefinition<CR>
 nno <leader>sr :ALEFindReferences<CR>
 nno <leader>sn :ALEDetail<CR>
@@ -576,6 +580,7 @@ imap <expr><TAB>
  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
 " =================================
 "       Source vim-scripts
 " =================================

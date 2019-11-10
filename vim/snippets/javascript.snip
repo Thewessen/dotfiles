@@ -3,23 +3,23 @@
 snippet console.log
 alias cl log con
 options head
-	console.log(${0:TARGET});
+	console.log(${0:TARGET})
 
 snippet console.error
 alias ce error
 options head
-	console.error(${0:TARGET});
+	console.error(${0:TARGET})
 
 snippet console.warn
 alias cw warn
 options head
-	console.warn(${0:TARGET});
+	console.warn(${0:TARGET})
 
 snippet if
 options head
 	if (${1:#:condition}) {
 		${2:#:do_stuff}
-	};
+	}
 	${0:TARGET}
 
 snippet if-else
@@ -29,7 +29,7 @@ options head
 		${2:#:do_stuff}
 	} else {
 		${3:#:do_more_stuff}
-	};
+	}
 	${0:TARGET}
 
 snippet if-else-if
@@ -39,7 +39,7 @@ options head
 		${2:#:do_stuff}
 	} else if (${3:#:condition}) {
 		${4:#:do_more_stuff}
-	};
+	}
 	${0:TARGET}
 
 snippet try-catch
@@ -49,7 +49,7 @@ options head
 		${1:#:do_stuff}
 	} catch (${2:err}) {
 		${3:#:handle_error}
-	};
+	}
 	${0:TARGET}
 
 snippet try-finally
@@ -59,7 +59,7 @@ options head
 		${1:#:do_stuff}
 	} finally {
 		${2:#:do_more_stuff}
-	};
+	}
 	${0:TARGET}
 	
 snippet try-catch-finally
@@ -71,7 +71,7 @@ options head
 		${3:#:handle_error}
 	} finally {
 		${4:#:do_more_stuff}
-	};
+	}
 	${0:TARGET}
 
 snippet for
@@ -86,15 +86,15 @@ options head
 	for (const ${1:key} in ${2:obj}) {
 		if ($2.hasOwnProperty($1)) {
 			${0:TARGET}
-		};
-	};
+		}
+	}
 
 snippet for-of
 alias forof
 options head
 	for (const ${1:value} of ${2:#:iterable}) {
 		${0:TARGET}
-	};
+	}
 
 snippet arrow-function
 alias f
@@ -108,7 +108,7 @@ alias fa
 options head
 	const ${1:#:functionName} = ${2:#:argument} => {
 		${3:#:do_stuff}
-	};
+	}
 	${0:TARGET}
 
 snippet small-arrow-function
@@ -128,8 +128,8 @@ options head
 			<>
 				${4:#:JSX}
 			</>
-		);
-	};
+		)
+	}
 	${0:TARGET}
 
 snippet styled-component
@@ -137,7 +137,7 @@ alias cs
 options head
 	const ${1:MyStyledComponent} = styled.${2:div}((${3:props}) => \`
 		${4:#:styles}
-	\`;
+	\`
 	${0:TARGET}
 
 # Hooks
@@ -145,7 +145,7 @@ options head
 snippet hook-state
 alias hs
 options head
-	const [${1:state}, ${2:setState}] = useState(${3:false});
+	const [${1:state}, ${2:setState}] = useState(${3:false})
 	${0:TARGET}
 
 snippet hook-effect
@@ -153,7 +153,7 @@ alias he
 options head
 	useEffect(() => {
 		${1:#:do_stuff}
-	}${2:, []});
+	}${2:, []})
 	${0:TARGET}
 
 snippet hook-memo
@@ -161,7 +161,7 @@ alias hm
 options head
 	useMemo(() => {
 		${1:#:do_stuff}
-	}, [${2:#:dependencies]}]);
+	}, [${2:#:dependencies]}])
 	${0:TARGET}
 
 # PropTypes
@@ -397,36 +397,36 @@ options word
 snippet react-file-functional-component
 alias rfc
 options head
-	import react from 'react';
+	import react from 'react'
 
 	const ${1:`expand('%:t:r')`} = (${2:props}) => {
 		${3:#:constants}
 
 		return (
 			${0:TARGET}
-		);
-	};
+		)
+	}
 
-	export default $1;
+	export default $1
 
 snippet react-functional-component-proptypes
 alias rfcp
 options head
-	import react from 'react';
-	import PropTypes from 'prop-types';
+	import react from 'react'
+	import PropTypes from 'prop-types'
 
 	const ${1:`expand('%:t:r')`} = (${2:props}) => {
 		${3:#:constants}
 
 		return (
 			${0:TARGET}
-		);
-	};
+		)
+	}
 
 	$1.propTypes = {
-	};
+	}
 
 	$1.defaultProps = {
-	};
+	}
 
-	export default $1;
+	export default $1
