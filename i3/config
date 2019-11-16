@@ -97,7 +97,7 @@ bindsym $alt+period layout toggle split
 bindsym $alt+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $alt+space focus mode_toggle
+bindsym $super+space focus mode_toggle
 
 # focus the parent container
 bindsym $alt+a focus parent
@@ -203,7 +203,6 @@ workspace 9 output DVI-D-0
 workspace 10 output DVI-D-0 
 
 # Applications to workspace assignments
-assign [class="^Terminator$"] 1
 assign [class="^qutebrowser$"] 6
 assign [class="^Chromium-browser$" instance="web.whatsapp.com"] 7
 assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
@@ -224,6 +223,7 @@ exec slack
 # Setting background and keybindings
 exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/"Hubbel stars"/"Galaxy M106 2560x1440.jpg"
 exec --no-startup-id xmodmap ~/.xmodmap
+exec --no-startup-id ulauncher --hide-window --no-window-shadow
 
 # Window borders
 new_window none

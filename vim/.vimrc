@@ -8,7 +8,8 @@ set encoding=utf8
 "  Index
 " =================================
 " - Vundle configuration
-" - Vim configuration
+" - Vim configurations
+" - Neovim configurations
 " - Mappings
 " - Source
 
@@ -160,6 +161,15 @@ set wrapmargin=0    " No linebreaks in Insert mode
 set wildignore=Session.vim
 
 " =================================
+"       Neovim Configurations
+" =================================
+
+if has('nvim')
+  set inccommand=split
+  " let g:node_host_prog = '/usr/local/bin/neovim-node-host'
+endif
+
+" =================================
 "       Plugin Configurations
 " =================================
 
@@ -196,7 +206,6 @@ let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
-let g:dispatch_terminal_exec = 'terminator'
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -311,8 +320,8 @@ nno <C-Y> 2<C-Y>
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search 
-nno ? :Abolish! -search 
+nno \ :Abolish -search<space>
+nno ? :Abolish! -search<space>
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -417,18 +426,18 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 nmap <silent> <leader>. <C-^>
 
 " Buffers
-" nmap <leader>b :buffer 
+" nmap <leader>b :buffer<space>
 " Location list
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
-" nmap <leader>a :args 
+" nmap <leader>a :args<space>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
-nno <leader>G :call GolfStart()<CR>
+" nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
@@ -445,40 +454,42 @@ nno <leader>st :ALEToggle<CR>
 
 " Git commands (vim-fugitive)
 " CD too repository root
-nno <leader>cd :Gcd<CR>
+" nno <leader>cd :Gcd<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
-" nno <leader>gg :Gpush<CR>
-nno <leader>gg :Git 
-nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
+" nno <leader>gg :Git<space>
+nno <leader>gg :Gwrite!<CR>
+nno <leader>gp :Gpush<CR>
 nno <silent> <leader>gL :0Glog<CR>
 nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
-nno <leader>gm :Gmerge 
-nno <silent> <leader>gf :Gfetch<CR>
-nno <silent> <leader>gc :Gcommit -v<CR>
-nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gD :Gremove 
-nno <leader>gd :Gdiffsplit 
-nno <leader>gn :Gmove 
+nno <leader>gm :Gmerge<space>
+nno <leader>gf :Gfetch<CR>
+nno <leader>gc :Gcommit -v<CR>
+nno <leader>gb :Gblame<CR>
+nno <leader>gD :Gremove<space>
+nno <leader>gd :Gvdiffsplit<space>
+nno <leader>gn :Gmove<space>
 
 " FZF commands
-nno <silent> <C-P> :Files<CR>
-nno <silent> <leader>ff :GFiles<CR>
-nno <silent> <leader>/ :Lines<CR>
-nno <silent> <leader>fL :BLines<CR>
-nno <silent> <leader>fg :GFiles?<CR>
-nno <silent> <leader>fc :Commits<CR>
-nno <silent> <leader>fd :BCommits<CR>
-nno <silent> <leader>b :Buffer<CR>
-nno <silent> <leader>fw :Windows<CR>
-nno <silent> <leader>fm :Marks<CR>
-nno <silent> <leader>ft :Tags<CR>
-nno <silent> <leader>fT :Filetypes<CR>
-nno <silent> <leader>fM :Maps<CR>
-nno <silent> <leader>fh :History<CR>
-nno <silent> <leader>f? :Helptags<CR>
-nno <silent> <leader>fH :History:<CR>
-nno <silent> <leader>f/ :History/<CR>
+nno <leader>fa :Ag<space>
+nno <leader>f* :Ag <C-R><C-W><CR>
+nno <C-P> :Files<CR>
+nno <leader>ff :GFiles<CR>
+nno <leader>/ :Lines<CR>
+nno <leader>fl :BLines<CR>
+nno <leader>fg :GFiles?<CR>
+nno <leader>fc :Commits<CR>
+nno <leader>fd :BCommits<CR>
+nno <leader>b :Buffer<CR>
+nno <leader>fw :Windows<CR>
+nno <leader>fm :Marks<CR>
+nno <leader>ft :Tags<CR>
+nno <leader>fT :Filetypes<CR>
+nno <leader>fM :Maps<CR>
+nno <leader>fh :History<CR>
+nno <leader>f? :Helptags<CR>
+nno <leader>f: :History:<CR>
+nno <leader>f/ :History/<CR>
 
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
@@ -502,13 +513,13 @@ nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep 
-nno <leader>amc :!php artisan make:controller 
-nno <leader>amm :!php artisan make:model 
-nno <leader>amr :!php artisan make:migration 
-nno <leader>amp :!php artisan make:policy  
-nno <leader>ame :!php artisan make:event 
-nno <leader>aml :!php artisan make:listener 
+nno <leader>arl :!php artisan route:list \| grep<space>
+nno <leader>amc :!php artisan make:controller<space>
+nno <leader>amm :!php artisan make:model<space>
+nno <leader>amr :!php artisan make:migration<space>
+nno <leader>amp :!php artisan make:policy <space>
+nno <leader>ame :!php artisan make:event<space>
+nno <leader>aml :!php artisan make:listener<space>
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
