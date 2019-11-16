@@ -8,6 +8,8 @@
 # =================================
 #             General
 # =================================
+# For mac
+alias ctags='/usr/local/bin/ctags'
 alias pstree='pstree -aclp'
 
 alias xclip='xclip -selection clipboard'

@@ -1,0 +1,123 @@
+"=================================
+"		    Plugins
+"=================================
+set surround
+set commentary
+
+"=================================
+"		    Settings
+"=================================
+set hlsearch
+"=================================
+"		    Mappings
+"=================================
+" Different leader key
+let mapleader=','
+
+" Save&Close file
+nmap <leader>w :x<CR>
+
+" Quit!
+nmap <silent> <leader>q :qall!<CR>
+
+" " Copy to clipboard
+vno <leader>y  "+y
+nno <leader>Y  "+yg_
+nno <leader>y  "+y
+nno <leader>yy  "+yy
+
+" " Paste from clipboard
+nno <leader>p "+p
+nno <leader>P "+P
+vno <leader>p "+p
+vno <leader>P "+P
+
+" Scroll faster with C-E and C-Y
+nno <C-E> 2<C-E>
+nno <C-Y> 2<C-Y>
+
+" Search and destroy
+nno s :%s/
+vno s :s/
+
+" Yank till end of line
+nno Y y$
+
+" Quit
+nno <silent> <C-D> :q<CR>
+
+" Window movement and tiling
+nmap <C-H> <C-W>W
+nmap <C-L> <C-W>w
+" nno <C-W><C-V> <C-W><C-V><C-W>l
+" nno <C-W><C-S> <C-W><C-S><C-W>j
+nno <leader>o :only<CR>
+
+" Make C-U act like u
+ino <C-U> <C-G>u<C-U>
+
+" Command & Insert-mode mapping
+cno <C-D> <Del>
+ino <C-D> <Del>
+ino <C-B> <ESC>bi
+ino <C-L> <ESC>li
+ino <C-E> <ESC>ea
+
+" Switch between current and last buffer
+nmap <silent> <leader>. <C-^>
+
+" Press Space to turn off highlighted search
+" and clear any message already displayed.
+nno <silent> <Space> :nohlsearch<CR>:echo<CR>
+
+" Remove extra whitespace
+nmap <silent> <leader><space> :%s/\s\+$<CR>
+
+"Empty line
+nno [<space> O<ESC>j
+nno ]<space> o<ESC>k
+
+"=================================
+"		    Editor actions
+"=================================
+" View navigation bar
+nno - :action ShowNavBar<CR>
+
+" Open terminal
+nno <leader>z :action ActivateTerminalToolWindow<CR>
+
+" Recent files
+nno <leader>e :action RecentLocations<CR>
+nno <leader>b :action RecentFiles<CR>
+nno <leader>f :action GotoFile<CR>
+nno <leader>a :action GotoAction<CR>
+nno gf :action GotoDeclaration<CR>
+
+" Other windows
+nno <leader>l :action ActivateFavoritesToolWindow<CR>
+nno <leader>r :action ActivateRunToolWindow<CR>
+" nno <leader>r :action ActivateTODOToolWindow<CR>
+nno <leader>c :action ActivateVersionControlToolWindow<CR>
+
+" Git commands
+nno <leader>gg :action Git.Branches<CR>
+nno <leader>gc :action CheckinProject<CR>
+nno <leader>gr :action ChangesView.Revert<CR>
+nno <leader>gd :action Git.CompareWithBranch<CR>
+nno <leader>gf :action Git.Fetch<CR>
+nno <leader>gl :action Git.Pull<CR>
+nno <leader>gp :action Vcs.Push<CR>
+nno <leader>gL :action Git.Log<CR>
+nno <leader>gb :action Annotate<CR>
+nno <leader>gm :action Git.ResolveConflicts<CR>
+
+" Live templates
+nno <leader>, :action InsertLiveTemplate<CR>
+nno <leader>s :action SurroundWithLiveTemplate<CR>
+
+" Reformat
+nno <leader>t :action ReformatWithPrettier<CR>
+" vno <leader>t :action VimReformatVisual<CR>
+" nno <leader>T :action ReformatCode<CR>
+
+

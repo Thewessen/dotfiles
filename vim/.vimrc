@@ -38,8 +38,8 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'w0rp/ale'                       " Async linter and completer
 Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
 Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
-Plugin 'roxma/nvim-yarp'                " Deoplete dependency
-Plugin 'roxma/vim-hug-neovim-rpc'       " Deoplete dependency
+Plugin 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
+Plugin 'tpope/vim-obsession'            " Auto updating a session file
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
@@ -48,6 +48,7 @@ Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
 Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
+Plugin 'tpope/vim-dispatch'               " Async implementations (tmux and other)
 Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plugin 'airblade/vim-rooter'            " Automtically change working dir to root
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
@@ -57,6 +58,7 @@ Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
+Plugin 'hail2u/vim-css3-syntax'         " CSS3 syntax
 "Snippets
 if !has('nvim')
   Plugin 'roxma/nvim-yarp'
@@ -166,6 +168,10 @@ endif
 "       Plugin Configurations
 " =================================
 
+" GutenTags
+" Use :GutentagsToggleEnabled to enable gutentags
+let g:gutentags_enabled = 0
+
 " NeovimSnippets settings
 let g:neosnippet#snippets_directory = ['~/.dotfiles/vim/snippets']
 let g:neosnippet#disable_runtime_snippets = {
@@ -198,7 +204,7 @@ let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
-let g:dispatch_terminal_exec = 'terminator'
+let g:dispatch_terminal_exec = 'zsh'
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -226,7 +232,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['.git/', 'package.json']
+let g:rooter_patterns = ['package.json', '.git/']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 
@@ -236,9 +242,11 @@ let g:ale_linters = {
 \   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+\   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
 \}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
 
 " =================================
@@ -291,7 +299,7 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0 | endif
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=0 | endif
     autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
 augroup END
 
@@ -349,6 +357,11 @@ ino <C-U> <C-G>u<C-U>
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
 
+" Make C-A and C-E act like terminal in Command mode
+cno <C-A> <HOME>
+cno <C-E> <END>
+
+
 " Window movement and tiling
 nno <C-H> <C-W>W
 nno <C-L> <C-W>w
@@ -374,20 +387,10 @@ imap <C-S> <Plug>Isurround
 ino <C-G><C-M> <CR><ESC>O
 
 " Map function key's
-" nmap <f1> :Gstatus<CR>
-" nmap <f2> :Gcommit -v<CR>
-" nmap <f3> :Gpush<CR>
-" nmap <f4> :Gpull<CR>
-" nmap <f5> :0Glog<CR>
-" nmap <f7> :SyntasticCheck<CR>
-" nmap <f8> :SyntasticReset<CR>
-" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
 nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-" nmap <silent> <f11>
-" nmap <silent> <f12>
 
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
@@ -412,7 +415,7 @@ nno <silent> <leader>h :hide<CR>
 nno <silent> <leader>o :only<CR>
 
 " Save file
-nmap <leader>, :w<CR>
+nmap <leader>, :wa<CR>
 
 " Save&Close file
 nmap <leader>w :x<CR>
@@ -440,6 +443,7 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
+" nmap <silent> <leader>'
 
 " Buffers
 " nmap <leader>b :buffer<space>
@@ -453,7 +457,6 @@ nmap <silent> <leader>c :copen<CR>
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
-nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
@@ -461,6 +464,7 @@ nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (ale)
 nno <leader>ss :ALEReset<CR>
+nno <leader>sf :ALEFix<CR>
 nno <leader>sd :ALEGoToTypeDefinition<CR>
 nno <leader>sr :ALEFindReferences<CR>
 nno <leader>sn :ALEDetail<CR>
@@ -474,14 +478,14 @@ nno <leader>st :ALEToggle<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
-nno <leader>gg :Git<space>
-nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
-nno <silent> <leader>gL :0Glog<CR>
-nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
+nno <leader>gg :Gwrite!<CR>
+nno <leader>gp :Gpush<CR>
+nno <leader>gL :0Glog<CR>
+nno <leader>gl :Gpull<CR>
 nno <leader>gm :Gmerge<space>
-nno <silent> <leader>gf :Gfetch<CR>
-nno <silent> <leader>gc :Gcommit -v<CR>
-nno <silent> <leader>gb :Gblame!<CR>
+nno <leader>gf :Gfetch<CR>
+nno <leader>gc :Gcommit -v<CR>
+nno <leader>gb :Gblame<CR>
 nno <leader>gd :Gvdiffsplit!<CR>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
@@ -490,6 +494,9 @@ nno <leader>gw :Gwrite!<CR>
 " Used inside working file (mid file)
 nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
 nno <leader>g] :diffget //3<CR>:diffupdate<CR>
+
+" Enable gutentags
+nno <leader>G :GutentagsUpdate<CR>
 
 " FZF commands
 nno <silent> <C-P> :Files<CR>
@@ -512,9 +519,9 @@ nno <silent> <leader>fH :History:<CR>
 nno <silent> <leader>f/ :History/<CR>
 
 " NPM and nodejs dispatch commands
-nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
 nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
+nno <silent> <leader>nh :bo 10split term://node"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
 nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
@@ -549,6 +556,7 @@ nno <silent> <leader>aMs :!php artisan migrate:status<CR>
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
+nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
 nmap <leader>eg :vsplit ~/.gitconfig<CR>
 nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
@@ -572,6 +580,10 @@ imap <expr><TAB>
  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" TODO: GitHub auto add ticket to commit message
+au! filetype gitcommit nno <buffer> <leader>b 5GyyggPd3wi[3ea] lC
+
 " =================================
 "       Source vim-scripts
 " =================================

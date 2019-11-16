@@ -21,15 +21,15 @@ const screens = {
 }
 
 const applications = {
-  '1': 'iTerm2',
-  '2': 'PhpStorm',
+  '1': 'Slack',
+  '2': 'iTerm2',
   '3': 'Google Chrome',
   '4': 'Grud Hypotheekbond',
   '5': 'WhatsApp',
-  '6': 'Avocode',
-  '7': 'Agenda Hypotheekbond',
-  '8': 'Mail Hypotheekbond',
-  '9': 'Slack',
+  '6': 'PhpStorm',
+  '7': 'Avocode',
+  '8': 'Agenda Hypotheekbond',
+  '9': 'Mail Hypotheekbond',
   '0': 'TimeChimp Hypotheekbond',
 }
 
@@ -250,5 +250,6 @@ S.log('[SLATE] --- Setting slate key bindings ---')
 for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
 }
+S.bind('r:ctrl,shift', S.op('relaunch'))
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')

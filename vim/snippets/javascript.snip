@@ -1,5 +1,15 @@
 # Note: Hard-tabs for JavaScript snippets is important
 # because of indention
+snippet TODO
+alias td TD TODO
+options head
+  // TODO: ${0:TARGET}
+
+snippet JSX-TODO
+alias rtd rto RTODO
+options head
+  {/* TODO: ${0:TARGET} */}
+
 snippet console.log
 alias cl log con
 options head
@@ -169,19 +179,19 @@ options head
 snippet proptype-array
 alias pa
 options word
-	PropType.array,
+	PropTypes.array,
 	${0:TARGET}
 
 snippet proptype-array-required
 alias par
 options word
-	PropType.array.isRequired,
+	PropTypes.array.isRequired,
 	${0:TARGET}
 
 snippet proptype-arrayOf
 alias pao
 options word
-	PropType.arrayOf([
+	PropTypes.arrayOf([
 		${1:#:proptypes},
 	]),
 	${0:TARGET}
@@ -189,7 +199,7 @@ options word
 snippet proptype-arrayOf-required
 alias paor
 options word
-	PropType.arrayOf([
+	PropTypes.arrayOf([
 		${1:#:proptypes},
 	]).isRequired,
 	${0:TARGET}
@@ -197,55 +207,55 @@ options word
 snippet proptype-bool
 alias pb
 options word
-	PropType.bool,
+	PropTypes.bool,
 	${0:TARGET}
 
 snippet proptype-bool-required
 alias pbr
 options word
-	PropType.bool.isRequired,
+	PropTypes.bool.isRequired,
 	${0:TARGET}
 
 snippet proptype-function
 alias pf
 options word
-	PropType.func,
+	PropTypes.func,
 	${0:TARGET}
 
 snippet proptype-function-required
 alias pfr
 options word
-	PropType.func.isRequired,
+	PropTypes.func.isRequired,
 	${0:TARGET}
 
 snippet proptype-number
 alias pn
 options word
-	PropType.number,
+	PropTypes.number,
 	${0:TARGET}
 
 snippet proptype-number-required
 alias pnr
 options word
-	PropType.number.isRequired,
+	PropTypes.number.isRequired,
 	${0:TARGET}
 
 snippet proptype-object
 alias po
 options word
-	PropType.object,
+	PropTypes.object,
 	${0:TARGET}
 
 snippet proptype-object-required
 alias por
 options word
-	PropType.object.isRequired,
+	PropTypes.object.isRequired,
 	${0:TARGET}
 
 snippet proptype-objectOf
 alias po
 options word
-	PropType.objectOf([
+	PropTypes.objectOf([
 		${1:#:proptypes},
 	]),
 	${0:TARGET}
@@ -253,7 +263,7 @@ options word
 snippet proptype-objectOf-required
 alias por
 options word
-	PropType.objectOf([
+	PropTypes.objectOf([
 		${1:#:proptypes},
 	]).isRequired,
 	${0:TARGET}
@@ -261,7 +271,7 @@ options word
 snippet proptype-shape
 alias psh
 options word
-	PropType.shape({
+	PropTypes.shape({
 		${1:#:key}: ${2:#:proptype},
 		${3:#:more}
 	}),
@@ -270,7 +280,7 @@ options word
 snippet proptype-shape-required
 alias pshr
 options word
-	PropType.shape({
+	PropTypes.shape({
 		${1:#:key}: ${2:#:proptype},
 		${3:#:more}
 	}).isRequired,
@@ -279,7 +289,7 @@ options word
 snippet proptype-exact
 alias px
 options word
-	PropType.exact({
+	PropTypes.exact({
 		${1:#:key}: ${2:#:proptype},
 		${3:#:more}
 	}),
@@ -288,7 +298,7 @@ options word
 snippet proptype-exact-required
 alias pxr
 options word
-	PropType.exact({
+	PropTypes.exact({
 		${1:#:key}: ${2:#:proptype},
 		${3:#:more}
 	}).isRequired,
@@ -297,67 +307,67 @@ options word
 snippet proptype-string
 alias ps
 options word
-	PropType.string,
+	PropTypes.string,
 	${0:TARGET}
 
 snippet proptype-string-required
 alias psr
 options word
-	PropType.string.isRequired,
+	PropTypes.string.isRequired,
 	${0:TARGET}
 
 snippet proptype-symbol
 alias pS
 options word
-	PropType.symbol,
+	PropTypes.symbol,
 	${0:TARGET}
 
 snippet proptype-symbol-required
 alias pSr
 options word
-	PropType.symbol.isRequired,
+	PropTypes.symbol.isRequired,
 	${0:TARGET}
 
 snippet proptype-node
 alias pN
 options word
-	PropType.node,
+	PropTypes.node,
 	${0:TARGET}
 
 snippet proptype-node-required
 alias pNr
 options word
-	PropType.node.isRequired,
+	PropTypes.node.isRequired,
 	${0:TARGET}
 
 snippet proptype-element
 alias pE
 options word
-	PropType.element,
+	PropTypes.element,
 	${0:TARGET}
 
 snippet proptype-element-required
 alias pEr
 options word
-	PropType.element.isRequired,
+	PropTypes.element.isRequired,
 	${0:TARGET}
 
 snippet proptype-instanceOf
 alias pio
 options word
-	PropType.instanceOf(${1:#:constructor}),
+	PropTypes.instanceOf(${1:#:constructor}),
 	${0:TARGET}
 
 snippet proptype-instanceOf-required
 alias pior
 options word
-	PropType.instanceOf(${1:#:constructor}).isRequired,
+	PropTypes.instanceOf(${1:#:constructor}).isRequired,
 	${0:TARGET}
 
 snippet proptype-oneOf
 alias p1
 options word
-	PropType.oneOf([
+	PropTypes.oneOf([
 		${1:#:values}
 	]),
 	${0:TARGET}
@@ -365,7 +375,7 @@ options word
 snippet proptype-oneOf-required
 alias p1r
 options word
-	PropType.oneOf([
+	PropTypes.oneOf([
 		${1:#:values}
 	]).isRequired,
 	${0:TARGET}
@@ -373,7 +383,7 @@ options word
 snippet proptype-oneOfType
 alias p1t
 options word
-	PropType.oneOfType([
+	PropTypes.oneOfType([
 		${1:#:proptypes}
 	]),
 	${0:TARGET}
@@ -381,7 +391,7 @@ options word
 snippet proptype-oneOfType-required
 alias p1tr
 options word
-	PropType.oneOfType([
+	PropTypes.oneOfType([
 		${1:#:proptypes}
 	]).isRequired,
 	${0:TARGET}
@@ -389,7 +399,7 @@ options word
 snippet proptype-any
 alias pany
 options word
-	PropType.any.isRequired,
+	PropTypes.any.isRequired,
 	${0:TARGET}
 
 # Files
