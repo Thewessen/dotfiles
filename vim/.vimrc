@@ -491,6 +491,7 @@ nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
 nno <silent> <leader>gb :Gblame!<CR>
 nno <leader>gd :Gvdiffsplit!<CR>
+nno <leader>gi :Gvdiffsplit<space>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
 nno <leader>gw :Gwrite!<CR>
