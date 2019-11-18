@@ -396,14 +396,15 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 " and clear any message already displayed.
 nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 
-" Remove extra whitespace
-nmap <silent> <leader><space> :%s/\s\+$<cr>
-" nmap <leader><space><space> :%s/\s*\n//g<cr>
 " =================================
 "       Leaders
 " =================================
 " Different leader key
 let mapleader=','
+
+" Remove extra whitespace
+nmap <silent> <leader><space> :%s/\s\+$<cr>
+" nmap <leader><space><space> :%s/\s*\n//g<cr>
 
 " Reload this config file
 nno <silent> <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
