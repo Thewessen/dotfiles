@@ -3,8 +3,9 @@
 # Make sure this directory is in your $PATH
 # Run all updatecommands
 
+sudo
 upgrade_oh_my_zsh
-nvim +PluginInstall +qall
+nvim +PluginUpdate +qall
 update-git-pull
 upgrade-npm
 update-apt

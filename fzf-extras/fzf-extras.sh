@@ -229,10 +229,10 @@ v() {
 # git
 # -----------------------------------------------------------------------------
 
-# fbr - checkout git branch (including remote branches)
+# fb - checkout git branch (including remote branches)
 #   - sorted by most recent commit
 #   - limit 30 last branches
-fbr() {
+fb() {
   local branches
   local num_branches
   local branch
@@ -299,8 +299,8 @@ fco() {
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 
-# fcoc - checkout git commit
-fcoc() {
+# fcc - checkout git commit
+fcc() {
   local commits
   local commit
 
@@ -344,8 +344,8 @@ fcs() {
   echo -n "$(echo "$commit" | sed "s/ .*//")"
 }
 
-# fshow - git commit browser
-fshow() {
+# fs - git commit browser
+fs() {
   local execute
 
   execute="grep -o \"[a-f0-9]\{7\}\" \

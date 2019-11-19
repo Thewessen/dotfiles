@@ -5,6 +5,12 @@
 set nocompatible    " Unlock vim functionality (not Vi)
 set encoding=utf8
 
+"  Index
+" =================================
+" - Vundle configuration
+" - Vim configuration
+" - Mappings
+" - Source
 "=================================
 " Start Vundle vim configuration
 "=================================
@@ -32,42 +38,48 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'w0rp/ale'                       " Async linter and completer
 Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
 Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
-Plugin 'roxma/nvim-yarp'                " Deoplete dependency
-Plugin 'roxma/vim-hug-neovim-rpc'       " Deoplete dependency
-Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
+Plugin 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
+Plugin 'tpope/vim-obsession'            " Auto updating a session file
 Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
 Plugin 'tpope/vim-fugitive'             " Git from inside vim
 Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
-Plugin 'tpope/vim-dispatch'             " Async vim-compilers (tmux,gui,windows)
 Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
 Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plugin 'tpope/vim-ragtag'               " Other cool mappings
-Plugin 'tpope/vim-vividchalk'           " Colorscheme
-Plugin 'kien/ctrlp.vim'                 " Search anything and everything!
-Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
-Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
-Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
+Plugin 'tpope/vim-dispatch'               " Async implementations (tmux and other)
+Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plugin 'airblade/vim-rooter'            " Automtically change working dir to root
 Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-Plugin 'leafgarland/typescript-vim'     " Typescript syntax
 Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plugin 'mxw/vim-jsx'                    " JSX highlighting (React way of HTML in Javascript)
-Plugin 'ianks/vim-tsx'                  " TSX Reacte typescript syntax highlighting
+Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
+Plugin 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
+Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
+Plugin 'leafgarland/typescript-vim'     " Typescript syntax
+Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plugin 'posva/vim-vue'                  " Vue syntax highlighting
 Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
+"Snippets
+if !has('nvim')
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
 
 " all of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+" filetype plugin on
 "
 " Put your non-Plugin stuff after this line
 
@@ -148,16 +160,25 @@ endif
 set nowrap          " No linebreaks when window-width is too small
 set wrapmargin=0    " No linebreaks in Insert mode
 
+set wildignore=Session.vim
+
+" =================================
+"       Neovim Configurations
+" =================================
+if has('nvim')
+  set inccommand=split
+endif
+
 " =================================
 "       Plugin Configurations
 " =================================
 
-" Signature highlights
-" let g:SignatureMarkTextHL =
-" hi link SignatureMarkText User1
 
-" let g:SignatureMarkTextHL =
-" hi link SignatureMarkText User1
+" NeovimSnippets settings
+let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
+let g:neosnippet#disable_runtime_snippets = {
+    \ '_': 1,
+    \}
 
 " HTML skeletons and more...
 let g:user_emmet_leader_key=','
@@ -170,11 +191,9 @@ let g:blade_custom_directives_pairs = {
       \ 'for'    : 'endfor',
       \}
 
-" CtrlP options
-let g:ctrlp_by_filename = 1
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_extensions = ['mixed', 'dir']
+" FZF options
+let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_buffers_jump = 1
 
 " Angular-cli enter on angular-cli project
 autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
@@ -187,7 +206,6 @@ let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
-let g:dispatch_terminal_exec = 'terminator'
 
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
@@ -195,7 +213,7 @@ let g:dispatch_terminal_exec = 'terminator'
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-\ 'auto_complete_delay': 200,
+\ 'auto_complete_delay': 100,
 \ 'smart_case': v:true,
 \ })
 
@@ -228,6 +246,8 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'typescript': ['tslint'],
 \}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
 
 " =================================
@@ -280,8 +300,8 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
 augroup END
 
 augroup no_numberline
@@ -290,9 +310,25 @@ augroup no_numberline
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
+augroup fugitive_window
+    autocmd!
+    autocmd filetype fugitive wincmd H
+augroup END
+
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
 "=================================
 "		    Mappings
 "=================================
+" Rebinding <C-L> (unbinding NetrwNetwork(?))
+function! NetrwMapping()
+    nunmap <buffer> <C-L>
+    nno <buffer> <C-L> <C-W>w
+    nno <buffer> <C-R> <Plug>(NetrwRefresh)
+endfunction
 
 " Scroll faster with C-E and C-Y
 nno <C-E> 2<C-E>
@@ -302,8 +338,8 @@ nno <C-Y> 2<C-Y>
 nmap <S-K> <S-K><C-W><S-L><C-W>|
 
 " Search and destroy
-nno \ :Abolish -search 
-nno ? :Abolish! -search 
+nno \ :Abolish -search<space>
+nno ? :Abolish! -search<space>
 nno s :%s/
 vno s :s/
 nno S :%S/
@@ -322,9 +358,13 @@ ino <C-U> <C-G>u<C-U>
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
 
+" Make C-A and C-E act like terminal in Command mode
+cno <C-A> <HOME>
+cno <C-E> <END>
+
 " Window movement and tiling
-nmap <C-H> <C-W>W
-nmap <C-L> <C-W>w
+nno <C-H> <C-W>W
+nno <C-L> <C-W>w
 tno <C-H> <C-[><C-W>W
 tno <C-L> <C-[><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
@@ -347,26 +387,24 @@ imap <C-S> <Plug>Isurround
 ino <C-G><C-M> <CR><ESC>O
 
 " Map function key's
-" nmap <f1> :Gstatus<CR>
-" nmap <f2> :Gcommit -v<CR>
-" nmap <f3> :Gpush<CR>
-" nmap <f4> :Gpull<CR>
-" nmap <f5> :0Glog<CR>
-" nmap <f7> :SyntasticCheck<CR>
-" nmap <f8> :SyntasticReset<CR>
-" nmap <f9> :py3 import vim, random; vim.current.line += str(random.randint(0, 9)) <CR>
 nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-" nmap <silent> <f11>
-" nmap <silent> <f12>
+
+" Press Space to turn off highlighted search
+" and clear any message already displayed.
+nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 
 " =================================
 "       Leaders
 " =================================
 " Different leader key
 let mapleader=','
+
+" Remove extra whitespace
+nmap <silent> <leader><space> :%s/\s\+$<cr>
+" nmap <leader><space><space> :%s/\s*\n//g<cr>
 
 " Reload this config file
 nno <silent> <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
@@ -378,7 +416,7 @@ nno <silent> <leader>h :hide<CR>
 nno <silent> <leader>o :only<CR>
 
 " Save file
-nmap <leader>, :w<CR>
+nmap <leader>, :wa<CR>
 
 " Save&Close file
 nmap <leader>w :x<CR>
@@ -406,17 +444,20 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
+" nmap <silent> <leader>'
 
 " Buffers
-nmap <leader>b :buffer 
+" nmap <leader>b :buffer<space>
+" Location list
+nmap <silent> <leader>l :lopen<CR>
+nmap <silent> <leader>c :copen<CR>
 
 " Arguments-list (currently held by artisan commands)
-" nmap <leader>a :args 
+" nmap <leader>a :args<space>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
-nno <leader>G :call GolfStart()<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
@@ -424,6 +465,7 @@ nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (ale)
 nno <leader>ss :ALEReset<CR>
+nno <leader>sf :ALEFix<CR>
 nno <leader>sd :ALEGoToTypeDefinition<CR>
 nno <leader>sr :ALEFindReferences<CR>
 nno <leader>sn :ALEDetail<CR>
@@ -432,24 +474,55 @@ nno <leader>sl :ALELint<CR>
 nno <leader>st :ALEToggle<CR>
 
 " Git commands (vim-fugitive)
-" CD too repository root
-nno <leader>cd :Gcd<CR>
+" CD to repository root
+" nno <leader>cd :Gcd<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
-" nno <leader>gg :Gpush<CR>
-nno <leader>gg :Git 
-nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
-nno <silent> <leader>gL :0Glog<CR>
-nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
-nno <leader>gm :Gmerge 
-nno <silent> <leader>gf :Gfetch<CR>
-nno <silent> <leader>gc :Gcommit -v<CR>
-nno <silent> <leader>gb :Gblame!<CR>
-nno <leader>gd :Gremove 
-nno <leader>gn :Gmove 
+nno <leader>gg :Gwrite!<CR>
+nno <leader>gp :Gpush<CR>
+nno <leader>gL :0Glog<CR>
+nno <leader>gl :Gpull<CR>
+nno <leader>gm :Gmerge<space>
+nno <leader>gf :Gfetch<CR>
+nno <leader>gc :Gcommit -v<CR>
+nno <leader>gb :Gblame<CR>
+nno <leader>gd :Gvdiffsplit!<CR>
+nno <leader>gi :Gvdiffsplit<space>
+nno <leader>gD :Gremove<space>
+nno <leader>gn :Gmove<space>
+nno <leader>gw :Gwrite!<CR>
+" Gdiff (3 way diff) solving merge conflicts
+" Used inside working file (mid file)
+nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
+nno <leader>g] :diffget //3<CR>:diffupdate<CR>
+
+" Enable gutentags
+nno <leader>G :GutentagsUpdate<CR>
+
+" FZF commands
+nno <C-P> :Files<CR>
+nno <leader>ff :GFiles<CR>
+nno <leader>fa :Ag<space>
+nno <leader>f* :Ag <C-R><C-W><CR>
+nno <leader>/ :Lines<CR>
+nno <leader>fl :BLines<CR>
+nno <leader>fg :GFiles?<CR>
+nno <leader>fc :Commits<CR>
+nno <leader>fd :BCommits<CR>
+nno <leader>b :Buffer<CR>
+nno <leader>fw :Windows<CR>
+nno <leader>fm :Marks<CR>
+nno <leader>ft :Tags<CR>
+nno <leader>fT :Filetypes<CR>
+nno <leader>fM :Maps<CR>
+nno <leader>fh :History<CR>
+nno <leader>f? :Helptags<CR>
+nno <leader>f: :History:<CR>
+nno <leader>f/ :History/<CR>
 
 " NPM and nodejs dispatch commands
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
 nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
@@ -459,22 +532,23 @@ nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
+nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " Python dispatch commands
-nno <silent> <leader>pp :!python3 %:p<CR>
-nno <silent> <leader>ph :bo 10split term://python3<CR>
-nno <silent> <leader>pt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+nno <silent> <leader>yy :!python3 %:p<CR>
+nno <silent> <leader>yh :bo 10split term://python3<CR>
+nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep 
-nno <leader>amc :!php artisan make:controller 
-nno <leader>amm :!php artisan make:model 
-nno <leader>amr :!php artisan make:migration 
-nno <leader>amp :!php artisan make:policy  
-nno <leader>ame :!php artisan make:event 
-nno <leader>aml :!php artisan make:listener 
+nno <leader>arl :!php artisan route:list \| grep<space>
+nno <leader>amc :!php artisan make:controller<space>
+nno <leader>amm :!php artisan make:model<space>
+nno <leader>amr :!php artisan make:migration<space>
+nno <leader>amp :!php artisan make:policy<space>
+nno <leader>ame :!php artisan make:event<space>
+nno <leader>aml :!php artisan make:listener<space>
 nno <silent> <leader>aMM :!php artisan migrate<CR>
 nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
 nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
@@ -484,25 +558,31 @@ nno <silent> <leader>aMs :!php artisan migrate:status<CR>
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
+nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
 nmap <leader>eg :vsplit ~/.gitconfig<CR>
 nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
 nmap <leader>eb :vsplit ~/.bashrc<CR>
 nmap <leader>ea :vsplit ~/.aliases<CR>
+nmap <leader>es :NeoSnippetEdit-vertical<CR>
 nmap <leader>en :tabnew<CR>
 
-" Press Space to turn off highlighted search
-" and clear any message already displayed.
-nno <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" neovim-snippets key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" Todo: Make different keybining (tmux)
+imap <C-A> <Plug>(neosnippet_expand_or_jump)
+smap <C-A> <Plug>(neosnippet_expand_or_jump)
+xmap <C-A> <Plug>(neosnippet_expand_target)
 
-" Remove extra whitespace
-nmap <silent> <leader><space> :%s/\s\+$<cr>
-" nmap <leader><space><space> :%s/\s*\n//g<cr>
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-" Snippits (read from .vim/skeletons) like html tags etc.
-nno <silent> <leader>hh :-1read $HOME/.vim/skeletons/header_comment.txt<CR>:+0,+2Commentary<CR>jA<BS>
-nno <silent> <leader>ht :-1read $HOME/.vim/skeletons/title_comment.txt<CR>:+0,+2Commentary<CR>jfSc2w
-nno <silent> <leader>html :-1read $HOME/.vim/skeletons/skeleton.html<CR>4jwf<i
 
 " =================================
 "       Source vim-scripts
