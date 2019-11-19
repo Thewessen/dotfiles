@@ -158,3 +158,18 @@ hi link yamlDocumentHeader Label
 " ALE
 hi link ALEErrorSign Error
 hi link ALEWarningSign Warning
+
+" Git fugitive
+hi link diffRemoved Operator
+hi link diffAdded Function
+hi link diffLine Special
+hi link diffSubname Type
+hi link diffFile Folded
+hi link diffIndexLine Comment
+hi link gitDiff Normal
+
+" Twig
+hi link twigString String
+hi link twigTagDelim Noise
+hi link twigVariable Normal
+hi link twigOperator Noise

@@ -59,6 +59,7 @@ Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in
 Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
 Plugin 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plugin 'lumiliet/vim-twig'              " Twig highlighting
 "Snippets
 if !has('nvim')
   Plugin 'roxma/nvim-yarp'
@@ -162,6 +163,8 @@ set rtp+=/usr/local/opt/fzf
 " =================================
 if has('nvim')
   set inccommand=split
+  nno <Tab> :tabnext<CR>
+  nno <S-Tab> :tabprevious<CR>
 endif
 
 " =================================
@@ -319,6 +322,10 @@ augroup netrw_mapping
     autocmd filetype netrw call NetrwMapping()
 augroup END
 
+augroup fzf_window
+    autocmd!
+    autocmd filetype fzf imap <buffer> <ESC> <C-D>
+augroup END
 "=================================
 "		    Mappings
 "=================================
@@ -356,6 +363,7 @@ ino <C-U> <C-G>u<C-U>
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
+tno <leader> <C-\><C-N>
 
 " Make C-A and C-E act like terminal in Command mode
 cno <C-A> <HOME>
@@ -396,12 +404,13 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 " and clear any message already displayed.
 nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 
-" Remove extra whitespace
-nmap <silent> <leader><space> :%s/\s\+$<cr>
-" nmap <leader><space><space> :%s/\s*\n//g<cr>
 " =================================
 "       Leaders
 " =================================
+" Remove extra whitespace
+nmap <silent> <leader><space> :%s/\s\+$<cr>
+" nmap <leader><space><space> :%s/\s*\n//g<cr>
+"
 " Different leader key
 let mapleader=','
 
@@ -498,6 +507,9 @@ nno <leader>g] :diffget //3<CR>:diffupdate<CR>
 " Enable gutentags
 nno <leader>G :GutentagsUpdate<CR>
 
+" Find usages of word under cursor
+nno <leader>d :Ag <C-R><C-W><CR>
+
 " FZF commands
 nno <silent> <C-P> :Files<CR>
 nno <silent> <leader>ff :GFiles<CR>
@@ -531,11 +543,6 @@ nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>nd :tabe term://npm run deploy<CR>
-
-" Python dispatch commands
-nno <silent> <leader>yy :!python3 %:p<CR>
-nno <silent> <leader>yh :bo 10split term://python3<CR>
-nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
