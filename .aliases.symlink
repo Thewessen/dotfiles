@@ -5,6 +5,8 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
+alias sfix='vssh composer install && cd ~/hypotheekbond/monorepo/apps/migrate && vssh ./bin/migrate.php migrate && cd -'
+
 # =================================
 #             General
 # =================================
@@ -86,7 +88,7 @@ function nvim() {
   if test $# -gt 0; then
     env nvim "$@"
   else
-    nvim +GFiles
+    nvim +GitFiles
   fi
 }
 
