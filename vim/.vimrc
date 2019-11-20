@@ -24,52 +24,54 @@ set encoding=utf8
 
 filetype off 		" required
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Plugin 'VundleVim/Vundle.vim'
 
 " =================================
 "             Plugins
 " =================================
 " New plugins here
-Plugin 'w0rp/ale'                       " Async linter and completer
-Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
-Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
-Plugin 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
-Plugin 'tpope/vim-obsession'            " Auto updating a session file
-Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
-Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
-Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
-Plugin 'tpope/vim-fugitive'             " Git from inside vim
-Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
-Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
-Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
-Plugin 'tpope/vim-ragtag'               " Other cool mappings
-Plugin 'tpope/vim-dispatch'               " Async implementations (tmux and other)
-Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
-Plugin 'airblade/vim-rooter'            " Automtically change working dir to root
-Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
-Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
-Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
-Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
-Plugin 'hail2u/vim-css3-syntax'         " CSS3 syntax
-Plugin 'lumiliet/vim-twig'              " Twig highlighting
-"Snippets
-if !has('nvim')
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
+Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
+Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
+Plug 'tpope/vim-obsession'            " Auto updating a session file
+Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
+Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
+Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
+Plug 'tpope/vim-fugitive'             " Git from inside vim
+Plug 'tpope/vim-repeat'               " Extends '.' command for plugins
+Plug 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
+Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
+Plug 'tpope/vim-ragtag'               " Other cool mappings
+Plug 'tpope/vim-dispatch'               " Async implementations (tmux and other)
+Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plug 'airblade/vim-rooter'            " Automtically change working dir to root
+Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
+Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
+Plug 'mattn/emmet-vim'                " Super fast html skeletons
+Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
+Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plug 'othree/html5-syntax.vim'        " Better HTML syntax
+Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plug 'lumiliet/vim-twig'              " Twig highlighting
+"Snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
 
 " all of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
