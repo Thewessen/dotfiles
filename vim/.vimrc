@@ -1,40 +1,26 @@
 "==================================================================
 "================ Samuel Thewessen vimrc-file =====================
 "==================================================================
+" Install Vim-Plug using:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-set nocompatible    " Unlock vim functionality (not Vi)
+" Basic settings
+set nocompatible
 set encoding=utf8
 
 "  Index
 " =================================
-" - Vundle configuration
+" - Plugins
 " - Vim configuration
 " - Mappings
 " - Source
-"=================================
-" Start Vundle vim configuration
-"=================================
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-
-filetype off 		" required
-set rtp+=~/.vim/bundle/Vundle.vim
-call plug#begin('~/.vim/plugged')
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-" Plugin 'VundleVim/Vundle.vim'
 
 " =================================
 "             Plugins
 " =================================
-" New plugins here
+call plug#begin('~/.vim/plugged')
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -66,13 +52,12 @@ Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plug 'othree/html5-syntax.vim'        " Better HTML syntax
 Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
 Plug 'lumiliet/vim-twig'              " Twig highlighting
-"Snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
+Plug 'Shougo/neosnippet.vim'          " Snippet maneger
+Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 
 " all of your Plugins must be added before the following line
 call plug#end()            " required
-filetype plugin indent on    " required
+filetype plugin indent on
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -258,7 +243,7 @@ let g:ale_sign_warning = '⚠'
 "           Autocommands
 " =================================
 
-au FileType netrw set nonumber norelativenumber foldcolumn=1
+au FileType netrw set nonumber norelativenumber foldcolumn=2
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
@@ -304,13 +289,13 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=0 | endif
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=2 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=6 | endif
 augroup END
 
 augroup no_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=2 | exec 'normal i' | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
