@@ -72,9 +72,9 @@ alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
 # Simple watch filechange and run file command (needs notify-tools)
 notify() {
   echo
-  while inotifywait "$1" 2>/dev/null 1>/dev/null; do
-    sleep 0.1 && "$1"
-  done
+    while inotifywait "$1" 2>/dev/null 1>/dev/null; do
+      sleep 0.1 && "$1"
+        done
 }
 
 alias vi='nvim'
@@ -82,15 +82,15 @@ alias vundle='nvim +PluginInstall +qall'
 alias vundle-clean='nvim +PluginClean +qall'
 
 # Start neovim with Obsession
-# function nvim() {
-#   if test $# -gt 0; then
-#     env nvim "$@"
-#   elif test -f Session.vim; then
-#     env nvim -S
-#   else
-#     env nvim -c Obsession
-#   fi
-# }
+function nvim() {
+  if test $# -gt 0; then
+    env nvim "$@"
+  elif command -v fzf; then
+    env nvim `fzf`
+  else
+    env nvim
+  fi
+}
 
 # vundle-add() {
 #     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")
