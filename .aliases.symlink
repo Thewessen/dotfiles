@@ -85,10 +85,8 @@ alias vundle-clean='nvim +PluginClean +qall'
 function nvim() {
   if test $# -gt 0; then
     env nvim "$@"
-  elif command -v fzf; then
-    env nvim `fzf`
   else
-    env nvim
+    nvim +GFiles
   fi
 }
 
