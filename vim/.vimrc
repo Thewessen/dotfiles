@@ -1,8 +1,8 @@
 "==================================================================
 "================ Samuel Thewessen vimrc-file =====================
 "==================================================================
-
-set nocompatible    " Unlock vim functionality (not Vi)
+" Unlock vim functionality (not Vi)
+set nocompatible
 set encoding=utf8
 
 "  Index
@@ -13,81 +13,61 @@ set encoding=utf8
 " - Mappings
 " - Source
 
-"=================================
-" Start Vundle vim configuration
-"=================================
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-
-filetype off 		" required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Install Vim-Plug using:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " =================================
 "             Plugins
 " =================================
-" New plugins here
-Plugin 'w0rp/ale'                       " Async linter and completer
-Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
-Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
-Plugin 'roxma/nvim-yarp'                " Deoplete dependency
-Plugin 'roxma/vim-hug-neovim-rpc'       " Deoplete dependency
-Plugin 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
-Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
-Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
-Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
-Plugin 'tpope/vim-fugitive'             " Git from inside vim
-Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
-Plugin 'tpope/vim-dispatch'             " Async vim-compilers (tmux,gui,windows)
-Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
-Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
-Plugin 'tpope/vim-ragtag'               " Other cool mappings
-Plugin 'tpope/vim-vividchalk'           " Colorscheme
-Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
-Plugin 'ludovicchabant/vim-gutentags'   " Auto tag generation.
-Plugin 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
-Plugin 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
-Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
-Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
-Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plugin 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
-Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
-Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
-Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
-Plugin 'posva/vim-vue'                  " Vue syntax highlighting
-Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
-Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
-"Snippets
-if !has('nvim')
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
-endif
-Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
+call plug#begin('~/.vim/plugged')
 
-" all of your Plugins must be added before the following line
-call vundle#end()            " required
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
+Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
+Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
+Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
+Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
+Plug 'tpope/vim-fugitive'             " Git from inside vim
+Plug 'tpope/vim-repeat'               " Extends '.' command for plugins
+Plug 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
+Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
+Plug 'tpope/vim-ragtag'               " Other cool mappings
+Plug 'tpope/vim-dispatch'             " Async vim-compilers (tmux,gui,windows)
+Plug 'tpope/vim-vividchalk'           " Colorscheme
+Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plug 'ludovicchabant/vim-gutentags'   " Auto tag generation.
+Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
+Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
+Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
+Plug 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
+Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
+Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
+Plug 'mattn/emmet-vim'                " Super fast html skeletons
+Plug 'leafgarland/typescript-vim'     " Typescript syntax
+Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
+Plug 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
+Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
+Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plug 'othree/html5-syntax.vim'        " Better HTML syntax
+Plug 'posva/vim-vue'                  " Vue syntax highlighting
+Plug 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
+Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
+Plug 'Shougo/neosnippet.vim'          " Snippets
+Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
-"
-" Put your non-Plugin stuff after this line
 
 "=================================
 "         Vim Configurations
