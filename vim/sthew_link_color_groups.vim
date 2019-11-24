@@ -64,6 +64,7 @@ hi link bladeKeyword Special
 
 " JSX
 hi link jsxComponentName Tag
+hi link jsxBraces Noise
 
 " Emberjs
 hi link hbsHandles Normal
@@ -74,7 +75,6 @@ hi link graphqlFold Noise
 
 " CSS (Damn those groups!!)
 hi link cssClassName Type
-hi link cssPseudoClassId Function
 hi link cssFunctionName Function
 hi link cssValueLength Number
 hi link cssPropRegion Normal
@@ -104,7 +104,7 @@ hi link cssUIAttr String
 hi link cssIEUIAttr String
 hi link cssMultiColumnAttr String
 hi link cssListAttr String
-hi link cssFlexibleBoxAttr Special
+hi link cssFlexibleBoxAttr String
 hi link cssColor Special
 hi link cssCommonAttr Special
 hi link cssUnitDecorators Special
@@ -112,6 +112,14 @@ hi link cssAttrRegion Special
 hi link cssTagName Tag
 hi link cssIdentifier Identifier
 hi link cssBraces Noise
+hi link cssPageProp Normal
+hi link cssMediaProp Normal
+hi link cssCommonAttr String
+hi link cssSelectorOp Operator
+hi link cssGridProp Normal
+hi link cssCustomPositioningPrefix Normal
+hi link cssPseudoClassId Normal
+hi link styledAmpersand Identifier
 
 " Ruby 
 hi link rubyException Conditional
@@ -146,3 +154,22 @@ hi link yamlKey Keyword
 hi link yamlAnchor Normal
 hi link yamlAlias Normal
 hi link yamlDocumentHeader Label
+
+" ALE
+hi link ALEErrorSign Error
+hi link ALEWarningSign Warning
+
+" Git fugitive
+hi link diffRemoved Operator
+hi link diffAdded Function
+hi link diffLine Special
+hi link diffSubname Type
+hi link diffFile Folded
+hi link diffIndexLine Comment
+hi link gitDiff Normal
+
+" Twig
+hi link twigString String
+hi link twigTagDelim Noise
+hi link twigVariable Normal
+hi link twigOperator Noise

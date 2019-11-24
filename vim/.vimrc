@@ -226,6 +226,7 @@ let g:rooter_silent_chdir = 1
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'vue': ['eslint'],
 \   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
@@ -465,9 +466,9 @@ nno <leader>st :ALEToggle<CR>
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
 nno <leader>gg :Git<space>
-nno <silent> <leader>gp :Gcd<CR>:bo 10split term://git push<CR><C-\><C-N><C-W>w
+nno <silent> <leader>gp :Gpush<CR>
 nno <silent> <leader>gL :0Glog<CR>
-nno <silent> <leader>gl :bo 10split term://git pull<CR><C-\><C-N><C-W>w
+nno <silent> <leader>gl :Gpull<CR>
 nno <leader>gm :Gmerge<space>
 nno <silent> <leader>gf :Gfetch<CR>
 nno <silent> <leader>gc :Gcommit -v<CR>
@@ -540,6 +541,7 @@ nno <silent> <leader>aMs :!php artisan migrate:status<CR>
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
+nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
 nmap <leader>eg :vsplit ~/.gitconfig<CR>
 nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
