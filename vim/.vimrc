@@ -369,6 +369,7 @@ tmap <C-W><C-S> <C-[><C-W><C-S>
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
+nunmap <C-A>
 
 " Command & Insert-mode mapping
 cno <C-D> <Del>
@@ -447,6 +448,11 @@ nmap <silent> <leader>. <C-^>
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
 
+nmap <leader>0 :cbelow<CR>
+nmap <leader>9 :cabove<CR>
+nmap <leader>] :lbelow<CR>
+nmap <leader>[ :labove<CR>
+
 " Arguments-list (currently held by artisan commands)
 " nmap <leader>a :args<space>
 
@@ -474,7 +480,7 @@ nno <leader>st :ALEToggle<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 " nno <leader>gg :Gpush<CR>
-nno <leader>gg :Gwrite!<CR>
+nno <leader>gg :Git<space>
 nno <leader>gp :Gpush<CR>
 nno <leader>gL :0Glog<CR>
 nno <leader>gl :Gpull<CR>
@@ -483,6 +489,7 @@ nno <leader>gf :Gfetch<CR>
 nno <leader>gc :Gcommit -v<CR>
 nno <leader>gb :Gblame<CR>
 nno <leader>gd :Gvdiffsplit!<CR>
+nno <leader>gi :Gvdiffsplit<space>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
 nno <leader>gw :Gwrite!<CR>

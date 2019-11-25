@@ -35,12 +35,13 @@ endfunction
 function! Custom_Statusline()
     let s=''
     let s.='%1*%4.4(|#%n%) '                          " Buffer number
-    let s.='%0*%<%( %Y '                                 " FileType
-    let s.='%0* (%0{&ff}) '                          " FileFormat (dos/unix..)
-    let s.='%{&fenc} %)'                  " Encoding
+    let s.=" %{expand('#'.buffer_number('%').':t')}\ "    " File in window (base only)
     let s.="%0* %m%r%h%w%{VarExists('b:gzflag','[GZ]')}%q\ "  " File flags (modified, readonly, preview etc.)
     let s.="%{FugitiveStatusline()}"                " Add git repro to bottom statusline
     let s.='%='                                        " Right Side
+    let s.='%0*%<%( %Y '                                 " FileType
+    let s.='%0* (%0{&ff}) '                          " FileFormat (dos/unix..)
+    let s.='%{&fenc} %)'                  " Encoding
     let s.='%0* %<☰ %02l⋮ %02v (%3p%%) '            " Line/col number (percentage)
     let s.='%1* %-7{toupper(g:currentmode[mode()])}|'  " The current mode
     return s
@@ -49,8 +50,7 @@ endfunction
 function! Custom_Statusline_NC()
     let s=''
     let s.='%4.4(#%n%) '                                   " Buffer number
-    let s.=" %{expand('#'.buffer_number('%').':t')} "    " File in window (base only)
-    let s.=" %m%r%h%w%{VarExists('b:gzflag','[GZ]')}%q\ "  " File flags (modified, readonly, preview etc.)
+    let s.=" %{expand('#'.buffer_number('%'))} "    " File in window (base only)
     let s.='%='                                            " Right Side
     let s.=' %<☰ %02l⋮ %02v (%3p%%) '                      " Line/col number (percentage)
     return s

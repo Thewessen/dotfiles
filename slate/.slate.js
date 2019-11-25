@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Slate Javasript configuration file
  */
@@ -26,7 +27,7 @@ const applications = {
   '3': 'Google Chrome',
   '4': 'Grud Hypotheekbond',
   '5': 'WhatsApp',
-  '6': 'PhpStorm',
+  '6': 'PHPStorm',
   '7': 'Avocode',
   '8': 'Agenda Hypotheekbond',
   '9': 'Mail Hypotheekbond',
@@ -80,7 +81,7 @@ S.configAll({
 
 S.log('[SLATE] --- Defining slate operations ---')
 const hint = S.operation('hint', {
-  characters: 'AOEUIQJK',
+  characters: 'HTNSBMWV',
 })
 // TODO: make unhide possible for all windows
 const hide = S.operation('hide', {
@@ -250,6 +251,7 @@ S.log('[SLATE] --- Setting slate key bindings ---')
 for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
 }
+S.bind('a:ctrl', hint)
 S.bind('r:ctrl,shift', S.op('relaunch'))
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')
