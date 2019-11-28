@@ -78,6 +78,14 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
+set hidden
+
+" Some plugin bug fixes
+set nobackup
+set nowritebackup
+
+" ??
+set shortmess+=c
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -100,6 +108,7 @@ colorscheme sthew   " Own colorscheme adapted from monokai-colors
 set nolazyredraw    " Don't redraw when using macro's
 set ttyfast         " Improves smoothness of redrawing
 set path+=**        " Enable recursive/fuzzy filesearch
+set updatetime=300
 
 " Extra info
 set laststatus=2    " Always show statusline
@@ -109,6 +118,7 @@ set showcmd         " Pending commands in right corner
 
 " Show linenumbers
 set ruler
+set signcolumn=yes
 " set number relativenumber   " Relative numberline (only the current line has absolute linenumber
 
 " Indention and formatting
