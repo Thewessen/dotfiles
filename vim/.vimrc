@@ -238,6 +238,7 @@ au FileType netrw set nonumber norelativenumber foldcolumn=2
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
+au BufLeave,BufWinLeave * if &filetype == 'qf' | lclose | cclose | endif
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
