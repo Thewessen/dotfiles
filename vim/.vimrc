@@ -300,6 +300,11 @@ augroup netrw_mapping
     autocmd filetype netrw call NetrwMapping()
 augroup END
 
+augroup diff_mappings
+  autocmd!
+  autocmd BufWinEnter,BufEnter * if &diff | call VimDiffMapping() | endif
+augroup END
+
 augroup fzf_window
     autocmd!
     autocmd filetype fzf imap <buffer> <ESC> <C-D>
@@ -312,6 +317,13 @@ function! NetrwMapping()
     nunmap <buffer> <C-L>
     nno <buffer> <C-L> <C-W>w
     nno <buffer> <C-R> <Plug>(NetrwRefresh)
+endfunction
+
+function! VimDiffMapping()
+  nno <buffer> ]] ]c
+  nno <buffer> [[ [c
+  nno <buffer> <leader>[ :diffget //2<CR>:diffupdate<CR>
+  nno <buffer> <leader>] :diffget //3<CR>:diffupdate<CR>
 endfunction
 
 " Scroll faster with C-E and C-Y
@@ -486,9 +498,6 @@ nno <leader>gn :Gmove<space>
 nno <leader>gw :Gwrite!<CR>
 " Gdiff (3 way diff) solving merge conflicts
 " Used inside working file (mid file)
-nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
-nno <leader>g] :diffget //3<CR>:diffupdate<CR>
-
 " Enable gutentags
 nno <leader>G :GutentagsUpdate<CR>
 
