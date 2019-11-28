@@ -251,7 +251,6 @@ S.log('[SLATE] --- Setting slate key bindings ---')
 for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
 }
-S.bind('a:ctrl', hint)
 S.bind('r:ctrl,shift', S.op('relaunch'))
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')
