@@ -28,7 +28,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'w0rp/ale'                       " Async linter and fixer
 Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
 Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
 Plug 'tpope/vim-obsession'            " Auto updating a session file
@@ -183,15 +183,6 @@ let g:blade_custom_directives_pairs = {
 let g:fzf_layout = { 'up': '~40%' }
 let g:fzf_buffers_jump = 1
 
-" Angular-cli enter on angular-cli project
-autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
-let g:angular_cli_use_dispatch = 1
-
-" Latex-Suite configurations
-let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
-let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
-" :TTarget pdf              " Set standard output of compiler to PDF (iso DVI)
-
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
 let g:dispatch_terminal_exec = 'zsh'
@@ -225,7 +216,7 @@ set omnifunc=ale#completion#OmniFunc
 let g:rooter_patterns = ['package.json', '.git/']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
-
+ 
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -289,8 +280,8 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=2 | endif
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=6 | endif
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=0 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
 augroup END
 
 augroup no_numberline
@@ -412,7 +403,7 @@ nno <silent> <leader>h :hide<CR>
 nno <silent> <leader>o :only<CR>
 
 " Save file
-nmap <leader>, :wa<CR>
+nmap <leader>, :w<CR>
 
 " Save&Close file
 nmap <leader>w :x<CR>
