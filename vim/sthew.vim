@@ -18,7 +18,7 @@ hi link EndOfBuffer Normal
 hi link vimParenSep Noise
 
 " Global
-hi Search term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE
+hi Search term=underline cterm=underline ctermfg=NONE ctermbg=237
 hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE
 hi PmenuSel ctermfg=NONE ctermbg=NONE cterm=reverse
 hi Underlined cterm=underline
