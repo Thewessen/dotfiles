@@ -7,6 +7,15 @@
 
 alias sfix='vssh composer install && cd ~/hypotheekbond/monorepo/apps/migrate && vssh ./bin/migrate.php migrate && cd -'
 
+# pullrequest with vim
+vpr() {
+  if [ $# -eq 0]; then
+    nvim -p `git --no-pager diff --name-only master` -c ":tabdo Gdiff master"
+  else
+    nvim -p `git --no-pager diff --name-only $1` -c ":tabdo Gdiff $1"
+  fi
+}
+
 # =================================
 #             General
 # =================================
