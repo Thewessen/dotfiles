@@ -62,6 +62,8 @@ Plug 'othree/html5-syntax.vim'        " Better HTML syntax
 Plug 'posva/vim-vue'                  " Vue syntax highlighting
 Plug 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
+Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'Shougo/neosnippet.vim'          " Snippets
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 call plug#end()            " required
@@ -430,6 +432,7 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
+" nmap <silent> <leader>'
 
 " Buffers
 " nmap <leader>b :buffer<space>
@@ -451,7 +454,7 @@ nno <silent> <leader>m :Dispatch!<CR>
 
 " Syntax checking command (ale)
 nno <leader>ss :ALEReset<CR>
-nmap <leader>sf <plug>(ale_fix)
+nno <leader>sf :ALEFix<CR>
 nno <leader>sd :ALEGoToTypeDefinition<CR>
 nno <leader>sr :ALEFindReferences<CR>
 nno <leader>sn :ALEDetail<CR>
@@ -579,6 +582,6 @@ source $HOME/.dotfiles/vim/sthew_link_color_groups.vim
 
 " Source statusline toggle mode
 source $HOME/.dotfiles/vim/sthew_mode_echo.vim
-autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
+autocmd! VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
 
 "==================================================================
