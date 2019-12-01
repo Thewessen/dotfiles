@@ -178,7 +178,7 @@ bar {
         modifier $alt
         colors {
           separator #212121
-          background #000000
+          background #2c292d
           statusline #839496
         }
 }
@@ -189,6 +189,10 @@ bar {
 # Setting correct display properties
 exec --no-startup-id xrandr --output DVI-D-0 --right-of DP-4 --rotate left
 exec --no-startup-id xrandr --output DP-4 --primary
+
+# Setting background and keybindings
+exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/"Hubbel stars"/"Galaxy M106 2560x1440.jpg"
+exec --no-startup-id xmodmap ~/.xmodmap
 
 # Workspaces on multiple screen layout
 workspace 1 output DP-4
@@ -209,10 +213,9 @@ assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
 assign [class="^Chromium-browser$" instance="gmail.com"] 9
 assign [class="^Slack$"] 10
 
-# Custom window settings
-for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
 
 # Startup applications
+exec --no-startup-id ulauncher --hide-window --no-window-shadow
 exec terminator --title="scratchpad" --classname="scratchpad"
 exec qutebrowser
 exec chromium-browser --app="https://web.whatsapp.com"
@@ -220,10 +223,8 @@ exec chromium-browser --app="https://calendar.google.com"
 exec chromium-browser --app="https://gmail.com"
 exec slack
 
-# Setting background and keybindings
-exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/"Hubbel stars"/"Galaxy M106 2560x1440.jpg"
-exec --no-startup-id xmodmap ~/.xmodmap
-exec --no-startup-id ulauncher --hide-window --no-window-shadow
+# Custom window settings
+for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
 
 # Window borders
 new_window none
@@ -231,10 +232,10 @@ bindsym $super+b border toggle
 
 # Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #ffd866
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.urgent           #2f343a #900000 #ffffff #900000   #ff6188
+client.placeholder      #2c292d #0c0c0c #ffffff #2c292d   #0c0c0c
 
-client.background       #000000
+client.background       #2c292d

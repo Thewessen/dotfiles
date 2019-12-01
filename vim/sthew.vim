@@ -18,7 +18,7 @@ hi link EndOfBuffer Normal
 hi link vimParenSep Noise
 
 " Global
-hi Search term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE
+hi Search term=underline cterm=underline ctermfg=NONE ctermbg=237
 hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE
 hi PmenuSel ctermfg=NONE ctermbg=NONE cterm=reverse
 hi Underlined cterm=underline
@@ -69,9 +69,9 @@ if &t_Co > 255
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
         hi TabLineSel ctermfg=102 ctermbg=NONE cterm=bold
-        hi DiffAdd ctermbg=64 cterm=NONE
-        hi DiffDelete ctermbg=88 cterm=NONE
-        hi DiffChange ctermbg=233 cterm=NONE
+        hi DiffAdd ctermbg=234 cterm=NONE
+        hi DiffDelete ctermbg=NONE cterm=underline
+        hi DiffChange ctermbg=235 cterm=NONE
         hi DiffText ctermbg=22 cterm=NONE
         hi Special ctermfg=141 cterm=italic
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE

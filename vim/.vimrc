@@ -1,87 +1,73 @@
 "==================================================================
 "================ Samuel Thewessen vimrc-file =====================
 "==================================================================
-
-set nocompatible    " Unlock vim functionality (not Vi)
+" Unlock vim functionality (not Vi)
+set nocompatible
 set encoding=utf8
 
 "  Index
 " =================================
-" - Vundle configuration
+" - Plugins
 " - Vim configuration
+" - Neovim configuration
 " - Mappings
 " - Source
-"=================================
-" Start Vundle vim configuration
-"=================================
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
 
-filetype off 		" required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Install Vim-Plug using:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " =================================
 "             Plugins
 " =================================
-" New plugins here
-Plugin 'w0rp/ale'                       " Async linter and completer
-Plugin 'Shougo/deoplete.nvim'           " Async completion for omnicomplete
-Plugin 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
-Plugin 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
-Plugin 'tpope/vim-obsession'            " Auto updating a session file
-Plugin 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
-Plugin 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
-Plugin 'tpope/vim-commentary'           " Comment out (command: gcc)
-Plugin 'tpope/vim-fugitive'             " Git from inside vim
-Plugin 'tpope/vim-repeat'               " Extends '.' command for plugins
-Plugin 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
-Plugin 'tpope/vim-unimpaired'           " '[' and ']' mappings
-Plugin 'tpope/vim-ragtag'               " Other cool mappings
-Plugin 'tpope/vim-dispatch'               " Async implementations (tmux and other)
-Plugin 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
-Plugin 'airblade/vim-rooter'            " Automtically change working dir to root
-Plugin 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
-Plugin 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plugin 'mattn/emmet-vim'                " Super fast html skeletons
-Plugin 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plugin 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
-Plugin 'jwalton512/vim-blade'           " PHP blade highlighting syntax
-Plugin 'othree/html5-syntax.vim'        " Better HTML syntax
-Plugin 'hail2u/vim-css3-syntax'         " CSS3 syntax
-Plugin 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plugin 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
-Plugin 'leafgarland/typescript-vim'     " Typescript syntax
-Plugin 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plugin 'posva/vim-vue'                  " Vue syntax highlighting
-Plugin 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
-Plugin 'jparise/vim-graphql'            " GraphQL highlighting and indention
-"Snippets
-if !has('nvim')
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
-endif
-Plugin 'Shougo/neosnippet.vim'
-Plugin 'Shougo/context_filetype.vim'   " Snippets depending on context filetype
+call plug#begin('~/.vim/plugged')
 
-" all of your Plugins must be added before the following line
-call vundle#end()            " required
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
+Plug 'tpope/vim-obsession'            " Auto updating a session file
+Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
+Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
+Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
+Plug 'tpope/vim-fugitive'             " Git from inside vim
+Plug 'tpope/vim-repeat'               " Extends '.' command for plugins
+Plug 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
+Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
+Plug 'tpope/vim-ragtag'               " Other cool mappings
+Plug 'tpope/vim-dispatch'               " Async implementations (tmux and other)
+Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
+Plug 'airblade/vim-rooter'            " Automtically change working dir to root
+Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
+Plug 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
+Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
+Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
+Plug 'mattn/emmet-vim'                " Super fast html skeletons
+Plug 'leafgarland/typescript-vim'     " Typescript syntax
+Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
+Plug 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
+Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
+Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
+Plug 'othree/html5-syntax.vim'        " Better HTML syntax
+Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plug 'posva/vim-vue'                  " Vue syntax highlighting
+Plug 'lumiliet/vim-twig'              " Twig highlighting
+Plug 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
+Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
+Plug 'Shougo/neosnippet.vim'          " Snippets
+Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
-"
-" Put your non-Plugin stuff after this line
 
 "=================================
 "         Vim Configurations
@@ -98,6 +84,14 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
+set hidden
+
+" Some plugin bug fixes
+set nobackup
+set nowritebackup
+
+" ??
+set shortmess+=c
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -120,6 +114,7 @@ colorscheme sthew   " Own colorscheme adapted from monokai-colors
 set nolazyredraw    " Don't redraw when using macro's
 set ttyfast         " Improves smoothness of redrawing
 set path+=**        " Enable recursive/fuzzy filesearch
+set updatetime=300
 
 " Extra info
 set laststatus=2    " Always show statusline
@@ -129,6 +124,7 @@ set showcmd         " Pending commands in right corner
 
 " Show linenumbers
 set ruler
+set signcolumn=yes
 " set number relativenumber   " Relative numberline (only the current line has absolute linenumber
 
 " Indention and formatting
@@ -162,17 +158,18 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 set wildignore=Session.vim
 
-" =================================
-"       Neovim Configurations
-" =================================
+"=================================
+"         Neovim Configurations
+"=================================
 if has('nvim')
   set inccommand=split
+  nno <Tab> :tabnext<CR>
+  nno <S-Tab> :tabprevious<CR>
 endif
 
 " =================================
 "       Plugin Configurations
 " =================================
-
 
 " NeovimSnippets settings
 let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
@@ -240,10 +237,11 @@ let g:rooter_silent_chdir = 1
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'vue': ['eslint'],
 \   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+\   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
 \}
 let g:ale_sign_error = '✘'
@@ -254,7 +252,7 @@ let g:ale_sign_warning = '⚠'
 "           Autocommands
 " =================================
 
-au FileType netrw set nonumber norelativenumber foldcolumn=1
+au FileType netrw set nonumber norelativenumber foldcolumn=2
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
@@ -306,7 +304,7 @@ augroup END
 
 augroup no_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=2 | exec 'normal i' | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
@@ -382,10 +380,6 @@ ino <C-B> <ESC>bi
 ino <C-L> <ESC>li
 ino <C-E> <ESC>ea
 
-" instead of Isurround
-imap <C-S> <Plug>Isurround
-ino <C-G><C-M> <CR><ESC>O
-
 " Map function key's
 nmap <f9> :set invpaste<CR>
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -416,7 +410,7 @@ nno <silent> <leader>h :hide<CR>
 nno <silent> <leader>o :only<CR>
 
 " Save file
-nmap <leader>, :wa<CR>
+nmap <leader>, :w<CR>
 
 " Save&Close file
 nmap <leader>w :x<CR>
@@ -452,6 +446,11 @@ nmap <silent> <leader>. <C-^>
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
 
+nmap <leader>0 :cbelow<CR>
+nmap <leader>9 :cabove<CR>
+nmap <leader>] :lbelow<CR>
+nmap <leader>[ :labove<CR>
+
 " Arguments-list (currently held by artisan commands)
 " nmap <leader>a :args<space>
 
@@ -478,7 +477,7 @@ nno <leader>st :ALEToggle<CR>
 " nno <leader>cd :Gcd<CR>
 " Rest of great git commands
 nno <leader>gs :Gstatus<CR>
-nno <leader>gg :Gwrite!<CR>
+nno <leader>gg :Git<space>
 nno <leader>gp :Gpush<CR>
 nno <leader>gL :0Glog<CR>
 nno <leader>gl :Gpull<CR>
@@ -582,7 +581,6 @@ imap <expr><TAB>
  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
 
 " =================================
 "       Source vim-scripts
