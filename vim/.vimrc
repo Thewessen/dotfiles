@@ -454,7 +454,7 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
-" nmap <silent> <leader>'
+nmap <silent> <leader>' :tabclose<CR>
 
 " Buffers
 " nmap <leader>b :buffer<space>

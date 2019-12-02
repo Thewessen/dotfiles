@@ -69,10 +69,10 @@ if &t_Co > 255
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
         hi TabLineSel ctermfg=102 ctermbg=NONE cterm=bold
-        hi DiffAdd ctermbg=22 cterm=NONE
-        hi DiffDelete ctermbg=88 cterm=NONE
-        hi DiffChange ctermbg=NONE cterm=NONE
-        hi DiffText ctermbg=22 cterm=NONE
+        hi DiffAdd ctermbg=234 cterm=NONE
+        hi DiffDelete ctermbg=NONE cterm=italic
+        hi DiffChange ctermbg=235 cterm=NONE
+        hi DiffText ctermbg=234 cterm=NONE
         hi Special ctermfg=141 cterm=italic
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=81 ctermbg=NONE cterm=NONE
