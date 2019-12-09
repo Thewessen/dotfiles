@@ -40,7 +40,8 @@ Plug 'tpope/vim-repeat'               " Extends '.' command for plugins
 Plug 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
 Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plug 'tpope/vim-ragtag'               " Other cool mappings
-Plug 'tpope/vim-dispatch'               " Async implementations (tmux and other)
+Plug 'tpope/vim-dispatch'             " Async implementations (tmux and other)
+Plug 'tpope/vim-dadbod'               " Database explorer (supports many different databases)
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plug 'airblade/vim-rooter'            " Automtically change working dir to root
 Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
@@ -409,13 +410,13 @@ nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 " =================================
 "       Leaders
 " =================================
+" Different leader key
+let mapleader=','
+
 " Remove extra whitespace
 nmap <silent> <leader><space> :%s/\s\+$<cr>
 " nmap <leader><space><space> :%s/\s*\n//g<cr>
 "
-" Different leader key
-let mapleader=','
-
 " Reload this config file
 nno <silent> <leader>R :source ~/.vimrc<CR> :echo "Vimrc configuration reloaded..."<CR>
 
