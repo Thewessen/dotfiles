@@ -161,8 +161,6 @@ set rtp+=/usr/local/opt/fzf
 " =================================
 if has('nvim')
   set inccommand=split
-  nno <Tab> :tabnext<CR>
-  nno <S-Tab> :tabprevious<CR>
 endif
 
 " =================================
@@ -225,6 +223,7 @@ set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', '.git/']
+let g:rooter_manual_only = 1
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
  
