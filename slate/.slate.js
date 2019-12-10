@@ -27,7 +27,7 @@ const applications = {
   '3': 'Firefox',
   '4': 'Avocode',
   '5': 'Grud Hypotheekbond',
-  '6': 'PHPStorm',
+  '6': 'PhpStorm',
   '7': 'WhatsApp',
   '8': 'Agenda Hypotheekbond',
   '9': 'Mail Hypotheekbond',
