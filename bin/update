@@ -5,7 +5,7 @@
 
 sudo
 upgrade_oh_my_zsh
-nvim +PluginUpdate +qall
+nvim +PlugUpdate +qall
 update-git-pull
 upgrade-npm
 update-apt
