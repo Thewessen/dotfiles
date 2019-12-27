@@ -63,9 +63,11 @@ Plug 'posva/vim-vue'                  " Vue syntax highlighting
 Plug 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
 Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
+Plug 'reasonml-editor/vim-reason-plus' " Reasonml support
 Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'Shougo/neosnippet.vim'          " Snippets
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
+
 call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -169,6 +171,10 @@ let g:neosnippet#disable_runtime_snippets = {
 
 " HTML skeletons and more...
 let g:user_emmet_leader_key=','
+let g:user_emmet_install_global = 0
+let g:emmet_html5 = 1
+let g:user_emmet_mode = 'i'
+autocmd! FileType js,jsx,vue,html,php,css EmmetInstall
 
 " Blade php highlighting
 let g:blade_custom_directives = ['yield', 'method', 'csrf']
@@ -204,6 +210,9 @@ call deoplete#custom#option({
 \ 'auto_complete_delay': 300,
 \ 'smart_case': v:true,
 \ })
+let g:LanguageClient_serverCommands = {
+\ 'reason': ['$HOME/rls-linux/reason-language-server'],
+\ }
 
 " Setup javascript ternjs (other then default)
 let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
@@ -232,8 +241,9 @@ let g:ale_linters = {
 \   'typescript': ['tslint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+\   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
+\   'vue': ['prettier'],
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
@@ -307,6 +317,21 @@ augroup END
 augroup netrw_mapping
     autocmd!
     autocmd filetype netrw call NetrwMapping()
+augroup END
+
+augroup python_mapping
+    autocmd!
+    autocmd filetype python call PythonMapping()
+augroup END
+
+augroup npm_mapping
+    autocmd!
+    autocmd filetype js,javascript,mjs,vue,jsx,reason call NPMMapping()
+augroup END
+
+augroup shell_mapping
+    autocmd!
+    autocmd filetype sh call ShellMapping()
 augroup END
 
 "=================================
@@ -506,24 +531,33 @@ nno <silent> <leader>f? :Helptags<CR>
 nno <silent> <leader>fH :History:<CR>
 nno <silent> <leader>f/ :History/<CR>
 
-" NPM and nodejs dispatch commands
-nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
-nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
-nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
-nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ns :Start -title=server npm start<CR>
-nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nt :tabe term://npm run test<CR>
-nno <silent> <leader>nl :tabe term://npm run lint<CR>
-nno <silent> <leader>nd :tabe term://npm run deploy<CR>
+function! NPMMapping()
+    nno <buffer> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+    nno <buffer> <leader>nm :bo 10split term://node --experimental-modules %<CR>
+    nno <buffer> <leader>nh :bo 10split term://nodejs"<CR>
+    nno <buffer> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
+    nno <buffer> <leader>ne :bo 10split term://eslint --init<CR>
+    nno <buffer> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
+    nno <buffer> <leader>ns :Start -title=server npm start<CR>
+    nno <buffer> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
+    nno <buffer> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
+    nno <buffer> <leader>nt :tabe term://npm run test<CR>
+    nno <buffer> <leader>nT :tabe term://npm run test:watch<CR>
+    nno <buffer> <leader>nl :tabe term://npm run lint<CR>
+    nno <buffer> <leader>nd :tabe term://npm run deploy<CR>
+endfunction
 
-" Python dispatch commands
-nno <silent> <leader>yy :!python3 %:p<CR>
-nno <silent> <leader>yh :bo 10split term://python3<CR>
-nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+function! PythonMapping()
+    nno <buffer> <leader>nn :!python3 %:p<CR>
+    nno <buffer> <leader>ni :bo 10split term://python3<CR>
+    nno <buffer> <leader>nt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+endfunction
+
+function! ShellMapping()
+    nno <buffer> <leader>nn :!sh %:p<CR>
+    nno <buffer> <leader>ni :exec "bo 10split term://sh"<CR>
+    nno <buffer> <leader>nt :lcd %:p:h<CR>:exec ':tabe term://BATS_RUN_SKIPPED=true bats '.expand('%:p:r').'_test.sh'<CR>
+endfunction
 
 " PHP artisan commands
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
