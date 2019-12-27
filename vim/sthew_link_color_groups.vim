@@ -173,3 +173,6 @@ hi link twigString String
 hi link twigTagDelim Noise
 hi link twigVariable Normal
 hi link twigOperator Noise
+
+" Rust
+hi link rustStorage Type
