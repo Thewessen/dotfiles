@@ -238,7 +238,7 @@ let g:rooter_silent_chdir = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
-\   'typescript': ['tslint'],
+\   'typescript': ['eslint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
@@ -326,7 +326,7 @@ augroup END
 
 augroup npm_mapping
     autocmd!
-    autocmd filetype js,javascript,mjs,vue,jsx,reason call NPMMapping()
+    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
 augroup END
 
 augroup shell_mapping
@@ -538,7 +538,7 @@ function! NPMMapping()
     nno <buffer> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
     nno <buffer> <leader>ne :bo 10split term://eslint --init<CR>
     nno <buffer> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-    nno <buffer> <leader>ns :Start -title=server npm start<CR>
+    nno <buffer> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
     nno <buffer> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
     nno <buffer> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
     nno <buffer> <leader>nt :tabe term://npm run test<CR>

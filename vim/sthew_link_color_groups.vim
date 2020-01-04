@@ -54,6 +54,10 @@ hi link jsLabel Conditional
 " Typescript
 hi link typescriptBraces Noise
 hi link typescriptParens Noise
+hi link typescriptExceptions Operator
+hi link typescriptEndColons Noise
+hi link typescriptReserved Special
+hi link typescriptGlobalObjects Constant
 
 " PHP
 hi link phpVarSelector Noise
