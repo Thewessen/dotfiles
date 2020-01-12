@@ -180,3 +180,4 @@ hi link twigOperator Noise
 
 " Rust
 hi link rustStorage Type
+hi link rustOperator Operator
