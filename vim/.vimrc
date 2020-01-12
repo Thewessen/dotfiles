@@ -23,7 +23,9 @@ set encoding=utf8
 call plug#begin('~/.vim/plugged')
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', {
+        \ 'do': ':UpdateRemotePlugins'
+        \ }
 else
   Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
@@ -43,7 +45,10 @@ Plug 'tpope/vim-ragtag'               " Other cool mappings
 Plug 'tpope/vim-dispatch'             " Async vim-compilers (tmux,gui,windows)
 Plug 'tpope/vim-vividchalk'           " Colorscheme
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
+Plug 'junegunn/fzf', {
+      \ 'dir': '~/.fzf',
+      \ 'do': 'install'
+      \ }                             " FZF plugin for vim
 Plug 'ludovicchabant/vim-gutentags'   " Auto tag generation.
 Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
@@ -210,9 +215,6 @@ call deoplete#custom#option({
 \ 'auto_complete_delay': 300,
 \ 'smart_case': v:true,
 \ })
-let g:LanguageClient_serverCommands = {
-\ 'reason': ['$HOME/rls-linux/reason-language-server'],
-\ }
 
 " Setup javascript ternjs (other then default)
 let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
@@ -223,7 +225,8 @@ let g:deoplete#sources#ternjs#include_keywords = 1
 let g:deoplete#sources#ternjs#filetypes = [
 \ 'jsx',
 \ 'javascript.jsx',
-\ 'vue'
+\ 'vue',
+\ 'reason',
 \ ]
 
 " Ale
@@ -239,6 +242,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
 \   'typescript': ['eslint'],
+\   'reason': ['eslint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
@@ -305,7 +309,7 @@ augroup END
 
 augroup no_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | exec 'normal i' | endif
+    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
