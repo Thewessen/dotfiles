@@ -45,7 +45,7 @@ if &t_Co > 255
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=203 ctermbg=NONE cterm=underline
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
-        hi Keyword ctermfg=203 ctermbg=NONE cterm=NONE
+        hi Keyword ctermfg=204 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81
         hi Boolean ctermfg=99
         hi Number ctermfg=141
@@ -56,13 +56,13 @@ if &t_Co > 255
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
-        hi Operator ctermfg=203
-        hi Conditional ctermfg=203
-        hi Identifier ctermfg=203
-        hi PreProc ctermfg=203
-        hi Tag ctermfg=203
-        hi Statement ctermfg=203
-        hi Define ctermfg=203
+        hi Operator ctermfg=204
+        hi Conditional ctermfg=204
+        hi Identifier ctermfg=204
+        hi PreProc ctermfg=204
+        hi Tag ctermfg=204
+        hi Statement ctermfg=204
+        hi Define ctermfg=204
         hi Folded ctermfg=252 ctermbg=NONE
         hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
