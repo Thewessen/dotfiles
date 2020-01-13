@@ -2,6 +2,9 @@
 " =============== S. Thewessen vim-color links =====================
 " ==================================================================
 
+" Vim
+hi link helpCommand Keyword
+
 " netrew
 hi link netrwClassify Noise
 
@@ -57,6 +60,7 @@ hi link typescriptParens Noise
 
 " PHP
 hi link phpVarSelector Noise
+hi link phpDocTags Special
 
 " Blade PHP
 hi link bladeDelimiter Normal
