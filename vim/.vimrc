@@ -29,7 +29,9 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'w0rp/ale'                       " Async linter and fixer
-Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " Javascript source for deoplete
+Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
+Plug 'rafaelndev/deoplete-laravel-plugin', {'for': ['php'], 'do': 'composer install'} " Laravel completion source
 Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
 Plug 'tpope/vim-obsession'            " Auto updating a session file
 Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
@@ -55,6 +57,9 @@ Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
 Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'Shougo/neosnippet.vim'          " Snippet maneger
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
+Plug 'janko/vim-test'                 " Multiple test runners
+Plug 'jiangmiao/auto-pairs'           " Setup auto add closing pair [] {} ()
+Plug 'junegunn/goyo.vim'              " Distraction free vim
 
 " all of your Plugins must be added before the following line
 call plug#end()            " required
@@ -206,17 +211,21 @@ call deoplete#custom#option({
 \ 'smart_case': v:true,
 \ })
 
+" let g:deoplete#sources = {}
+" let g:deoplete#sources.php = ['omni', 'phpactor', 'ultisnips', 'buffer']
+" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
+" let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 " Setup javascript ternjs (other then default)
-let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
-let g:deoplete#sources#ternjs#timeout = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
-let g:deoplete#sources#ternjs#filetypes = [
-\ 'jsx',
-\ 'javascript.jsx',
-\ 'vue'
-\ ]
+" let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
+" let g:deoplete#sources#ternjs#timeout = 1
+" let g:deoplete#sources#ternjs#types = 1
+" let g:deoplete#sources#ternjs#case_insensitive = 1
+" let g:deoplete#sources#ternjs#include_keywords = 1
+" let g:deoplete#sources#ternjs#filetypes = [
+" \ 'jsx',
+" \ 'javascript.jsx',
+" \ 'vue'
+" \ ]
 
 " Ale
 set omnifunc=ale#completion#OmniFunc
@@ -239,6 +248,10 @@ let g:ale_fixers = {
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
+" goyo config
+let g:goyo_width = 120
+let g:goyo_height = "100%"
+let g:goyo_linenr = 0
 
 " =================================
 "           Autocommands
@@ -454,8 +467,9 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
-nmap <silent> <leader>' :tabclose<CR>
 
+" Toggle distraction free
+nmap <silent> <leader>' :Goyo<CR>
 " Buffers
 " nmap <leader>b :buffer<space>
 " Location list
@@ -536,6 +550,7 @@ nno <silent> <leader>fH :History:<CR>
 nno <silent> <leader>f/ :History/<CR>
 
 " NPM and nodejs dispatch commands
+" TODO: better setup for interpreter
 nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
 nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
 nno <silent> <leader>nh :bo 10split term://node"<CR>
@@ -545,11 +560,12 @@ nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C
 nno <silent> <leader>ns :Start -title=server npm start<CR>
 nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nt :tabe term://npm run test<CR>
+" nno <silent> <leader>nt :tabe term://npm run test<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " PHP artisan commands
+nno <silent> <leader>nt :tabe term://vssh /home/vagrant/hypotheekbond/monorepo/packages/calculation/vendor/bin/phpunit /home/vagrant/hypotheekbond/monorepo/packages/calculation/tests/Calculation/IncomeTax/IncomeTaxTestCalculation.php<CR>
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
 nno <leader>arl :!php artisan route:list \| grep<space>
