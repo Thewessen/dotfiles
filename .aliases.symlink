@@ -21,9 +21,6 @@ vpr() {
 # Git status vi
 alias vig='nvim +Gstatus -c ":only"' 
 
-# Service worker
-alias workforce='mono && cd apps/workforce && vssh php artisan queue:refinancingworker-comparison -vvv'
-
 # =================================
 #             General
 # =================================
@@ -97,6 +94,7 @@ notify() {
 }
 
 alias vi='nvim'
+alias oni2='/Applications/Onivim2.app/Contents/MacOS/Oni2'
 alias vundle='nvim +PluginInstall +qall'
 alias vundle-clean='nvim +PluginClean +qall'
 
