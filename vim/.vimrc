@@ -1,20 +1,21 @@
 "==================================================================
 "================ Samuel Thewessen vimrc-file =====================
 "==================================================================
-" Install Vim-Plug using:
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-" Basic settings
+" Unlock vim functionality (not Vi)
 set nocompatible
 set encoding=utf8
 
 "  Index
 " =================================
-" - Plugins
+" - Vundle configuration
 " - Vim configuration
+" - Neovim configuration
 " - Mappings
 " - Source
+
+" Install Vim-Plug using:
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 " =================================
 "             Plugins
@@ -22,7 +23,9 @@ set encoding=utf8
 call plug#begin('~/.vim/plugged')
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', {
+        \ 'do': ':UpdateRemotePlugins'
+        \ }
 else
   Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
@@ -61,13 +64,10 @@ Plug 'janko/vim-test'                 " Multiple test runners
 Plug 'jiangmiao/auto-pairs'           " Setup auto add closing pair [] {} ()
 Plug 'junegunn/goyo.vim'              " Distraction free vim
 
-" all of your Plugins must be added before the following line
 call plug#end()            " required
-filetype plugin indent on
+filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Put your non-Plugin stuff after this line
+" filetype plugin on
 
 "=================================
 "         Vim Configurations
@@ -216,16 +216,15 @@ call deoplete#custom#option({
 " let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 " let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 " Setup javascript ternjs (other then default)
-" let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
-" let g:deoplete#sources#ternjs#timeout = 1
-" let g:deoplete#sources#ternjs#types = 1
-" let g:deoplete#sources#ternjs#case_insensitive = 1
-" let g:deoplete#sources#ternjs#include_keywords = 1
-" let g:deoplete#sources#ternjs#filetypes = [
-" \ 'jsx',
-" \ 'javascript.jsx',
-" \ 'vue'
-" \ ]
+let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
+let g:deoplete#sources#ternjs#timeout = 1
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#case_insensitive = 1
+let g:deoplete#sources#ternjs#include_keywords = 1
+let g:deoplete#sources#ternjs#filetypes = [
+\ 'jsx',
+\ 'javascript.jsx',
+\ ]
 
 " Ale
 set omnifunc=ale#completion#OmniFunc
@@ -239,7 +238,7 @@ let g:rooter_silent_chdir = 1
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
+\   'typescript': ['eslint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
@@ -261,7 +260,6 @@ au FileType netrw set nonumber norelativenumber foldcolumn=2
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
-au BufLeave,BufWinLeave * if &filetype == 'qf' | lclose | cclose | endif
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -304,13 +302,13 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number norelativenumber foldcolumn=0 | endif
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
+    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number foldcolumn=0 | endif
+    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber foldcolumn=4 | endif
 augroup END
 
 augroup no_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=2 | exec 'normal i' | endif
+    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber foldcolumn=2  | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
@@ -377,7 +375,6 @@ ino <C-U> <C-G>u<C-U>
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
-tno <leader> <C-\><C-N>
 
 " Make C-A and C-E act like terminal in Command mode
 cno <C-A> <HOME>
@@ -439,10 +436,10 @@ nno <silent> <leader>h :hide<CR>
 nno <silent> <leader>o :only<CR>
 
 " Save file
-nmap <leader>, :w<CR>
+nno <leader>, :w<CR>
 
 " Save&Close file
-nmap <leader>w :x<CR>
+nno <leader>w :x<CR>
 
 " Quit!
 nmap <silent> <leader>q :qall!<CR>
@@ -557,10 +554,11 @@ nno <silent> <leader>nh :bo 10split term://node"<CR>
 nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
 nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
 nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ns :Start -title=server npm start<CR>
+nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-" nno <silent> <leader>nt :tabe term://npm run test<CR>
+nno <silent> <leader>nt :tabe term://npm run test<CR>
+nno <silent> <leader>nT :tabe term://npm run test:watch<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 

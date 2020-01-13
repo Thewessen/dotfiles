@@ -36,16 +36,16 @@ if &t_Co > 255
         hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=239
         hi CursorLine ctermbg=NONE cterm=underline
-        hi CursorLineNr ctermfg=231 ctermbg=NONE
+        hi CursorLineNr ctermfg=230 ctermbg=NONE cterm=underline
         hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=238 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
         hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=NONE
         hi VertSplit ctermfg=102 ctermbg=NONE cterm=NONE
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
-        hi MatchParen ctermfg=204 ctermbg=NONE cterm=underline
+        hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
-        hi Keyword ctermfg=204 ctermbg=NONE cterm=bold
+        hi Keyword ctermfg=204 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81
         hi Boolean ctermfg=99
         hi Number ctermfg=141
@@ -56,23 +56,23 @@ if &t_Co > 255
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
-        hi Operator ctermfg=204
+        hi Operator ctermfg=202
         hi Conditional ctermfg=204
-        hi Identifier ctermfg=214 cterm=NONE
+        hi Identifier ctermfg=204 cterm=NONE
         hi PreProc ctermfg=204
         hi Tag ctermfg=204
         hi Statement ctermfg=204
         hi Define ctermfg=204
-        hi Folded ctermfg=252 ctermbg=235
-        hi FoldColumn ctermbg=NONE ctermfg=0
+        hi Folded ctermfg=252 ctermbg=NONE
+        hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
         hi TabLine ctermfg=242 ctermbg=NONE cterm=underline
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
         hi TabLineSel ctermfg=102 ctermbg=NONE cterm=bold
         hi DiffAdd ctermbg=234 cterm=NONE
         hi DiffDelete ctermbg=NONE cterm=italic
-        hi DiffChange ctermbg=235 cterm=NONE
-        hi DiffText ctermbg=234 cterm=NONE
+        hi DiffChange ctermbg=237 cterm=NONE
+        hi DiffText ctermbg=22 cterm=NONE
         hi Special ctermfg=141 cterm=italic
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=81 ctermbg=NONE cterm=NONE
@@ -126,7 +126,7 @@ if &t_Co > 255
         hi DiffDelete ctermbg=204 cterm=NONE
         hi DiffChange ctermbg=255 cterm=NONE
         hi DiffText ctermbg=46 cterm=NONE
-        hi Special ctermfg=57 ctermbg=NONE cterm=NONE
+        hi Special ctermfg=57 ctermbg=NONE cterm=italic
         hi SpecialComment ctermfg=245 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=231 cterm=bold
