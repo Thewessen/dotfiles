@@ -70,6 +70,7 @@ Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
 Plug 'hail2u/vim-css3-syntax'         " CSS3 syntax
 Plug 'reasonml-editor/vim-reason-plus' " Reasonml support
 Plug 'lumiliet/vim-twig'              " Twig highlighting
+Plug 'neovimhaskell/haskell-vim'      " Haskell indention and syntax
 Plug 'Shougo/neosnippet.vim'          " Snippets
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 
@@ -167,6 +168,11 @@ endif
 " =================================
 "       Plugin Configurations
 " =================================
+" OCaml interpreter
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" :execute 'helptags ' . substitute(system('opam config var share'),'\n$','','''') .  "/merlin/vim/doc"
+
 
 " NeovimSnippets settings
 let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
@@ -226,14 +232,13 @@ let g:deoplete#sources#ternjs#filetypes = [
 \ 'jsx',
 \ 'javascript.jsx',
 \ 'vue',
-\ 'reason',
 \ ]
 
 " Ale
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
+let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 
@@ -242,15 +247,20 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
 \   'typescript': ['eslint'],
-\   'reason': ['eslint'],
+\   'reason': ['reason-language-server'],
+\   'ocaml' : ['merlin'],
+\   'haskell' : ['hlint'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
 \   'vue': ['prettier'],
+\   'ocaml' : ['ocamlformat'],
+\   '*' : ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
+let g:ale_reason_ls_executable = 'reason-language-server'
 
 
 " =================================
@@ -336,6 +346,16 @@ augroup END
 augroup shell_mapping
     autocmd!
     autocmd filetype sh call ShellMapping()
+augroup END
+
+augroup ocaml_reason_mapping
+    autocmd!
+    autocmd filetype ocaml,reason call OCAMLMapping()
+augroup END
+
+augroup haskell_mapping
+    autocmd!
+    autocmd filetype haskell call HaskellMapping()
 augroup END
 
 "=================================
@@ -606,6 +626,15 @@ imap <expr><TAB>
  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+function! OCAMLMapping()
+    nno <buffer> <leader>nh :tabe term://utop"<CR>
+endfunction
+
+function! HaskellMapping()
+    nno <buffer> <leader>nh :bo 20split term://stack ghci<CR>i
+    nno <buffer> <leader>nt :bo 20split term://stack test<CR>
+endfunction
 
 " =================================
 "       Source vim-scripts

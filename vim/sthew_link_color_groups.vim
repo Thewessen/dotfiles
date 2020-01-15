@@ -183,4 +183,6 @@ hi link rustStorage Type
 hi link rustOperator Operator
 
 " Haskell
-hi link ConId Type
+hi link conId Type
+hi link hsDelimiter Delimiter
+hi link hsStructure Special

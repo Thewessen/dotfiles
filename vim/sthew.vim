@@ -36,7 +36,7 @@ if &t_Co > 255
         hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=239
         hi CursorLine ctermbg=NONE cterm=underline
-        hi CursorLineNr ctermfg=230 ctermbg=NONE cterm=underline
+        hi CursorLineNr ctermfg=242 ctermbg=NONE
         hi ColorColumn ctermbg=NONE
         hi LineNr ctermfg=238 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
@@ -56,7 +56,7 @@ if &t_Co > 255
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
-        hi Operator ctermfg=202
+        hi Operator ctermfg=204
         hi Conditional ctermfg=204
         hi Identifier ctermfg=204 cterm=NONE
         hi PreProc ctermfg=204
