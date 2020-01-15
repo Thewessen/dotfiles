@@ -56,7 +56,7 @@ if &t_Co > 255
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
-        hi Operator ctermfg=204
+        hi Operator ctermfg=202
         hi Conditional ctermfg=204
         hi Identifier ctermfg=204 cterm=NONE
         hi PreProc ctermfg=204
