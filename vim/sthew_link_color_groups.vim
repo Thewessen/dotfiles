@@ -47,7 +47,7 @@ hi link htmlEndTag Comment
 hi link jsObjectKey Normal
 hi link jsFunction Statement
 hi link jsFunctionKey Normal
-hi link jsArrowFunction Statement
+hi link jsArrowFunction Operator
 hi link jsObjectFuncName Normal
 hi link javaScriptFunction Type
 hi link javaScriptRailsFunction Type
