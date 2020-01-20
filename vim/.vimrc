@@ -217,7 +217,7 @@ call deoplete#custom#option({
 " let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 " let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 " Setup javascript ternjs (other then default)
-let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
+let g:deoplete#sources#ternjs#tern_bin = '/usr/local/bin/tern'
 let g:deoplete#sources#ternjs#timeout = 1
 let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#case_insensitive = 1
@@ -235,21 +235,23 @@ let g:rooter_patterns = ['package.json', '.git/']
 let g:rooter_manual_only = 1
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
- 
+
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'typescript': ['eslint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
+\   'javascript': ['prettier', 'prettier_eslint'],
 \   'typescript': ['tslint'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
+let g:ale_fix_on_save = 1
 
 " goyo config
-let g:goyo_width = 120
+let g:goyo_width = "120+20"
 let g:goyo_height = "100%"
 let g:goyo_linenr = 0
 
@@ -257,7 +259,7 @@ let g:goyo_linenr = 0
 "           Autocommands
 " =================================
 
-au FileType netrw set nonumber norelativenumber foldcolumn=2
+au FileType netrw setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
@@ -518,7 +520,7 @@ nno <leader>gd :Gvdiffsplit!<CR>
 nno <leader>gi :Gvdiffsplit<space>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
-nno <leader>gw :Gwrite!<CR>
+nno <leader>g, :Gwrite!<CR>
 " Gdiff (3 way diff) solving merge conflicts
 " Used inside working file (mid file)
 " Enable gutentags
