@@ -129,6 +129,7 @@ set signcolumn=yes
 
 " Indention and formatting
 set textwidth=79
+set colorcolumn=80
 set fileformat=unix
 set expandtab
 set autoindent
