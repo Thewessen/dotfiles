@@ -63,6 +63,7 @@ Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 Plug 'janko/vim-test'                 " Multiple test runners
 Plug 'jiangmiao/auto-pairs'           " Setup auto add closing pair [] {} ()
 Plug 'junegunn/goyo.vim'              " Distraction free vim
+Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
 
 call plug#end()            " required
 filetype plugin indent on    " required
