@@ -25,12 +25,12 @@ const applications = {
   '1': 'Slack',
   '2': 'iTerm2',
   '3': 'Google Chrome',
-  '4': 'Onivim 2',
-  '5': 'Grud Hypotheekbond',
-  '6': 'PhpStorm',
+  '4': 'Avocode',
+  '5': 'PhpStorm',
+  '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
   '8': 'Agenda Hypotheekbond',
-  '9': 'Mail Hypotheekbond',
+  '9': 'Grud Hypotheekbond',
   '0': 'TimeChimp Hypotheekbond',
 }
 
@@ -219,7 +219,7 @@ const throwNext = function(win) {
 //   win.doOperation(throwNextBottom)
 // })
 S.log('[SLATE] --- Setting slate key bindings ---')
-// S.bindAll({
+S.bindAll({
   // [mod('g')]: S.op('grid'),
   // [mod('h')]: hint,
   // [mod('c')]: hide,
@@ -246,7 +246,7 @@ S.log('[SLATE] --- Setting slate key bindings ---')
   // '1:ctrl,shift': moveLeftMonitor,
   // '2:ctrl,shift': moveMainMonitor,
   // '3:ctrl,shift': moveLeftMonitor,
-// })
+})
 
 for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
