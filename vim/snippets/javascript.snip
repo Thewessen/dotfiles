@@ -174,6 +174,16 @@ options head
 	}, [${2:#:dependencies]}]);
 	${0:TARGET}
 
+snippet hook-dispatch
+alias hd
+options head
+	const dispatch = useDispatch();
+
+snippet hook-selector
+alias hr
+options head
+	const {${1:#:state}} = useSelector(state => state);
+
 # PropTypes
 # ========================================
 snippet proptype-array
