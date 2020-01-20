@@ -164,3 +164,4 @@ setopt HIST_BEEP
   && source $DOTFILES/fzf-extras/fzf-extras.sh
 [[ -e "$DOTFILES/fzf-extras/fzf-extras.zsh" ]] \
   && source $DOTFILES/fzf-extras/fzf-extras.zsh
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
