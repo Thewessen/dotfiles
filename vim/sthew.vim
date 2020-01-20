@@ -37,7 +37,7 @@ if &t_Co > 255
         hi Visual ctermbg=239
         hi CursorLine ctermbg=NONE cterm=underline
         hi CursorLineNr ctermfg=230 ctermbg=NONE cterm=underline
-        hi ColorColumn ctermbg=NONE
+        hi ColorColumn ctermbg=237 ctermfg=NONE
         hi LineNr ctermfg=238 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
         hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=NONE
