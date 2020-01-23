@@ -1,0 +1,31 @@
+URxvt*transparent: false
+URxvt*tintColor: Blue
+URxvt*shading: 40
+URxvt*saveLines: 120000
+URxvt*font: xft:inconsolata:size=14:antialias=true:hinting=true
+URxvt*boldFont: xft:Lato Semibold:style=Semibold:size=14:antialias=true:hinting=true
+URxvt*letterSpace: -1
+URxvt*lineSpace: 5
+URxvt*scrollBar: false
+URxvt*scrollBar_right: false
+URxvt*scrollstyle: rxvt
+
+# Colors
+URxvt*foreground: #ffffd7
+URxvt*background: #2c292d
+URxvt*color0: Black
+URxvt*color1: #ff6188
+URxvt*color2: #a9dc76
+URxvt*color3: #ffd866
+URxvt*color4: #78a0e8
+URxvt*color5: #736aa3
+URxvt*color6: #78dce8
+URxvt*color7: #908e8f
+URxvt*color8: #3e3e3e
+URxvt*color9: #fb3838
+URxvt*color10: #8af752
+URxvt*color11: #ffee7a
+URxvt*color12: #9dc0ff
+URxvt*color13: #ab9df2
+URxvt*color14: #bff8ff
+URxvt*color15: White
