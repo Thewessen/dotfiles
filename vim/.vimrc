@@ -47,9 +47,8 @@ Plug 'tpope/vim-vividchalk'           " Colorscheme
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plug 'junegunn/fzf', {
       \ 'dir': '~/.fzf',
-      \ 'do': 'install'
+      \ 'do': './install'
       \ }                             " FZF plugin for vim
-Plug 'ludovicchabant/vim-gutentags'   " Auto tag generation.
 Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
@@ -241,6 +240,7 @@ set omnifunc=ale#completion#OmniFunc
 let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
+let g:rooter_manual_only = 1
 
 " ale linters config
 let g:ale_linters = {
