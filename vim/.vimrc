@@ -64,6 +64,8 @@ Plug 'janko/vim-test'                 " Multiple test runners
 Plug 'jiangmiao/auto-pairs'           " Setup auto add closing pair [] {} ()
 Plug 'junegunn/goyo.vim'              " Distraction free vim
 Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
+Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
+Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
 
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -130,7 +132,7 @@ set signcolumn=yes
 
 " Indention and formatting
 set textwidth=79
-set colorcolumn=80
+set colorcolumn=120
 set fileformat=unix
 set expandtab
 set autoindent
@@ -177,6 +179,11 @@ endif
 " GutenTags
 " Use :GutentagsToggleEnabled to enable gutentags
 let g:gutentags_enabled = 0
+
+" Ranger default mapping
+let g:ranger_map_keys = 0
+let g:ranger_replace_netrw = 0
+let g:bclose_no_plugin_maps = 1
 
 " NeovimSnippets settings
 let g:neosnippet#snippets_directory = ['~/.dotfiles/vim/snippets']
@@ -243,13 +250,13 @@ let g:ale_linters = {
 \   'typescript': ['eslint'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['prettier', 'prettier_eslint'],
+\   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
 \   '*': ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 " goyo config
 let g:goyo_width = "120+20"
@@ -352,9 +359,9 @@ function! VimDiffMapping()
   nno <buffer> <leader>] :diffget //3<CR>:diffupdate<CR>
 endfunction
 
-" Scroll faster with C-E and C-Y
-nno <C-E> 2<C-E>
-nno <C-Y> 2<C-Y>
+" Use C-E and C-U for fast scrolling
+nno <C-E> 31<C-E>
+nno <C-U> 31<C-Y>
 
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|
@@ -425,6 +432,9 @@ nno <silent> <Space> :nohlsearch<CR>:echo<CR>
 " =================================
 " Different leader key
 let mapleader=','
+
+" Ranger iso netrw
+nno <leader>- :Ranger<CR>
 
 " Remove extra whitespace
 nmap <silent> <leader><space> :%s/\s\+$<cr>
@@ -531,6 +541,7 @@ nno <leader>G :GutentagsUpdate<CR>
 nno <leader>d :Ag <C-R><C-W><CR>
 
 " FZF commands
+" for some reason this is mapped to buffer delete
 nno <silent> <C-P> :Files<CR>
 nno <silent> <leader>ff :GFiles<CR>
 nno <leader>fa :Ag<space>
@@ -561,13 +572,13 @@ nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C
 nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
 nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nt :tabe term://npm run test<CR>
+nno <silent> <leader>nt :tabe term://yarn test<CR>
 nno <silent> <leader>nT :tabe term://npm run test:watch<CR>
 nno <silent> <leader>nl :tabe term://npm run lint<CR>
 nno <silent> <leader>nd :tabe term://npm run deploy<CR>
 
 " PHP artisan commands
-nno <silent> <leader>nt :tabe term://vssh /home/vagrant/hypotheekbond/monorepo/packages/calculation/vendor/bin/phpunit /home/vagrant/hypotheekbond/monorepo/packages/calculation/tests/Calculation/IncomeTax/IncomeTaxTestCalculation.php<CR>
+" nno <silent> <leader>nt :tabe term://vssh /home/vagrant/hypotheekbond/monorepo/packages/calculation/vendor/bin/phpunit /home/vagrant/hypotheekbond/monorepo/packages/calculation/tests/Calculation/IncomeTax/IncomeTaxTestCalculation.php<CR>
 nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
 nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
 nno <leader>arl :!php artisan route:list \| grep<space>

@@ -67,7 +67,8 @@ hi link bladeDelimiter Normal
 hi link bladeKeyword Special
 
 " JSX
-hi link jsxComponentName Tag
+hi link jsxComponentName Define
+hi link jsxTagName Tag
 hi link jsxBraces Noise
 
 " Emberjs

@@ -25,12 +25,12 @@ const applications = {
   '1': 'Slack',
   '2': 'iTerm2',
   '3': 'Google Chrome',
-  '4': 'Avocode',
+  '4': 'Grud Hypotheekbond',
   '5': 'PhpStorm',
   '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
   '8': 'Agenda Hypotheekbond',
-  '9': 'Grud Hypotheekbond',
+  '9': 'Avocode',
   '0': 'TimeChimp Hypotheekbond',
 }
 
