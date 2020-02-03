@@ -32,7 +32,8 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'w0rp/ale'                       " Async linter and completer
-Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
+Plug 'carlitux/deoplete-ternjs', { 'do' : 'npm install -g tern' }       " Javascript source for deoplete
+Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }     " PHP source
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -351,9 +352,9 @@ function! NetrwMapping()
     nno <buffer> <C-R> <Plug>(NetrwRefresh)
 endfunction
 
-" Scroll faster with C-E and C-Y
-nno <C-E> 2<C-E>
-nno <C-Y> 2<C-Y>
+" Scroll faster with C-E and C-U
+nno <C-E> 31<C-E>
+nno <C-U> 31<C-Y>
 
 " Help file vsplit on search
 nmap <S-K> <S-K><C-W><S-L><C-W>|

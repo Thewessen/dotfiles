@@ -36,8 +36,8 @@ if &t_Co > 255
         hi Normal ctermfg=230 ctermbg=NONE
         hi Visual ctermbg=239
         hi CursorLine ctermbg=NONE cterm=underline
-        hi CursorLineNr ctermfg=242 ctermbg=NONE
-        hi ColorColumn ctermbg=NONE
+        hi CursorLineNr ctermfg=230 ctermbg=NONE
+        hi ColorColumn ctermbg=237 ctermfg=NONE
         hi LineNr ctermfg=238 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
         hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=NONE
@@ -45,7 +45,7 @@ if &t_Co > 255
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
-        hi Keyword ctermfg=204 ctermbg=NONE cterm=NONE
+        hi Keyword ctermfg=197 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81
         hi Boolean ctermfg=99
         hi Number ctermfg=141
@@ -56,13 +56,13 @@ if &t_Co > 255
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
-        hi Operator ctermfg=202
-        hi Conditional ctermfg=204
-        hi Identifier ctermfg=204 cterm=NONE
-        hi PreProc ctermfg=204
-        hi Tag ctermfg=204
-        hi Statement ctermfg=204
-        hi Define ctermfg=204
+        hi Operator ctermfg=214
+        hi Conditional ctermfg=197
+        hi Identifier ctermfg=197 cterm=bold
+        hi PreProc ctermfg=197 cterm=italic
+        hi Tag ctermfg=197
+        hi Statement ctermfg=197
+        hi Define ctermfg=160
         hi Folded ctermfg=252 ctermbg=NONE
         hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
@@ -131,7 +131,7 @@ if &t_Co > 255
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=231 cterm=bold
         hi Todo ctermfg=3 ctermbg=231 cterm=bold
-        hi SignatureMarkText ctermfg=202 cterm=underline
+        hi SignatureMarkText ctermfg=197 cterm=underline
     endif
 else " For 16 color terminal
     set background=dark

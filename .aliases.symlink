@@ -44,6 +44,7 @@ alias p='ps -f'
 alias sortnr='sort -n -r'
 
 alias grep='grep --color'
+alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
 # deprecated, use ag.
 # alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 
@@ -114,6 +115,7 @@ alias -g NUL="> /dev/null 2>&1"
 # =================================
 
 alias vi='nvim'
+alias vig='nvim +Gstatus -c ":only"' 
 alias vundle='nvim +PluginInstall +qall'
 alias vundle-clean='nvim +PluginClean +qall'
 
