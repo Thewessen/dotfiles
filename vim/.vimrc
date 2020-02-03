@@ -262,6 +262,8 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_reason_ls_executable = 'reason-language-server'
 
+" Signature config
+let g:SignatureIncludeMarks = 'HTNSGCRDLFOEUIYPA'
 
 " =================================
 "           Autocommands
@@ -328,34 +330,15 @@ augroup fugitive_window
     autocmd filetype fugitive wincmd H
 augroup END
 
-augroup netrw_mapping
+augroup mappings
     autocmd!
     autocmd filetype netrw call NetrwMapping()
-augroup END
-
-augroup python_mapping
-    autocmd!
-    autocmd filetype python call PythonMapping()
-augroup END
-
-augroup npm_mapping
-    autocmd!
-    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
-augroup END
-
-augroup shell_mapping
-    autocmd!
     autocmd filetype sh call ShellMapping()
-augroup END
-
-augroup ocaml_reason_mapping
-    autocmd!
-    autocmd filetype ocaml,reason call OCAMLMapping()
-augroup END
-
-augroup haskell_mapping
-    autocmd!
+    autocmd filetype python call PythonMapping()
+    autocmd filetype php call PHPMapping()
     autocmd filetype haskell call HaskellMapping()
+    autocmd filetype ocaml,reason call OCAMLMapping()
+    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
 augroup END
 
 "=================================
@@ -529,7 +512,7 @@ nno <leader>gd :Gvdiffsplit!<CR>
 nno <leader>gi :Gvdiffsplit<space>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
-nno <leader>gw :Gwrite!<CR>
+nno <leader>g, :Gwrite!<CR>
 " Gdiff (3 way diff) solving merge conflicts
 " Used inside working file (mid file)
 nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
@@ -584,19 +567,14 @@ function! ShellMapping()
 endfunction
 
 " PHP artisan commands
-nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
-nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep<space>
-nno <leader>amc :!php artisan make:controller<space>
-nno <leader>amm :!php artisan make:model<space>
-nno <leader>amr :!php artisan make:migration<space>
-nno <leader>amp :!php artisan make:policy<space>
-nno <leader>ame :!php artisan make:event<space>
-nno <leader>aml :!php artisan make:listener<space>
-nno <silent> <leader>aMM :!php artisan migrate<CR>
-nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
-nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
-nno <silent> <leader>aMs :!php artisan migrate:status<CR>
+function! PHPMapping()
+    nno <buffer> <leader>nn :tabe term://php artisan tinker<CR>
+    nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
+    nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
+    nno <buffer> <leader>nm :!php artisan make:
+    nno <buffer> <leader>ni :!php artisan migrate
+    nno <buffer> <leader>ns :!php artisan db:seed<CR>
+endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
