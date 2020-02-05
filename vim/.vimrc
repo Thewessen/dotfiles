@@ -61,7 +61,6 @@ Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'Shougo/neosnippet.vim'          " Snippet maneger
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 Plug 'janko/vim-test'                 " Multiple test runners
-Plug 'jiangmiao/auto-pairs'           " Setup auto add closing pair [] {} ()
 Plug 'junegunn/goyo.vim'              " Distraction free vim
 Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
 Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
@@ -178,7 +177,9 @@ endif
 
 " GutenTags
 " Use :GutentagsToggleEnabled to enable gutentags
-let g:gutentags_enabled = 0
+let g:gutentags_enabled = 1
+let g:gutengas_add_default_project_roots = 0
+let g:gutentags_project_root = ['package.json']
 
 " Ranger default mapping
 let g:ranger_map_keys = 0
@@ -535,7 +536,7 @@ nno <leader>g, :Gwrite!<CR>
 " Gdiff (3 way diff) solving merge conflicts
 " Used inside working file (mid file)
 " Enable gutentags
-nno <leader>G :GutentagsUpdate<CR>
+nno <leader>G :GutentagsUpdate!<CR>
 
 " Find usages of word under cursor
 nno <leader>d :Ag <C-R><C-W><CR>
