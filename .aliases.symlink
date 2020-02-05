@@ -6,6 +6,7 @@
 # ==================================================================
 
 alias vpa='vssh php artisan'
+alias vci='vssh composer install'
 alias sfix='vssh composer install && cd ~/hypotheekbond/monorepo/apps/migrate && vssh ./bin/migrate.php migrate && cd -'
 alias genAflosKey='vpa tool:create-unique 11 -l ‘WOOOOOHOOOOOO!’ --force-code=‘0000000000000000’ --to-notepad'
 
