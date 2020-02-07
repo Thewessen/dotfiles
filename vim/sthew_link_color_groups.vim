@@ -176,5 +176,6 @@ hi link gitDiff Normal
 " Twig
 hi link twigString String
 hi link twigTagDelim Noise
-hi link twigVariable Normal
-hi link twigOperator Noise
+hi link twigVariable Italic
+hi link twigOperator Operator
+hi link twigVarDelim Noise
