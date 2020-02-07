@@ -204,7 +204,7 @@ let g:blade_custom_directives_pairs = {
       \}
 
 " FZF options
-let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_layout = { 'left': '~100%' }
 let g:fzf_buffers_jump = 1
 
 " Dispatch no keybindings
