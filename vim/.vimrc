@@ -329,20 +329,17 @@ augroup fugitive_window
     autocmd filetype fugitive wincmd H
 augroup END
 
-augroup netrw_mapping
+augroup mappings
     autocmd!
     autocmd filetype netrw call NetrwMapping()
-augroup END
-
-augroup diff_mappings
-  autocmd!
-  autocmd BufWinEnter,BufEnter * if &diff | call VimDiffMapping() | endif
-augroup END
-
-augroup fzf_window
-    autocmd!
+    autocmd BufWinEnter,BufEnter * if &diff | call VimDiffMapping() | endif
     autocmd filetype fzf imap <buffer> <ESC> <C-D>
+    autocmd filetype sh call ShellMapping()
+    autocmd filetype python call PythonMapping()
+    autocmd filetype php call PHPMapping()
+    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
 augroup END
+
 "=================================
 "		    Mappings
 "=================================
@@ -562,37 +559,44 @@ nno <silent> <leader>f? :Helptags<CR>
 nno <silent> <leader>fH :History:<CR>
 nno <silent> <leader>f/ :History/<CR>
 
-" NPM and nodejs dispatch commands
 " TODO: better setup for interpreter
-nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
-nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-nno <silent> <leader>nh :bo 10split term://node"<CR>
-nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
-nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nt :tabe term://yarn test<CR>
-nno <silent> <leader>nT :tabe term://npm run test:watch<CR>
-nno <silent> <leader>nl :tabe term://npm run lint<CR>
-nno <silent> <leader>nd :tabe term://npm run deploy<CR>
+function! NPMMapping()
+  nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
+  nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
+  nno <silent> <leader>nh :bo 10split term://node"<CR>
+  nno <silent> <leader>ni :bo 10split term://yarn<CR><C-\><C-N><C-W>w
+  nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
+  nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
+  nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
+  nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
+  nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
+  nno <silent> <leader>nt :tabe term://yarn test<CR>
+  nno <silent> <leader>nT :tabe term://npm run test:watch<CR>
+  nno <silent> <leader>nl :tabe term://npm run lint<CR>
+  nno <silent> <leader>nd :tabe term://npm run deploy<CR>
+endfunction
+
+function! PythonMapping()
+    nno <buffer> <leader>nn :!python3 %:p<CR>
+    nno <buffer> <leader>ni :bo 10split term://python3<CR>
+    nno <buffer> <leader>nt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+endfunction
+
+function! ShellMapping()
+    nno <buffer> <leader>nn :!sh %:p<CR>
+    nno <buffer> <leader>ni :exec "bo 10split term://sh"<CR>
+    nno <buffer> <leader>nt :lcd %:p:h<CR>:exec ':tabe term://BATS_RUN_SKIPPED=true bats '.expand('%:p:r').'_test.sh'<CR>
+endfunction
 
 " PHP artisan commands
-" nno <silent> <leader>nt :tabe term://vssh /home/vagrant/hypotheekbond/monorepo/packages/calculation/vendor/bin/phpunit /home/vagrant/hypotheekbond/monorepo/packages/calculation/tests/Calculation/IncomeTax/IncomeTaxTestCalculation.php<CR>
-nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
-nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep<space>
-nno <leader>amc :!php artisan make:controller<space>
-nno <leader>amm :!php artisan make:model<space>
-nno <leader>amr :!php artisan make:migration<space>
-nno <leader>amp :!php artisan make:policy<space>
-nno <leader>ame :!php artisan make:event<space>
-nno <leader>aml :!php artisan make:listener<space>
-nno <silent> <leader>aMM :!php artisan migrate<CR>
-nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
-nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
-nno <silent> <leader>aMs :!php artisan migrate:status<CR>
+function! PHPMapping()
+    nno <buffer> <leader>nn :tabe term://php artisan tinker<CR>
+    nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
+    nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
+    nno <buffer> <leader>nm :!php artisan make:
+    nno <buffer> <leader>ni :!php artisan migrate
+    nno <buffer> <leader>ns :!php artisan db:seed<CR>
+endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
