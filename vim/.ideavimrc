@@ -80,6 +80,8 @@ nno ]<space> o<ESC>k
 "=================================
 "		    Editor actions
 "=================================
+" Use IDE find
+nno / :action Find<CR>
 " View navigation bar
 nno - :action ShowNavBar<CR>
 
@@ -110,6 +112,13 @@ nno <leader>gp :action Vcs.Push<CR>
 nno <leader>gL :action Git.Log<CR>
 nno <leader>gb :action Annotate<CR>
 nno <leader>gm :action Git.ResolveConflicts<CR>
+
+" Git diff
+nno <leader>[ :action Diff.AppendLeftSide<CR>
+nno <leader>] :action Diff.AppendRightSide<CR>
+nno <leader>, :action Diff.ApplyNonConflicts<CR>
+nno ]] :action NextDiff<CR>
+nno [[ :action PreviousDiff<CR>
 
 " Live templates
 nno <leader>, :action InsertLiveTemplate<CR>
