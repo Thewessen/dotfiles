@@ -23,7 +23,7 @@ const screens = {
 
 const applications = {
   '1': 'Slack',
-  '2': 'iTerm2',
+  '2': 'Alacritty',
   '3': 'Google Chrome',
   '4': 'Grud Hypotheekbond',
   '5': 'PhpStorm',
