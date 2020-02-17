@@ -106,7 +106,7 @@ function nvim() {
   if test $# -gt 0; then
     env nvim "$@"
   else
-    nvim +GitFiles
+    nvim +GitFiles!
   fi
 }
 

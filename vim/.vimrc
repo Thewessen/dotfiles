@@ -206,6 +206,14 @@ let g:blade_custom_directives_pairs = {
 " FZF options
 let g:fzf_layout = { 'left': '~100%' }
 let g:fzf_buffers_jump = 1
+" Files with preview
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
+
+" command! -bang -nargs=* Ag
+"   \ call fzf#vim#grep(
+"   \   'ag --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+"   \   fzf#vim#with_preview(), <bang>0)
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
@@ -272,6 +280,7 @@ au FileType netrw setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType js set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -536,13 +545,13 @@ nno <leader>g, :Gwrite!<CR>
 nno <leader>G :GutentagsUpdate!<CR>
 
 " Find usages of word under cursor
-nno <leader>d :Ag <C-R><C-W><CR>
+nno <leader>d :Ag! <C-R><C-W><CR>
 
 " FZF commands
 " for some reason this is mapped to buffer delete
 nno <silent> <C-P> :Files<CR>
 nno <silent> <leader>ff :GFiles<CR>
-nno <leader>fa :Ag<space>
+nno <leader>fa :Ag!<space>
 nno <silent> <leader>/ :Lines<CR>
 nno <silent> <leader>fL :BLines<CR>
 nno <silent> <leader>fg :GFiles?<CR>
