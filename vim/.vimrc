@@ -38,12 +38,14 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'w0rp/ale'                       " Async linter and fixer
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " Javascript source for deoplete
-Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }
-Plug 'rafaelndev/deoplete-laravel-plugin', {'for': ['php'], 'do': 'composer install'} " Laravel completion source
-Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
-Plug 'tpope/vim-obsession'            " Auto updating a session file
+Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'carlitux/deoplete-ternjs', {
+      \ 'do' : 'npm install -g tern'
+      \}                              " Javascript source for deoplete
+Plug 'padawan-php/deoplete-padawan', {
+      \'do': 'composer install'
+      \}                              " PHP source
+Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
@@ -72,6 +74,7 @@ Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
 Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
 Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
 Plug 'jacquesbh/vim-showmarks'        " Show marks
+Plug 'rust-lang/rust.vim'             " Rust language toolchain
 call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -196,7 +199,7 @@ let g:ranger_replace_netrw = 0
 let g:bclose_no_plugin_maps = 1
 
 " NeovimSnippets settings
-let g:neosnippet#snippets_directory = ['~/.dotfiles/vim/snippets']
+let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
 let g:neosnippet#disable_runtime_snippets = {
     \ '_': 1,
     \}
@@ -214,7 +217,7 @@ let g:blade_custom_directives_pairs = {
       \}
 
 " FZF options
-let g:fzf_layout = { 'left': '~100%' }
+let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_buffers_jump = 1
 " Files with preview
 command! -bang -nargs=? -complete=dir Files
@@ -259,7 +262,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=LanguageClient#complete
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', '.git/']
+let g:rooter_patterns = ['package.json', '.git/', 'Cargo.toml']
 let g:rooter_manual_only = 1
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
@@ -268,10 +271,12 @@ let g:rooter_silent_chdir = 1
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'typescript': ['eslint'],
+\   'rust' : ['cargo'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
+\   'rust' : ['rustfmt'],
 \   '*': ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
@@ -364,6 +369,7 @@ augroup mappings
     autocmd filetype python call PythonMapping()
     autocmd filetype php call PHPMapping()
     autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
+    autocmd filetype rust,cfg call RustMapping()
 augroup END
 
 "=================================
@@ -624,6 +630,20 @@ function! PHPMapping()
   nno <buffer> <leader>nm :!php artisan make:
   nno <buffer> <leader>ni :!php artisan migrate
   nno <buffer> <leader>ns :!php artisan db:seed<CR>
+endfunction
+
+function! RustMapping()
+    nno <buffer> <leader>n, :Cbuild<CR>
+    nno <buffer> <leader>n. :Cargo build --release<CR>
+    nno <buffer> <leader>nn :Crun<CR>
+    nno <buffer> <leader>nd :Cdoc<CR>
+    nno <buffer> <leader>nD :Cargo doc --open<CR>
+    nno <buffer> <leader>nN :Cnew<space>
+    nno <buffer> <leader>nt :Cargo test<CR>
+    nno <buffer> <leader>nT :Ccheck<CR>
+    nno <buffer> <leader>nc :Cclean<CR>
+    nno <buffer> <leader>nb :Cbench<CR>
+    nno <buffer> <leader>nB :Cpublish<CR>
 endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
