@@ -2,8 +2,23 @@
 " =============== S. Thewessen vim-color links =====================
 " ==================================================================
 
+" vim
+hi link vimEnvVar String
+hi link vimFgBgAttrib String
+hi link vimHighlight PreProc
+hi link vimCommand Tag
+hi link vimGroup Normal
+hi link vimHiGroup Normal
+hi link vimLet StorageClass
+hi link vimNotFunc Conditional
+hi link vimHiClear Normal
+hi link vimOption Type
+hi link vimVar Variable
+hi link vimHiAttrib Normal
+
 " netrew
 hi link netrwClassify Noise
+hi link netrwExe Statement
 
 " Tmux
 hi link tmuxOptions Identifier
@@ -35,6 +50,7 @@ hi link texBeginEndName Type
 " HTML
 hi link htmlTagN Tag
 hi link htmlTagName Tag
+hi link htmlSpecialTagName Tag
 hi link htmlArg Normal
 hi link htmlSpecialChar Special
 hi link htmlTag Comment
@@ -44,12 +60,13 @@ hi link htmlEndTag Comment
 hi link jsObjectKey Normal
 hi link jsFunction Statement
 hi link jsFunctionKey Normal
-hi link jsArrowFunction Statement
+hi link jsArrowFunction Operator
 hi link jsObjectFuncName Normal
 hi link javaScriptFunction Type
 hi link javaScriptRailsFunction Type
 hi link javaScriptBraces Noise
 hi link jsLabel Conditional
+hi link jsRepeat Conditional
 
 " Typescript
 hi link typescriptBraces Noise
@@ -58,9 +75,14 @@ hi link typescriptExceptions Operator
 hi link typescriptEndColons Noise
 hi link typescriptReserved Special
 hi link typescriptGlobalObjects Constant
+hi link typescriptLogicSymbols Operator
 
 " PHP
 hi link phpVarSelector Noise
+hi link phpDocTags Special
+hi link phpMemberSelector VertSplit
+hi link phpIdentifier Normal
+hi link phpComparison Operator
 
 " Blade PHP
 hi link bladeDelimiter Normal
@@ -158,6 +180,8 @@ hi link yamlKey Keyword
 hi link yamlAnchor Normal
 hi link yamlAlias Normal
 hi link yamlDocumentHeader Label
+hi link yamlBlockMappingKey Normal
+hi link yamlKeyValueDelimiter Noise
 
 " ALE
 hi link ALEErrorSign Error

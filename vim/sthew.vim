@@ -59,10 +59,10 @@ if &t_Co > 255
         hi Operator ctermfg=214
         hi Conditional ctermfg=197
         hi Identifier ctermfg=197 cterm=bold
-        hi PreProc ctermfg=197 cterm=italic
-        hi Tag ctermfg=197
-        hi Statement ctermfg=197
-        hi Define ctermfg=160
+        hi PreProc ctermfg=69 cterm=italic
+        hi Tag ctermfg=144
+        hi Statement ctermfg=69 cterm=bold
+        hi Define ctermfg=69
         hi Folded ctermfg=252 ctermbg=NONE
         hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE

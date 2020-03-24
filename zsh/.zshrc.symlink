@@ -99,7 +99,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 export DOTFILES="$HOME/.dotfiles"
 
 # Bin to PATH
-export PATH="$PATH:$DOTFILES/bin:$HOME/.config/composer/vendor/bin"
+export PATH="$PATH:$DOTFILES/bin:$HOME/.config/composer/vendor/bin:$HOME/.cargo/bin"
 
 # Default browser
  export BROWSER="firefox"

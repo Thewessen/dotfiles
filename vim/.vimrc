@@ -32,8 +32,12 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'w0rp/ale'                       " Async linter and completer
-Plug 'carlitux/deoplete-ternjs', { 'do' : 'npm install -g tern' }       " Javascript source for deoplete
-Plug 'padawan-php/deoplete-padawan', { 'do': 'composer install' }     " PHP source
+Plug 'carlitux/deoplete-ternjs', {
+      \ 'do' : 'npm install -g tern'
+      \}                              " Javascript source for deoplete
+Plug 'padawan-php/deoplete-padawan', {
+      \'do': 'composer install'
+      \}                              " PHP source
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -61,7 +65,7 @@ Plug 'leafgarland/typescript-vim'     " Typescript syntax
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plug 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
-Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
+Plug 'MaxMEllon/vim-jsx-pretty'       " JSX syntax highlighting (React way of HTML in Javascript)
 Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plug 'othree/html5-syntax.vim'        " Better HTML syntax
 Plug 'posva/vim-vue'                  " Vue syntax highlighting
@@ -73,6 +77,8 @@ Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'neovimhaskell/haskell-vim'      " Haskell indention and syntax
 Plug 'Shougo/neosnippet.vim'          " Snippets
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
+Plug 'ludovicchabant/vim-gutentags'   " ctags management
+Plug 'rust-lang/rust.vim'             " rust helpfull toolchain
 
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -196,7 +202,7 @@ let g:blade_custom_directives_pairs = {
       \}
 
 " FZF options
-let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_layout = { 'down': '~67%' }
 let g:fzf_buffers_jump = 1
 
 " Angular-cli enter on angular-cli project
@@ -238,7 +244,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
+let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/', 'package.yaml', 'Cargo.toml']
 let g:rooter_use_lcd = 1
 let g:rooter_silent_chdir = 1
 let g:rooter_manual_only = 1
@@ -251,17 +257,20 @@ let g:ale_linters = {
 \   'reason': ['reason-language-server'],
 \   'ocaml' : ['merlin'],
 \   'haskell' : ['hlint'],
+\   'rust' : ['cargo'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
 \   'typescript': ['tslint'],
 \   'vue': ['prettier'],
 \   'ocaml' : ['ocamlformat'],
+\   'rust' : ['rustfmt'],
 \   '*' : ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_reason_ls_executable = 'reason-language-server'
+let g:ale_close_preview_on_insert = 1
 
 " Signature config
 let g:SignatureIncludeMarks = 'HTNSGCRDLFOEUIYPA'
@@ -274,6 +283,7 @@ au FileType netrw set nonumber norelativenumber foldcolumn=1
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType js set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -340,6 +350,7 @@ augroup mappings
     autocmd filetype haskell call HaskellMapping()
     autocmd filetype ocaml,reason call OCAMLMapping()
     autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
+    autocmd filetype rust,cfg call RustMapping()
 augroup END
 
 "=================================
@@ -416,7 +427,7 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 
 " Press Space to turn off highlighted search
 " and clear any message already displayed.
-nno <silent> <Space> :nohlsearch<CR>:echo<CR>
+nno <silent> <space> :nohlsearch<cr>:echo<cr>
 
 " Remove extra whitespace
 nmap <silent> <leader><space> :%s/\s\+$<cr>
@@ -479,7 +490,7 @@ nmap <silent> <leader>c :copen<CR>
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
-nno <leader>G :call GolfStart()<CR>
+nno <leader>G :GutentagsUpdate!<CR>
 nno <leader>E :!exercism submit %<CR>
 
 " Run compiler for current file
@@ -573,12 +584,27 @@ function! PHPMapping()
     nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
     nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
     nno <buffer> <leader>nm :!php artisan make:
-    nno <buffer> <leader>ni :!php artisan migrate
+    nno <buffer> <leader>ni :!php artisan migrate:
     nno <buffer> <leader>ns :!php artisan db:seed<CR>
+endfunction
+
+function! RustMapping()
+    nno <buffer> <leader>n, :Cbuild<CR>
+    nno <buffer> <leader>n. :Cargo build --release<CR>
+    nno <buffer> <leader>nn :Crun<CR>
+    nno <buffer> <leader>nd :Cdoc<CR>
+    nno <buffer> <leader>nD :Cargo doc --open<CR>
+    nno <buffer> <leader>nN :Cnew<space>
+    nno <buffer> <leader>nt :Cargo test<CR>
+    nno <buffer> <leader>nT :Ccheck<CR>
+    nno <buffer> <leader>nc :Cclean<CR>
+    nno <buffer> <leader>nb :Cbench<CR>
+    nno <buffer> <leader>nB :Cpublish<CR>
 endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
+nmap <leader>e, :vsplit ~/.dotfiles/alacritty.yml<CR>
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
 nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
@@ -593,9 +619,9 @@ nmap <leader>en :new<CR>:only<CR>
 " neovim-snippets key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 " Todo: Make different keybining (tmux)
-imap <C-a> <Plug>(neosnippet_expand_or_jump)
-smap <C-a> <Plug>(neosnippet_expand_or_jump)
-xmap <C-a> <Plug>(neosnippet_expand_target)
+imap <C-t> <Plug>(neosnippet_expand_or_jump)
+smap <C-t> <Plug>(neosnippet_expand_or_jump)
+xmap <C-t> <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.

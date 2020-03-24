@@ -31,7 +31,7 @@ font pango:Inconsolata 15
 floating_modifier $alt
 
 # start a terminal
-bindsym $alt+Return exec i3-sensible-terminal
+bindsym $alt+Return exec alacritty
 
 # start qutebrowser
 bindsym $super+Return exec qutebrowser

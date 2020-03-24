@@ -1,0 +1,16 @@
+snippet public function
+alias pfn
+options head
+    public function ${1:#:}(${2:#:})
+    {
+        ${0:#:}
+    }
+
+snippet docstring
+alias d
+    /**
+     * ${0:TARGET}
+     *
+     * @param
+     * @return
+     */
