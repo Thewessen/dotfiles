@@ -65,6 +65,10 @@ Plug 'junegunn/goyo.vim'              " Distraction free vim
 Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
 Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
 Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
+" Plug 'autozimu/LanguageClient-neovim', {
+" \ 'branch': 'next',
+" \ 'do': 'bash install.sh',
+" \ }                                   " A LC client for nvim
 
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -76,6 +80,9 @@ filetype plugin indent on    " required
 "=================================
 
 " Use dark background
+set background=dark
+
+" Basic
 set background=dark
 
 " Basic
@@ -193,7 +200,8 @@ let g:neosnippet#disable_runtime_snippets = {
     \}
 
 " HTML skeletons and more...
-let g:user_emmet_leader_key=','
+let g:user_emmet_leader_key = ','
+let g:user_emmet_mode = 'i'
 
 " Blade php highlighting
 let g:blade_custom_directives = ['yield', 'method', 'csrf']
@@ -271,6 +279,11 @@ let g:ale_fix_on_save = 0
 let g:goyo_width = "120+20"
 let g:goyo_height = "100%"
 let g:goyo_linenr = 0
+
+" Language server
+" let g:LanguageClient_serverCommands = {
+" \ 'javascript': ['javascript-typescript-stdio']
+" \ }
 
 " =================================
 "           Autocommands
@@ -549,14 +562,14 @@ nno <leader>d :Ag! <C-R><C-W><CR>
 
 " FZF commands
 " for some reason this is mapped to buffer delete
-nno <silent> <C-P> :Files<CR>
-nno <silent> <leader>ff :GFiles<CR>
+nno <silent> <C-P> :Files!<CR>
+nno <silent> <leader>ff :GFiles!<CR>
 nno <leader>fa :Ag!<space>
-nno <silent> <leader>/ :Lines<CR>
-nno <silent> <leader>fL :BLines<CR>
+nno <silent> <leader>/ :Lines!<CR>
+nno <silent> <leader>fL :BLines!<CR>
 nno <silent> <leader>fg :GFiles?<CR>
-nno <silent> <leader>fc :Commits<CR>
-nno <silent> <leader>fd :BCommits<CR>
+nno <silent> <leader>fc :Commits!<CR>
+nno <silent> <leader>fd :BCommits!<CR>
 nno <silent> <leader>b :Buffer<CR>
 nno <silent> <leader>fw :Windows<CR>
 nno <silent> <leader>fm :Marks<CR>
@@ -578,37 +591,30 @@ function! NPMMapping()
   nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
   nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
   nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
-  nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-  nno <silent> <leader>nt :tabe term://yarn test<CR>
-  nno <silent> <leader>nT :tabe term://npm run test:watch<CR>
-  nno <silent> <leader>nl :tabe term://npm run lint<CR>
-  nno <silent> <leader>nd :tabe term://npm run deploy<CR>
-endfunction
-
-function! PythonMapping()
-    nno <buffer> <leader>nn :!python3 %:p<CR>
-    nno <buffer> <leader>ni :bo 10split term://python3<CR>
-    nno <buffer> <leader>nt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
+  " Language Client
+  " nno <silent> <leader>nd :call LanguageClient#textDocument_definition()<CR>
+  " nno <silent> <leader>nc :call LanguageClient#omniComplete()<CR>
 endfunction
 
 function! ShellMapping()
-    nno <buffer> <leader>nn :!sh %:p<CR>
-    nno <buffer> <leader>ni :exec "bo 10split term://sh"<CR>
-    nno <buffer> <leader>nt :lcd %:p:h<CR>:exec ':tabe term://BATS_RUN_SKIPPED=true bats '.expand('%:p:r').'_test.sh'<CR>
+  nno <buffer> <leader>nn :!sh %:p<CR>
+  nno <buffer> <leader>ni :exec "bo 10split term://sh"<CR>
+  nno <buffer> <leader>nt :lcd %:p:h<CR>:exec ':tabe term://BATS_RUN_SKIPPED=true bats '.expand('%:p:r').'_test.sh'<CR>
 endfunction
 
 " PHP artisan commands
 function! PHPMapping()
-    nno <buffer> <leader>nn :tabe term://php artisan tinker<CR>
-    nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
-    nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
-    nno <buffer> <leader>nm :!php artisan make:
-    nno <buffer> <leader>ni :!php artisan migrate
-    nno <buffer> <leader>ns :!php artisan db:seed<CR>
+  nno <buffer> <leader>nn :tabe term://php artisan tinker<CR>
+  nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
+  nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
+  nno <buffer> <leader>nm :!php artisan make:
+  nno <buffer> <leader>ni :!php artisan migrate
+  nno <buffer> <leader>ns :!php artisan db:seed<CR>
 endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
+nmap <leader>e, :vsplit ~/.dotfiles/alacritty.yml<CR>
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
 nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
@@ -623,9 +629,9 @@ nmap <leader>en :new<CR>:only<CR>
 " neovim-snippets key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 " Todo: Make different keybining (tmux)
-imap <C-a> <Plug>(neosnippet_expand_or_jump)
-smap <C-a> <Plug>(neosnippet_expand_or_jump)
-xmap <C-a> <Plug>(neosnippet_expand_target)
+imap <C-T> <Plug>(neosnippet_expand_or_jump)
+smap <C-T> <Plug>(neosnippet_expand_or_jump)
+xmap <C-T> <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.

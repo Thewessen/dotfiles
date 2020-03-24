@@ -1,0 +1,117 @@
+# TMUX configuration file
+
+# Here are some more fance characters:
+# 🔌 🔍 🔎 🔏 🔊 🔉 🔈 🔇 🔆 🔅 🔄 🔃 🔂 🔁 🔀 📿 📾
+# ≡
+# Use a 256 color scheme
+set -g default-terminal "screen-256color"
+set-option -sg escape-time 10
+set -g history-limit 65000
+
+# Some widget variables for statusbar
+# wg_cpu="#(ps -A -o %cpu | awk '{s+=$1} END {print s %}')"
+wg_session="#[italic,fg=colour2] [#S]:#I #W"
+# wg_mem="#(free --mega | grep -E Mem | awk '{print $3}')MB 🖴 "
+wg_batt="#(zsh $DOTFILES/tmux/battery_status.sh)"
+# wg_volm="#(zsh $DOTFILES/tmux/get_volume_level.sh)"
+wg_date="%A %d %b"
+# wg_seperator="#[fg=colour8]⌇#[default]"
+
+# Statusbar configuration
+set -g status on
+set -g status-interval 5
+set -g status-position top
+set -g status-justify "left"
+set -g status-left-length 60
+set -g status-right-length 90
+set-option -g status-style bold,fg=0
+set-option -g window-status-current-style bold,fg=2
+# set -g status-attr default
+set -g status-right "$wg_batt #[bg=default,fg=colour4] $wg_date #[bold,bg=default,fg=colour4] %R "
+set -g status-left "#[bg=default,fg=colour4] #S "
+
+# make window/pane index start with 1
+set -g base-index 1
+setw -g pane-base-index 1
+
+# automatically renumber tmux windows
+set -g renumber-windows on
+
+# automatically rename tmux windows
+set-window-option -g automatic-rename off
+set-option -g allow-rename off
+
+set-option -g set-titles on
+set-option -g set-titles-string "#T - #W"
+
+# active window title colors
+# set-option -g status-current-fg color0
+# set-window-option -g window-status-current-bg default 
+set-window-option -g window-status-current-format " #[bold]#I #W#[default] "
+ 
+# inactive window title colors
+# set-window-option -g window-status-fg colour3
+# set-window-option -g window-status-bg default 
+set -g window-status-format " #I #W "
+
+# Pane active/inactive borders
+set -g pane-border-style fg=colour8
+set -g pane-active-border-style fg=colour3
+# set -g pane-border-status top
+# set -g pane-border-format "<#P>- #(pwd) "
+
+# Mouse scroll enters copymode (and enable scroll)
+set -g mouse on
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -in -f -selection clipboard"
+bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -in -f -selection clipboard"
+
+# =================================
+#             Bindings
+# =================================
+
+unbind C-j
+
+# Bindings configuration
+set -g prefix C-a
+
+# Reload this config file
+bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
+# pane movement shortcuts
+bind -r h select-pane -L
+bind  j select-pane -D
+bind  k select-pane -U
+bind -r l select-pane -R
+
+# pane movement shortcuts
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# split window and fix path for tmux 1.9
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# window movement shortcuts
+bind -r C-h previous-window
+bind -r C-l next-window
+
+# new window
+bind -r C-c new-window -n "~"
+bind-key c new-window \; command-prompt -p "(rename-window)" "rename-window '%%'"
+
+# synchronize all panes in a window
+bind g setw synchronize-panes
+
+# vim keybindings on copymode
+# Enter copy-mode (<C-a>[)
+bind P paste-buffer
+bind-key -T copy-mode-vi v send-keys -X
+bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+
+bind-key -T copy-mode h send-keys -X cursor-left
+bind-key -T copy-mode l send-keys -X cursor-right
+bind-key -T copy-mode k send-keys -X cursor-up
+bind-key -T copy-mode j send-keys -X cursor-down
