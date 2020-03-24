@@ -28,7 +28,7 @@ if &t_Co > 255
     hi Directory ctermfg=144
     hi Label ctermfg=186
     hi Wildmenu ctermfg=232 ctermbg=214 cterm=NONE
-    hi SpecialKey ctermfg=19 ctermbg=NONE cterm=NONE
+    hi SpecialKey ctermfg=141 ctermbg=NONE cterm=NONE
     hi ErrorMsg ctermfg=230 ctermbg=88 cterm=NONE
     hi WarningMsg ctermfg=232 ctermbg=3 cterm=NONE
 
@@ -45,7 +45,7 @@ if &t_Co > 255
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
-        hi Keyword ctermfg=197 ctermbg=NONE cterm=NONE
+        hi Keyword ctermfg=144 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81
         hi Boolean ctermfg=99
         hi Number ctermfg=141
@@ -59,7 +59,7 @@ if &t_Co > 255
         hi Operator ctermfg=214
         hi Conditional ctermfg=197
         hi Identifier ctermfg=197 cterm=bold
-        hi PreProc ctermfg=197 cterm=italic
+        hi PreProc ctermfg=69 cterm=italic
         hi Tag ctermfg=197
         hi Statement ctermfg=197
         hi Define ctermfg=160
@@ -114,7 +114,7 @@ if &t_Co > 255
         hi Operator ctermfg=88
         hi Conditional ctermfg=88
         hi Identifier ctermfg=88
-        hi PreProc ctermfg=88
+        hi PreProc ctermfg=88 cterm=italic
         hi Tag ctermfg=88
         hi Statement ctermfg=88
         hi Folded ctermfg=235 ctermbg=252

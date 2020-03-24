@@ -1,6 +1,6 @@
 # terminal coloring
-export CLICOLOR=1
-export LSCOLORS=dxFxCxDxBxegedabagacad
+# export CLICOLOR=1
+# export LSCOLORS=dxFxCxDxBxegedabagacad
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 

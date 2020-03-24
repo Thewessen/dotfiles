@@ -15,10 +15,10 @@ const screens = {
     id: 1,
     resolution: '2560x1440',
   },
-  right: {
-    id: 2,
-    resolution: '2560x1440',
-  },
+  // right: {
+  //   id: 2,
+  //   resolution: '2560x1440',
+  // },
 }
 
 const applications = {
@@ -26,7 +26,7 @@ const applications = {
   '2': 'Alacritty',
   '3': 'Google Chrome',
   '4': 'Grud Hypotheekbond',
-  '5': 'PhpStorm',
+  '5': 'TablePlus',
   '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
   '8': 'Agenda Hypotheekbond',
@@ -252,5 +252,6 @@ for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
 }
 S.bind('r:ctrl,shift', S.op('relaunch'))
+S.bind('m:cmd', full)
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')

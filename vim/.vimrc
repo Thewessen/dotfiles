@@ -26,6 +26,13 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
         \ 'do': ':UpdateRemotePlugins'
         \ }
+  Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }                                   " A LC client for nvim
+  Plug 'roxma/LanguageServer-php-neovim',  {
+  \ 'do': 'composer install && composer run-script parse-stubs'
+  \ }                                   " php LanguageServer
 else
   Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
@@ -61,15 +68,10 @@ Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'Shougo/neosnippet.vim'          " Snippet maneger
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 Plug 'janko/vim-test'                 " Multiple test runners
-Plug 'junegunn/goyo.vim'              " Distraction free vim
 Plug 'lifepillar/vim-solarized8'      " Solarized colorscheme vim
 Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
 Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
-" Plug 'autozimu/LanguageClient-neovim', {
-" \ 'branch': 'next',
-" \ 'do': 'bash install.sh',
-" \ }                                   " A LC client for nvim
-
+Plug 'jacquesbh/vim-showmarks'        " Show marks
 call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -252,8 +254,9 @@ let g:deoplete#sources#ternjs#filetypes = [
 \ 'javascript.jsx',
 \ ]
 
-" Ale
-set omnifunc=ale#completion#OmniFunc
+" Completion function
+" set omnifunc=ale#completion#OmniFunc
+set omnifunc=LanguageClient#complete
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', '.git/']
@@ -275,15 +278,16 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 0
 
-" goyo config
-let g:goyo_width = "120+20"
-let g:goyo_height = "100%"
-let g:goyo_linenr = 0
-
 " Language server
-" let g:LanguageClient_serverCommands = {
-" \ 'javascript': ['javascript-typescript-stdio']
-" \ }
+" let $LANGUAGECLIENT_DEBUG=1
+" let g:LanguageClient_loggingLevel='DEBUG'
+" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log') 
+let g:LanguageClient_serverCommands = {
+\ 'javascript': ['javascript-typescript-stdio']
+\ }
+let g:LanguageClient_autoStart=1
+let g:LanguageClient_hoverPreview="Never"
+let g:LanguageClient_useVirtualText="CodeLens"
 
 " =================================
 "           Autocommands
@@ -293,7 +297,7 @@ au FileType netrw setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
 au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
-au FileType js set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType js,javascript set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -403,6 +407,9 @@ nno <silent> <C-D> :q<CR>
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
 
+" omnifunc iso next in buffer
+" ino <C-N> <C-X><C-O>
+
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
 tno <C-[> <C-\><C-N>
@@ -499,8 +506,6 @@ nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
 
-" Toggle distraction free
-nmap <silent> <leader>' :Goyo<CR>
 " Buffers
 " nmap <leader>b :buffer<space>
 " Location list
@@ -532,6 +537,15 @@ nno <leader>sn :ALEDetail<CR>
 nno <leader>si :ALEInfo<CR>
 nno <leader>sl :ALELint<CR>
 nno <leader>st :ALEToggle<CR>
+
+" Renaming (LanguageClient)
+nno <leader>rn :call LanguageClient#textDocument_rename()<CR>
+nno <leader>rc :call LanguageClient#textDocument_rename(
+\ {'newName': Abolish.camelcase(expand('<cword>'))})<CR>
+nno <leader>rs :call LanguageClient#textDocument_rename(
+\ {'newName': Abolish.snakecase(expand('<cword>'))})<CR>
+nno <leader>ru :call LanguageClient#textDocument_rename(
+\ {'newName': Abolish.uppercase(expand('<cword>'))})<CR>
 
 " Git commands (vim-fugitive)
 " CD to repository root
@@ -644,6 +658,13 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 " TODO: GitHub auto add ticket to commit message
 au! filetype gitcommit nno <buffer> <leader>b 5GyyggPd3wi[3ea] lC
+
+" =================================
+"       Custom commands
+" =================================
+command! Cdtools cd ~/hypotheekbond/monorepo/apps/tools/resources/assets/js
+command! Cdweb cd ~/hypotheekbond/monorepo/apps/web
+command! Cdnode cd ~/hypotheekbond/monorepo/node_package/src
 
 " =================================
 "       Source vim-scripts

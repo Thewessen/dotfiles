@@ -4,6 +4,9 @@
 
 " Vim
 hi link helpCommand Keyword
+hi link vimEnvVar String
+hi link vimCommand Keyword
+hi link vimNotFunc Conditional
 
 " netrew
 hi link netrwClassify Noise
@@ -12,6 +15,8 @@ hi link netrwClassify Noise
 hi link tmuxOptions Identifier
 hi link tmuxFlags Type
 hi link tmuxVariable Normal
+hi link tmuxOptions PreProc
+hi link tmuxFormatString Normal
 
 " Shell
 hi link shVariable Normal
@@ -61,6 +66,7 @@ hi link typescriptParens Noise
 " PHP
 hi link phpVarSelector Noise
 hi link phpDocTags Special
+hi link phpIdentifier Variable
 
 " Blade PHP
 hi link bladeDelimiter Normal
@@ -172,6 +178,7 @@ hi link diffSubname Type
 hi link diffFile Folded
 hi link diffIndexLine Comment
 hi link gitDiff Normal
+hi link gitcommitSummary Normal
 
 " Twig
 hi link twigString String
@@ -179,3 +186,7 @@ hi link twigTagDelim Noise
 hi link twigVariable Italic
 hi link twigOperator Operator
 hi link twigVarDelim Noise
+
+" Yaml
+hi link yamlKeyValueDelimiter Noise
+hi link yamlBlockMappingKey Normal
