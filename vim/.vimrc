@@ -288,6 +288,7 @@ let g:ale_fix_on_save = 0
 " let g:LanguageClient_loggingLevel='DEBUG'
 " let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log') 
 let g:LanguageClient_serverCommands = {
+\ 'rust': ['rls'],
 \ 'javascript': ['javascript-typescript-stdio']
 \ }
 let g:LanguageClient_autoStart=1
@@ -624,7 +625,7 @@ endfunction
 
 " PHP artisan commands
 function! PHPMapping()
-  nno <buffer> <leader>nn :tabe term://php artisan tinker<CR>
+  nno <buffer> <leader>nn :tabe term://psysh<CR>
   nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
   nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
   nno <buffer> <leader>nm :!php artisan make:

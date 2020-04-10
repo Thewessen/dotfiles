@@ -100,7 +100,7 @@ export DOTFILES="$HOME/.dotfiles"
 PATH="$PATH:$DOTFILES/bin"
 
 # Path to composer
-export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Default browser
 export BROWSER="chromium-browser"

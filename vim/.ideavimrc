@@ -81,7 +81,7 @@ nno ]<space> o<ESC>k
 "		    Editor actions
 "=================================
 " Use IDE find
-nno / :action Find<CR>
+" nno / :action Find<CR>
 " View navigation bar
 nno - :action ShowNavBar<CR>
 
