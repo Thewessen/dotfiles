@@ -62,6 +62,19 @@ hi link jsLabel Conditional
 " Typescript
 hi link typescriptBraces Noise
 hi link typescriptParens Noise
+hi link typescriptArrayMethod Function
+hi link typescriptStringMethod Function
+hi link typescriptConsoleMethod Normal
+hi link typescriptDateMethod Function
+hi link typescriptBOMLocationMethod Function
+hi link typescriptBOMWindowProp Normal
+hi link typescriptIdentifier Identifier
+hi link typescriptVariable Type
+hi link typescriptCall Normal
+hi link typescriptBinaryOp Operator
+hi link typescriptGlobal Normal
+hi link typescriptTypeReference Type
+hi link typescriptObjectLabel Normal
 
 " PHP
 hi link phpVarSelector Noise
@@ -190,3 +203,8 @@ hi link twigVarDelim Noise
 " Yaml
 hi link yamlKeyValueDelimiter Noise
 hi link yamlBlockMappingKey Normal
+
+" JSON
+hi link jsonCommentError Comment
+hi link jsonNoQuotesError Todo
+

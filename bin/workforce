@@ -1,19 +1,17 @@
 #!/usr/bin/env zsh
 
-cd ~/hypotheekbond/monorepo/apps/workforce
+# cd ~/hypotheekbond/monorepo/apps/workforce
 
 # base worker
 tmux new-window -n 'workforce' 'vssh php artisan queue:refinancingworker-base -vvv' 
 sleep 1
-tmux split-pane -l 3 'vssh php artisan queue:refinancingworker-base -vvv'\; last-pane
-sleep 1
 
 # comparison worker (many)
-for i in {1..10}; do
+for i in {1..6}; do
   tmux\
-    split-pane -l 3 'vssh php artisan queue:refinancingworker-comparison -vvv' \; \
+    split-pane -l 2 'vssh php artisan queue:refinancingworker-comparison -vvv' \; \
     last-pane
   sleep 1
 done
 
-cd -
+# cd -

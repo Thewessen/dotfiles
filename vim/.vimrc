@@ -58,7 +58,6 @@ Plug 'tpope/vim-dispatch'             " Async implementations (tmux and other)
 Plug 'tpope/vim-dadbod'               " Database explorer (supports many different databases)
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plug 'airblade/vim-rooter'            " Automtically change working dir to root
-Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
@@ -176,6 +175,9 @@ set wildignore=Session.vim
 " Use fzf in vim
 set rtp+=/usr/local/opt/fzf
 
+" mouse support
+set mouse=a
+
 " =================================
 "       Neovim Configurations
 " =================================
@@ -236,9 +238,13 @@ let g:dispatch_terminal_exec = 'zsh'
 " nno ]g i<CR><esc>k$
 
 " Use Deoplete.
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
+if has('python3')
+  let g:deoplete#enable_at_startup = 1
+endif
+
 call deoplete#custom#option({
-\ 'auto_complete_delay': 100,
+\ 'auto_complete_delay': 0,
 \ 'smart_case': v:true,
 \ })
 
@@ -270,12 +276,10 @@ let g:rooter_silent_chdir = 1
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'typescript': ['eslint'],
 \   'rust' : ['cargo'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
-\   'typescript': ['tslint'],
 \   'rust' : ['rustfmt'],
 \   '*': ['remove_trailing_lines', 'trim_whitespace']
 \}
@@ -289,7 +293,8 @@ let g:ale_fix_on_save = 0
 " let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log') 
 let g:LanguageClient_serverCommands = {
 \ 'rust': ['rls'],
-\ 'javascript': ['javascript-typescript-stdio']
+\ 'javascript': ['javascript-typescript-stdio'],
+\ 'typescript': ['typescript-language-server', '--stdio']
 \ }
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_hoverPreview="Never"
