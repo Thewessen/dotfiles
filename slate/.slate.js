@@ -25,7 +25,7 @@ const applications = {
   '1': 'Slack',
   '2': 'Alacritty',
   '3': 'Firefox',
-  '4': 'Chrome',
+  '4': 'Google Chrome',
   '5': 'PhpStorm',
   '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
