@@ -5,3 +5,19 @@ options head
     {
         ${0:TARGET}
     }
+
+snippet private function
+alias prf privf
+options head
+    private function ${1:NAME}(${2:PARAMS})
+    {
+        ${0:TARGET}
+    }
+
+snippet public function
+alias puf pubf
+options head
+    public function ${1:NAME}(${2:PARAMS})
+    {
+        ${0:TARGET}
+    }

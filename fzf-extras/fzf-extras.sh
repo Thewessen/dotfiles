@@ -163,7 +163,7 @@ e() {
       | grep -o "/.*"
   )" || echo 'No file selected'; return
 
-  "${VISUAL:-vim}" "$files"
+  "${EDITOR:-vim}" "$files"
 }
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
@@ -250,7 +250,7 @@ fb() {
 
   branch="$(
     echo "$branches" \
-      | fzf-tmux -d "$((2 + "$num_branches"))" +m
+      | fzf-tmux -d "$((2 + $num_branches))" +m
   )" || return
 
   target="$(
@@ -305,12 +305,16 @@ fcc() {
   local commit
 
   commits="$(
-    git log --pretty=oneline --abbrev-commit --reverse
+    git log \
+      --color=always \
+      --pretty=oneline \
+      --abbrev-commit \
+      --reverse
   )" || return
 
   commit="$(
     echo "$commits" \
-      | fzf --tac +s +m -e
+      | fzf --tac +s +m -e --ansi
   )" || return
 
   git checkout "$(echo "$commit" | sed "s/ .*//")"
@@ -345,7 +349,7 @@ fcs() {
 }
 
 # fs - git commit browser
-fs() {
+fss() {
   local execute
 
   execute="grep -o \"[a-f0-9]\{7\}\" \

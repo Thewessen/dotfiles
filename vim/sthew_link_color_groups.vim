@@ -80,6 +80,8 @@ hi link typescriptObjectLabel Normal
 hi link phpVarSelector Noise
 hi link phpDocTags Special
 hi link phpIdentifier Variable
+hi link phpMethodsVar Function
+hi link phpFunctions Type
 
 " Blade PHP
 hi link bladeDelimiter Normal

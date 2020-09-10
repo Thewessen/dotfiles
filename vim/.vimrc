@@ -56,6 +56,8 @@ Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plug 'tpope/vim-ragtag'               " Other cool mappings
 Plug 'tpope/vim-dispatch'             " Async implementations (tmux and other)
 Plug 'tpope/vim-dadbod'               " Database explorer (supports many different databases)
+Plug 'junegunn/fzf', {
+      \ 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plug 'airblade/vim-rooter'            " Automtically change working dir to root
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
@@ -74,6 +76,9 @@ Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
 Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
 Plug 'jacquesbh/vim-showmarks'        " Show marks
 Plug 'rust-lang/rust.vim'             " Rust language toolchain
+Plug 'ludovicchabant/vim-gutentags'   " ctags generater
+Plug 'vim-vdebug/vdebug'              " Debugger cli (can be used with Xdebug)
+Plug 'andrmuel/vim-curl'              " Simple curl wrapper
 call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -93,6 +98,8 @@ set background=dark
 set autoread            " If file changed outside vim, while inside vim
 set backspace=indent,eol,start
 set complete-=i
+set completeopt=menu
+set completeopt+=noinsert
 set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
@@ -189,6 +196,21 @@ endif
 "       Plugin Configurations
 " =================================
 
+" Vdebug
+let g:vdebug_keymap = {
+\    "run" : "<leader>dr",
+\    "run_to_cursor" : "<leader>dR",
+\    "step_over" : "<leader>do",
+\    "step_into" : "<leader>di",
+\    "step_out" : "<leader>ds",
+\    "close" : "<leader>dc",
+\    "detach" : "<leader>d,",
+\    "set_breakpoint" : "<leader>dd",
+\    "get_context" : "<leader>d!",
+\    "eval_under_cursor" : "<leader>d?",
+\    "eval_visual" : "<Leader>dv",
+\}
+
 " GutenTags
 " Use :GutentagsToggleEnabled to enable gutentags
 let g:gutentags_enabled = 1
@@ -225,11 +247,6 @@ let g:fzf_buffers_jump = 1
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
 
-" command! -bang -nargs=* Ag
-"   \ call fzf#vim#grep(
-"   \   'ag --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-"   \   fzf#vim#with_preview(), <bang>0)
-
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
 let g:dispatch_terminal_exec = 'zsh'
@@ -244,7 +261,7 @@ if has('python3')
 endif
 
 call deoplete#custom#option({
-\ 'auto_complete_delay': 0,
+\ 'auto_complete_delay': 400,
 \ 'smart_case': v:true,
 \ })
 
@@ -270,22 +287,26 @@ set omnifunc=LanguageClient#complete
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', '.git/', 'Cargo.toml']
 let g:rooter_manual_only = 1
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd = 'lcd'
 let g:rooter_silent_chdir = 1
 
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'rust' : ['cargo'],
+\   'rust' : ['rls', 'cargo'],
+\   'php' : ['phpcs'],
 \}
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
+\   'javascript': ['prettier', 'eslint'],
 \   'rust' : ['rustfmt'],
+\   'php' : ['php_cs_fixer'],
 \   '*': ['remove_trailing_lines', 'trim_whitespace']
 \}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 0
+let g:ale_php_cs_fixer_use_global = 1
+let g:ale_php_phpcs_standard = 'PSR2'
 
 " Language server
 " let $LANGUAGECLIENT_DEBUG=1
@@ -502,7 +523,8 @@ nmap <silent> <leader>t <C-W>T
 
 " " Copy to clipboard
 vno <leader>y  "+y
-nno <leader>Y  "+yg_
+" nno <leader>Y  "+yg_
+nno <leader>Y  :call YankFileLineNr()<CR>
 nno <leader>y  "+y
 nno <leader>yy  "+yy
 
@@ -560,11 +582,7 @@ nno <leader>ru :call LanguageClient#textDocument_rename(
 \ {'newName': Abolish.uppercase(expand('<cword>'))})<CR>
 
 " Git commands (vim-fugitive)
-" CD to repository root
-" nno <leader>cd :Gcd<CR>
-" Rest of great git commands
 nno <leader>gs :Gstatus<CR>
-" nno <leader>gg :Gpush<CR>
 nno <leader>gg :Git<space>
 nno <leader>gp :Gpush<CR>
 nno <leader>gL :0Glog<CR>
@@ -573,30 +591,26 @@ nno <leader>gm :Gmerge<space>
 nno <leader>gf :Gfetch<CR>
 nno <leader>gc :Gcommit -v<CR>
 nno <leader>gb :Gblame<CR>
-nno <leader>gd :Gvdiffsplit!<CR>
+nno <leader>gd :Git difftool -y<space>
 nno <leader>gi :Gvdiffsplit<space>
 nno <leader>gD :Gremove<space>
 nno <leader>gn :Gmove<space>
 nno <leader>g, :Gwrite!<CR>
-" Gdiff (3 way diff) solving merge conflicts
-" Used inside working file (mid file)
+
 " Enable gutentags
 nno <leader>G :GutentagsUpdate!<CR>
-
-" Find usages of word under cursor
-nno <leader>d :Ag! <C-R><C-W><CR>
 
 " FZF commands
 " for some reason this is mapped to buffer delete
 nno <silent> <C-P> :Files!<CR>
 nno <silent> <leader>ff :GFiles!<CR>
-nno <leader>fa :Ag!<space>
+nno <leader>fa :Ag<space>
 nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>fL :BLines!<CR>
-nno <silent> <leader>fg :GFiles?<CR>
+nno <silent> <leader>fg :GCheckout!<CR>
 nno <silent> <leader>fc :Commits!<CR>
 nno <silent> <leader>fd :BCommits!<CR>
-nno <silent> <leader>b :Buffer<CR>
+nno <silent> <leader>b :Buffers!<CR>
 nno <silent> <leader>fw :Windows<CR>
 nno <silent> <leader>fm :Marks<CR>
 nno <silent> <leader>ft :Tags<CR>
@@ -614,12 +628,10 @@ function! NPMMapping()
   nno <silent> <leader>nh :bo 10split term://node"<CR>
   nno <silent> <leader>ni :bo 10split term://yarn<CR><C-\><C-N><C-W>w
   nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
+  nno <silent> <leader>ne :bo 80vsplit term://yarn lint<CR>
   nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
   nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
   nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
-  " Language Client
-  " nno <silent> <leader>nd :call LanguageClient#textDocument_definition()<CR>
-  " nno <silent> <leader>nc :call LanguageClient#omniComplete()<CR>
 endfunction
 
 function! ShellMapping()
@@ -688,9 +700,29 @@ au! filetype gitcommit nno <buffer> <leader>b 5GyyggPd3wi[3ea] lC
 " =================================
 "       Custom commands
 " =================================
-command! Cdtools cd ~/hypotheekbond/monorepo/apps/tools/resources/assets/js
-command! Cdweb cd ~/hypotheekbond/monorepo/apps/web
-command! Cdnode cd ~/hypotheekbond/monorepo/node_package/src
+function! YankFileLineNr()
+  let path = join([expand('%'), line('.')], ':')
+  call setreg('+', path)
+  echo path . " (yanked to clipboard)"
+endfunction
+
+function! s:open_branch_fzf(line)
+  let l:parser = split(a:line)
+  let l:branch = l:parser[0]
+  if l:branch ==? '*'
+    let l:branch = l:parser[1]
+  endif
+  execute '!git checkout ' . l:branch
+endfunction
+
+command! -bang -nargs=0 GCheckout
+  \ call fzf#vim#grep(
+  \   'git branch -v', 0,
+  \   {
+  \     'sink': function('s:open_branch_fzf')
+  \   },
+  \   <bang>0
+  \ )
 
 " =================================
 "       Source vim-scripts

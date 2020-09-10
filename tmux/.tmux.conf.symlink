@@ -7,6 +7,8 @@
 set -g default-terminal "screen-256color"
 set-option -sg escape-time 10
 set -g history-limit 65000
+set-option -g focus-events on
+set-option -sa terminal-overrides ',*256col*:Tc'
 
 # Some widget variables for statusbar
 # wg_cpu="#(ps -A -o %cpu | awk '{s+=$1} END {print s %}')"

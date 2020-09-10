@@ -100,7 +100,13 @@ export DOTFILES="$HOME/.dotfiles"
 PATH="$PATH:$DOTFILES/bin"
 
 # Path to composer
-export PATH="$PATH:$HOME/.composer/vendor/bin"
+PATH="$PATH:$HOME/.composer/vendor/bin"
+
+# Path to other bin
+PATH="$PATH:$HOME/.local/bin"
+
+# Path to python3.8
+export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 
 # Default browser
 export BROWSER="chromium-browser"
