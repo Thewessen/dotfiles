@@ -100,6 +100,7 @@ hi link graphqlName Normal
 hi link graphqlFold Noise
 
 " CSS (Damn those groups!!)
+hi link sassDefinition Noise
 hi link cssClassName Type
 hi link cssFunctionName Function
 hi link cssValueLength Number

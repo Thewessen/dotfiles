@@ -64,7 +64,6 @@ Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'leafgarland/typescript-vim'     " Typescript syntax
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
 Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
-Plug 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
 Plug 'MaxMEllon/vim-jsx-pretty'       " JSX syntax highlighting (React way of HTML in Javascript)
 Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plug 'othree/html5-syntax.vim'        " Better HTML syntax
@@ -96,6 +95,7 @@ set background=dark
 set autoread            " If file changed outside vim, while inside vim
 set backspace=indent,eol,start
 set complete-=i
+set completeopt=menu,noinsert
 set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
@@ -174,9 +174,12 @@ endif
 " =================================
 "       Plugin Configurations
 " =================================
+" Gutentags (manually invoce gutentags)
+let g:gutentags_enabled = 0
+
 " OCaml interpreter
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" execute "set rtp+=" . g:opamshare . "/merlin/vim"
 " :execute 'helptags ' . substitute(system('opam config var share'),'\n$','','''') .  "/merlin/vim/doc"
 
 
@@ -244,20 +247,20 @@ let g:deoplete#sources#ternjs#filetypes = [
 set omnifunc=ale#completion#OmniFunc
 
 " vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/', 'package.yaml', 'Cargo.toml']
-let g:rooter_use_lcd = 1
+let g:rooter_patterns = ['Cargo.toml', 'package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
+let g:rooter_cd_cmd = 'lcd'
 let g:rooter_silent_chdir = 1
-let g:rooter_manual_only = 1
+let g:rooter_manual_only = 0
 
 " ale linters config
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
-\   'typescript': ['eslint'],
+\   'typescript': ['tsserver'],
 \   'reason': ['reason-language-server'],
 \   'ocaml' : ['merlin'],
 \   'haskell' : ['hlint'],
-\   'rust' : ['cargo'],
+\   'rust' : ['rls'],
 \}
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
@@ -267,6 +270,7 @@ let g:ale_fixers = {
 \   'rust' : ['rustfmt'],
 \   '*' : ['remove_trailing_lines', 'trim_whitespace']
 \}
+let g:ale_rust_cargo_use_clippy = 1
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_reason_ls_executable = 'reason-language-server'
@@ -489,9 +493,11 @@ nmap <silent> <leader>c :copen<CR>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
+
 " Run
 nno <leader>G :GutentagsUpdate!<CR>
 nno <leader>E :!exercism submit %<CR>
+nno <silent> <leader>C :Rooter<CR>
 
 " Run compiler for current file
 nno <silent> <leader>m :Dispatch!<CR>
@@ -531,10 +537,10 @@ nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
 nno <leader>g] :diffget //3<CR>:diffupdate<CR>
 
 " FZF commands
-nno <silent> <C-P> :Files<CR>
-nno <silent> <leader>ff :GFiles<CR>
-nno <leader>fa :Ag<space>
-nno <silent> <leader>/ :Lines<CR>
+nno <silent> <C-P> :Files!<CR>
+nno <silent> <leader>ff :GFiles!<CR>
+nno <silent> <leader>fa :Ag!<CR>
+nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>fL :BLines<CR>
 nno <silent> <leader>fg :GFiles?<CR>
 nno <silent> <leader>fc :Commits<CR>

@@ -310,14 +310,14 @@ ftpane() {
   fi
 }
 
-# e - open 'frecency' files in $VISUAL editor
+# e - open 'frecency' files in $EDITOR editor
 e() {
     local files
     files=($(fasd -fl |
                 fzf --tac --reverse -1 --no-sort  --multi --tiebreak=index\
                 --bind=ctrl-x:toggle-sort --query "$*" |
                     grep -o "/.*"))
-    [[ -n $files ]] && echo "${VISUAL:-vim} ${files[@]}" | runcmd || echo 'No file selected'
+    [[ -n $files ]] && echo "${EDITOR:-vim} ${files[@]}" | runcmd || echo 'No file selected'
 }
 
 # _zz - selectable cd to frecency directory

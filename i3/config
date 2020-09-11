@@ -188,20 +188,20 @@ bar {
 # new_window 1pixel
 
 # Applications to workspace assignments
-assign [class="^qutebrowser$"] 1
-assign [class="^Chromium-browser$" instance="web.whatsapp.com"] 7
-assign [class="^Chromium-browser$" instance="calendar.google.com"] 8
-assign [class="^Chromium-browser$" instance="gmail.com"] 9
+assign [class="^Google-chrome"] 1
+assign [class="^Google-chrome" instance="web.whatsapp.com"] 7
+assign [class="^Google-chrome" instance="calendar.google.com"] 8
+assign [class="^Google-chrome" instance="gmail.com"] 9
 assign [class="^Slack$"] 10
 
 # Startup applications (reversed order of priority)
 exec --no-startup-id ulauncher --hide-window
-exec chromium-browser --app="https://web.whatsapp.com"
-exec chromium-browser --app="https://calendar.google.com"
-exec chromium-browser --app="https://gmail.com"
+exec google-chrome --app="https://web.whatsapp.com"
+exec google-chrome --app="https://calendar.google.com"
+exec google-chrome --app="https://gmail.com"
 exec slack
 exec terminator --title="scratchpad" --classname="scratchpad"
-exec qutebrowser
+exec google-chrome
 
 # Custom window settings
 for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad

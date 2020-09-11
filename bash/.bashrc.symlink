@@ -140,3 +140,6 @@ PS1="${debian_chroot:+($debian_chroot)}\w > "
 
 [[ -e "$DOTFILES/fzf-extras/fzf-extras.sh" ]] \
   && source $DOTFILES/fzf-extras/fzf-extras.sh
+source ~/.bash_completion/alacritty
+source ~/.bash_completion/alacritty
+source ~/.bash_completions/alacritty

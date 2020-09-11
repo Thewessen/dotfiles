@@ -5,6 +5,7 @@
 # ≡
 # Use a 256 color scheme
 set -g default-terminal "screen-256color"
+set-option -sa terminal-overrides ',xterm-256color:RGB'
 set-option -sg escape-time 10
 
 # Some widget variables for statusbar
@@ -25,7 +26,7 @@ set -g status-left-length 60
 set -g status-right-length 90
 set -g status-bg default
 set -g status-fg colour8
-set -g status-attr default
+# set -g status-attr default
 set -g status-right "$wg_cpu  $wg_mem $wg_volm  $wg_batt #[bg=default,fg=colour4] $wg_date #[bold,bg=default,fg=colour4] %R "
 set -g status-left "#[bg=default,fg=colour4] #S "
 
@@ -44,13 +45,13 @@ set-option -g set-titles on
 set-option -g set-titles-string "#T - #W"
 
 # active window title colors
-set-window-option -g window-status-current-fg default
-set-window-option -g window-status-current-bg default 
+# set-window-option -g window-status-current-fg default
+# set-window-option -g window-status-current-bg default 
 set-window-option -g window-status-current-format " #[bold]#I #W#[default] "
  
 # inactive window title colors
-set-window-option -g window-status-fg colour3
-set-window-option -g window-status-bg default 
+# set-window-option -g window-status-fg colour3
+# set-window-option -g window-status-bg default 
 set -g window-status-format " #I #W "
 
 # Pane active/inactive borders
