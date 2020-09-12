@@ -22,15 +22,6 @@ set encoding=utf8
 " =================================
 call plug#begin('~/.vim/plugged')
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-Plug 'w0rp/ale'                       " Async linter and completer
-Plug 'carlitux/deoplete-ternjs'       " Javascript source for deoplete
 Plug 'tpope/vim-obsession'            " Auto updating a session file
 Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -40,19 +31,12 @@ Plug 'tpope/vim-repeat'               " Extends '.' command for plugins
 Plug 'tpope/vim-abolish'              " Abbriviations, '{}' substitution, and coercion
 Plug 'tpope/vim-unimpaired'           " '[' and ']' mappings
 Plug 'tpope/vim-ragtag'               " Other cool mappings
-Plug 'tpope/vim-dispatch'               " Async implementations (tmux and other)
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'install --all' } " FZF plugin for vim
-Plug 'ludovicchabant/vim-gutentags'   " Auto generating tags using ctags
-Plug 'airblade/vim-rooter'            " Automtically change working dir to root
 Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plug 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
-Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
-Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'leafgarland/typescript-vim'     " Typescript syntax
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plug 'cakebaker/scss-syntax.vim'      " SCSS syntax highlighting
 Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
@@ -62,8 +46,6 @@ Plug 'posva/vim-vue'                  " Vue syntax highlighting
 Plug 'lumiliet/vim-twig'              " Twig highlighting
 Plug 'joukevandermaas/vim-ember-hbs'  " Ember js highlighting and indention
 Plug 'jparise/vim-graphql'            " GraphQL highlighting and indention
-Plug 'Shougo/neosnippet.vim'          " Snippets
-Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -171,15 +153,6 @@ endif
 "       Plugin Configurations
 " =================================
 
-" NeovimSnippets settings
-let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
-let g:neosnippet#disable_runtime_snippets = {
-    \ '_': 1,
-    \}
-
-" HTML skeletons and more...
-let g:user_emmet_leader_key=','
-
 " Blade php highlighting
 let g:blade_custom_directives = ['yield', 'method', 'csrf']
 let g:blade_custom_directives_pairs = {
@@ -192,60 +165,8 @@ let g:blade_custom_directives_pairs = {
 let g:fzf_layout = { 'up': '~40%' }
 let g:fzf_buffers_jump = 1
 
-" Angular-cli enter on angular-cli project
-autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
-let g:angular_cli_use_dispatch = 1
-
-" Latex-Suite configurations
-let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
-let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
-" :TTarget pdf              " Set standard output of compiler to PDF (iso DVI)
-
-" Dispatch no keybindings
-let g:dispatch_no_maps = 1
-
 " Unimpaired-like keybindings
 " nno ]g i<CR><esc>k$
-
-" Use Deoplete.
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-\ 'auto_complete_delay': 100,
-\ 'smart_case': v:true,
-\ })
-
-" Setup javascript ternjs (other then default)
-let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
-let g:deoplete#sources#ternjs#timeout = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
-let g:deoplete#sources#ternjs#filetypes = [
-\ 'jsx',
-\ 'javascript.jsx',
-\ 'vue'
-\ ]
-
-" Ale
-set omnifunc=ale#completion#OmniFunc
-
-" vim-rooter (lcd)
-let g:rooter_patterns = ['package.json', 'venv/', '.git/', '.exercism/']
-let g:rooter_use_lcd = 1
-let g:rooter_silent_chdir = 1
-
-" ale linters config
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'vue': ['eslint'],
-\   'typescript': ['tslint'],
-\}
-let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\   'typescript': ['tslint'],
-\}
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
 
 
 " =================================
@@ -264,35 +185,10 @@ function! Wincmd_help()
     " wincmd |
 endfunction
 
-" Save folds of some files
-" When mkview is saving manual folds, set foldmethod,foldlevelstart auto(?!?)
-" augroup load_save_folds
-"     autocmd!
-"     autocmd BufLeave vimrc,.vimrc,*.conf mkview
-"     autocmd BufRead vimrc,.vimrc,*.conf
-"         \ silent loadview
-"         \ setlocal foldmethod=manual
-"         \ setlocal foldlevel=0
-" augroup END
-
 " Auto reload this configfile on change
 augroup reload_vimrc
     autocmd!
     autocmd BufWritePost vimrc,.vimrc,*.vim normal ,R
-augroup END
-
-" Use compiler for latex files
-augroup latex_compiler
-    autocmd!
-    autocmd BufWinEnter *.tex let &makeprg="pdflatex -output-directory %:p:h -interaction nonstopmode -file-line-error %"
-    autocmd BufWinEnter *.tex set textwidth=79
-    autocmd BufWinLeave *.tex let &makeprg=""
-augroup END
-
-" Add shebang to shell scripts
-augroup skeletons
-    autocmd!
-    autocmd BufNewFile *.sh,*.bash,*.zsh if !empty(&filetype) | execute 'silent! 1s/.*/#!\/usr\/bin\/env ' . &filetype . '\r\r'| :startinsert | endif
 augroup END
 
 " Active Window more visible by changing ruler
@@ -456,26 +352,7 @@ nmap <leader>[ :labove<CR>
 
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
-" Run
-nno <leader>E :!exercism submit %<CR>
-
-" Run compiler for current file
-nno <silent> <leader>m :Dispatch!<CR>
-
-" Syntax checking command (ale)
-nno <leader>ss :ALEReset<CR>
-nno <leader>sf :ALEFix<CR>
-nno <leader>sd :ALEGoToTypeDefinition<CR>
-nno <leader>sr :ALEFindReferences<CR>
-nno <leader>sn :ALEDetail<CR>
-nno <leader>si :ALEInfo<CR>
-nno <leader>sl :ALELint<CR>
-nno <leader>st :ALEToggle<CR>
-
 " Git commands (vim-fugitive)
-" CD to repository root
-" nno <leader>cd :Gcd<CR>
-" Rest of great git commands
 nno <leader>gs :Gstatus<CR>
 nno <leader>gg :Git<space>
 nno <leader>gp :Gpush<CR>
@@ -494,9 +371,6 @@ nno <leader>gw :Gwrite!<CR>
 " Used inside working file (mid file)
 nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
 nno <leader>g] :diffget //3<CR>:diffupdate<CR>
-
-" Enable gutentags
-nno <leader>G :GutentagsUpdate<CR>
 
 " FZF commands
 nno <C-P> :Files<CR>
@@ -519,40 +393,6 @@ nno <leader>f? :Helptags<CR>
 nno <leader>f: :History:<CR>
 nno <leader>f/ :History/<CR>
 
-" NPM and nodejs dispatch commands
-nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://nodejs<CR>const m = require('./<C-\><C-N>"fpi')<CR>
-nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-nno <silent> <leader>nh :bo 10split term://nodejs"<CR>
-nno <silent> <leader>ni :bo 10split term://npm install<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
-nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-nno <silent> <leader>ns :Start -title=server npm start<CR>
-nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nw :tabe term://npm run watch<CR><C-\><C-N>:tabprevious<CR>
-nno <silent> <leader>nt :tabe term://npm run test<CR>
-nno <silent> <leader>nl :tabe term://npm run lint<CR>
-nno <silent> <leader>nd :tabe term://npm run deploy<CR>
-
-" Python dispatch commands
-nno <silent> <leader>yy :!python3 %:p<CR>
-nno <silent> <leader>yh :bo 10split term://python3<CR>
-nno <silent> <leader>yt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
-
-" PHP artisan commands
-nno <silent> <leader>aa :tabe term://php artisan tinker<CR>
-nno <silent> <leader>at :tabe term://vendor/bin/phpunit<CR>
-nno <leader>arl :!php artisan route:list \| grep<space>
-nno <leader>amc :!php artisan make:controller<space>
-nno <leader>amm :!php artisan make:model<space>
-nno <leader>amr :!php artisan make:migration<space>
-nno <leader>amp :!php artisan make:policy<space>
-nno <leader>ame :!php artisan make:event<space>
-nno <leader>aml :!php artisan make:listener<space>
-nno <silent> <leader>aMM :!php artisan migrate<CR>
-nno <silent> <leader>aMf :!php artisan migrate:fresh<CR>
-nno <silent> <leader>aMr :!php artisan migrate:rollback<CR>
-nno <silent> <leader>aMs :!php artisan migrate:status<CR>
-
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
@@ -563,24 +403,7 @@ nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
 nmap <leader>eb :vsplit ~/.bashrc<CR>
 nmap <leader>ea :vsplit ~/.aliases<CR>
-nmap <leader>es :NeoSnippetEdit-vertical<CR>
 nmap <leader>en :tabnew<CR>
-
-" neovim-snippets key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-" Todo: Make different keybining (tmux)
-imap <C-A> <Plug>(neosnippet_expand_or_jump)
-smap <C-A> <Plug>(neosnippet_expand_or_jump)
-xmap <C-A> <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " =================================
 "       Source vim-scripts
