@@ -67,7 +67,8 @@ alias t='tail -f'
 
 alias dud='du -d 1 -h'
 alias duf='du -cksh *'
-alias ff='find . -type f -name'
+alias ff='find . -type f -iname'
+alias fd='find . -type d -iname'
 
 alias l='ls -lFh --group-directories-first'
 alias ll='ls -l --group-directories-first'
@@ -122,8 +123,9 @@ alias -g NUL="> /dev/null 2>&1"
 
 alias vi='nvim'
 alias vig='nvim +Gstatus -c ":only"' 
-alias vundle='nvim +PluginInstall +qall'
-alias vundle-clean='nvim +PluginClean +qall'
+alias viplug='nvim +PlugInstall +qall'
+alias viplug-update='nvim +PlugUpdate +qall'
+alias viplug-clean='nvim +PlugClean +qall'
 
 # Start neovim with Obsession
 function nvim() {
@@ -136,25 +138,6 @@ function nvim() {
   fi
 }
 
-# Start project
-alias project="~/Scripts/GIT/hello-world/Node/projects.mjs"
-
-# vundle-add() {
-#     local vimrc_locations=("/home/sthewessen/.vim/vimrc" "/home/sthewessen/.vimrc")
-#     local vimrc=''
-#     for vimrc in $vimrc_locations; do
-#         if [ -f $vimrc ]; then
-#             echo $vimrc
-#             while [ $# -gt 0 ]; do
-#                 sed -i "s/\" New plugins here/\0\nPlugin '$1'/" "$vimrc"
-#                 echo "Added Plugin '$1' to $vimrc"
-#                 shift
-#             done
-#             return 0
-#         fi
-#     done
-# return 1
-# }
 # =================================
 #            History
 # =================================
