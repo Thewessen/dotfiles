@@ -62,7 +62,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(tmux git)
+plugins=(
+  tmux
+  git
+  cargo
+  catimg
+  colored-man-pages
+  cp
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -135,13 +142,13 @@ fi
  # launch tmux terminal multiplexer
  # only if tmux is installed
 if command -v tmux >/dev/null 2>&1; then
-  # if not inside a tmux session, and if no session is started, start a new session named SH
-  test -z "$TMUX" && (tmux attach -t SH || tmux new-session -s SH)
+    #if not inside a tmux session, and if no session is started, start a new session
+    test -z "$TMUX" && (tmux attach || tmux new-session)
 
-  # try to attach too a detached session when killing a session
-  while test -z ${TMUX}; do
-    tmux attach || break
-  done
+    #try to attach too a detached session when killing a session
+    while test -z ${TMUX}; do
+        tmux attach || break
+    done
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
