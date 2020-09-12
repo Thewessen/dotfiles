@@ -70,6 +70,7 @@ plugins=(
   catimg
   colored-man-pages
   cp
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
