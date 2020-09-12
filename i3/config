@@ -188,18 +188,18 @@ bar {
 # new_window 1pixel
 
 # Applications to workspace assignments
-assign [class="^Google-chrome"] 1
-assign [class="^Google-chrome" instance="web.whatsapp.com"] 7
-assign [class="^Google-chrome" instance="calendar.google.com"] 8
-assign [class="^Google-chrome" instance="gmail.com"] 9
-assign [class="^Slack$"] 10
+assign [class="^Google-chrome$" instance="^google-chrome$"] 1
+assign [class="^Google-chrome$" instance="^web.whatsapp.com$"] 7
+assign [class="^Google-chrome$" instance="^calendar.google.com$"] 8
+assign [class="^Google-chrome$" instance="^gmail.com$"] 9
+# assign [class="^Slack$"] 10
 
 # Startup applications (reversed order of priority)
 exec --no-startup-id ulauncher --hide-window
 exec google-chrome --app="https://web.whatsapp.com"
 exec google-chrome --app="https://calendar.google.com"
 exec google-chrome --app="https://gmail.com"
-exec slack
+# exec slack
 exec terminator --title="scratchpad" --classname="scratchpad"
 exec google-chrome
 
