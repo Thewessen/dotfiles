@@ -42,6 +42,9 @@ ENABLE_CORRECTION="true"
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
+# with zsh-autosuggestions
+ZSH_AUTOSUGGEST_STRATEGIE="completion"
+
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
@@ -86,7 +89,7 @@ bindkey "^S" history-incremental-pattern-search-forward
 
 # Use zman for the manualpage of zsh and search
 zman() {
-  PAGER="less -g -s '+/^       "$1"'" man zshall
+  PAGER="less -g -s '+/^"$1"'" man zshall
 }
 
 # export MANPATH="/usr/local/man:$MANPATH"
