@@ -3,6 +3,16 @@ Session.vim
 
 # tags
 tags
+tags.temp
+tags.bck
 
 fzf/
-.dotfiles
+.dotfiles/
+
+# Add vim acceptions
+*~
+.*.sw?
+
+# For Mac-os
+.DS_Store
+Thumbs.db
