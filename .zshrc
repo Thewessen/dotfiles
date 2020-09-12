@@ -95,11 +95,8 @@ fi
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Path to dotfiles
-export DOTFILES="$HOME/.dotfiles"
-
 # Path to dotfiles bin
-PATH="$PATH:$DOTFILES/bin"
+PATH="$PATH:$HOME/bin"
 
 # Path to composer
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
@@ -135,16 +132,16 @@ elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# launch tmux terminal multiplexer
-# only if tmux is installed
-# if command -v tmux >/dev/null 2>&1; then
+ # launch tmux terminal multiplexer
+ # only if tmux is installed
+if command -v tmux >/dev/null 2>&1; then
   # if not inside a tmux session, and if no session is started, start a new session named SH
-  # test -z "$TMUX" && (tmux attach -t SH || tmux new-session -s SH)
+  test -z "$TMUX" && (tmux attach -t SH || tmux new-session -s SH)
 
-  #try to attach too a detached session when killing a session
-  # while test -z ${TMUX}; do
-  #     tmux attach || break
-  # done
-# fi
+  # try to attach too a detached session when killing a session
+  while test -z ${TMUX}; do
+    tmux attach || break
+  done
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
