@@ -209,4 +209,3 @@ hi link yamlBlockMappingKey Normal
 " JSON
 hi link jsonCommentError Comment
 hi link jsonNoQuotesError Todo
-

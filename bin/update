@@ -1,0 +1,12 @@
+#!/usr/bin/zsh
+
+# Make sure this directory is in your $PATH
+# Run all updatecommands
+
+sudo
+upgrade_oh_my_zsh
+nvim +PluginUpdate +qall
+update-git-pull
+upgrade-npm
+update-apt
+update-pip

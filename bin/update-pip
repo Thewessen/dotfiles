@@ -1,0 +1,8 @@
+# pip: Python package installer
+for pip in "pip" "pip2" "pip3"; do
+  if command -v "$pip" >/dev/null 2>&1; then
+    sudo -H $pip install --upgrade $pip
+    sudo -H $pip install --upgrade setuptools
+    sudo -H $pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 sudo -H $pip install -U
+  fi
+done
