@@ -93,11 +93,8 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Path to dotfiles
-export DOTFILES="$HOME/.dotfiles"
-
 # Path to dotfiles bin
-PATH="$PATH:$DOTFILES/bin"
+PATH="$PATH:$HOME/bin"
 
 # Path to composer
 PATH="$PATH:$HOME/.composer/vendor/bin"
@@ -163,10 +160,10 @@ setopt HIST_BEEP
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # source fzf extra commands
-[[ -e "$DOTFILES/fzf-extras/fzf-extras.sh" ]] \
-  && source $DOTFILES/fzf-extras/fzf-extras.sh
-[[ -e "$DOTFILES/fzf-extras/fzf-extras.zsh" ]] \
-  && source $DOTFILES/fzf-extras/fzf-extras.zsh
+[[ -e "$HOME/project/fzf-extras.sh" ]] \
+  && source $HOME/project/fzf-extras.sh
+[[ -e "$HOME/project/fzf-extras.zsh" ]] \
+  && source $HOME/project/fzf-extras.zsh
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 
 

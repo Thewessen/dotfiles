@@ -56,7 +56,7 @@ nno <leader>o :only<CR>
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
 
-" Command & Insert-mode mapping
+" Comand & Insert-mode mapping
 cno <C-D> <Del>
 ino <C-D> <Del>
 ino <C-B> <ESC>bi
@@ -128,5 +128,3 @@ nno <leader>s :action SurroundWithLiveTemplate<CR>
 nno <leader>t :action ReformatWithPrettier<CR>
 " vno <leader>t :action VimReformatVisual<CR>
 " nno <leader>T :action ReformatCode<CR>
-
-
