@@ -5,8 +5,8 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
-# Quickly navigate to some folders
-alias dot='cd ~/.dotfiles'
+# commit to dot repo
+alias dot='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # pullrequest with vim
 vpr() {
