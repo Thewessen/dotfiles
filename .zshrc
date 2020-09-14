@@ -134,6 +134,8 @@ if [ -f ~/.aliases ]; then
 elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+# Add work aliases
+[ -f ~/.aliases_work ] && \. ~/.aliases_work
 
 #No duplicates in fzf zsh history
 setopt EXTENDED_HISTORY
@@ -171,3 +173,6 @@ setopt HIST_BEEP
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# complete aliases before autocompletion
+unsetopt completealiases

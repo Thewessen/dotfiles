@@ -6,7 +6,7 @@
 # ==================================================================
 
 # commit to dot repo
-alias dot='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # pullrequest with vim
 vpr() {
