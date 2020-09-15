@@ -223,7 +223,7 @@ let g:ranger_replace_netrw = 0
 let g:bclose_no_plugin_maps = 1
 
 " NeovimSnippets settings
-let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
+let g:neosnippet#snippets_directory = ['$HOME/.vim/snippets']
 let g:neosnippet#disable_runtime_snippets = {
     \ '_': 1,
     \}
@@ -666,7 +666,7 @@ endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
 " In current window
-nmap <leader>e, :vsplit ~/.dotfiles/alacritty.yml<CR>
+nmap <leader>e, :vsplit ~/.config/alacritty/alacritty.yml<CR>
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
 nmap <leader>el :vsplit ~/.vim/scripts/sthew_link_color_groups.vim<CR>

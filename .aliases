@@ -65,7 +65,7 @@ alias ldot='gls -d .* --group-directories-first --color=auto'
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.dotfiles/vim/.vimrc ~/.vimrc ~/.dotfiles/vim/*"
+alias vimrc="$EDITOR ~/.vimrc"
 
 # =================================
 #             Programs
