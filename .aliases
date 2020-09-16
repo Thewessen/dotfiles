@@ -90,8 +90,10 @@ notify() {
 }
 
 alias vi='nvim'
-alias vundle='nvim +PluginInstall +qall'
-alias vundle-clean='nvim +PluginClean +qall'
+alias viplug='nvim +PlugInstall +qall'
+alias viplug-clean='nvim +PlugClean +qall'
+alias viplug-update='nvim +PlugUpdate +qall'
+alias viplug-upgrade='nvim +PlugUpgrade +qall'
 
 # Start neovim with Obsession
 function nvim() {
