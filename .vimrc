@@ -464,7 +464,9 @@ tmap <C-W><C-S> <C-[><C-W><C-S>
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
-nunmap <C-A>
+if (maparg('<C-A>'))
+  nunmap <C-A>
+endif
 
 " Command & Insert-mode mapping
 cno <C-D> <Del>

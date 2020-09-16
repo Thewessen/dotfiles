@@ -47,6 +47,7 @@ hi link htmlArg Normal
 hi link htmlSpecialChar Special
 hi link htmlTag Comment
 hi link htmlEndTag Comment
+hi link htmlItalic Italic
 
 " Javascript
 hi link jsObjectKey Normal

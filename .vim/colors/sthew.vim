@@ -46,7 +46,7 @@ if &t_Co > 255
         hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
         hi Keyword ctermfg=144 ctermbg=NONE cterm=NONE
-        hi Type ctermfg=81
+        hi Type ctermfg=81 cterm=italic
         hi Boolean ctermfg=99
         hi Number ctermfg=141
         hi Float ctermfg=213
