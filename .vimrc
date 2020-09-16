@@ -585,9 +585,9 @@ nno <leader>ru :call LanguageClient#textDocument_rename(
 
 " Git commands (vim-fugitive)
 nno <leader>gs :Gstatus<CR>
-nno <leader>gg :Git<space>
+nno <leader>g<space> :Git<space>
 nno <leader>gp :Gpush<CR>
-nno <leader>gL :0Glog<CR>
+nno <leader>gg :0Glog<CR>
 nno <leader>gl :Gpull<CR>
 nno <leader>gm :Gmerge<space>
 nno <leader>gf :Gfetch<CR>
@@ -606,7 +606,8 @@ nno <leader>G :GutentagsUpdate!<CR>
 " for some reason this is mapped to buffer delete
 nno <silent> <C-P> :Files!<CR>
 nno <silent> <leader>ff :GFiles!<CR>
-nno <leader>fa :Ag<space>
+nno <leader>f<space> :Ag<space>
+nno <leader>fa :Ag!<CR>
 nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>fL :BLines!<CR>
 nno <silent> <leader>fg :GCheckout!<CR>
