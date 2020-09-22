@@ -141,14 +141,14 @@ fi
 
  # launch tmux terminal multiplexer
  # only if tmux is installed
-if command -v tmux >/dev/null 2>&1; then
+# if command -v tmux >/dev/null 2>&1; then
     #if not inside a tmux session, and if no session is started, start a new session
-    test -z "$TMUX" && (tmux attach || tmux new-session)
+    # test -z "$TMUX" && (tmux attach || tmux new-session)
 
     #try to attach too a detached session when killing a session
-    while test -z ${TMUX}; do
-        tmux attach || break
-    done
-fi
+    # while test -z ${TMUX}; do
+    #     tmux attach || break
+    # done
+# fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
