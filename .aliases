@@ -25,7 +25,7 @@ notify() {
 # Python3.7
 # ## it's unsafe to point 'python' cmd to python3.7
 # ## the system uses it
-alias py="python3.7"
+alias py="python3 -m ptpython --vi"
 alias ru="evcxr"
 
 # John the Ripper (Jumbo)
