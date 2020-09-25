@@ -595,6 +595,7 @@ function! PHPMapping()
 endfunction
 
 function! RustMapping()
+    nno <buffer> <leader>n<space> :Cargo<space>
     nno <buffer> <leader>n, :Cbuild<CR>
     nno <buffer> <leader>n. :Cargo build --release<CR>
     nno <buffer> <leader>nn :Crun<CR>
