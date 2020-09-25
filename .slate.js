@@ -13,7 +13,7 @@ const screens = {
   },
   main: {
     id: 1,
-    resolution: '2560x1440',
+    resolution: '3008x1692',
   },
   // right: {
   //   id: 2,
@@ -22,15 +22,15 @@ const screens = {
 }
 
 const applications = {
-  '1': 'Slack',
-  '2': 'Alacritty',
-  '3': 'Firefox',
-  '4': 'Google Chrome',
-  '5': 'PhpStorm',
+  '1': 'Alacritty',
+  '2': 'Google Chrome',
+  '3': 'Slack',
+  '4': 'PhpStorm',
+  '5': 'Firefox',
   '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
   '8': 'Agenda Hypotheekbond',
-  '9': 'Avocode',
+  '9': 'Abstract',
   '0': 'TimeChimp Hypotheekbond',
 }
 
