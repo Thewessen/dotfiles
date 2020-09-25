@@ -30,9 +30,11 @@ if has('nvim')
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
   \ }                                   " A LC client for nvim
-  Plug 'roxma/LanguageServer-php-neovim',  {
-  \ 'do': 'composer install && composer run-script parse-stubs'
-  \ }                                   " php LanguageServer
+  Plug 'phpactor/phpactor', {
+  \ 'for': 'php',
+  \ 'branch': 'master',
+  \ 'do': 'composer install --no-dev -o'}
+  Plug 'kristijanhusak/deoplete-phpactor'
 else
   Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
@@ -42,11 +44,8 @@ Plug 'w0rp/ale'                       " Async linter and completer
 Plug 'carlitux/deoplete-ternjs', {
       \ 'do' : 'npm install -g tern'
       \}                              " Javascript source for deoplete
-Plug 'padawan-php/deoplete-padawan', {
-      \'do': 'composer install'
-      \}                              " PHP source
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
-Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
+Plug 'justinmk/vim-dirvish'           " filebrowser like netrw (but better)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
 Plug 'tpope/vim-fugitive'             " Git from inside vim
@@ -179,9 +178,6 @@ set wrapmargin=0    " No linebreaks in Insert mode
 
 set wildignore=Session.vim
 
-" Use fzf in vim
-set rtp+=/usr/local/opt/fzf
-
 " mouse support
 set mouse=a
 
@@ -215,7 +211,7 @@ let g:vdebug_keymap = {
 " Use :GutentagsToggleEnabled to enable gutentags
 let g:gutentags_enabled = 1
 let g:gutengas_add_default_project_roots = 0
-let g:gutentags_project_root = ['package.json']
+let g:gutentags_project_root = ['composer.json', 'vendor']
 
 " Ranger default mapping
 let g:ranger_map_keys = 0
@@ -241,18 +237,11 @@ let g:blade_custom_directives_pairs = {
       \}
 
 " FZF options
-let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_buffers_jump = 1
-" Files with preview
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
 let g:dispatch_terminal_exec = 'zsh'
-
-" Unimpaired-like keybindings
-" nno ]g i<CR><esc>k$
 
 " Use Deoplete.
 let g:deoplete#enable_at_startup = 0
@@ -265,10 +254,6 @@ call deoplete#custom#option({
 \ 'smart_case': v:true,
 \ })
 
-" let g:deoplete#sources = {}
-" let g:deoplete#sources.php = ['omni', 'phpactor', 'ultisnips', 'buffer']
-" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-" let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 " Setup javascript ternjs (other then default)
 let g:deoplete#sources#ternjs#tern_bin = '/usr/local/bin/tern'
 let g:deoplete#sources#ternjs#timeout = 1
@@ -279,10 +264,10 @@ let g:deoplete#sources#ternjs#filetypes = [
 \ 'jsx',
 \ 'javascript.jsx',
 \ ]
+call deoplete#custom#option('sources', {'php' : ['omni', 'phpactor', 'ultisnips', 'buffer']})
 
 " Completion function
-" set omnifunc=ale#completion#OmniFunc
-set omnifunc=LanguageClient#complete
+autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['package.json', '.git/', 'Cargo.toml']
@@ -309,9 +294,6 @@ let g:ale_php_cs_fixer_use_global = 1
 let g:ale_php_phpcs_standard = 'PSR2'
 
 " Language server
-" let $LANGUAGECLIENT_DEBUG=1
-" let g:LanguageClient_loggingLevel='DEBUG'
-" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log') 
 let g:LanguageClient_serverCommands = {
 \ 'rust': ['rls'],
 \ 'javascript': ['javascript-typescript-stdio'],
@@ -326,10 +308,11 @@ let g:LanguageClient_useVirtualText="CodeLens"
 " =================================
 
 au FileType netrw setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
-au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
-au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
-au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
-au FileType js,javascript set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType dirvish setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
+au FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+au FileType blade setlocal shiftwidth=2 tabstop=2 softtabstop=2
+au FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
+au FileType js,javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -337,17 +320,6 @@ function! Wincmd_help()
     wincmd L
     " wincmd |
 endfunction
-
-" Save folds of some files
-" When mkview is saving manual folds, set foldmethod,foldlevelstart auto(?!?)
-" augroup load_save_folds
-"     autocmd!
-"     autocmd BufLeave vimrc,.vimrc,*.conf mkview
-"     autocmd BufRead vimrc,.vimrc,*.conf
-"         \ silent loadview
-"         \ setlocal foldmethod=manual
-"         \ setlocal foldlevel=0
-" augroup END
 
 " Auto reload this configfile on change
 augroup reload_vimrc
@@ -390,6 +362,7 @@ augroup END
 augroup mappings
     autocmd!
     autocmd filetype netrw call NetrwMapping()
+    autocmd filetype dirvish call DirvishMapping()
     autocmd BufWinEnter,BufEnter * if &diff | call VimDiffMapping() | endif
     autocmd filetype fzf imap <buffer> <ESC> <C-D>
     autocmd filetype sh call ShellMapping()
@@ -407,6 +380,10 @@ function! NetrwMapping()
     nunmap <buffer> <C-L>
     nno <buffer> <C-L> <C-W>w
     nno <buffer> <C-R> <Plug>(NetrwRefresh)
+endfunction
+
+function! DirvishMapping()
+  nno <buffer> <C-p> :Files<CR>
 endfunction
 
 function! VimDiffMapping()
@@ -439,9 +416,6 @@ nno <silent> <C-D> :q<CR>
 
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
-
-" omnifunc iso next in buffer
-" ino <C-N> <C-X><C-O>
 
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
@@ -553,9 +527,6 @@ nmap <leader>9 :cabove<CR>
 nmap <leader>] :lbelow<CR>
 nmap <leader>[ :labove<CR>
 
-" Arguments-list (currently held by artisan commands)
-" nmap <leader>a :args<space>
-
 " Split line on match
 ino <C-G><C-M> <CR><ESC>O
 " Run
@@ -609,7 +580,7 @@ nno <silent> <leader>ff :GFiles!<CR>
 nno <leader>f<space> :Ag<space>
 nno <leader>fa :Ag!<CR>
 nno <silent> <leader>/ :Lines!<CR>
-nno <silent> <leader>fL :BLines!<CR>
+nno <silent> <leader>f, :BLines!<CR>
 nno <silent> <leader>fg :GCheckout!<CR>
 nno <silent> <leader>fc :Commits!<CR>
 nno <silent> <leader>fd :BCommits!<CR>
@@ -645,12 +616,15 @@ endfunction
 
 " PHP artisan commands
 function! PHPMapping()
-  nno <buffer> <leader>nn :tabe term://psysh<CR>
+  nno <buffer> <leader>nn :bo 20split term://vssh psysh<CR>
   nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
-  nno <buffer> <leader>nr :!php artisan route:list \| grep<space>
-  nno <buffer> <leader>nm :!php artisan make:
-  nno <buffer> <leader>ni :!php artisan migrate
-  nno <buffer> <leader>ns :!php artisan db:seed<CR>
+  nno <buffer> <leader>ar :!php artisan route:list \| grep<space>
+  nno <buffer> <leader>am :!php artisan make:
+  nno <buffer> <leader>ai :!php artisan migrate
+  nno <buffer> <leader>as :!php artisan db:seed<CR>
+  nno <buffer> <leader>n, :PhpactorHover<CR>
+  nno <buffer> <leader>n<space> :PhpactorContextMenu<CR>
+  nno <buffer> <leader>nd :PhpactorGotoDefinition<CR>
 endfunction
 
 function! RustMapping()
@@ -665,6 +639,9 @@ function! RustMapping()
     nno <buffer> <leader>nc :Cclean<CR>
     nno <buffer> <leader>nb :Cbench<CR>
     nno <buffer> <leader>nB :Cpublish<CR>
+endfunction
+
+function! PythonMapping()
 endfunction
 
 " Edit vimrc, gitconfig, tmux.conf, zshrc, bashrc and aliases
