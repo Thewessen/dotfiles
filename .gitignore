@@ -6,3 +6,6 @@ tags*
 
 # module
 .dotfiles/
+
+# phpactor config
+.phpactor.json
