@@ -46,7 +46,7 @@ if &t_Co > 255
         hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
         hi Keyword ctermfg=144 ctermbg=NONE cterm=NONE
-        hi Type ctermfg=81 cterm=italic
+        hi Type ctermfg=81 cterm=NONE
         hi Boolean ctermfg=99
         hi Number ctermfg=141
         hi Float ctermfg=213
@@ -59,12 +59,12 @@ if &t_Co > 255
         hi Operator ctermfg=214
         hi Conditional ctermfg=197
         hi Identifier ctermfg=197 cterm=bold
-        hi PreProc ctermfg=69 cterm=italic
+        hi PreProc ctermfg=69 cterm=NONE
         hi Tag ctermfg=197
         hi Statement ctermfg=197
         hi Define ctermfg=160
         hi Underlined ctermfg=230 cterm=underline
-        hi Italic ctermfg=230 cterm=italic
+        hi Italic ctermfg=230 cterm=NONE
         hi Folded ctermfg=252 ctermbg=NONE
         hi FoldColumn ctermbg=NONE ctermfg=236
         hi SignColumn ctermbg=NONE
@@ -72,10 +72,10 @@ if &t_Co > 255
         hi TabLineFill ctermfg=102 ctermbg=NONE cterm=underline
         hi TabLineSel ctermfg=102 ctermbg=NONE cterm=bold
         hi DiffAdd ctermbg=234 cterm=NONE
-        hi DiffDelete ctermbg=NONE cterm=italic
+        hi DiffDelete ctermbg=NONE cterm=NONE
         hi DiffChange ctermbg=237 cterm=NONE
         hi DiffText ctermbg=22 cterm=NONE
-        hi Special ctermfg=141 cterm=italic
+        hi Special ctermfg=141 cterm=NONE
         hi SpecialComment ctermfg=242 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=81 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=NONE cterm=bold
@@ -114,7 +114,7 @@ if &t_Co > 255
         hi Operator ctermfg=88
         hi Conditional ctermfg=88
         hi Identifier ctermfg=88
-        hi PreProc ctermfg=88 cterm=italic
+        hi PreProc ctermfg=88 cterm=NONE
         hi Tag ctermfg=88
         hi Statement ctermfg=88
         hi Folded ctermfg=235 ctermbg=252
@@ -128,7 +128,7 @@ if &t_Co > 255
         hi DiffDelete ctermbg=204 cterm=NONE
         hi DiffChange ctermbg=255 cterm=NONE
         hi DiffText ctermbg=46 cterm=NONE
-        hi Special ctermfg=57 ctermbg=NONE cterm=italic
+        hi Special ctermfg=57 ctermbg=NONE cterm=NONE
         hi SpecialComment ctermfg=245 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
         hi Error ctermfg=1 ctermbg=231 cterm=bold
