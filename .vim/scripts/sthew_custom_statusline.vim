@@ -30,19 +30,32 @@ function! VarExists(var, val)
     if exists(a:var) | return a:val | else | return '' | endif
 endfunction
 
+function! s:get_gutentags_status(mods) abort
+    let l:msg = ''
+    if index(a:mods, 'ctags') >= 0
+       let l:msg .= '♨'
+     endif
+     if index(a:mods, 'cscope') >= 0
+       let l:msg .= '♺'
+     endif
+     return l:msg
+endfunction
+
+set statusline+=
 " Statusline attributes
 " default: set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
 function! Custom_Statusline()
     let s=''
-    let s.='%1*%4.4(|#%n%) '                          " Buffer number
-    let s.=" %{expand('#'.buffer_number('%').':t')}\ "    " File in window (base only)
+    let s.='%1*%4.4(|#%n%) '                                  " Buffer number
+    let s.=" %{expand('#'.buffer_number('%').':t')}\ "        " File in window (base only)
     let s.="%0* %m%r%h%w%{VarExists('b:gzflag','[GZ]')}%q\ "  " File flags (modified, readonly, preview etc.)
-    let s.="%{FugitiveStatusline()}"                " Add git repro to bottom statusline
-    let s.='%='                                        " Right Side
-    let s.='%0*%<%( %Y '                                 " FileType
-    let s.='%0* (%0{&ff}) '                          " FileFormat (dos/unix..)
-    let s.='%{&fenc} %)'                  " Encoding
-    let s.='%0* %<☰ %02l⋮ %02v (%3p%%) '            " Line/col number (percentage)
+    let s.="%{gutentags#statusline()} "
+    let s.="%{FugitiveStatusline()}"                          " Add git repro to bottom statusline
+    let s.='%='                                               " Right Side
+    let s.='%0*%<%( %Y '                                      " FileType
+    let s.='%0* (%0{&ff}) '                                   " FileFormat (dos/unix..)
+    let s.='%{&fenc} %)'                                      " Encoding
+    let s.='%0* %<☰ %02l⋮ %02v (%3p%%) '                      " Line/col number (percentage)
     let s.='%1* %-7{toupper(g:currentmode[mode()])}|'  " The current mode
     return s
 endfunction
