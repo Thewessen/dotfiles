@@ -39,7 +39,7 @@ alias sortnr='sort -n -r'
 
 alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
-alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
+alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32 --ignore tags"
 
 alias chf='find . -type f -exec chmod 644 {} \;'
 alias chd='find . -type d -exec chmod 755 {} \;'
@@ -55,12 +55,12 @@ alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 
 # Brew install coreutils
-alias l='gls -lFh --group-directories-first --color=auto'
-alias ll='gls -l --group-directories-first --color=auto'
-alias la='gls -lAFh --group-directories-first --color=auto'
-alias lr='gls -tRFh --group-directories-first --color=auto'
-alias lt='gls -ltFh --group-directories-first --color=auto'
-alias ldot='gls -d .* --group-directories-first --color=auto'
+alias l='lsd -lFh --group-dirs --color=auto'
+alias ll='lsd -l --group-dirs --color=auto'
+alias la='lsd -lAFh --group-dirs --color=auto'
+alias lr='lsd -tRFh --group-dirs --color=auto'
+alias lt='lsd -ltFh --group-dirs --color=auto'
+alias ldot='lsd -d .* --group-dirs --color=auto'
 
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
