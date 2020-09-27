@@ -9,7 +9,7 @@
 alias dot='/usr/bin/git --git-dir=$HOME/repos/dotfiles --work-tree=$HOME'
 
 # fzf based functions
-source "$HOME/Scripts/fzf-extras.sh"
+source "$HOME/scripts/fzf-extras.sh"
 
 # Simple watch filechange and run file command (needs notify-tools)
 notify() {
