@@ -6,7 +6,7 @@
 # ==================================================================
 
 # dotfiles repo
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/repos/dotfiles --work-tree=$HOME'
 
 # fzf based functions
 source "$HOME/Scripts/fzf-extras.sh"
