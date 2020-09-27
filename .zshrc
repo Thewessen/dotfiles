@@ -75,6 +75,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# remove the right prompt after command execution
+setopt TRANSIENT_RPROMPT
+
 # Use wildcard in history search
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
