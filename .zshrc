@@ -155,3 +155,6 @@ fi
 # fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# source autocompletion (alacritty term)
+fpath+=${ZDOTDIR:-~}/.zsh_functions
