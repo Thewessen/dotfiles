@@ -17,6 +17,9 @@ vpr() {
   fi
 }
 
+# make aliases usable with sudo
+alias sudo='sudo '
+
 # Git status vi
 alias vig='nvim +Gstatus -c ":only"' 
 
