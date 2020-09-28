@@ -6,7 +6,7 @@
 # ==================================================================
 
 # commit to dot repo
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 
 # pullrequest with vim
 vpr() {
@@ -100,10 +100,14 @@ alias viplug-upgrade='nvim +PlugUpgrade +qall'
 
 # Start neovim with Obsession
 function nvim() {
-  if test $# -gt 0; then
+  if test $# -gt 0
+  then
     env nvim "$@"
-  else
+  elif $(git rev-parse --git-dir >/dev/null 2>&1)
+  then
     nvim +GitFiles!
+  else
+    env nvim .
   fi
 }
 
