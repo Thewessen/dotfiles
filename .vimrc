@@ -381,7 +381,7 @@ function! NetrwMapping()
 endfunction
 
 function! DirvishMapping()
-  nno <buffer> <C-p> :Files<CR>
+  nno <buffer> <C-p> :GFiles<CR>
 endfunction
 
 function! VimDiffMapping()
@@ -577,6 +577,7 @@ nno <silent> <C-P> :Files!<CR>
 nno <silent> <leader>ff :GFiles!<CR>
 nno <leader>f<space> :Ag<space>
 nno <leader>fa :Ag!<CR>
+nno <silent> <leader>* :CtrlSF<CR>
 nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>f, :BLines!<CR>
 nno <silent> <leader>fg :GCheckout!<CR>
@@ -696,7 +697,7 @@ endfunction
 function! SetWindowActive()
   if &filetype == 'netrw' || &filetype == 'dirvish' || &filetype == 'terminal'
     setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
-  elseif &filetype == 'ctrlfs'
+  elseif &filetype == 'ctrlsf'
     setlocal nonumber norelativenumber foldcolumn=0 colorcolumn=0
   else
     setlocal number foldcolumn=0
@@ -706,7 +707,7 @@ endfunction
 function! SetWindowInactive()
   if &filetype == 'netrw' || &filetype == 'dirvish' || &filetype == 'terminal'
     setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
-  elseif &filetype == 'ctrlfs'
+  elseif &filetype == 'ctrlsf'
     setlocal nonumber norelativenumber foldcolumn=0 colorcolumn=0
   else
     setlocal nonumber foldcolumn=4
