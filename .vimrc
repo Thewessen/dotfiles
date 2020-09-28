@@ -58,6 +58,7 @@ Plug 'tpope/vim-dadbod'               " Database explorer (supports many differe
 Plug 'junegunn/fzf', {
       \ 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'               " FZF fuzzy filesearch in vim, like ctrlp
+Plug 'dyng/ctrlsf.vim'                " Powered code search, view, destroy tool
 Plug 'airblade/vim-rooter'            " Automtically change working dir to root
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plug 'mattn/emmet-vim'                " Super fast html skeletons
@@ -307,8 +308,6 @@ let g:LanguageClient_useVirtualText="CodeLens"
 "           Autocommands
 " =================================
 
-au FileType netrw setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
-au FileType dirvish setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
 au FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
 au FileType blade setlocal shiftwidth=2 tabstop=2 softtabstop=2
 au FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -344,13 +343,12 @@ augroup END
 " Active Window more visible by changing ruler
 augroup activewin_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number foldcolumn=0 | endif
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber foldcolumn=4 | endif
+    autocmd BufEnter,WinEnter * call SetWindowActive()
+    autocmd BufLeave,WinLeave * call SetWindowInactive()
 augroup END
 
 augroup no_numberline
     autocmd!
-    autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber foldcolumn=2  | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
 augroup END
 
@@ -695,6 +693,26 @@ function! s:open_branch_fzf(line)
   execute '!git checkout ' . l:branch
 endfunction
 
+function! SetWindowActive()
+  if &filetype == 'netrw' || &filetype == 'dirvish' || &filetype == 'terminal'
+    setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
+  elseif &filetype == 'ctrlfs'
+    setlocal nonumber norelativenumber foldcolumn=0 colorcolumn=0
+  else
+    setlocal number foldcolumn=0
+  endif
+endfunction
+
+function! SetWindowInactive()
+  if &filetype == 'netrw' || &filetype == 'dirvish' || &filetype == 'terminal'
+    setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
+  elseif &filetype == 'ctrlfs'
+    setlocal nonumber norelativenumber foldcolumn=0 colorcolumn=0
+  else
+    setlocal nonumber foldcolumn=4
+  endif
+endfunction
+
 command! -bang -nargs=0 GCheckout
   \ call fzf#vim#grep(
   \   'git branch -v', 0,
@@ -718,5 +736,4 @@ source $HOME/.vim/scripts/sthew_link_color_groups.vim
 " Source statusline toggle mode
 source $HOME/.vim/scripts/sthew_mode_echo.vim
 autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
-
 "==================================================================
