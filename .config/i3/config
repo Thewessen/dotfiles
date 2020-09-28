@@ -31,10 +31,10 @@ font pango:Inconsolata 15
 floating_modifier $alt
 
 # start a terminal
-bindsym $alt+Return exec alacritty
+bindsym $alt+Return exec terminator
 
 # start qutebrowser
-bindsym $super+Return exec qutebrowser
+bindsym $super+Return exec firefox
 
 # cycle through workspaces
 bindsym $alt+Tab workspace next
@@ -188,23 +188,23 @@ bar {
 # new_window 1pixel
 
 # Applications to workspace assignments
-assign [class="^Google-chrome$" instance="^google-chrome$"] 1
-assign [class="^Google-chrome$" instance="^web.whatsapp.com$"] 7
-assign [class="^Google-chrome$" instance="^calendar.google.com$"] 8
-assign [class="^Google-chrome$" instance="^gmail.com$"] 9
+# assign [class="^Google-chrome$" instance="^google-chrome$"] 1
+# assign [class="^Google-chrome$" instance="^web.whatsapp.com$"] 7
+# assign [class="^Google-chrome$" instance="^calendar.google.com$"] 8
+# assign [class="^Google-chrome$" instance="^gmail.com$"] 9
 # assign [class="^Slack$"] 10
 
 # Startup applications (reversed order of priority)
-exec --no-startup-id ulauncher --hide-window
-exec google-chrome --app="https://web.whatsapp.com"
-exec google-chrome --app="https://calendar.google.com"
-exec google-chrome --app="https://gmail.com"
+# exec --no-startup-id ulauncher --hide-window
+# exec google-chrome --app="https://web.whatsapp.com"
+# exec google-chrome --app="https://calendar.google.com"
+# exec google-chrome --app="https://gmail.com"
 # exec slack
-exec terminator --title="scratchpad" --classname="scratchpad"
-exec google-chrome
+# exec terminator --title="scratchpad" --classname="scratchpad"
+# exec google-chrome
 
 # Custom window settings
-for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
+# for_window [class="^Terminator$" title="scratchpad"] border 1pixel; move scratchpad
 
 # Window borders
 new_window none
