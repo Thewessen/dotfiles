@@ -148,8 +148,8 @@ else " For 16 color terminal
     hi ErrorMsg ctermfg=7 ctermbg=1 cterm=NONE
     hi WarningMsg ctermfg=0 ctermbg=3 cterm=NONE
 
-    hi Normal ctermfg=7
-    hi Visual ctermbg=8
+    hi Normal ctermfg=8
+    hi Visual ctermbg=9
     hi CursorLine ctermbg=0 cterm=underline
     hi CursorLineNr ctermfg=3
     hi ColorColumn ctermbg=0
@@ -157,34 +157,34 @@ else " For 16 color terminal
     hi StatusLine ctermfg=7 ctermbg=NONE cterm=underline
     hi StatusLineNC ctermfg=8 ctermbg=NONE cterm=NONE
     hi VertSplit ctermfg=7 ctermbg=0 cterm=NONE
-    hi Title ctermfg=7 ctermbg=NONE cterm=bold
+    hi Title ctermfg=7 ctermbg=NONE
     hi MatchParen ctermfg=1 ctermbg=NONE cterm=underline
     hi Pmenu ctermfg=NONE ctermbg=59 cterm=NONE
     hi Keyword ctermfg=1
-    hi Type ctermfg=12
+    hi Type ctermfg=14
     hi Directory ctermfg=3
     hi Boolean ctermfg=5
     hi Character ctermfg=5
-    hi String ctermfg=15
+    hi String ctermfg=3
     hi Number ctermfg=5
     hi Float ctermfg=5
     hi Comment ctermfg=8
     hi Noise ctermfg=8
     hi NonText ctermfg=2
     hi Function ctermfg=10
-    hi Operator ctermfg=1
-    hi Conditional ctermfg=1
+    hi Operator ctermfg=4 cterm=bold
+    hi Conditional ctermfg=1 cterm=bold
     hi Identifier ctermfg=1
-    hi PreProc ctermfg=1
+    hi PreProc ctermfg=4 cterm=bold
     hi Tag ctermfg=1
-    hi Statement ctermfg=1
+    hi Statement ctermfg=12
     hi Folded ctermfg=15 ctermbg=0
     hi FoldColumn ctermbg=NONE ctermfg=0
     hi SignColumn ctermfg=NONE ctermbg=0 cterm=NONE
     hi Define ctermfg=1
     hi TabLine ctermfg=8 ctermbg=NONE cterm=underline
     hi TabLineFill ctermfg=7 ctermbg=NONE cterm=underline
-    hi TabLineSel ctermfg=7 ctermbg=NONE cterm=bold
+    hi TabLineSel ctermfg=15 ctermbg=NONE
     hi DiffAdd ctermfg=7 ctermbg=3
     hi DiffDelete ctermfg=1 cterm=NONE
     hi DiffChange ctermfg=3 cterm=NONE
@@ -192,6 +192,6 @@ else " For 16 color terminal
     hi Special ctermfg=5 ctermbg=NONE cterm=NONE
     hi SpecialComment ctermfg=8 ctermbg=NONE cterm=NONE
     hi StorageClass ctermfg=12 ctermbg=NONE cterm=NONE
-    hi Error ctermfg=1 ctermbg=NONE cterm=bold
-    hi Todo ctermfg=3 ctermbg=NONE cterm=bold
+    hi Error ctermfg=1 ctermbg=NONE
+    hi Todo ctermfg=11 ctermbg=NONE
 endif
