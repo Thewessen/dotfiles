@@ -46,7 +46,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Remove RPROMTP after command execution
-setopt TRANSIENT_RPROMPT
+# setopt TRANSIENT_RPROMPT
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
