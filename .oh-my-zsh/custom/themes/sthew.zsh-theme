@@ -4,8 +4,8 @@
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 
-PROMPT="%{$fg[green]%}╭ %{$fg[yellow]%}%/%{$fg[green]%} ─ ${git_branch}
-%{$fg[green]%}\$%{$reset_color%} "
+PROMPT="%{$fg[green]%}λ%{$reset_color%} "
+RPROMPT="%{$fg[green]%}─ %{$fg[yellow]%}%~%{$fg[green]%} ─ ${git_branch}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[blue]%})"
