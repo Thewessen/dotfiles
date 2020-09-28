@@ -78,6 +78,7 @@ Plug 'Shougo/neosnippet.vim'          " Snippets
 Plug 'Shougo/context_filetype.vim'    " Snippets depending on context filetype
 Plug 'ludovicchabant/vim-gutentags'   " ctags management
 Plug 'rust-lang/rust.vim'             " rust helpfull toolchain
+Plug 'cespare/vim-toml'               " toml syntax highlighting
 
 call plug#end()            " required
 filetype plugin indent on    " required
