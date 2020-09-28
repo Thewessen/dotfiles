@@ -111,6 +111,14 @@ function nvim() {
   fi
 }
 
+function www() {
+  if test $# -gt 0; then
+    w3m "$@"
+  else
+    w3m duckduckgo.com
+  fi
+}
+
 # =================================
 #             Files
 # =================================
