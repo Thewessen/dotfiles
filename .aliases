@@ -74,12 +74,12 @@ alias duf='du -cksh *'
 alias ff='find . -type f -iname'
 alias fd='find . -type d -iname'
 
-alias l='ls -lFh --group-directories-first'
-alias ll='ls -l --group-directories-first'
-alias la='ls -lAFh --group-directories-first'
-alias lr='ls -tRFh --group-directories-first'
-alias lt='ls -ltFh --group-directories-first'
-alias ldot='ls -d .* --group-directories-first'
+alias l='lsd -lFh --group-dirs first'
+alias ll='lsd -l --group-dirs first'
+alias la='lsd -lAFh --group-dirs first'
+alias lr='lsd -tRFh --group-dirs first'
+alias lt='lsd -ltFh --group-dirs first'
+alias ldot='lsd -d .* --group-dirs first'
 
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
@@ -115,9 +115,11 @@ alias -g T="| tail"
 alias -g H="| head"
 alias -g S="| sort"
 alias -g L="| less -X"
+alias -g B="| bat"
 alias -g M="| most"
 alias -g V="| nvim -"
 alias -g LL="2>&1 | less -X"
+alias -g BB="2>&1 | bat"
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
 
