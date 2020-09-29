@@ -164,6 +164,9 @@ fi
 # fzf configs 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# fzf extras
+[[ -f  "$HOME/scripts/fzf-extras.sh" ]] && source "$HOME/scripts/fzf-fzf-extras.sh"
+
 # compinit configs
 [ -f ~/.zsh.compinit ] && source ~/.zsh.compinit
 

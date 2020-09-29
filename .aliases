@@ -1,158 +1,176 @@
-# ==================================================================
-#       S. Thewessen
-#       Personal: ~/.oh-my-zsh/custom/aliases
+#!/usr/bin/env sh
 
-#       Last modified: Mo 28 Jan 2019
-# ==================================================================
+# TODO: add from other branch
+#-- active window swapping vimrc
+
+# ==============================================================================
+#       S. Thewessen
+#       Personal: .aliases
+#       Last modified: Th 29 Sep 2020
+# ==============================================================================
 
 # dotfiles repo
 alias dot='/usr/bin/git --git-dir=$HOME/repos/dotfiles --work-tree=$HOME'
-
-# fzf based functions
-source "$HOME/scripts/fzf-extras.sh"
-
-# Simple watch filechange and run file command (needs notify-tools)
-notify() {
-  echo
-  while inotifywait "$1" 2>/dev/null 1>/dev/null; do
-    sleep 0.1 && "$1"
-  done
-}
-
-# =================================
-#             General
-# =================================
-# Python3.7
-# ## it's unsafe to point 'python' cmd to python3.7
-# ## the system uses it
-alias py="python3 -m ptpython --vi"
-alias ru="evcxr"
-
-# John the Ripper (Jumbo)
-alias john="$HOME/.local/share/JohnTheRipper/run/john"
-alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
-alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
-
-# password generation
-alias password="pwgen -ncysBv1"
-
-# List processes
-alias pstree='pstree -aclp'
-
-# Copy to clipboard
-alias xclip='xclip -selection clipboard'
-
-# Dir STACK, zsh and csh only
-alias dh='dirs -v'
-
-# http-server
-alias http='live-server -V'
-
-alias c='clear' # Clear the screen
-alias j='jobs' # Current running jobs
-alias p='ps -f'
-alias sortnr='sort -n -r'
-
-alias grep='grep --color'
-alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
-# deprecated, use ag.
-# alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
-
-
-# change permission of files and folders recursively in current dir
-alias cmf='find . -type f -exec chmod 644 {} \;'
-alias cmd='find . -type d -exec chmod 755 {} \;'
-
-# Bash history
-alias h='history'
-alias hgrep='fc -El 0 | grep'
-alias help='man'
-alias t='tail -f'
-
-alias dud='du -d 1 -h'
-alias duf='du -cksh *'
-alias ff='find . -type f -iname'
-alias fd='find . -type d -iname'
-
-alias l='lsd -lFh --group-dirs first'
-alias ll='lsd -l --group-dirs first'
-alias la='lsd -lAFh --group-dirs first'
-alias lr='lsd -tRFh --group-dirs first'
-alias lt='lsd -ltFh --group-dirs first'
-alias ldot='lsd -d .* --group-dirs first'
 
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
 
-#read documents on Linux Mint/Ubuntu from commandline
-if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
-    alias o="xdg-open 2> /dev/null"
+# ===============================
+#           General
+# ===============================
 
-    _www_fts=(html de org net com at io nl se dk)
-    _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX heic HEIC heif HEIF)
-    _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
-    _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
-    _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
-    _sht_fts=(ods ODS xls XLS xlsm XLSM)
+alias sudo='sudo '
 
-    for ft in $_www_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_img_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_aud_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_pres_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_doc_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_sht_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+alias c='clear'
+
+alias j='jobs'
+alias p='ps -F'
+alias pstree='pstree -aclp'
+
+alias sortnr='sort -n -r'
+
+# change permission of files and folders recursively in current dir
+alias cmf='find . -type f -exec chmod 644 {} \;'
+alias cmd='find . -type d -exec chmod 755 {} \;'
+
+alias h='history'
+alias help='man'
+alias t='tail -f'
+
+alias grep='grep --color'
+alias hgrep='fc -El 0 | grep'
+
+alias dud='du -d 1 -h'
+alias duf='du -cksh *'
+alias ff='find . -type f -iname'
+alias fd='find . -type d -iname'
+
+if type lsd >/dev/null; then
+    alias l='lsd -lFh --group-dirs first'
+    alias ll='lsd -l --group-dirs first'
+    alias la='lsd -lAFh --group-dirs first'
+    alias lr='lsd -tRFh --group-dirs first'
+    alias lt='lsd -ltFh --group-dirs first'
+    alias ldot='lsd -d .* --group-dirs first'
+else
+    alias l='ls -lFh --list-directories-first'
+    alias ll='ls -l --list-directories-first'
+    alias la='ls -lAFh --list-directories-first'
+    alias lr='ls -tRFh --list-directories-first'
+    alias lt='ls -ltFh --list-directories-first'
+    alias ldot='ls -d .* --list-directories-first'
 fi
 
-# =================================
-#               Pipes
-# =================================
+# ===============================
+#           Tools
+# ===============================
 
-alias -g G="| grep"
-alias -g F="| fzf"
-alias -g T="| tail"
-alias -g H="| head"
-alias -g S="| sort"
-alias -g L="| less -X"
-alias -g B="| bat"
-alias -g M="| most"
-alias -g V="| nvim -"
-alias -g LL="2>&1 | less -X"
-alias -g BB="2>&1 | bat"
-alias -g NE="2> /dev/null"
-alias -g NUL="> /dev/null 2>&1"
+# Copy to clipboard
+if type xclip >/dev/null; then
+    alias xclip='xclip -selection clipboard'
+fi
+
+# Internet browser
+if type w3m >/dev/null; then
+    alias www="w3m -B"
+fi
+
+# John the Ripper (Jumbo)
+if [[ -f "$HOME/.local/share/JohnTheRipper/run/john" ]]; then
+    alias john="$HOME/.local/share/JohnTheRipper/run/john"
+    alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
+    alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
+fi
+
+# password generation
+if type pwgen >/dev/null; then
+    alias passwd="pwgen -ncysBv1"
+fi
+
+# the silver searcher
+if type ag >/dev/null; then
+    alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
+else
+    alias ag='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+fi
+
+# Python3 REPL
+if type python3 >/dev/null; then
+    if python3 -c "import ptpython" 2>/dev/null; then
+        alias py="python3 -m ptpython --vi"
+    else
+        alias py="python3"
+    fi
+fi
+
+# Rust REPL
+if type evcxr >/dev/null; then
+    alias ru="evcxr"
+fi
+
+# JS REPL
+if type nodejs >/dev/null; then
+    alias js="nodejs"
+elif type node >/dev/null; then
+    alias js="nodejs"
+fi
 
 # =================================
 #               Vim
 # =================================
 
-alias vi='nvim'
-alias vig='nvim +Gstatus -c ":only"' 
-alias viplug='nvim +PlugInstall +qall'
-alias viplug-update='nvim +PlugUpdate +qall'
-alias viplug-clean='nvim +PlugClean +qall'
+if type nvim >/dev/null; then
+    alias vi='nvim'
+    alias vig='nvim +Gstatus -c ":only"' 
+    alias viplug='nvim +PlugInstall +qall'
+    alias viplug-update='nvim +PlugUpdate +qall'
+    alias viplug-clean='nvim +PlugClean +qall'
+elif type vim >/dev/null; then
+    alias vi='vim'
+    alias vig='vim +Gstatus -c ":only"' 
+    alias viplug='vim +PlugInstall +qall'
+    alias viplug-update='vim +PlugUpdate +qall'
+    alias viplug-clean='vim +PlugClean +qall'
+fi
 
-# Start neovim with Obsession
-function nvim() {
-  if test $# -gt 0; then
-    env nvim "$@"
-  elif test -f Session.vim; then
-    env nvim -S
-  else
-    env nvim -c Obsession
-  fi
-}
+# ===============================
+#           ZSH
+# ===============================
 
-# =================================
-#            History
-# =================================
+# ZSH specific aliases
+if [[ "$SHELL" =~ "zsh" ]]; then
+    # Pipes
+    alias -g G="| grep"
+    alias -g F="| fzf"
+    alias -g T="| tail"
+    alias -g H="| head"
+    alias -g S="| sort"
+    alias -g L="| less -X"
+    alias -g B="| bat"
+    alias -g M="| most"
+    alias -g V="| xargs nvim --"
+    alias -g LL="2>&1 | less -X"
+    alias -g BB="2>&1 | bat"
+    alias -g NE="2> /dev/null"
+    alias -g NUL="> /dev/null 2>&1"
 
+    if [[ uname == "Linux" ]] && type xdg-open >/dev/null; then
+        alias o="xdg-open 2> /dev/null"
 
-# =================================
-#          System-Monitor
-# =================================
+        _www_fts=(html de org net com at io nl se dk)
+        _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX heic HEIC heif HEIF)
+        _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
+        _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
+        _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
+        _sht_fts=(ods ODS xls XLS xlsm XLSM)
 
-# Watch the current temps of core and fanspeed. Usefull for stresstesting.
-#alias wtch='watch -t -n1 "(lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"' 
-alias wtch='watch -t -n1 "printf '"'"'GPU MHz:       '"'"' && (nvidia-settings -tq GPUCurrentClockFreqs | head -1) && echo && ((printf '"'"'GPU Temp:      +\c'"'"' && nvidia-settings -tq GPUCoreTemp) | head -1) && printf '"'"'.0°C'"'"' && echo && (lscpu | grep MHz | cut -c '"'"'1-10 19-31'"'"') && echo && (sensors | grep Core | cut -c 1-25) && echo && (sensors | grep fan | cut -c '"'"'1-5 14-31'"'"') && echo && (free -m | grep '"'"'total\|Mem\|Swap'"'"' | cut -c 1-40) && echo && (df -h | grep '"'"'Filesystem\|sdb8\|sda1'"'"')"'
+        for ft in $_www_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_img_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_aud_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_pres_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_doc_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_sht_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    fi
+fi
