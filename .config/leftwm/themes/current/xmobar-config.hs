@@ -8,15 +8,11 @@ Config { font = "xft:Open Sans:size=8:antialias=true"
     , allDesktops = True
     , pickBroadest = False
     , overrideRedirect = False
-    , commands = [  Run MultiCpu ["-L","15","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory [] 10
-                    , Run Swap [] 10
-                    , Run TopProc [] 10
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+    , commands = [  Run Date "%_d %b %H:%M" "date" 10
                     , Run UnsafeStdinReader
-                    , Run Com "sh" [ "-c", "wifi_status" ] "wifi" 30 
+                    , Run Com "/bin/zsh" [ "-c", "/home/sthewessen/bin/wifi_status" ] "wifi" 30 
     ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeStdinReader% }{ %top% | %multicpu% | %memory% * %swap% | %date% | %wifi%"
+    , template = "%UnsafeStdinReader% }{ %date% | %wifi%"
 }
