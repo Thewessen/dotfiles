@@ -1,0 +1,12 @@
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _correct
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'l:|=* r:|=*'
+zstyle ':completion:*' original true
+zstyle ':completion:*' use-compctl true
+zstyle :compinstall filename '/home/sthewessen/.zsh.compinit'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall

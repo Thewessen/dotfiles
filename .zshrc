@@ -161,7 +161,11 @@ fi
     # done
 # fi
 
+# fzf configs 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# compinit configs
+[ -f ~/.zsh.compinit ] && source ~/.zsh.compinit
 
 # source autocompletion (alacritty term)
 fpath+=${ZDOTDIR:-~}/.zsh_functions
