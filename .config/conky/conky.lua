@@ -74,6 +74,7 @@ ${color grey}Processes:$color $processes  ${color grey}Running:$color $running_p
 $hr
 ${color grey}File systems:
  / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
+ /home $color${fs_used /home}/${fs_size /home} ${fs_bar 6 /home}
 ${color grey}Networking:
 Up:$color ${upspeed} ${color grey} - Down:$color ${downspeed}
 $hr
