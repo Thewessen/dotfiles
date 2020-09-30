@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-# TODO: add from other branch
-#-- active window swapping vimrc
-
 # ==============================================================================
 #       S. Thewessen
 #       Personal: .aliases
@@ -121,18 +118,22 @@ fi
 #               Vim
 # =================================
 
-if type nvim >/dev/null; then
-    alias vi='nvim'
-    alias vig='nvim +Gstatus -c ":only"' 
-    alias viplug='nvim +PlugInstall +qall'
-    alias viplug-update='nvim +PlugUpdate +qall'
-    alias viplug-clean='nvim +PlugClean +qall'
-elif type vim >/dev/null; then
-    alias vi='vim'
-    alias vig='vim +Gstatus -c ":only"' 
-    alias viplug='vim +PlugInstall +qall'
-    alias viplug-update='vim +PlugUpdate +qall'
-    alias viplug-clean='vim +PlugClean +qall'
+if [[ "$EDITOR" =~ "vim" ]]; then
+    function vi() {
+        if [[ -z "$1" ]]; then
+            if git rev-parse --git-dir >/dev/null 2>&1; then
+                env "$EDITOR" "+GitFiles!"
+            else
+                env "$EDITOR" "."
+            fi
+        else
+            env "$EDITOR" "$@"
+        fi
+    }
+    alias vig="$EDITOR +Gstatus -c ':only'" 
+    alias viplug="$EDITOR +PlugInstall +qall"
+    alias viplug-update="$EDITOR +PlugUpdate +qall"
+    alias viplug-clean="$EDITOR +PlugClean +qall"
 fi
 
 # ===============================

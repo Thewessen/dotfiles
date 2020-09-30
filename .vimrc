@@ -185,7 +185,7 @@ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 
 
 " NeovimSnippets settings
-let g:neosnippet#snippets_directory = ['$DOTFILES/vim/snippets']
+let g:neosnippet#snippets_directory = ['$HOME/.vim/snippets']
 let g:neosnippet#disable_runtime_snippets = {
     \ '_': 1,
     \}
@@ -285,10 +285,8 @@ let g:SignatureIncludeMarks = 'HTNSGCRDLFOEUIYPA'
 " =================================
 
 au FileType netrw set nonumber norelativenumber foldcolumn=1
-au FileType php set shiftwidth=4 tabstop=4 softtabstop=4
-au FileType blade set shiftwidth=2 tabstop=2 softtabstop=2
-au FileType vue set shiftwidth=2 tabstop=2 softtabstop=2
-au FileType js set shiftwidth=2 tabstop=2 softtabstop=2
+au FileType php,sh set shiftwidth=4 tabstop=4 softtabstop=4
+au FileType blade,vue,js set shiftwidth=2 tabstop=2 softtabstop=2
 
 " Vertical split help files
 autocmd FileType help call Wincmd_help()
@@ -329,10 +327,10 @@ augroup skeletons
 augroup END
 
 " Active Window more visible by changing ruler
-augroup activewin_numberline
+augroup toggle_active_win
     autocmd!
-    autocmd BufEnter,WinEnter * if &filetype != 'netrw' | setlocal number relativenumber foldcolumn=0 | endif
-    autocmd BufLeave,WinLeave * if &filetype != 'netrw' | setlocal nonumber norelativenumber foldcolumn=4 | endif
+    autocmd BufEnter,WinEnter * call SetWindowActive()
+    autocmd BufLeave,WinLeave * call SetWindowInactive()
 augroup END
 
 augroup no_numberline
@@ -652,6 +650,20 @@ endfunction
 " =================================
 "       Source vim-scripts
 " =================================
+
+function SetWindowActive()
+  if &filetype == 'netrw' || &filetype == 'dirvish' || &filetype == 'terminal'
+    setlocal nonumber norelativenumber foldcolumn=2 colorcolumn=0
+  else
+    setlocal number norelativenumber foldcolumn=0 colorcolumn=0
+  endif
+endfunction
+
+function SetWindowInactive()
+  if &filetype != 'netrw' && &filetype != 'dirvish' && &filetype != 'terminal' && &filetype != 'ctrlsf'
+    setlocal nonumber foldcolumn=4
+  endif
+endfunction
 
 " Source statusline and tabline
 source $HOME/.vim/scripts/sthew_custom_tabline.vim
