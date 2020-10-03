@@ -1,0 +1,17 @@
+configuration {
+  theme: "./sthew.rasi";
+  modi: "drun,run,window";
+  lines: 5;
+  width: 16;
+  padding: 4;
+  font: "OpenSans 14";
+  bw: 0;
+  show-icons: true;
+  window-thumbnail: true;
+  terminal: "alacritty";
+  drun-display-format: "{name}";
+  hide-scrollbar: true;
+  display-drun: "";
+  display-run: ">";
+  display-window: "#";
+}

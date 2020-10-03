@@ -1,0 +1,56 @@
+// Based on the Monokai theme
+
+* {
+  text-color: rgba ( 39, 40, 34, 100% );
+  background-color: rgba ( 253, 249, 244, 70% );
+  invisible: rgba ( 0, 0, 0, 0%);
+}
+
+window {
+    background-color: @invisible;
+}
+
+listview {
+    border:       1px 0px 0px;
+    border-color: @background-color;
+    background:   @invisible;
+}
+element {
+  padding: 4px 8px;
+}
+element.normal.normal {
+    background-color: @invisible;
+    text-color:       @foreground;
+}
+element.normal.urgent {
+    background-color: @invisible;
+    text-color:       @foreground;
+}
+element.normal.active {
+    background-color: @foreground;
+    text-color:       @background-color;
+}
+element.selected.normal {
+    background-color: @text-color;
+    text-color:       @background-color;
+}
+element.selected.urgent {
+    background-color: @text-color;
+    text-color:       @background-color;
+}
+element.selected.active {
+    background-color: @text-color;
+    text-color:       @background-color;
+}
+element.alternate.normal {
+    background-color: @invisible;
+    text-color:       @foreground;
+}
+element.alternate.urgent {
+    background-color: @invisible;
+    text-color:       @foreground;
+}
+element.alternate.active {
+    background-color: @invisible;
+    text-color:       @foreground;
+}
