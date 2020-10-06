@@ -8,15 +8,6 @@
 # commit to dot repo
 alias dot='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 
-# pullrequest with vim
-vpr() {
-  if [ $# -eq 0 ]; then
-    nvim -c ":Git difftool -y master"
-  else
-    nvim -c ":Git difftool -y $1"
-  fi
-}
-
 # make aliases usable with sudo
 alias sudo='sudo '
 
@@ -84,40 +75,10 @@ alias gpi="git pimp"
 
 alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
 
-# Simple watch filechange and run file command (needs notify-tools)
-notify() {
-  echo
-    while inotifywait "$1" 2>/dev/null 1>/dev/null; do
-      sleep 0.1 && "$1"
-        done
-}
-
-alias vi='nvim'
 alias viplug='nvim +PlugInstall +qall'
 alias viplug-clean='nvim +PlugClean +qall'
 alias viplug-update='nvim +PlugUpdate +qall'
 alias viplug-upgrade='nvim +PlugUpgrade +qall'
-
-# Start neovim with Obsession
-function nvim() {
-  if test $# -gt 0
-  then
-    env nvim "$@"
-  elif $(git rev-parse --git-dir >/dev/null 2>&1)
-  then
-    nvim +GitFiles!
-  else
-    env nvim .
-  fi
-}
-
-function www() {
-  if test $# -gt 0; then
-    w3m "$@"
-  else
-    w3m duckduckgo.com
-  fi
-}
 
 # =================================
 #             Files

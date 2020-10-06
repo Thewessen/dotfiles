@@ -78,6 +78,8 @@ source $ZSH/oh-my-zsh.sh
 # zsh autocmpl functions
 fpath+=~/.zsh_functions
 
+autoload -Uz $HOME/.zsh_functions/[^_]*(:t)
+
 # Use wildcard in history search
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward

@@ -1,0 +1,18 @@
+# fcc - checkout git commit
+
+fcc() {
+  local commits
+  local commit
+
+  commits="$(
+    git log --pretty=oneline --abbrev-commit --reverse
+  )" || return
+
+  commit="$(
+    echo "$commits" \
+      | fzf --tac +s +m -e
+  )" || return
+
+  git checkout "$(echo "$commit" | sed "s/ .*//")"
+}
+
