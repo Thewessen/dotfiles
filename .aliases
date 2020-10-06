@@ -49,12 +49,12 @@ alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 
 # Brew install coreutils
-alias l='lsd -lFh --group-dirs --color=auto'
-alias ll='lsd -l --group-dirs --color=auto'
-alias la='lsd -lAFh --group-dirs --color=auto'
-alias lr='lsd -tRFh --group-dirs --color=auto'
-alias lt='lsd -ltFh --group-dirs --color=auto'
-alias ldot='lsd -d .* --group-dirs --color=auto'
+alias l='lsd -lFh --group-dirs first --color=auto'
+alias ll='lsd -l --group-dirs first --color=auto'
+alias la='lsd -lAFh --group-dirs first --color=auto'
+alias lr='lsd -tRFh --group-dirs first --color=auto'
+alias lt='lsd -ltFh --group-dirs first --color=auto'
+alias ldot='lsd -d .* --group-dirs first --color=auto'
 
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
@@ -112,6 +112,7 @@ alias -g T="| tail"
 alias -g H="| head"
 alias -g S="| sort"
 alias -g L="| less -X"
+alias -g B="| bat"
 alias -g M="| most"
 alias -g VI="| xargs nvim --"
 alias -g LL="2>&1 | less -X"
