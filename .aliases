@@ -47,20 +47,16 @@ alias ff='find . -type f -iname'
 alias fd='find . -type d -iname'
 
 if type lsd >/dev/null; then
-    alias l='lsd -lFh --group-dirs first'
-    alias ll='lsd -l --group-dirs first'
-    alias la='lsd -lAFh --group-dirs first'
-    alias lr='lsd -tRFh --group-dirs first'
-    alias lt='lsd -ltFh --group-dirs first'
-    alias ldot='lsd -d .* --group-dirs first'
+    alias ls='lsd --group-dirs first'
 else
-    alias l='ls -lFh --list-directories-first'
-    alias ll='ls -l --list-directories-first'
-    alias la='ls -lAFh --list-directories-first'
-    alias lr='ls -tRFh --list-directories-first'
-    alias lt='ls -ltFh --list-directories-first'
-    alias ldot='ls -d .* --list-directories-first'
+    alias ls='ls --list-directories-first'
 fi
+alias l='ls -lFh'
+alias ll='ls -l'
+alias la='ls -lAFh'
+alias lr='ls -tRFh'
+alias lt='ls -ltFh'
+alias ldot='ls -d .*'
 
 # ===============================
 #           Tools
