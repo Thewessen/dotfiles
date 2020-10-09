@@ -122,6 +122,9 @@ PATH="$PATH:$HOME/.local/bin"
 # Path to python3.8
 export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 
+# cmd for reading file with <file (empty pipe)
+export READNULLCMD='bat'
+
 # Default browser
 export BROWSER="chromium-browser"
 
