@@ -26,6 +26,10 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
         \ 'do': ':UpdateRemotePlugins'
         \ }
+  Plug 'phpactor/phpactor', {
+        \'for': 'php',
+        \'branch': 'master',
+        \'do': 'composer install --no-dev -o'}
 else
   Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
@@ -35,11 +39,8 @@ Plug 'w0rp/ale'                       " Async linter and completer
 Plug 'carlitux/deoplete-ternjs', {
       \ 'do' : 'npm install -g tern'
       \}                              " Javascript source for deoplete
-Plug 'padawan-php/deoplete-padawan', {
-      \'do': 'composer install'
-      \}                              " PHP source
+Plug 'justinmk/vim-dirvish'           " File browser like netrw
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
-Plug 'tpope/vim-vinegar'              " Extends Netrw filebrowsing (use '-' to enter current file browsing)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
 Plug 'tpope/vim-commentary'           " Comment out (command: gcc)
 Plug 'tpope/vim-fugitive'             " Git from inside vim
@@ -54,6 +55,7 @@ Plug 'junegunn/fzf', {
       \ 'dir': '~/.fzf',
       \ 'do': './install'
       \ }                             " FZF plugin for vim
+Plug 'dyng/ctrlsf.vim'                " Quickly make multiple changes
 Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
@@ -101,6 +103,7 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
+set hidden
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -175,6 +178,9 @@ endif
 " =================================
 "       Plugin Configurations
 " =================================
+let g:dirvish_mode = ':sort ,^.*[\/],'
+" call dirvish#add_icon_fn({p -> p[-1:]=='/'?'':''})
+
 " Gutentags (manually invoce gutentags)
 let g:gutentags_enabled = 0
 
@@ -246,6 +252,7 @@ let g:deoplete#sources#ternjs#filetypes = [
 
 " Ale
 set omnifunc=ale#completion#OmniFunc
+au FileType php set omnifunc=phpactor#Complete
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['Cargo.toml', 'package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
@@ -535,10 +542,15 @@ nno <leader>g, :Gwrite!<CR>
 nno <leader>g[ :diffget //2<CR>:diffupdate<CR>
 nno <leader>g] :diffget //3<CR>:diffupdate<CR>
 
+" Ctrlfs command
+nno <silent> <leader>* :Ctrlfs<CR>
+
 " FZF commands
 nno <silent> <C-P> :Files!<CR>
 nno <silent> <leader>ff :GFiles!<CR>
 nno <silent> <leader>fa :Ag!<CR>
+nno <silent> <leader>f* :Ag <C-R><C-W><CR>
+nno <leader>f<space> :Ag<space>
 nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>fL :BLines<CR>
 nno <silent> <leader>fg :GFiles?<CR>
