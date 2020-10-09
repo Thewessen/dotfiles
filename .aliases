@@ -20,8 +20,6 @@ alias vimrc="$EDITOR ~/.vimrc"
 #           General
 # ===============================
 
-alias sudo='sudo '
-
 alias c='clear'
 
 alias j='jobs'
