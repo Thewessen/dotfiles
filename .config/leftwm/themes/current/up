@@ -25,11 +25,3 @@ echo "LoadTheme $SCRIPTPATH/theme.toml" > $XDG_RUNTIME_DIR/leftwm/commands.pipe
 if [ -x "$(command -v feh)" ]; then
   feh --bg-scale $SCRIPTPATH/background.jpg
 fi
-
-index=0
-leftwm-state -q -n -t $SCRIPTPATH/sizes.liquid | sed -r '/^\s*$/d' | while read size
-do 
-   leftwm-state -w $index -t $SCRIPTPATH/template.liquid | xmobar -p "$size" $SCRIPTPATH/xmobar-config.hs &
-   let index=index+1
-done
-
