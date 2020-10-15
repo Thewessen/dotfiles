@@ -23,22 +23,13 @@ set encoding=utf8
 call plug#begin('~/.vim/plugged')
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', {
-        \ 'do': ':UpdateRemotePlugins'
-        \ }
-  Plug 'phpactor/phpactor', {
-        \'for': 'php',
-        \'branch': 'master',
-        \'do': 'composer install --no-dev -o'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
-  Plug 'Shougo/deoplete.nvim'         " Async completion for omnicomplete
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'phpactor/phpactor', {'for': 'php', 'branch': 'master', 'do': 'composer install --no-dev -o'}
 Plug 'w0rp/ale'                       " Async linter and completer
-Plug 'carlitux/deoplete-ternjs', {
-      \ 'do' : 'npm install -g tern'
-      \}                              " Javascript source for deoplete
 Plug 'justinmk/vim-dirvish'           " File browser like netrw
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -103,7 +94,16 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
+set cmdheight=2
+set updatetime=300
 set hidden
+
+" backups
+set nobackup
+set nowritebackup
+
+" Don't pass messages to |ins-complete-menu|
+set shortmess+=c
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -136,6 +136,11 @@ set showcmd         " Pending commands in right corner
 " Show linenumbers
 set ruler
 " set number relativenumber   " Relative numberline (only the current line has absolute linenumber
+if has('patch-8.1.1564')
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
 " Indention and formatting
 set textwidth=79
@@ -222,37 +227,10 @@ let g:angular_cli_use_dispatch = 1
 " Latex-Suite configurations
 let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
 let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
-" :TTarget pdf              " Set standard output of compiler to PDF (iso DVI)
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
 let g:dispatch_terminal_exec = 'terminator'
-
-" Unimpaired-like keybindings
-" nno ]g i<CR><esc>k$
-
-" Use Deoplete.
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-\ 'auto_complete_delay': 300,
-\ 'smart_case': v:true,
-\ })
-
-" Setup javascript ternjs (other then default)
-let g:deoplete#sources#ternjs#tern_bin = '/usr/local/lib/node_modules/ternjs/bin/tern'
-let g:deoplete#sources#ternjs#timeout = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:deoplete#sources#ternjs#include_keywords = 1
-let g:deoplete#sources#ternjs#filetypes = [
-\ 'jsx',
-\ 'javascript.jsx',
-\ 'vue',
-\ ]
-
-" Ale
-set omnifunc=ale#completion#OmniFunc
-au FileType php set omnifunc=phpactor#Complete
 
 " vim-rooter (lcd)
 let g:rooter_patterns = ['Cargo.toml', 'package.json', 'venv/', '.git/', '.exercism/', 'package.yaml']
@@ -641,14 +619,32 @@ imap <C-t> <Plug>(neosnippet_expand_or_jump)
 smap <C-t> <Plug>(neosnippet_expand_or_jump)
 xmap <C-t> <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" SuperTab for for completions
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! OCAMLMapping()
     nno <buffer> <leader>nh :tabe term://utop"<CR>
