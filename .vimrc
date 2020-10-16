@@ -144,7 +144,9 @@ set showcmd         " Pending commands in right corner
 
 " Show linenumbers
 set ruler
-set signcolumn=yes
+if exists('&signcolumn')
+  set signcolumn=yes
+endif
 " set number relativenumber   " Relative numberline (only the current line has absolute linenumber
 
 " Indention and formatting
@@ -417,7 +419,9 @@ ino <C-U> <C-G>u<C-U>
 
 " Make C-C act like esc in Insertmode
 ino <C-C> <ESC>:echo<CR>
-tno <C-[> <C-\><C-N>
+if has('nvim')
+  tno <C-[> <C-\><C-N>
+endif
 
 " Make C-A and C-E act like terminal in Command mode
 cno <C-A> <HOME>
@@ -427,12 +431,15 @@ cno <C-E> <END>
 " Window movement and tiling
 nno <C-H> <C-W>W
 nno <C-L> <C-W>w
-tno <C-H> <C-[><C-W>W
-tno <C-L> <C-[><C-W>w
 nno <C-W>v <C-W><C-V><C-W>l
 nno <C-W>s <C-W><C-S><C-W>j
-tmap <C-W><C-V> <C-[><C-W><C-V>
-tmap <C-W><C-S> <C-[><C-W><C-S>
+if has('nvim')
+  tno <C-H> <C-[><C-W>W
+  tno <C-L> <C-[><C-W>w
+  tmap <C-W><C-V> <C-[><C-W><C-V>
+  tmap <C-W><C-S> <C-[><C-W><C-S>
+endif
+
 
 " Increment with C-K (iso C-A tmux)
 nno <C-K> <C-A>
