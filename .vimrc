@@ -194,6 +194,10 @@ endif
 "       Plugin Configurations
 " =================================
 
+" Dirvish
+call dirvish#add_icon_fn({p -> p[-1:]=='/'?'📂':'📄'})
+let g:dirvish_mode = ":sort ,^.*[\/],"
+
 " Vdebug
 let g:vdebug_keymap = {
 \    "run" : "<leader>dr",
