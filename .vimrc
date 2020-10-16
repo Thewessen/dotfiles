@@ -499,6 +499,7 @@ nmap <silent> <leader>q :qall!<CR>
 
 " New tab
 nmap <silent> <leader>t <C-W>T
+nmap <silent> <leader>T :tabnew
 
 " " Copy to clipboard
 vno <leader>y  "+y
@@ -583,6 +584,7 @@ nno <silent> <leader>ff :GFiles!<CR>
 nno <leader>f<space> :Ag<space>
 nno <leader>fa :Ag!<CR>
 nno <silent> <leader>* :CtrlSF<CR>
+nno <silent> <leader>f* :Ag! <C-R><C-W><CR>
 nno <silent> <leader>/ :Lines!<CR>
 nno <silent> <leader>f, :BLines!<CR>
 nno <silent> <leader>fg :GCheckout!<CR>
@@ -627,8 +629,12 @@ function! PHPMapping()
   nno <buffer> <leader>ai :!php artisan migrate
   nno <buffer> <leader>as :!php artisan db:seed<CR>
   nno <buffer> <leader>n, :PhpactorHover<CR>
-  nno <buffer> <leader>n<space> :PhpactorContextMenu<CR>
+  nno <buffer> <leader>np :PhpactorContextMenu<CR>
   nno <buffer> <leader>nd :PhpactorGotoDefinition<CR>
+  nno <buffer> <leader>ns :PhpactorStatus<CR>
+  nno <buffer> <leader>nf :PhpactorFindReferences<CR>
+  nno <buffer> <leader>ni :PhpactorImportMissingClasses<CR>
+  nno <buffer> <leader>nR :PhpactorCacheClear<CR>
 endfunction
 
 function! RustMapping()
