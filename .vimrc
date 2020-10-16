@@ -101,7 +101,6 @@ set complete-=i
 set completeopt=menu
 set completeopt+=noinsert
 set nrformats-=octal
-set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
 set hidden
@@ -161,7 +160,7 @@ set softtabstop=2
 set shiftwidth=2
 
 " Folds
-set foldmethod=indent     " Automatic folding depending on syntax
+set foldmethod=manual     " Automatic folding depending on syntax
 set foldlevelstart=99     " Start with all folds open
 
 " Invisible chars
@@ -352,11 +351,6 @@ augroup END
 augroup no_numberline
     autocmd!
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
-augroup END
-
-augroup fugitive_window
-    autocmd!
-    autocmd filetype fugitive wincmd H
 augroup END
 
 augroup mappings
