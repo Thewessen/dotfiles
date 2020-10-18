@@ -50,13 +50,11 @@ Plug 'dyng/ctrlsf.vim'                " Quickly make multiple changes
 Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plug 'vim-latex/vim-latex'            " Latex syntax, indention, snippits and more (install latex-suite)
 Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'leafgarland/typescript-vim'     " Typescript syntax
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
-Plug 'bdauria/angular-cli.vim'        " Angular-cli inside vim (only starts when in a Angule-dir: see mappings)
 Plug 'MaxMEllon/vim-jsx-pretty'       " JSX syntax highlighting (React way of HTML in Javascript)
 Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plug 'othree/html5-syntax.vim'        " Better HTML syntax
@@ -94,7 +92,7 @@ set nrformats-=octal
 set nrformats+=alpha    " Increment and decrement also works on aplhabeth
 set formatoptions+=j    " Delete comment character when joining commented lines
 set tabpagemax=50
-set cmdheight=2
+set cmdheight=1
 set updatetime=300
 set hidden
 
@@ -191,9 +189,6 @@ let g:gutentags_enabled = 0
 
 " OCaml interpreter
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-" execute "set rtp+=" . g:opamshare . "/merlin/vim"
-" :execute 'helptags ' . substitute(system('opam config var share'),'\n$','','''') .  "/merlin/vim/doc"
-
 
 " NeovimSnippets settings
 let g:neosnippet#snippets_directory = ['$HOME/.vim/snippets']
@@ -219,14 +214,6 @@ let g:blade_custom_directives_pairs = {
 " FZF options
 let g:fzf_layout = { 'down': '~67%' }
 let g:fzf_buffers_jump = 1
-
-" Angular-cli enter on angular-cli project
-autocmd VimEnter * if globpath('.,..','node_modules/@angular') != '' | call angular_cli#init() | endif
-let g:angular_cli_use_dispatch = 1
-
-" Latex-Suite configurations
-let g:tex_flavor='latex'    " Enable latex-suite on empty tex-files
-let g:Tex_AdvancedMath = 1  " Enable <alt>-key macro's for latex-suite
 
 " Dispatch no keybindings
 let g:dispatch_no_maps = 1
@@ -297,14 +284,6 @@ augroup reload_vimrc
     autocmd BufWritePost vimrc,.vimrc,*.vim normal ,R
 augroup END
 
-" Use compiler for latex files
-augroup latex_compiler
-    autocmd!
-    autocmd BufWinEnter *.tex let &makeprg="pdflatex -output-directory %:p:h -interaction nonstopmode -file-line-error %"
-    autocmd BufWinEnter *.tex set textwidth=79
-    autocmd BufWinLeave *.tex let &makeprg=""
-augroup END
-
 " Add shebang to shell scripts
 augroup skeletons
     autocmd!
@@ -322,11 +301,6 @@ augroup no_numberline
     autocmd!
     autocmd BufEnter,WinEnter * if &buftype == 'terminal' | setlocal nonumber norelativenumber foldcolumn=1 | endif
     " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
-augroup END
-
-augroup fugitive_window
-    autocmd!
-    autocmd filetype fugitive wincmd H
 augroup END
 
 augroup mappings
