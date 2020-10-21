@@ -4,8 +4,7 @@
 
 vpr() {
   local branch="${1:-master}"
-  git checkout "$branch";
-  git pull
-  git checkout -
-  nvim -c ":Git difftool -y $branch"
+  git pull origin "$branch"
+  git merge "$branch";
+  "${EDITOR:-vim}" -c ":Git difftool -y remotes/origin/$branch"
 }
