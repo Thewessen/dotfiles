@@ -114,9 +114,12 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Path to dotfiles bin
 PATH="$PATH:$HOME/bin"
-
-# Path to composer
-export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+#path to python packages bin
+PATH="$PATH:$HOME/.local/bin"
+#path to ruby gem packages bin
+PATH="$PATH:$HOME/.gem/ruby/2.7.0/bin"
+# Path to composer php packages
+export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Default browser
 export BROWSER="firefox"
