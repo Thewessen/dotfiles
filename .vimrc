@@ -345,6 +345,7 @@ nno Y y$
 
 " Quit
 nno <silent> <C-D> :q<CR>
+nno <silent> <C-X> :bdelete!<CR>
 
 " Make C-U act like u
 ino <C-U> <C-G>u<C-U>
