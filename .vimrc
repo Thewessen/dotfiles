@@ -50,7 +50,6 @@ Plug 'dyng/ctrlsf.vim'                " Quickly make multiple changes
 Plug 'airblade/vim-rooter'            " Auto lcd to root of project (see configs)
 Plug 'kshenoy/vim-signature'          " Show marks and jumps (inc. Toggle)
 Plug 'tmux-plugins/vim-tmux'          " For tmux.conf file (highlights etc)
-Plug 'Quramy/tsuquyomi'               " TSServer for omnicomplition typescript
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'leafgarland/typescript-vim'     " Typescript syntax
