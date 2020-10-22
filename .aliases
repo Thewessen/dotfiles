@@ -8,6 +8,8 @@
 
 # dotfiles repo
 alias dot='/usr/bin/git --git-dir=$HOME/repos/dotfiles --work-tree=$HOME'
+alias dss='dot branch --show-current && dot diff --compact-summary'
+alias dcm='dot commit -m'
 
 alias git-remove-branches="git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D"
 
