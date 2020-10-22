@@ -89,13 +89,11 @@ else
     alias ag='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 fi
 
-# Python3 REPL
-if type python3 >/dev/null; then
-    if python3 -c "import ptpython" 2>/dev/null; then
-        alias py="python3 -m ptpython --vi"
-    else
-        alias py="python3"
-    fi
+# Python REPL
+if type ipython >/dev/null; then
+    alias py="ipython --no-banner --no-confirm-exit"
+else
+    alias py="python"
 fi
 
 # Rust REPL

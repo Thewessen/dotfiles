@@ -1,5 +1,4 @@
 from IPython.terminal.prompts import Prompts, Token
-import os
 
 # Configuration file for ipython.
 # By default, configuration files are fully featured Python scripts that can
@@ -18,10 +17,4 @@ class MyPrompt(Prompts):
 
 c.InteractiveShell.editor = 'nvim'
 c.InteractiveShell.colors = 'Linux'
-
-c.InteractiveShellApp.exec_lines = [
-    'import os',
-    'os.system("fortune | cowsay")',
-]
-
 c.TerminalInteractiveShell.prompts_class = MyPrompt

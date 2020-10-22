@@ -537,7 +537,7 @@ endfunction
 
 function! PythonMapping()
     nno <buffer> <leader>nn :!python3 %:p<CR>
-    nno <buffer> <leader>ni :bo 10split term://python3 -m ptpython --vi<CR>
+    nno <buffer> <leader>ni :bo 10split term://ipython --no-confirm-exit --no-banner<CR>
     nno <buffer> <leader>nt :exec ':tabe term://pytest -v -x --ff '.expand('%:p:h')<CR>
 endfunction
 
