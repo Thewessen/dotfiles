@@ -4,6 +4,7 @@
 	username = Thewessen
 [core]
 	editor = nvim
+  pager = bat --plain
 [credential]
 	helper = store
 [pull]
