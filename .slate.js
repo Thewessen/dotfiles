@@ -4,7 +4,7 @@
  */
 S.log('[SLATE] --- Started Loading config from .slate.js ---')
 // helpers
-const mod = key => `${key}:a,ctrl`
+const mod = key => `${key}:ctrl,shift`
 
 const screens = {
   mac: {
@@ -23,7 +23,7 @@ const screens = {
 
 const applications = {
   '1': 'Alacritty',
-  '2': 'Google Chrome',
+  '2': 'Firefox',
   '3': 'Slack',
   '4': 'PhpStorm',
   '5': 'Firefox',
@@ -71,12 +71,13 @@ const isFullscreen = win => {
 S.log('[SLATE] --- Setting slate global configuration options ---')
 S.configAll({
   defaultToCurrentScreen: true,
-  secondsBeforeRepeat: 0.4,
+  secondsBeforeRepeat: 0.2,
   secondsBetweenRepeat: 0.1,
   keyboardLayout: 'dvorak',
   nudgePercentOf: 'screenSize',
   resizePercentOf: 'screenSize',
   modalEscapeKey: 'c:ctrl',
+  windowHintsSpread: true,
 })
 
 S.log('[SLATE] --- Defining slate operations ---')
@@ -219,9 +220,9 @@ const throwNext = function(win) {
 //   win.doOperation(throwNextBottom)
 // })
 S.log('[SLATE] --- Setting slate key bindings ---')
-S.bindAll({
-  // [mod('g')]: S.op('grid'),
-  // [mod('h')]: hint,
+// S.bindAll({
+  // [mod('i')]: S.op('grid'),
+  // [mod('i')]: hint,
   // [mod('c')]: hide,
   // [mod('t')]: toggle,
   // [mod('s')]: show,
@@ -246,12 +247,13 @@ S.bindAll({
   // '1:ctrl,shift': moveLeftMonitor,
   // '2:ctrl,shift': moveMainMonitor,
   // '3:ctrl,shift': moveLeftMonitor,
-})
+// })
 
 for (const [i, app] of Object.entries(applications)) {
   S.bind(`${i}:ctrl`, S.op('focus', { app } ))
 }
-S.bind('r:ctrl,shift', S.op('relaunch'))
-S.bind('m:cmd', full)
+S.bind(mod('i'), hint)
+// S.bind('r:ctrl,shift', S.op('relaunch'))
+// S.bind('m:ctrl,shift', full)
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')
