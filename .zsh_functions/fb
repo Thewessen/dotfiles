@@ -1,0 +1,34 @@
+# fb - checkout git branch (including remote branches)
+#   - sorted by most recent commit
+#   - limit 30 last branches
+
+fb() {
+  local branches
+  local num_branches
+  local branch
+  local target
+
+  branches="$(
+    git for-each-ref \
+      --count=30 \
+      --sort=-committerdate \
+      refs/heads/ \
+      --format='%(refname:short)'
+  )" || return
+
+  num_branches="$(wc -l <<< "$branches")"
+
+  branch="$(
+    echo "$branches" \
+      | fzf -d "$((2 + "$num_branches"))" +m
+  )" || return
+
+  target="$(
+    echo "$branch" \
+      | sed "s/.* //" \
+      | sed "s#remotes/[^/]*/##"
+  )" || return
+
+  git checkout "$target"
+}
+

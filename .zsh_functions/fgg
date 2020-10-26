@@ -1,0 +1,43 @@
+# fzf-gitlog-multi-widget - multi-selectable git show
+#
+# 1. Show `git log --graph`
+# 2. Fuzzy Search
+# 3. Select Tab key
+# 4. Enter, then push selected commit message into STDOUT
+#
+# You can use pipe like below
+# ```
+# # Show only date
+# fzf-gitlog-multi-widget | grep date
+# # Commit message highlight 'hoge'
+# fzf-gitlog-multi-widget | less -P 'hoge'
+# ```
+#
+
+fgg() {
+  local git_cmd
+  local fzf_cmd
+
+  git_cmd='git log \
+    --all \
+    --graph \
+    --date-order \
+    --format=format:"%C(auto)%s %d %h %C(cyan)%cd %C(bold black)%an %C(auto)" \
+    --date=short \
+    --color=always'
+
+  fzf_cmd='fzf \
+    --height 100% \
+    --multi \
+    --ansi \
+    --reverse \
+    --no-sort \
+    --tiebreak=index \
+    --bind=ctrl-x:toggle-sort'
+
+  eval "$git_cmd | $fzf_cmd" \
+    | grep -o '[a-f0-9]\{7\}' \
+    | xargs -I % sh -c 'git show % --color' \
+    | cat
+}
+
