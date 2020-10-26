@@ -114,6 +114,8 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Path to dotfiles bin
 PATH="$PATH:$HOME/bin"
+# Path to cargo bin
+PATH="$PATH:$HOME/.cargo/bin"
 #path to python packages bin
 PATH="$PATH:$HOME/.local/bin"
 #path to ruby gem packages bin
@@ -172,17 +174,21 @@ fi
     # done
 # fi
 
-# fzf configs 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# source fzf keybinding and completions
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh 2>/dev/null
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 
 # compinit configs
 [ -f ~/.zsh.compinit ] && source ~/.zsh.compinit
 
 # source autocompletion (alacritty term)
-fpath+=${ZDOTDIR:-~}/.zsh_functions
+if [ -d ${ZDOTDIR:-~}/.zsh_functions ] && [ ${ZDOTDIR:-~}/.zsh_functions/.(NF) ]
+then
+  fpath+=${ZDOTDIR:-~}/.zsh_functions
+  autoload -U ${ZDOTDIR:-~}/.zsh_functions/*(.:t)
+fi
 
 # autoload functions found in .zsh_functions
-autoload -U ${ZDOTDIR:-~}/.zsh_functions/*(.:t)
 
 # fasd (FAST) cmd productivity booster
 eval "$(fasd --init auto)"
