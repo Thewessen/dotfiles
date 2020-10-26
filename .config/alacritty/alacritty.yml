@@ -106,7 +106,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Inconsolata
+    family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -117,7 +117,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Inconsolata
+    family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     style: Bold
@@ -128,7 +128,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Inconsolata
+    family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -139,26 +139,26 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Inconsolata
+    family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
 
   # Point size
-  size: 12.0
+  size: 11.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
    x: 0
-   y: 12
+   y: 16
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
   # increasing `y` moves the glyph upwards.
   glyph_offset:
    x: 0
-   y: 6
+   y: 8
 
 # If `true`, bold text is drawn using the bright color variants.
 # draw_bold_text_with_bright_colors: false
