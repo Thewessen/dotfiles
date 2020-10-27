@@ -125,6 +125,13 @@ alias fs
 options word
 	${1:#:argument} => ${0:#:TARGET}
 
+snippet promises
+alias .get .g
+options word
+  .get(${1:url})
+  .then(resp => ${2:resp})
+  .catch(err => ${3:err})
+  ${0:target}
 # Components
 # ========================================
 snippet functional-component
