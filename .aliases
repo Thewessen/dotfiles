@@ -10,9 +10,6 @@ alias dot='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
 alias dss='dot branch --show-current && dot diff --compact-summary'
 alias dcm='dot commit -m'
 
-# make aliases usable with sudo
-alias sudo='sudo '
-
 # Git status vi
 alias vig='nvim +Gstatus -c ":only"' 
 
