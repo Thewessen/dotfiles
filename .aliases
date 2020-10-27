@@ -69,6 +69,8 @@ alias vimrc="$EDITOR ~/.vimrc"
 # =================================
 alias gpi="git pimp"
 
+alias passwd='pwgen -ncsBv1'
+
 # John the Ripper (Jumbo)
 # alias john="$HOME/.local/share/JohnTheRipper/run/john"
 # alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
