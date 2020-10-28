@@ -51,7 +51,9 @@ function! Custom_Statusline()
     let s.="%0* %m%r%h%w%{VarExists('b:gzflag','[GZ]')}%q\ "  " File flags (modified, readonly, preview etc.)
     let s.="%{gutentags#statusline()} "
     let s.="%{FugitiveStatusline()}"                          " Add git repro to bottom statusline
-    let s.="%{coc#status()}%{get(b:,'coc_current_function','')}" " Coc completion in statusline
+    if exists('g:coc_enabled')
+      let s.="%{coc#status()}%{get(b:,'coc_current_function','')}" " Coc completion in statusline
+    endif
     let s.='%='                                               " Right Side
     let s.='%0*%<%( %Y '                                      " FileType
     let s.='%0* (%0{&ff}) '                                   " FileFormat (dos/unix..)

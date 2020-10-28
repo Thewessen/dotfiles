@@ -21,7 +21,6 @@ set encoding=utf8
 "             Plugins
 " =================================
 call plug#begin('~/.vim/plugged')
-
 if has('nvim')
   Plug 'phpactor/phpactor', {
   \ 'for': 'php',
@@ -31,7 +30,10 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'neoclide/coc.nvim', {'branch': 'release'}  " LSP completer for vim8 and nvim
+Plug 'neoclide/coc.nvim', {
+\ 'branch': 'release',
+\ 'for': ['php', 'javascript', 'typescript', 'html', 'css', 'scss']
+\ }  " LSP completer for vim8 and nvim
 Plug 'w0rp/ale'                       " Async linter and completer
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'justinmk/vim-dirvish'           " filebrowser like netrw (but better)
@@ -66,7 +68,7 @@ Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
 Plug 'jacquesbh/vim-showmarks'        " Show marks
 Plug 'rust-lang/rust.vim'             " Rust language toolchain
 Plug 'ludovicchabant/vim-gutentags'   " ctags generater
-Plug 'vim-vdebug/vdebug'              " Debugger cli (can be used with Xdebug)
+Plug 'vim-vdebug/vdebug', { 'on': 'VdebugStart' } " Debugger cli (can be used with Xdebug)
 Plug 'andrmuel/vim-curl'              " Simple curl wrapper
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -624,11 +626,11 @@ xmap <C-T> <Plug>(neosnippet_expand_target)
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -636,16 +638,16 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" if has('nvim')
+"   inoremap <silent><expr> <c-space> coc#refresh()
+" else
+"   inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " TODO: GitHub auto add ticket to commit message
 au! filetype gitcommit nno <buffer> <leader>b 5GyyggPd3wi[3ea] lC
