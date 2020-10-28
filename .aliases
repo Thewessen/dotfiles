@@ -115,17 +115,6 @@ fi
 # =================================
 
 if [[ "$EDITOR" =~ "vim" ]]; then
-    function vi() {
-        if [[ -z "$1" ]]; then
-            if git rev-parse --git-dir >/dev/null 2>&1; then
-                env "$EDITOR" "+GitFiles!"
-            else
-                env "$EDITOR" "."
-            fi
-        else
-            env "$EDITOR" "$@"
-        fi
-    }
     alias vig="$EDITOR +Gstatus -c ':only'" 
     alias viplug="$EDITOR +PlugInstall +qall"
     alias viplug-update="$EDITOR +PlugUpdate +qall"
