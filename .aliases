@@ -48,6 +48,7 @@ alias fd='find . -type d -iname'
 
 if type lsd >/dev/null; then
     alias ls='lsd --group-dirs first'
+    alias tree='ls --tree'
 else
     alias ls='ls --group-directories-first'
 fi
