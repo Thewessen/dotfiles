@@ -248,12 +248,50 @@ S.log('[SLATE] --- Setting slate key bindings ---')
   // '2:ctrl,shift': moveMainMonitor,
   // '3:ctrl,shift': moveLeftMonitor,
 // })
+const appEQ = (app, name) =>
+  app.name().toLowerCase().includes(name.toLowerCase())
 
-for (const [i, app] of Object.entries(applications)) {
-  S.bind(`${i}:ctrl`, S.op('focus', { app } ))
+const buildWindowList = (name) => {
+  let currentWindows = []
+  S.eachApp(app => {
+    if (appEQ(app, name)) {
+      app.eachWindow(win => {
+        currentWindows.push(win)
+      })
+    }
+  })
+  return currentWindows;
 }
-S.bind(mod('i'), hint)
-// S.bind('r:ctrl,shift', S.op('relaunch'))
-// S.bind('m:ctrl,shift', full)
+
+const toggleWindows = key => {
+  let app = applications[key]
+  let currentWindows = buildWindowList(app)
+  return win => {
+    if (appEQ(win.app(), app)) {
+      // we don't want to rebuild our preserved currentWindows
+      // unless we really have to
+      // because the order of the elements matter!
+      let tempWindows = buildWindowList(app)
+      if (currentWindows.length !== tempWindows.length) {
+        currentWindows = tempWindows
+      }
+      let i = currentWindows.findIndex(w => w.title() === win.title())
+      if (i !== undefined) {
+        currentWindows[(i + 1) % currentWindows.length].focus()
+      } else {
+        S.log(`Index of ${win.title()} not found in: ${JSON.stringify(currentWindows.map(w => w.title()))}`)
+      }
+    } else {
+      // rebuild the list of current windows,
+      // as this can be changed since the last time the window is focussed
+      currentWindows = buildWindowList(app)
+      S.op('focus', {app}).run()
+    }
+  }
+}
+
+for (const key of Object.keys(applications)) {
+  S.bind(`${key}:ctrl`, toggleWindows(key))
+}
 
 S.log('[SLATE] --- Finished Loading config from .slate.js ---')
