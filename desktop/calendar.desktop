@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Agenda
-Comment=Launch Calendar in chrome
-Exec=chromium-browser --app='https://calendar.google.com/'
-Icon=chromium-browser
-Terminal=True
-Type=Application
-Categories=Network;Communication;Online
