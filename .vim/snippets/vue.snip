@@ -1,0 +1,40 @@
+snippet template
+alias t ta te
+options head
+  <template>
+    <div>
+    </div>
+  </template>
+
+	<script>
+	export default {
+		name: '`expand('%:t:r')`',
+		props: {
+      ${0:TARGET}
+		}
+	}
+	</script>
+
+	<style lang='sass' scoped>
+
+	</style>
+
+snippet script
+alias sc scr
+options head
+	<script>
+	export default {
+		name: '`expand('%:t:r')`',
+		props: {
+			${1:data}
+		}${0:TARGET}
+	}
+	</script>
+
+snippet style
+alias st sl style
+options head
+	<style lang='sass' scoped>
+		${0:TARGET}
+	</style>
+

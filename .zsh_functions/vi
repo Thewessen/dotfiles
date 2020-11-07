@@ -1,0 +1,13 @@
+# Start neovim with Obsession
+
+vi() {
+  local editor="${EDITOR:-vim}"
+  if test $# -gt 0; then
+    $editor "$@"
+  elif $(git rev-parse --git-dir >/dev/null 2>&1); then
+    $editor +GitFiles!
+  else
+    $editor .
+  fi
+}
+

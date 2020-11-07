@@ -1,0 +1,284 @@
+#!/usr/bin/env sh
+
+# ==============================================================================
+#       S. Thewessen
+#       Personal: .aliases
+#       Last modified: Th 29 Sep 2020
+# ==============================================================================
+
+# dotfiles repo
+alias dot='/usr/bin/git --git-dir=$HOME/repos/dotfiles --work-tree=$HOME'
+alias dss='dot branch --show-current && dot diff --compact-summary'
+alias dcm='dot commit -m'
+
+alias git-remove-branches="git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D"
+
+alias zshrc="$EDITOR ~/.zshrc"
+alias bashrc="$EDITOR ~/.bashrc"
+alias tmuxrc="$EDITOR ~/.tmux.conf"
+alias vimrc="$EDITOR ~/.vimrc"
+
+# ===============================
+#           General
+# ===============================
+
+alias c='clear'
+
+alias j='jobs'
+alias p='ps -F'
+alias pstree='pstree -aclp'
+
+alias sortnr='sort -n -r'
+
+# change permission of files and folders recursively in current dir
+alias cmf='find . -type f -exec chmod 644 {} \;'
+alias cmd='find . -type d -exec chmod 755 {} \;'
+
+alias h='history'
+alias help='man'
+alias t='tail -f'
+
+alias grep='grep --color'
+alias hgrep='fc -El 0 | grep'
+
+alias dud='du -d 1 -h'
+alias duf='du -cksh *'
+alias ff='find . -type f -iname'
+alias fd='find . -type d -iname'
+
+if type lsd >/dev/null; then
+    alias ls='lsd --group-dirs first'
+    alias tree='ls --tree'
+else
+    alias ls='ls --group-directories-first'
+fi
+alias l='ls -lFh'
+alias ll='ls -l'
+alias la='ls -lAFh'
+alias lr='ls -tRFh'
+alias lt='ls -ltFh'
+alias ldot='ls -d .*'
+
+alias g='git'
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gbD='git branch -D'
+alias gba='git branch -a'
+alias gbd='git branch -d'
+alias gbda='git branch --no-color --merged | command grep -vE "^(\+|\*|\s*($(git_main_branch)|development|develop|devel|dev)\s*$)" | command xargs -n 1 git branch -d'
+alias gbl='git blame -b -w'
+alias gbnm='git branch --no-merged'
+alias gbr='git branch --remote'
+alias gbs='git bisect'
+alias gbsb='git bisect bad'
+alias gbsg='git bisect good'
+alias gbsr='git bisect reset'
+alias gbss='git bisect start'
+alias gc='git commit -v'
+alias 'gc!'='git commit -v --amend'
+alias gca='git commit -v -a'
+alias 'gca!'='git commit -v -a --amend'
+alias gcam='git commit -a -m'
+alias gcb='git checkout -b'
+alias gcm='git checkout $(git_main_branch)'
+alias gcmsg='git commit -m'
+alias 'gcn!'='git commit -v --no-edit --amend'
+alias gco='git checkout'
+alias gcount='git shortlog -sn'
+alias gd='git diff'
+alias gdca='git diff --cached'
+alias gdct='git describe --tags $(git rev-list --tags --max-count=1)'
+alias gdcw='git diff --cached --word-diff'
+alias gds='git diff --staged'
+alias gdt='git diff-tree --no-commit-id --name-only -r'
+alias gdw='git diff --word-diff'
+alias gf='git fetch'
+alias gfa='git fetch --all --prune --jobs=10'
+alias gfg='git ls-files | grep'
+alias gfo='git fetch origin'
+alias ggpull='git pull origin "$(git_current_branch)"'
+alias ggpush='git push origin "$(git_current_branch)"'
+alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
+alias gignore='git update-index --assume-unchanged'
+alias gignored='git ls-files -v | grep "^[[:lower:]]"'
+alias git-remove-branches='git branch -r | awk '\''{print }'\'' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '\''{print }'\'' | xargs git branch -D'
+alias gl='git pull'
+alias glg='git log --stat'
+alias glgg='git log --graph'
+alias glgga='git log --graph --decorate --all'
+alias glgm='git log --graph --max-count=10'
+alias glgp='git log --stat -p'
+alias glo='git log --oneline --decorate'
+alias glod='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s Cgreen(%ad) %C(bold blue)<%an>%Creset'\'
+alias glods='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s Cgreen(%ad) %C(bold blue)<%an>%Creset'\'' --date=short'
+alias glog='git log --oneline --decorate --graph'
+alias gloga='git log --oneline --decorate --graph --all'
+alias glol='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s Cgreen(%cr) %C(bold blue)<%an>%Creset'\'
+alias glola='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --all'
+alias glols='git log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --stat'
+alias glp=_git_log_prettily
+alias glum='git pull upstream $(git_main_branch)'
+alias gm='git merge'
+alias gma='git merge --abort'
+alias gmom='git merge origin/$(git_main_branch)'
+alias gmum='git merge upstream/$(git_main_branch)'
+alias gp='git push'
+alias gpd='git push --dry-run'
+alias gpf='git push --force-with-lease'
+alias 'gpf!'='git push --force'
+alias gpoat='git push origin --all && git push origin --tags'
+alias gpristine='git reset --hard && git clean -dffx'
+alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gpu='git push upstream'
+alias gpv='git push -v'
+alias gr='git remote'
+alias gra='git remote add'
+alias grb='git rebase'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbd='git rebase develop'
+alias grbi='git rebase -i'
+alias grbm='git rebase $(git_main_branch)'
+alias grbs='git rebase --skip'
+alias grev='git revert'
+alias grh='git reset'
+alias grhh='git reset --hard'
+alias grm='git rm'
+alias grmc='git rm --cached'
+alias grmv='git remote rename'
+alias groh='git reset origin/$(git_current_branch) --hard'
+alias grrm='git remote remove'
+alias grs='git restore'
+alias grset='git remote set-url'
+alias grss='git restore --source'
+alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
+alias gru='git reset --'
+alias grup='git remote update'
+alias grv='git remote -v'
+alias gsb='git status -sb'
+alias gsd='git svn dcommit'
+alias gsh='git show'
+alias gsi='git submodule init'
+alias gsps='git show --pretty=short --show-signature'
+alias gsr='git svn rebase'
+alias gss='git status -s'
+alias gst='git status'
+alias gsta='git stash push'
+alias gstaa='git stash apply'
+alias gstall='git stash --all'
+alias gstc='git stash clear'
+alias gstd='git stash drop'
+alias gstl='git stash list'
+alias gstp='git stash pop'
+alias gsts='git stash show --text'
+alias gstu='git stash --include-untracked'
+alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
+alias gup='git pull --rebase'
+alias gupa='git pull --rebase --autostash'
+alias gupav='git pull --rebase --autostash -v'
+alias gupv='git pull --rebase -v'
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
+
+# ===============================
+#           Tools
+# ===============================
+
+# Copy to clipboard
+if type xclip >/dev/null; then
+    alias xclip='xclip -selection clipboard'
+fi
+
+# Internet browser
+if type w3m >/dev/null; then
+    alias www="w3m -B"
+fi
+
+# John the Ripper (Jumbo)
+if [[ -f "$HOME/.local/share/JohnTheRipper/run/john" ]]; then
+    alias john="$HOME/.local/share/JohnTheRipper/run/john"
+    alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
+    alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
+fi
+
+# password generation
+if type pwgen >/dev/null; then
+    alias passwd="pwgen -ncysBv1"
+fi
+
+# the silver searcher
+if type ag >/dev/null; then
+    alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32"
+else
+    alias ag='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+fi
+
+# Python REPL
+if type ipython >/dev/null; then
+    alias py="ipython --no-banner --no-confirm-exit"
+else
+    alias py="python"
+fi
+
+# Rust REPL
+if type evcxr >/dev/null; then
+    alias ru="evcxr"
+fi
+
+# JS REPL
+if type nodejs >/dev/null; then
+    alias js="nodejs"
+elif type node >/dev/null; then
+    alias js="nodejs"
+fi
+
+# =================================
+#               Vim
+# =================================
+
+if [[ "$EDITOR" =~ "vim" ]]; then
+    alias vig="$EDITOR +Gstatus -c ':only'" 
+    alias viplug="$EDITOR +PlugInstall +qall"
+    alias viplug-update="$EDITOR +PlugUpdate +qall"
+    alias viplug-clean="$EDITOR +PlugClean +qall"
+fi
+
+# ===============================
+#           ZSH
+# ===============================
+
+# ZSH specific aliases
+if [[ "$SHELL" =~ "zsh" ]]; then
+    # Pipes
+    alias -g G="| grep"
+    alias -g F="| fzf"
+    alias -g T="| tail"
+    alias -g H="| head"
+    alias -g S="| sort"
+    alias -g L="| less -X"
+    alias -g B="| bat"
+    alias -g M="| most"
+    alias -g V="| xargs nvim --"
+    alias -g LL="2>&1 | less -X"
+    alias -g BB="2>&1 | bat"
+    alias -g NE="2> /dev/null"
+    alias -g NUL="> /dev/null 2>&1"
+
+    if [[ uname == "Linux" ]] && type xdg-open >/dev/null; then
+        alias o="xdg-open 2> /dev/null"
+
+        _www_fts=(html de org net com at io nl se dk)
+        _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX heic HEIC heif HEIF)
+        _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
+        _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
+        _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
+        _sht_fts=(ods ODS xls XLS xlsm XLSM)
+
+        for ft in $_www_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_img_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_aud_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_pres_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_doc_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+        for ft in $_sht_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
+    fi
+fi
