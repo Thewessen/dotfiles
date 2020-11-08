@@ -8,7 +8,7 @@ set -o nounset
 main () {
 	local REPO="https://github.com/Thewessen/dotfiles"
     local BRANCH="laptop"
-    local FOLDER="~/repos/dotfiles"
+    local FOLDER="$HOME/repos/dotfiles"
 	echo "cloning int repo $REPO"
 	git clone -b $BRANCH --single-branch --bare $REPO $FOLDER
     cd $FOLDER
