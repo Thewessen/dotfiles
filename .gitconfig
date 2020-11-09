@@ -1,0 +1,9 @@
+[user]
+  name = Thewessen
+  email = sthewessen@gmail.com
+  username = Thewessen
+[core]
+  editor = nvim
+  pager = bat --plain
+[pull]
+  rebase = false

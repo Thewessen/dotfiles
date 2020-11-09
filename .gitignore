@@ -1,0 +1,18 @@
+# vim
+Session.vim
+
+# tags
+tags
+tags.temp
+tags.bck
+
+fzf/
+.dotfiles/
+
+# Add vim acceptions
+*~
+.*.sw?
+
+# For Mac-os
+.DS_Store
+Thumbs.db
