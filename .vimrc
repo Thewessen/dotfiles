@@ -546,7 +546,8 @@ nno <silent> <leader>f/ :History/<CR>
 function! NPMMapping()
   nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
   nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-  nno <silent> <leader>nh :bo 10split term://node"<CR>
+  " nno <silent> <leader>nh :bo 10split term://node"<CR>
+  nno <silent> <leader>nh :Start node"<CR>
   nno <silent> <leader>ni :bo 10split term://yarn<CR><C-\><C-N><C-W>w
   nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
   nno <silent> <leader>ne :bo 80vsplit term://yarn lint<CR>
@@ -563,7 +564,8 @@ endfunction
 
 " PHP artisan commands
 function! PHPMapping()
-  nno <buffer> <leader>nn :bo 20split term://vssh psysh<CR>
+  " nno <buffer> <leader>nn :bo 20split term://vssh psysh<CR>
+  nno <buffer> <leader>nn :Start vssh psysh<CR>
   nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
   nno <buffer> <leader>ar :!php artisan route:list \| grep<space>
   nno <buffer> <leader>am :!php artisan make:
