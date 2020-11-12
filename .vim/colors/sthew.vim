@@ -52,7 +52,7 @@ if &t_Co > 255
         hi Float ctermfg=213
         hi Character ctermfg=178
         hi String ctermfg=186
-        hi Comment ctermfg=242
+        hi Comment ctermfg=242 cterm=italic
         hi Noise ctermfg=94
         hi NonText ctermfg=2
         hi Function ctermfg=148
@@ -107,7 +107,7 @@ if &t_Co > 255
         hi String ctermfg=166
         hi Number ctermfg=57
         hi Float ctermfg=57
-        hi Comment ctermfg=240
+        hi Comment ctermfg=240 cterm=italic
         hi Noise ctermfg=102
         hi NonText ctermfg=2
         hi Function ctermfg=22
@@ -170,7 +170,7 @@ else " For 16 color terminal
     hi String ctermfg=15
     hi Number ctermfg=5
     hi Float ctermfg=5
-    hi Comment ctermfg=8
+    hi Comment ctermfg=8 cterm=italic
     hi Noise ctermfg=8
     hi NonText ctermfg=2
     hi Function ctermfg=10
