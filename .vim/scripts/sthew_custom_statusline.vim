@@ -49,8 +49,9 @@ function! Custom_Statusline()
     let s.='%1*%4.4(|#%n%) '                                  " Buffer number
     let s.=" %{expand('#'.buffer_number('%').':t')}\ "        " File in window (base only)
     let s.="%0* %m%r%h%w%{VarExists('b:gzflag','[GZ]')}%q\ "  " File flags (modified, readonly, preview etc.)
-    let s.="%{gutentags#statusline()} "
-    let s.="%{FugitiveStatusline()}"                          " Add git repro to bottom statusline
+    if exists('g:loaded_fugitive')
+      let s.="%{fugitive#statusline()}"                          " Add git repro to bottom statusline
+    endif
     if exists('g:coc_enabled')
       let s.="%{coc#status()}%{get(b:,'coc_current_function','')}" " Coc completion in statusline
     endif
