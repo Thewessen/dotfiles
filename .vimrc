@@ -34,7 +34,7 @@ Plug 'neoclide/coc.nvim', {
 \ 'branch': 'release',
 \ 'for': ['php', 'javascript', 'typescript', 'html', 'css', 'scss']
 \ }  " LSP completer for vim8 and nvim
-Plug 'w0rp/ale'                       " Async linter and completer
+" Plug 'w0rp/ale'                       " Async linter and completer
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'justinmk/vim-dirvish'           " filebrowser like netrw (but better)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
