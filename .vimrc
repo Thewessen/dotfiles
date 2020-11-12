@@ -67,7 +67,6 @@ Plug 'rbgrouleff/bclose.vim'          " Ranger dependencie
 Plug 'francoiscabrol/ranger.vim'      " Ranger integration with vim
 Plug 'jacquesbh/vim-showmarks'        " Show marks
 Plug 'rust-lang/rust.vim'             " Rust language toolchain
-Plug 'ludovicchabant/vim-gutentags'   " ctags generater
 Plug 'vim-vdebug/vdebug', { 'on': 'VdebugStart' } " Debugger cli (can be used with Xdebug)
 Plug 'andrmuel/vim-curl'              " Simple curl wrapper
 call plug#end()            " required
@@ -205,12 +204,6 @@ let g:vdebug_keymap = {
 \    "eval_under_cursor" : "<leader>d?",
 \    "eval_visual" : "<Leader>dv",
 \}
-
-" GutenTags
-" Use :GutentagsToggleEnabled to enable gutentags
-let g:gutentags_enabled = 1
-let g:gutengas_add_default_project_roots = 0
-let g:gutentags_project_root = ['composer.json', 'vendor']
 
 " Ranger default mapping
 let g:ranger_map_keys = 0
