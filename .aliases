@@ -34,8 +34,17 @@ alias grep='grep --color'
 alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
 alias ag="ag --color-path 33 --color-match '1;34' --color-line-number 32 --ignore tags"
 
-alias chf='find . -type f -exec chmod 644 {} \;'
-alias chd='find . -type d -exec chmod 755 {} \;'
+if type fd >/dev/null; then
+  alias chf='fd --type f --exec chmod 644 {} \;'
+  alias chd='fd --type d --exec chmod 755 {} \;'
+  alias fd='fd --type d'
+  alias ff='fd --type f'
+else
+  alias chf='find . -type f -exec chmod 644 {} \;'
+  alias chd='find . -type d -exec chmod 755 {} \;'
+  alias fd='find . -type d -name'
+  alias ff='find . -type f -name'
+fi
 
 alias h='history'
 alias hgrep='fc -El 0 | grep'
@@ -44,8 +53,6 @@ alias t='tail -f'
 
 alias dud='du -d 1 -h'
 alias duf='du -cksh *'
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
 
 # Brew install coreutils
 if type lsd >/dev/null; then
