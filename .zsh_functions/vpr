@@ -5,6 +5,6 @@
 vpr() {
   local branch="${1:-master}"
   git pull origin "$branch"
-  git merge "$branch";
+  git merge "$branch"
   "${EDITOR:-vim}" -c ":Git difftool -y remotes/origin/$branch | tabclose 1"
 }

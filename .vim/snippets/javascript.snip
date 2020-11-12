@@ -16,7 +16,6 @@ alias cl log con
 
 snippet console.error
 alias ce error
-options head
 	console.error(${0:TARGET});
 
 snippet console.warn
@@ -169,7 +168,7 @@ alias he
 options head
 	useEffect(() => {
 		${1:#:do_stuff}
-	}${2:, []});
+	}, [${2:#:dependencies}]);
 	${0:TARGET}
 
 snippet hook-memo
