@@ -18,19 +18,15 @@ hi link EndOfBuffer Normal
 hi link vimParenSep Noise
 
 " Global
-hi Search term=underline cterm=underline ctermfg=NONE ctermbg=237
 hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE
 hi PmenuSel ctermfg=NONE ctermbg=NONE cterm=reverse
 hi Underlined cterm=underline
 
-
 if &t_Co > 255
     hi Directory ctermfg=144
-    hi Label ctermfg=186
     hi Wildmenu ctermfg=232 ctermbg=214 cterm=NONE
     hi SpecialKey ctermfg=141 ctermbg=NONE cterm=NONE
     hi ErrorMsg ctermfg=230 ctermbg=88 cterm=NONE
-    hi WarningMsg ctermfg=232 ctermbg=3 cterm=NONE
 
     if &background == 'dark'
         hi Normal ctermfg=230 ctermbg=NONE
@@ -38,6 +34,7 @@ if &t_Co > 255
         hi CursorLine ctermbg=NONE cterm=underline
         hi CursorLineNr ctermfg=230 ctermbg=NONE cterm=underline
         hi ColorColumn ctermbg=237 ctermfg=NONE
+        hi Label ctermfg=186
         hi LineNr ctermfg=238 ctermbg=NONE
         hi StatusLine ctermfg=102 ctermbg=NONE cterm=underline
         hi StatusLineNC ctermfg=241 ctermbg=NONE cterm=NONE
@@ -45,6 +42,7 @@ if &t_Co > 255
         hi Title ctermfg=231 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=231 ctermbg=NONE cterm=bold
         hi Pmenu ctermfg=NONE ctermbg=237 cterm=NONE
+        hi Search term=underline cterm=underline ctermfg=NONE ctermbg=214
         hi Keyword ctermfg=144 ctermbg=NONE cterm=NONE
         hi Type ctermfg=81 cterm=NONE
         hi Boolean ctermfg=99
@@ -88,23 +86,25 @@ if &t_Co > 255
 
     else " background == 'light'
         hi Normal ctermfg=232 ctermbg=NONE
+        hi Label ctermfg=162
         hi Visual ctermbg=252
         hi CursorLine ctermbg=255 cterm=underline
         hi CursorLineNr ctermfg=240 ctermbg=NONE
         hi ColorColumn ctermbg=NONE
-        hi LineNr ctermfg=52 ctermbg=NONE cterm=NONE
-        hi StatusLine ctermfg=52 ctermbg=NONE cterm=underline
-        hi StatusLineNC ctermfg=245 ctermbg=NONE cterm=underline
-        hi VertSplit ctermfg=52 ctermbg=NONE cterm=NONE
+        hi LineNr ctermfg=239 ctermbg=NONE cterm=NONE
+        hi StatusLine ctermfg=242 ctermbg=NONE cterm=underline
+        hi StatusLineNC ctermfg=242 ctermbg=NONE cterm=underline
+        hi VertSplit ctermfg=239 ctermbg=NONE cterm=NONE
         hi Title ctermfg=232 ctermbg=NONE cterm=bold
         hi MatchParen ctermfg=88 ctermbg=NONE cterm=underline
         hi Pmenu ctermfg=NONE ctermbg=255 cterm=NONE
-        hi Keyword ctermfg=88
-        hi Type ctermfg=21
-        hi Directory ctermfg=144
+        hi Search term=underline cterm=underline ctermfg=NONE ctermbg=172
+        hi Keyword ctermfg=124
+        hi Type ctermfg=20
+        hi Directory ctermfg=94
         hi Boolean ctermfg=57
         hi Character ctermfg=57
-        hi String ctermfg=166
+        hi String ctermfg=130
         hi Number ctermfg=57
         hi Float ctermfg=57
         hi Comment ctermfg=240 cterm=italic
@@ -113,21 +113,21 @@ if &t_Co > 255
         hi Function ctermfg=22
         hi Operator ctermfg=88
         hi Conditional ctermfg=88
-        hi Identifier ctermfg=88
-        hi PreProc ctermfg=88 cterm=NONE
+        hi Identifier ctermfg=124
+        hi PreProc ctermfg=54 cterm=italic
         hi Tag ctermfg=88
         hi Statement ctermfg=88
         hi Folded ctermfg=235 ctermbg=252
         hi FoldColumn ctermbg=NONE ctermfg=189
         hi SignColumn ctermbg=NONE
         hi Define ctermfg=88
-        hi TabLine ctermfg=52 ctermbg=NONE cterm=underline
-        hi TabLineFill ctermfg=52 ctermbg=NONE cterm=underline
-        hi TabLineSel ctermfg=232 ctermbg=NONE cterm=bold
-        hi DiffAdd ctermbg=76 cterm=NONE
-        hi DiffDelete ctermbg=204 cterm=NONE
+        hi TabLine ctermfg=239 ctermbg=NONE cterm=underline
+        hi TabLineFill ctermfg=239 ctermbg=NONE cterm=underline
+        hi TabLineSel ctermfg=237 ctermbg=NONE cterm=bold
+        hi DiffAdd ctermbg=194 cterm=NONE
+        hi DiffDelete ctermbg=225 cterm=NONE
         hi DiffChange ctermbg=255 cterm=NONE
-        hi DiffText ctermbg=46 cterm=NONE
+        hi DiffText ctermbg=194 cterm=NONE
         hi Special ctermfg=57 ctermbg=NONE cterm=NONE
         hi SpecialComment ctermfg=245 ctermbg=NONE cterm=NONE
         hi StorageClass ctermfg=21 ctermbg=NONE cterm=NONE
@@ -149,6 +149,7 @@ else " For 16 color terminal
     hi SpecialKey ctermfg=8 ctermbg=NONE cterm=NONE
     hi ErrorMsg ctermfg=7 ctermbg=1 cterm=NONE
     hi WarningMsg ctermfg=0 ctermbg=3 cterm=NONE
+    hi Search term=underline cterm=underline ctermfg=NONE ctermbg=3
 
     hi Normal ctermfg=7
     hi Visual ctermbg=8

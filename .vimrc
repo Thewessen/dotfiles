@@ -32,9 +32,9 @@ else
 endif
 Plug 'neoclide/coc.nvim', {
 \ 'branch': 'release',
-\ 'for': ['php', 'javascript', 'typescript', 'html', 'css', 'scss']
+\ 'for': ['php', 'javascript', 'typescript', 'typescriptreact', 'html', 'css', 'scss', 'rust']
 \ }  " LSP completer for vim8 and nvim
-" Plug 'w0rp/ale'                       " Async linter and completer
+Plug 'w0rp/ale'                       " Async linter and completer
 Plug 'tpope/vim-obsession'            " Automatically create, restore and update Sessions
 Plug 'justinmk/vim-dirvish'           " filebrowser like netrw (but better)
 Plug 'tpope/vim-surround'             " Change surroundings (command: {d,c,y}s{text object})
@@ -54,6 +54,8 @@ Plug 'airblade/vim-rooter'            " Automtically change working dir to root
 Plug 'adelarsq/vim-matchit'           " Extends '%' (jump html-tag, etc.)
 Plug 'mattn/emmet-vim'                " Super fast html skeletons
 Plug 'pangloss/vim-javascript'        " Javascript indention and syntax
+Plug 'leafgarland/typescript-vim'     " Typescript indention and syntax highlighting
+Plug 'peitalin/vim-jsx-typescript'    " More typescript for react
 Plug 'MaxMEllon/vim-jsx-pretty'       " JSX highlighting (React way of HTML in Javascript)
 Plug 'jwalton512/vim-blade'           " PHP blade highlighting syntax
 Plug 'othree/html5-syntax.vim'        " Better HTML syntax
@@ -78,11 +80,8 @@ filetype plugin indent on    " required
 "         Vim Configurations
 "=================================
 
-" Use dark background
-set background=dark
-
-" Basic
-set background=dark
+" Use light background
+set background=light
 
 " Basic
 set autoread            " If file changed outside vim, while inside vim
@@ -101,6 +100,9 @@ set nowritebackup
 
 " Don't pass messages to |ins-completion-menu|
 set shortmess+=c
+
+" clipboard
+set clipboard+=unnamedplus
 
 " Continue where you left off by using viminfo-file
 if !empty(&viminfo)
@@ -281,6 +283,16 @@ augroup reload_vimrc
     autocmd BufWritePost vimrc,.vimrc,*.vim normal ,R
 augroup END
 
+augroup source_tmux
+  autocmd!
+  autocmd BufWritePost .tmux.conf call system('tmux source-file ~/.tmux.conf && tmux display-message "Tmux config sourced"') 
+augroup END
+
+augroup source_zsh
+  autocmd!
+  autocmd BufWritePost .aliases,.aliases_work,.zshrc call system('source ~/.zshrc')
+augroup END
+
 " Use compiler for latex files
 augroup latex_compiler
     autocmd!
@@ -302,11 +314,6 @@ augroup activewin_numberline
     autocmd BufLeave,WinLeave * call SetWindowInactive()
 augroup END
 
-augroup no_numberline
-    autocmd!
-    " autocmd BufLeave,WinLeave * if &buftype == 'terminal' | exec 'normal ' | endif
-augroup END
-
 augroup mappings
     autocmd!
     autocmd filetype netrw call NetrwMapping()
@@ -316,7 +323,7 @@ augroup mappings
     autocmd filetype sh call ShellMapping()
     autocmd filetype python call PythonMapping()
     autocmd filetype php call PHPMapping()
-    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,reason call NPMMapping()
+    autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,tsx,reason,typescriptreact call NPMMapping()
     autocmd filetype rust,cfg call RustMapping()
 augroup END
 
@@ -331,7 +338,8 @@ function! NetrwMapping()
 endfunction
 
 function! DirvishMapping()
-  nno <buffer> <C-p> :GFiles<CR>
+  nno <buffer> <C-p> :Files<CR>
+  nno <buffer> <leader>ff :GFiles<CR>
 endfunction
 
 function! VimDiffMapping()
@@ -452,20 +460,20 @@ nmap <silent> <leader>t <C-W>T
 nmap <silent> <leader>T :tabnew
 
 " " Copy to clipboard
-vno <leader>y  "+y
+" vno <leader>y  "+y
 " nno <leader>Y  "+yg_
 nno <leader>Y  :call YankFileLineNr()<CR>
-nno <leader>y  "+y
-nno <leader>yy  "+yy
+" nno <leader>y  "+y
+" nno <leader>yy  "+yy
 
 " " Paste from clipboard
-nno <leader>p "+p
-nno <leader>P "+P
-vno <leader>p "+p
-vno <leader>P "+P
+" nno <leader>p "+p
+" nno <leader>P "+P
+" vno <leader>p "+p
+" vno <leader>P "+P
 
 " Open terminal
-nmap <silent> <leader>z :exec "bo 10split term://zsh"<CR>
+nmap <silent> <leader>z :call system('tmux split-pane -p 90')<CR>
 
 " Switch between current and last buffer
 nmap <silent> <leader>. <C-^>
@@ -475,6 +483,7 @@ nmap <silent> <leader>. <C-^>
 " Location list
 nmap <silent> <leader>l :lopen<CR>
 nmap <silent> <leader>c :copen<CR>
+nmap <silent> <leader>L :CocDiagnostics<CR>
 
 nmap <leader>0 :cbelow<CR>
 nmap <leader>9 :cabove<CR>
@@ -502,12 +511,13 @@ nno <leader>st :ALEToggle<CR>
 " Git commands (vim-fugitive)
 nno <leader>gs :Gstatus<CR>
 nno <leader>g<space> :Git<space>
-nno <leader>gp :Gpush<CR>
+nno <leader>gp :Dispatch git push<CR>
 nno <leader>gg :0Glog<CR>
-nno <leader>gl :Gpull<CR>
+nno <leader>gL :Glog<CR>
+nno <leader>gl :Dispatch git pull<CR>
 nno <leader>gm :Gmerge<space>
-nno <leader>gf :Gfetch<CR>
-nno <leader>gc :Gcommit -v<CR>
+nno <leader>gf :Dispatch git fetch<CR>
+nno <leader>gc :Git commit -v<CR>
 nno <leader>gb :Gblame<CR>
 nno <leader>gd :Git difftool -y<space>
 nno <leader>gi :Gvdiffsplit<space>
@@ -521,7 +531,7 @@ nno <leader>G :GutentagsUpdate!<CR>
 " FZF commands
 " for some reason this is mapped to buffer delete
 nno <silent> <C-P> :Files!<CR>
-nno <silent> <leader>ff :GFiles!<CR>
+nno <silent> <leader>ff :GFiles<CR>
 nno <leader>f<space> :Ag<space>
 nno <leader>fa :Ag!<CR>
 nno <silent> <leader>* :CtrlSF<CR>
@@ -539,44 +549,47 @@ nno <silent> <leader>fT :Filetypes<CR>
 nno <silent> <leader>fM :Maps<CR>
 nno <silent> <leader>fh :History<CR>
 nno <silent> <leader>f? :Helptags<CR>
-nno <silent> <leader>fH :History:<CR>
+nno <silent> <leader>fr :History:<CR>
 nno <silent> <leader>f/ :History/<CR>
+
+" Default mappings for yarn in project root
+" <leader>y(arn).
+nno <silent> <leader>yi :Rooter<CR>:Dispatch yarn install<CR>
+nno <silent> <leader>yd :Rooter<CR>:Dispatch yarn dev<CR>
+nno <silent> <leader>yw :Rooter<CR>:Start! -title=yarn-<C-R>=system('basename '.getcwd())<CR> yarn dev && yarn watch<CR>
+nno <silent> <leader>yl :Rooter<CR>:Dispatch yarn lint<CR>
+nno <silent> <leader>ys :Rooter<CR>:Start! -title=storybook-<C-R>=system('basename '.getcwd())<CR> yarn start-storybook --port 6006<CR>
+nno <silent> <leader>yt :Rooter<CR>:Start -title=yarn-test yarn test --watch<CR>
+nno <silent> <leader>yT :Rooter<CR>:Dispatch yarn test<CR>
 
 " TODO: better setup for interpreter
 function! NPMMapping()
-  nno <silent> <leader>nn :let @f=expand('%')<CR>:tabedit term://node<CR>const m = require('./<C-\><C-N>"fpi')<CR>
-  nno <silent> <leader>nm :bo 10split term://node --experimental-modules %<CR>
-  " nno <silent> <leader>nh :bo 10split term://node"<CR>
-  nno <silent> <leader>nh :Start node"<CR>
-  nno <silent> <leader>ni :bo 10split term://yarn<CR><C-\><C-N><C-W>w
-  nno <silent> <leader>ne :bo 10split term://eslint --init<CR>
-  nno <silent> <leader>ne :bo 80vsplit term://yarn lint<CR>
-  nno <silent> <leader>nf :bo 10split term://npm audit fix --force<CR><C-\><C-N><C-W>w
-  nno <silent> <leader>ns :tabe term://npm run start<CR><C-\><C-N>:tabprevious<CR>
-  nno <silent> <leader>nb :tabe term://npm run build<CR><C-\><C-N>:tabprevious<CR>
+  nno <silent> <leader>nn :Rooter<CR>:Start ts-node<CR>
+  nno <silent> <leader>nh :Rooter<CR>:Start node<CR>
 endfunction
 
 function! ShellMapping()
   nno <buffer> <leader>nn :!sh %:p<CR>
-  nno <buffer> <leader>ni :exec "bo 10split term://sh"<CR>
   nno <buffer> <leader>nt :lcd %:p:h<CR>:exec ':tabe term://BATS_RUN_SKIPPED=true bats '.expand('%:p:r').'_test.sh'<CR>
 endfunction
 
 " PHP artisan commands
 function! PHPMapping()
   " nno <buffer> <leader>nn :bo 20split term://vssh psysh<CR>
-  nno <buffer> <leader>nn :Start vssh psysh<CR>
+  nno <buffer> <leader>nn :Start psysh<CR>
+  nno <buffer> <leader>ni :Dispatch dre composer install<CR>
   nno <buffer> <leader>nt :bo 10split term://vendor/bin/phpunit<CR>
   nno <buffer> <leader>ar :!php artisan route:list \| grep<space>
   nno <buffer> <leader>am :!php artisan make:
   nno <buffer> <leader>ai :!php artisan migrate
   nno <buffer> <leader>as :!php artisan db:seed<CR>
+  nno <buffer> <leader>at :Start dpa tinker<CR>
   nno <buffer> <leader>n, :PhpactorHover<CR>
   nno <buffer> <leader>np :PhpactorContextMenu<CR>
   nno <buffer> <leader>nd :PhpactorGotoDefinition<CR>
-  nno <buffer> <leader>ns :PhpactorStatus<CR>
+  nno <buffer> <leader>nS :PhpactorStatus<CR>
   nno <buffer> <leader>nf :PhpactorFindReferences<CR>
-  nno <buffer> <leader>ni :PhpactorImportMissingClasses<CR>
+  nno <buffer> <leader>nI :PhpactorImportMissingClasses<CR>
   nno <buffer> <leader>nR :PhpactorCacheClear<CR>
 endfunction
 
@@ -627,10 +640,10 @@ xmap <C-T> <Plug>(neosnippet_expand_target)
 "       \ coc#refresh()
 " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 " Use <c-space> to trigger completion.
 " if has('nvim')
@@ -646,6 +659,7 @@ endfunction
 
 " TODO: GitHub auto add ticket to commit message
 au! filetype gitcommit nno <buffer> <leader>b 5GyyggPd3wi[3ea] lC
+au! filetype gitcommit nno <buffer> <leader>B 5GyyggPd3wi[Ea]<space>
 
 " =================================
 "       Custom commands
@@ -691,7 +705,7 @@ command! -bang -nargs=0 GCheckout
   \   {
   \     'sink': function('s:open_branch_fzf')
   \   },
-  \   <bang>0
+  \   <!-- <bang> -->0
   \ )
 
 " Diff changes current buffer with local file
@@ -703,6 +717,17 @@ function! s:DiffWithSaved()
   exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
 com! DiffSaved call s:DiffWithSaved()
+
+" Working with csv files
+command! CSVColumn %!column -t -s ','
+command! CSVJoin %s/ \{2,\}/,/g
+
+" format xml
+command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+command! FormatJSON :%!python3 -m json.tool
+
+" command
+command! Htop call system('tmux split-pane htop')
 
 " =================================
 "       Source vim-scripts

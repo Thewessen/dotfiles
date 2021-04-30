@@ -23,13 +23,13 @@ const screens = {
 
 const applications = {
   '1': 'Alacritty',
-  '2': 'Firefox',
+  '2': 'Google Chrome',
   '3': 'Slack',
-  '4': 'PhpStorm',
+  '4': 'Jira',
   '5': 'Firefox',
   '6': 'Mail Hypotheekbond',
   '7': 'WhatsApp',
-  '8': 'Agenda Hypotheekbond',
+  '8': 'TablePlus',
   '9': 'Abstract',
   '0': 'TimeChimp Hypotheekbond',
 }

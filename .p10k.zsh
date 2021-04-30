@@ -34,7 +34,7 @@
     # =========================[ Line #1 ]=========================
     # os_icon               # os identifier
     dir                     # current directory
-    vcs                     # git status
+    # vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
     prompt_char             # prompt symbol
@@ -156,7 +156,7 @@
   # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' ' below.
   typeset -g POWERLEVEL9K_SHOW_RULER=false
   typeset -g POWERLEVEL9K_RULER_CHAR='─'        # reasonable alternative: '·'
-  typeset -g POWERLEVEL9K_RULER_FOREGROUND=242
+  typeset -g POWERLEVEL9K_RULER_FOREGROUND=$BG_DARK_GRAY
 
   # Filler between left and right prompt on the first prompt line. You can set it to '·' or '─'
   # to make it easier to see the alignment between left and right prompt and to separate prompt
@@ -167,7 +167,7 @@
   typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
   if [[ $POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR != ' ' ]]; then
     # The color of the filler.
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND=102
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND=$BG_GRAY
     # Add a space between the end of left prompt and the filler.
     typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=' '
     # Add a space between the filler and the start of right prompt.
@@ -186,9 +186,9 @@
 
   ################################[ prompt_char: prompt symbol ]################################
   # Green prompt symbol if the last command succeeded.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=148
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$BG_GREEN
   # Red prompt symbol if the last command failed.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=202
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=$BG_RED
   # Default prompt symbol.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='λ'
   # Prompt symbol in command vi mode.
@@ -205,17 +205,17 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=144
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=$BG_BROWN
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=102
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=$BG_GRAY
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=144
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=$BG_BROWN
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -359,10 +359,10 @@
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local       meta='%f'     # default foreground
-      local      clean='%117F'   # blue foreground
-      local   modified='%178F'  # yellow foreground
-      local  untracked='%102F'   # grey foreground
-      local conflicted='%202F'  # red/orange foreground
+      local      clean='%'$BG_BLUE'F'   # blue foreground
+      local   modified='%'$BG_YELLOW'F'  # yellow foreground
+      local  untracked='%'$BG_GRAY'F'   # grey foreground
+      local conflicted='%'$BG_RED'F'  # red/orange foreground
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground
@@ -456,8 +456,8 @@
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # Icon color.
-  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=148
-  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=244
+  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=$BG_GREEN
+  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=$BG_GRAY
   # Custom icon.
   typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
@@ -470,9 +470,9 @@
 
   # These settings are used for repositories other than Git or when gitstatusd fails and
   # Powerlevel10k has to fall back to using vcs_info.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=117
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=102
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=$BG_BLUE
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=$BG_GRAY
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=$BG_YELLOW
 
   ##########################[ status: exit code of the last command ]###########################
   # Enable OK_PIPE, ERROR_PIPE and ERROR_SIGNAL status states to allow us to enable, disable and
@@ -750,17 +750,17 @@
   # Show average CPU load over this many last minutes. Valid values are 1, 5 and 15.
   typeset -g POWERLEVEL9K_LOAD_WHICH=5
   # Load color when load is under 50%.
-  typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=66
+  typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=$BG_BLUE
   # Load color when load is between 50% and 70%.
-  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=178
+  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=$BG_YELLOW
   # Load color when load is over 70%.
-  typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=166
+  typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=$BG_GREEN
   # Custom icon.
   # typeset -g POWERLEVEL9K_LOAD_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ################[ todo: todo items (https://github.com/todotxt/todo.txt-cli) ]################
   # Todo color.
-  typeset -g POWERLEVEL9K_TODO_FOREGROUND=110
+  typeset -g POWERLEVEL9K_TODO_FOREGROUND=$BG_YELLOW
   # Hide todo when the total number of tasks is zero.
   typeset -g POWERLEVEL9K_TODO_HIDE_ZERO_TOTAL=true
   # Hide todo when the number of tasks after filtering is zero.

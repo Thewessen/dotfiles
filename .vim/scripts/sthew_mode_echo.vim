@@ -40,17 +40,17 @@ function! MyHandler(timer)
             endif
             let s:m = m
         else
-            hi User1 ctermfg=52 ctermbg=NONE cterm=underline
+            hi User1 ctermfg=237 ctermbg=NONE cterm=underline
             hi User2 ctermfg=88 ctermbg=NONE cterm=bold
             if m == 'n'
-                hi User1 ctermfg=52 ctermbg=NONE cterm=underline
+                hi User1 ctermfg=237 ctermbg=NONE cterm=bold,underline
             elseif m == 'no'
                 hi User1 ctermfg=232 ctermbg=NONE cterm=bold,underline
                 echo "Operation pending!"
             elseif m == 'i'
-                hi User1 ctermfg=1 ctermbg=NONE cterm=bold,underline
+                hi User1 ctermfg=160 ctermbg=NONE cterm=bold,underline
             elseif m == 'v' || m == 'V' || m == ''
-                hi User1 ctermfg=52 ctermbg=253 cterm=underline
+                hi User1 ctermfg=237 ctermbg=253 cterm=underline
             elseif m == 'R' || m == 'Rv'
                 hi User1 ctermfg=88 ctermbg=NONE cterm=bold,underline
             elseif m == 'c' || m == 'cv'|| m == 'ce'
