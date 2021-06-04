@@ -24,7 +24,7 @@ map('n', '<leader>e', '<cmd>Config<cr>', { noremap = true })
 map('n', '<leader>E', '<cmd>NeoSnippetEdit-vertical<cr>', { noremap = true })
 
 -- git
-map('n', '<leader>gb', '<cmd>Gblame<cr>', { noremap = true })
+map('n', '<leader>gb', '<cmd>Git blame<cr>', { noremap = true })
 map('n', '<leader>gc', '<cmd>Git commit -v<cr>', { noremap = true })
 map('n', '<leader>gd', ':Git difftool -y<space>', { noremap = true })
 map('n', '<leader>gf', '<cmd>Dispatch git fetch<cr>', { noremap = true })
@@ -44,7 +44,7 @@ map('n', '<leader>g<space>', ':Git<space>', { noremap = true })
 -- fzf
 map('n', '<leader>b', '<cmd>Buffers!<cr>', { noremap = true, silent = true })
 map('n', '<leader>h', '<cmd>History<cr>', { noremap = true, silent = true })
-map('n', '<leader>*', ':Ag! <c-r><c-w><cr>', { noremap = true })
+map('n', '<leader>*', ':Ag <c-r><c-w><cr>', { noremap = true })
 map('n', '<leader>/', '<cmd>Lines!<cr>', { noremap = true, silent = true })
 map('n', '<leader>fa', '<cmd>Ag!<cr>', { noremap = true, silent = true })
 map('n', '<leader>fc', '<cmd>Commits!<cr>', { noremap = true, silent = true })

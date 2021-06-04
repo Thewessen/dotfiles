@@ -12,7 +12,6 @@ return require('packer').startup(function(use)
   use 'nvim-treesitter/playground'
 
 	-- file/buffer-browser
-	use {'iberianpig/ranger-explorer.vim', requires = {'rbgrouleff/bclose.vim'}}
 	use {'junegunn/fzf.vim', requires = {'junegunn/fzf', run = function() vim.fn['fzf#intall']() end}}
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/popup.nvim'}}
 
@@ -27,6 +26,7 @@ return require('packer').startup(function(use)
 	use 'tpope/vim-repeat'
 	use 'tpope/vim-abolish'
   use 'tpope/vim-unimpaired'
+  use 'tpope/vim-vinegar'
 	use 'tpope/vim-ragtag'
 
 	-- coding helpers

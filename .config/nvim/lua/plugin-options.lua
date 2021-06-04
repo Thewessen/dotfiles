@@ -33,3 +33,5 @@ set('neosnippet#disable_runtime_snippets', {_ = true})
 set('user_emmet_leader_key', '<c-n>')
 set('user_emmet_mode', 'i')
 set('user_emmet_install_global', false)
+
+set('ranger_replace_netrw', 0)
