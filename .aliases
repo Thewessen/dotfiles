@@ -43,8 +43,11 @@ alias hgrep='fc -El 0 | grep'
 
 alias dud='du -d 1 -h'
 alias duf='du -cksh *'
-alias ff='find . -type f -iname'
-alias fd='find . -type d -iname'
+
+if ! type fd >/dev/null; then
+    alias ff='find . -type f -iname'
+    alias fd='find . -type d -iname'
+fi
 
 if type lsd >/dev/null; then
     alias ls='lsd --group-dirs first'
@@ -109,6 +112,13 @@ if type nodejs >/dev/null; then
     alias js="nodejs"
 elif type node >/dev/null; then
     alias js="nodejs"
+fi
+
+if type sqlmap >/dev/null; then
+    alias sqlmap-tamper="sqlmap --tamper=apostrophemask,apostrophenullencode,appendnullbyte,base64encode,between,bluecoat,chardoubleencode,charencode,charunicodeencode,concat2concatws,equaltolike,greatest,halfversionedmorekeywords,ifnull2ifisnull,modsecurityversioned,modsecurityzeroversioned,multiplespaces,percentage,randomcase,randomcomments,space2comment,space2dash,space2hash,space2morehash,space2mssqlblank,space2mssqlhash,space2mysqlblank,space2mysqldash,space2plus,space2randomblank,sp_password,unionalltounion,unmagicquotes,versionedkeywords,versionedmorekeywords"
+    alias sqlmap-tamper-general="sqlmap --tamper=apostrophemask,apostrophenullencode,base64encode,between,chardoubleencode,charencode,charunicodeencode,equaltolike,greatest,ifnull2ifisnull,multiplespaces,percentage,randomcase,space2comment,space2plus,space2randomblank,unionalltounion,unmagicquotes"
+    alias sqlmap-tamper-mysql="sqlmap --tamper=between,bluecoat,charencode,charunicodeencode,concat2concatws,equaltolike,greatest,halfversionedmorekeywords,ifnull2ifisnull,modsecurityversioned,modsecurityzeroversioned,multiplespaces,percentage,randomcase,space2comment,space2hash,space2morehash,space2mysqldash,space2plus,space2randomblank,unionalltounion,unmagicquotes,versionedkeywords,versionedmorekeywords,xforwardedfor"
+    alias sqlmap-tamper-mssql="sqlmap --tamper=tamper=between,charencode,charunicodeencode,equaltolike,greatest,multiplespaces,percentage,randomcase,sp_password,space2comment,space2dash,space2mssqlblank,space2mysqldash,space2plus,space2randomblank,unionalltounion,unmagicquotes"
 fi
 
 # =================================
