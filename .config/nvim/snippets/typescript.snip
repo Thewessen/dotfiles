@@ -11,3 +11,34 @@ alias cw warn
 options head
 	console.warn(${0:TARGET});
 
+snippet try-catch
+alias tc
+options head
+	try {
+		${1:#:do_stuff}
+	} catch (${2:err}) {
+		${3:#:handle_error}
+	};
+	${0:TARGET}
+
+snippet try-finally
+alias tf
+options head
+	try {
+		${1:#:do_stuff}
+	} finally {
+		${2:#:do_more_stuff}
+	};
+	${0:TARGET}
+	
+snippet try-catch-finally
+alias tcf
+options head
+	try {
+		${1:#:do_stuff}
+	} catch (${2:err}) {
+		${3:#:handle_error}
+	} finally {
+		${4:#:do_more_stuff}
+	};
+	${0:TARGET}

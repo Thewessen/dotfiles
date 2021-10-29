@@ -12,16 +12,16 @@ options head
 
 snippet console.log
 alias cl log con
-	console.log(${0:TARGET});
+	console.log(${1})${0}
 
 snippet console.error
 alias ce error
-	console.error(${0:TARGET});
+	console.error(${0:TARGET})
 
 snippet console.warn
 alias cw warn
 options head
-	console.warn(${0:TARGET});
+	console.warn(${0:TARGET})
 
 snippet if
 options head
@@ -160,24 +160,26 @@ options head
 snippet hook-state
 alias hs
 options head
-	const [${1:state}, ${2:setState}] = useState<${3:any}>(${4:false});
-	${0:TARGET}
+	const [${1:state}, ${2:setState}] = useState<${3:any}>(${4:false});${0:TARGET}
+
+snippet hook-context
+alias hc
+options head
+	const {${1:prop}} = useContext(${2:context});${0:TARGET}
 
 snippet hook-effect
 alias he
 options head
 	useEffect(() => {
 		${1:#:do_stuff}
-	}, [${2:#:dependencies}]);
-	${0:TARGET}
+	}, [${2:#:dependencies}]);${0:TARGET}
 
 snippet hook-memo
 alias hm
 options head
 	useMemo(() => {
 		${1:#:do_stuff}
-	}, [${2:#:dependencies]}]);
-	${0:TARGET}
+	}, [${2:#:dependencies]}]);${0:TARGET}
 
 snippet hook-dispatch
 alias hd
@@ -195,13 +197,13 @@ snippet react-functional-component
 alias rfc
 options head
 	import * as React from 'react';
-  import { FunctionComponent } from 'react';
+  import { FC } from 'react';
 
   interface Props {
     
   }
 
-	const ${1:`expand('%:t:r')`}: FunctionComponent<Props> = (${2:props}) => {
+	const ${1:`expand('%:t:r')`}: FC<Props> = (${2:props}) => {
 		${3:#:constants}
 
 		return (

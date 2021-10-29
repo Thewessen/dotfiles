@@ -1,3 +1,5 @@
+autocmd FileType sjl setlocal omnifunc=vim_dadbod_completion#omni
+
 augroup reload_nvimconfig
     autocmd!
     autocmd BufWritePre */nvim/init.lua,*/nvim/lua/*.lua luafile ~/.config/nvim/init.lua

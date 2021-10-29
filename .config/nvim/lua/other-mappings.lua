@@ -17,12 +17,12 @@ map('t', '<c-[>', '<c-\\><c-n>', { noremap = true })
 map('n', '<F10>', '<cmd>TSHighlightCapturesUnderCursor<cr>', { noremap = true, silent = true })
 
 -- plugins
-map('n', '<c-p>', '<cmd>Files<cr>', { noremap = true, silent = true })
+map('n', '<c-p>', '<cmd>Files!<cr>', { noremap = true, silent = true })
 map('n', '\\', ':Abolish -search<space>', { noremap = true })
 map('n', '?', ':Abolish! -search<space>', { noremap = true })
 map('n', 'S', ':%S/', { noremap = true})
 map('v', 'S', ':S/', { noremap = true})
-map('i', '<c-t>', '<plug>(neosnippet_expand_or_jump)', {})
-map('s', '<c-t>', '<plug>(neosnippet_expand_or_jump)', {})
-map('x', '<c-t>', '<plug>(neosnippet_expand_target)', {})
+map('i', '<c-t>', '<plug>(vsnip_expand_or_jump)', {})
+map('s', '<c-t>', '<plug>(vsnip_expand_or_jump)', {})
+map('x', '<c-t>', '<plug>(vsnip_expand_target)', {})
 

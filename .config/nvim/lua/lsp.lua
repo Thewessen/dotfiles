@@ -7,7 +7,6 @@ local lsp_attach = function ()
   vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', {noremap = true, silent = true})
   vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', [[<cmd>lua require'lsp-info'.info()<cr>]], {noremap = true, silent = true})
   vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  require('completion').on_attach()
 end
 
 -- vim

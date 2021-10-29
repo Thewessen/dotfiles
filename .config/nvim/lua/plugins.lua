@@ -16,7 +16,13 @@ return require('packer').startup(function(use)
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/popup.nvim'}}
 
   -- lsp
-  use {'nvim-lua/completion-nvim', requires = {'neovim/nvim-lspconfig'}}
+  use {'hrsh7th/nvim-cmp', requires = {
+    'neovim/nvim-lspconfig',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline'
+  }}
 
 	-- tpope is king
 	use 'tpope/vim-dispatch'
@@ -30,7 +36,7 @@ return require('packer').startup(function(use)
 	use 'tpope/vim-ragtag'
 
 	-- coding helpers
-  use 'Shougo/neosnippet.vim'
+  use 'hrsh7th/vim-vsnip'
 	use {
 		'w0rp/ale',
 		cmd = 'ALEToggle',
@@ -43,4 +49,8 @@ return require('packer').startup(function(use)
     run = 'composer install --no-dev -o'
   }
 
+  -- databases
+  use 'tpope/vim-dadbod'
+  use 'kristijanhusak/vim-dadbod-ui'
+  use 'kristijanhusak/vim-dadbod-completion'
 end)

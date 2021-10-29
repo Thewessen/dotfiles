@@ -24,6 +24,19 @@ command! -bang -nargs=0 GCheckout
   \   0
   \ )
 
+function! s:apply_patch(line)
+  execute '!git apply --3way ~/tool_input/git-patch/' . a:line
+endfunction
+
+command! -bang -nargs=0 GApply
+  \ call fzf#vim#grep(
+  \   "ls ~/tool_input/git-patch", 0,
+  \   {
+  \     'sink': function('s:apply_patch')
+  \   },
+  \   0
+  \ )
+
 " diff buffer with local file
 function! s:diff_with_saved()
   let filetype=&ft
