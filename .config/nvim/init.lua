@@ -19,6 +19,7 @@ require('options')
 require('leader-mappings')
 require('other-mappings')
 require('lsp')
+require('work-related')
 
 cmd('colorscheme sthew')
 
@@ -66,13 +67,13 @@ require('nvim-treesitter.configs').setup{
 }
 
 -- lsp signs
-vim.cmd('sign define LspDiagnosticsSignError text=x texthl=LspDiagnosticsSignError linehl= numhl=')
-vim.cmd('sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSignWarning linehl= numhl=')
-vim.cmd('sign define LspDiagnosticsSignInformation text=? texthl=LspDiagnosticsSignInformation linehl= numhl=')
-vim.cmd('sign define LspDiagnosticsSignHint text=> texthl=LspDiagnosticsSignHint linehl= numhl=')
+cmd('sign define LspDiagnosticsSignError text=x texthl=LspDiagnosticsSignError linehl= numhl=')
+cmd('sign define LspDiagnosticsSignWarning text=! texthl=LspDiagnosticsSignWarning linehl= numhl=')
+cmd('sign define LspDiagnosticsSignInformation text=? texthl=LspDiagnosticsSignInformation linehl= numhl=')
+cmd('sign define LspDiagnosticsSignHint text=> texthl=LspDiagnosticsSignHint linehl= numhl=')
 
 -- highlight
-vim.cmd('hi Delimiter ctermfg=102')
+cmd('hi Delimiter ctermfg=102')
 
 -- A vim.api for creating user command is on its way
 -- https://github.com/neovim/neovim/pull/11613

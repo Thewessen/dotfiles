@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# creates a scratchpad like popup in tmux
+#   - creates a new tmux instance (socket) called scratchpad
+#   - creates a new tmux session called POPUP in this instance
+#   - attaches the display-popup window to this instance and session
+
+if [[ "$(tmux display-message -p -F "#{session_name}")" == "POPUP" ]]; then
+  tmux detach-client
+else
+  tmux display-popup -E "tmux -L scratchpad attach -t POPUP || tmux -L scratchpad -f ~/tmux-scratchpad/.tmux.conf new -s POPUP 'ZDOTDIR=~/tmux-scratchpad zsh'"
+fi

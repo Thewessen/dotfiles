@@ -10,6 +10,8 @@ return require('packer').startup(function(use)
   -- treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = [[:TSUpdate]] }
   use 'nvim-treesitter/playground'
+  use 'neovim/nvim-lspconfig'
+
 
 	-- file/buffer-browser
 	use {'junegunn/fzf.vim', requires = {'junegunn/fzf', run = function() vim.fn['fzf#intall']() end}}
@@ -17,7 +19,6 @@ return require('packer').startup(function(use)
 
   -- lsp
   use {'hrsh7th/nvim-cmp', requires = {
-    'neovim/nvim-lspconfig',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
@@ -37,12 +38,14 @@ return require('packer').startup(function(use)
 
 	-- coding helpers
   use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/cmp-vsnip'
+
 	use {
 		'w0rp/ale',
 		cmd = 'ALEToggle',
 		config = 'vim.cmd[[ALEEnable]]'
 	}
-  use {'mattn/emmet-vim', ft = {'javascriptreact','typescriptreact','html'}, config = 'vim.cmd[[EmmetInstall]]'}
+  -- use {'mattn/emmet-vim', ft = {'javascriptreact','typescriptreact','html'}, config = 'vim.cmd[[EmmetInstall]]'}
   use {
     'phpactor/phpactor',
     ft = {'php'},

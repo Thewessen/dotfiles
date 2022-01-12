@@ -5,6 +5,15 @@ function! s:yank_file_line_number()
 endfunction
 command! YankFileLineNr call s:yank_file_line_number()
 
+command! -bang -nargs=0 Notes
+  \ call fzf#vim#grep(
+  \   'ls $HOME/notes', 0,
+  \   {
+  \     'sink': 'edit $HOME/notes/'
+  \   },
+  \   0
+  \ )
+
 function! s:open_branch_fzf(line)
   let l:parser = split(a:line)
   let l:branch = l:parser[0]
@@ -58,3 +67,11 @@ command! FormatJSON :%!python3 -m json.tool
 " command
 command! Htop call system('tmux split-pane htop')
 
+function! s:OpenSearch(...)
+  let nr = bufnr('quick-www-search', 1)
+  exec 'buffer' l:nr
+  call termopen('w3m -o confirm_qq=0 https://duckduckgo.com/\?q\=' . join(a:000, '+'))
+  normal i
+endfunction
+
+command! -nargs=* Search call s:OpenSearch(<f-args>)

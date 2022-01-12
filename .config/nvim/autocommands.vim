@@ -1,5 +1,8 @@
 autocmd FileType sjl setlocal omnifunc=vim_dadbod_completion#omni
 
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
 augroup reload_nvimconfig
     autocmd!
     autocmd BufWritePre */nvim/init.lua,*/nvim/lua/*.lua luafile ~/.config/nvim/init.lua
@@ -32,6 +35,7 @@ augroup mappings
   autocmd filetype fzf imap <buffer> <ESC> <C-D>
   autocmd filetype sh call ShellMapping()
   autocmd filetype php call PHPMapping()
+  autocmd filetype fugitive call FugitiveMapping()
   autocmd filetype js,javascript,ts,typescript,mjs,vue,jsx,tsx,reason,typescriptreact call NPMMapping()
 augroup END
 
@@ -43,7 +47,7 @@ function! VimDiffMapping()
 endfunction
 
 function! NPMMapping()
-  nno <silent> <leader>nn <cmd>Start ts-node<CR>
+  nno <silent> <leader>nn <cmd>Start nvm exec<CR>
   nno <silent> <leader>nh <cmd>Start node<CR>
 endfunction
 
@@ -70,4 +74,8 @@ function! PHPMapping()
   nno <buffer> <leader>nf :PhpactorFindReferences<CR>
   nno <buffer> <leader>nI :PhpactorImportMissingClasses<CR>
   nno <buffer> <leader>nR :PhpactorCacheClear<CR>
+endfunction
+
+function! FugitiveMapping()
+  nno <buffer> <leader>, call termopen('git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"')
 endfunction
