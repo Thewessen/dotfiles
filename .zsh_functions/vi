@@ -6,7 +6,7 @@ vi() {
   then
     $editor "$@"
   else
-    $editor +Files!
+    $editor
   fi
   # elif $(git rev-parse --git-dir >/dev/null 2>&1)
   # then

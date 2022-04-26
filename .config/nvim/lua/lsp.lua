@@ -2,12 +2,14 @@ local lspconfig = require('lspconfig')
 local root_pattern = lspconfig.util.root_pattern
 -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local lsp_attach = function ()
-  -- vim.api.nvim_command('autocmd CursorHold * lua vim.lsp.buf.hover()')
-  vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>', {noremap = true, silent = true})
-  vim.api.nvim_buf_set_keymap(0, 'n', '<c-k>', [[<cmd>lua require'lsp-info'.info()<cr>]], {noremap = true, silent = true})
-  vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+local lsp_attach = function (client)
+  local opt = {buffer = true, noremap = true, silent = true}
+  vim.keymap.set('n', '<c-]>', vim.lsp.buf.definition, opt)
+  vim.keymap.set('n', 'K', vim.lsp.diagnostic.show_line_diagnostics, opt)
+  vim.keymap.set('v', 'F', vim.lsp.buf.range_formatting, opt)
+  vim.keymap.set('n', '<c-k>', require'functions'.lsp_info, opt)
+  vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
+  print('lsp attached: ' .. client.name)
 end
 
 -- vim
@@ -20,7 +22,7 @@ lspconfig.vimls.setup{
 
 -- js/ts
 lspconfig.tsserver.setup{
-  cmd = {'typescript-language-server', '--stdio'},
+  cmd = { 'typescript-language-server', '--stdio' },
   on_attach = lsp_attach,
   filetypes = {'javascript', 'typescript', 'javascriptreact', 'typescriptreact'},
   root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
@@ -82,4 +84,13 @@ lspconfig.jsonls.setup{
     },
     root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
     single_file_support = true,
+}
+
+-- css
+lspconfig.cssls.setup{
+  cmd = { 'vscode-css-language-server', '--stdio' },
+  on_attach = lsp_attach,
+  filetypes = { 'css', 'scss', 'less' },
+  root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+  single_file_support = true,
 }

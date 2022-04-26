@@ -8,5 +8,5 @@
 if [[ "$(tmux display-message -p -F "#{session_name}")" == "POPUP" ]]; then
   tmux detach-client
 else
-  tmux display-popup -E "tmux -L scratchpad attach -t POPUP || tmux -L scratchpad -f ~/tmux-scratchpad/.tmux.conf new -s POPUP 'ZDOTDIR=~/tmux-scratchpad zsh'"
+  tmux display-popup -w '100%' -h '70%' -E "tmux -L scratchpad attach -t POPUP || tmux -L scratchpad -f ~/tmux-scratchpad/.tmux.conf new -s POPUP 'ZDOTDIR=~/tmux-scratchpad zsh'"
 fi

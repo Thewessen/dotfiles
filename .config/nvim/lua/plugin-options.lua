@@ -8,6 +8,10 @@ set('fzf_preview_window', { 'up:70%' })
 set('dispatch_no_maps', true)
 set('dispatch_terminal_exec', 'zsh')
 
+set('test#strategy', 'neovim')
+set('test#php#phpunit#executable', 'dre ./vendor/bin/phpunit')
+set('test#javascript#jest#options', '--watch')
+
 set('ale_linters', {
 	javascript = {'eslint'},
 	typescript = {'eslint'},
@@ -61,15 +65,29 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<C-e>'] = cmp.mapping({
+    ['<c-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<c-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<c-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
+    ['<c-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<c-n>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
+    ['<c-p>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
+    ['<cr>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -97,3 +115,47 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+-- treesitter config
+require'nvim-treesitter.configs'.setup{
+  playground = {
+    enable = false,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  },
+  highlight = {
+    enable = true,
+    custom_captures = {
+      ["exclude"] = "PreProc",
+      ["tag"] = "Tag",
+      ["function"] = "Function",
+      ["variable.name"] = "Normal",
+      ["object.name"] = "Normal",
+      ["variable.declarator"] = "Type",
+    }
+  },
+  indent = { enable = true },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "vv",
+      node_incremental = ".",
+      scope_incremental = "gs",
+      node_decremental = ",",
+    },
+  }
+}
+

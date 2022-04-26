@@ -41,6 +41,6 @@ function! s:custom_list(A,C,P)
 endfunction
 
 command! -nargs=* -complete=customlist,s:custom_list Docker call s:docker_cmd('', 'Start -title=exec-$1 docker exec -it nhb_$1 $2', <f-args>)
-command! -nargs=* -complete=customlist,s:custom_list DockerLogs call s:docker_cmd('Logs', 'Start -title=logs-$1 docker container logs -f nhb_$1', <f-args>)
+command! -nargs=* -complete=customlist,s:custom_list DockerLogs call s:docker_cmd('Logs', 'Start -title=logs-$1 docker container logs -f nhb_$1 --tail 1000', <f-args>)
 command! -nargs=* -complete=customlist,s:custom_list DockerRestart call s:docker_cmd('Restart', 'Dispatch! docker container restart nhb_$1', <f-args>)
 command! -nargs=* -complete=customlist,s:custom_list DockerStop call s:docker_cmd('Stop', 'Dispatch! docker container stop nhb_$1', <f-args>)

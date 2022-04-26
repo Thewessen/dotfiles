@@ -30,7 +30,7 @@ return require('packer').startup(function(use)
 	use 'tpope/vim-surround'
 	use 'tpope/vim-commentary'
 	use 'tpope/vim-fugitive'
-	use 'tpope/vim-repeat'
+	-- use 'tpope/vim-repeat'
 	use 'tpope/vim-abolish'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-vinegar'
@@ -51,6 +51,9 @@ return require('packer').startup(function(use)
     ft = {'php'},
     run = 'composer install --no-dev -o'
   }
+
+  -- tests
+  use 'vim-test/vim-test'
 
   -- databases
   use 'tpope/vim-dadbod'

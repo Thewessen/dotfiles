@@ -67,7 +67,8 @@ map('n', '<leader>f<space>', ':Ag!<space>', { noremap = true })
 -- dispatch
 map('n', '<leader>yi', '<cmd>Dispatch yarn install<cr>', { noremap = true, silent = true })
 map('n', '<leader>yd', '<cmd>Dispatch yarn dev<cr>', { noremap = true, silent = true })
-map('n', '<leader>yw', [[:Start! -title=yarn-<c-r>=system('basename '.getcwd())<cr> yarn dev && yarn watch<cr>]], { noremap = true, silent = true })
+map('n', '<leader>yw', [[:Start! -title=watch-<c-r>=system('basename '.getcwd())<cr> yarn watch<cr>]], { noremap = true, silent = true })
+map('n', '<leader>yh', [[:Start! -title=hot-<c-r>=system('basename '.getcwd())<cr> yarn hot<cr>]], { noremap = true, silent = true })
 map('n', '<leader>yl', '<cmd>Dispatch yarn lint<cr>', { noremap = true, silent = true })
 map('n', '<leader>ys',
   [[:Start! -title=storybook-<c-r>=system('basename '.getcwd())<cr> yarn start-storybook --port 6006<cr>]],
@@ -77,11 +78,14 @@ map('n', '<leader>yt', '<cmd>Start -title=yarn-test yarn test --watch<cr>', { no
 map('n', '<leader>yT', '<cmd>Dispatch yarn test<cr>', { noremap = true, silent = true })
 
 -- ale
-map('n', '<leader>ss', '<cmd>ALEReset<cr>', { noremap = true })
-map('n', '<leader>sf', '<cmd>ALEFix<cr>', { noremap = true })
-map('n', '<leader>sd', '<cmd>ALEGoToTypeDefinition<cr>', { noremap = true })
-map('n', '<leader>sr', '<cmd>ALEFindReferences<cr>', { noremap = true })
-map('n', '<leader>sn', '<cmd>ALEDetail<cr>', { noremap = true })
-map('n', '<leader>si', '<cmd>ALEInfo<cr>', { noremap = true })
-map('n', '<leader>sl', '<cmd>ALELint<cr>', { noremap = true })
-map('n', '<leader>st', '<cmd>ALEToggle<cr>', { noremap = true })
+-- map('n', '<leader>ss', '<cmd>ALEReset<cr>', { noremap = true })
+-- map('n', '<leader>sf', '<cmd>ALEFix<cr>', { noremap = true })
+-- map('n', '<leader>sd', '<cmd>ALEGoToTypeDefinition<cr>', { noremap = true })
+-- map('n', '<leader>sr', '<cmd>ALEFindReferences<cr>', { noremap = true })
+-- map('n', '<leader>sn', '<cmd>ALEDetail<cr>', { noremap = true })
+-- map('n', '<leader>si', '<cmd>ALEInfo<cr>', { noremap = true })
+-- map('n', '<leader>sl', '<cmd>ALELint<cr>', { noremap = true })
+-- map('n', '<leader>st', '<cmd>ALEToggle<cr>', { noremap = true })
+
+-- test
+map('n', '<leader>nt', '<cmd>TestFile<cr>', { noremap = true })
