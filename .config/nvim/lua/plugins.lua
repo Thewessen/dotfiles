@@ -16,6 +16,7 @@ return require('packer').startup(function(use)
 	-- file/buffer-browser
 	use {'junegunn/fzf.vim', requires = {'junegunn/fzf', run = function() vim.fn['fzf#intall']() end}}
   use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/popup.nvim'}}
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
   -- lsp
   use {'hrsh7th/nvim-cmp', requires = {

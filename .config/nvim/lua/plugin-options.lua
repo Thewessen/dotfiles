@@ -1,5 +1,9 @@
 local set = vim.api.nvim_set_var
 
+-- lsp
+set('lsp_log_verbose', true)
+set('lsp_log_file', '~/lsp.log')
+
 set('bclose_no_plugin_maps', true)
 
 set('fzf_buffers_jump', true)
@@ -159,3 +163,23 @@ require'nvim-treesitter.configs'.setup{
   }
 }
 
+require'telescope'.setup{
+  defaults = {
+    layout_strategy = 'vertical',
+    layout_config = {
+      anchor = "S",
+      height = { padding = 1 },
+      preview_height = 0.65,
+      width = 0.9999,
+    },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = 'smart_case',
+    }
+  }
+}
+require'telescope'.load_extension('fzf')
