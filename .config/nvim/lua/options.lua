@@ -16,6 +16,7 @@ opt('g', 'showmode', false)
 opt('g', 'showcmd', true)
 opt('g', 'autoread', true)
 opt('g', 'background', 'light')
+opt('g', 'mouse', 'a')
 
 opt('g', 'completeopt', 'menu,menuone,noselect')
 opt('g', 'shortmess', vim.api.nvim_get_option('shortmess') .. 'cW')

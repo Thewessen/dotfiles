@@ -3,10 +3,10 @@ local root_pattern = lspconfig.util.root_pattern
 -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local lsp_attach = function (client)
-  local opt = {buffer = true, noremap = true, silent = true}
+  local opt = {buffer = true, noremap = true, silent = false}
   vim.keymap.set('n', '<c-]>', vim.lsp.buf.definition, opt)
-  vim.keymap.set('n', 'K', vim.lsp.diagnostic.show_line_diagnostics, opt)
-  vim.keymap.set('v', 'F', vim.lsp.buf.range_formatting, opt)
+  vim.keymap.set('n', 'K', vim.diagnostic.open_float, opt)
+  vim.keymap.set('v', 'F', vim.lsp.buf.format, opt)
   vim.keymap.set('n', '<c-k>', require'functions'.lsp_info, opt)
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
   print('lsp attached: ' .. client.name)

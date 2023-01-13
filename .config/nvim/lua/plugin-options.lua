@@ -52,6 +52,7 @@ set('user_emmet_install_global', false)
 set('ranger_replace_netrw', 0)
 
 set('db_ui_show_database_icon', true)
+set('db_ui_save_location', '~/db_ui_queries')
 set('db_ui_use_nerd_fonts', true)
 set('db_ui_show_help', false)
 set('db_ui_force_echo_notifications', true)
@@ -140,17 +141,7 @@ require'nvim-treesitter.configs'.setup{
       show_help = '?',
     },
   },
-  highlight = {
-    enable = true,
-    custom_captures = {
-      ["exclude"] = "PreProc",
-      ["tag"] = "Tag",
-      ["function"] = "Function",
-      ["variable.name"] = "Normal",
-      ["object.name"] = "Normal",
-      ["variable.declarator"] = "Type",
-    }
-  },
+  highlight = { enable = true },
   indent = { enable = true },
   incremental_selection = {
     enable = true,

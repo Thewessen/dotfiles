@@ -16,6 +16,7 @@ let g:colors_name = "sthew"
 hi link Constant Normal
 hi link EndOfBuffer Normal
 hi link vimParenSep Noise
+hi link @variable.name Normal
 
 " Global
 hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE

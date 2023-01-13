@@ -152,16 +152,16 @@ font:
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
    x: 0
-   # y: 20
-   y: 32
+   y: 16
+   # y: 24
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
   # increasing `y` moves the glyph upwards.
   glyph_offset:
    x: 0
-   # y: 10
-   y: 16
+   y: 8
+   # y: 12
 
   # Thin stroke font rendering (macOS only)
   #
@@ -212,9 +212,9 @@ colors:
   # Colors which should be used to draw the selection area. If selection
   # background is unset, selection color will be the inverse of the cell colors.
   # If only text is unset the cell text color will remain the same.
-  # selection:
+  selection:
    # text: '0xFFFF7D'
-   # background: '0x404040'
+   background: '0x404040'
 
   # Normal colors
   normal:
@@ -232,9 +232,9 @@ colors:
    white:   '0x878787'
 
   # Bright colors
-  #bright:
+  # bright:
   #  black:   '0x666666'
-  #  red:     '0xff3334'
+   # red:     '0xff3334'
   #  green:   '0x9ec400'
   #  yellow:  '0xe7c547'
   #  blue:    '0x7aa6da'
@@ -246,9 +246,9 @@ colors:
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
-  #dim:
-  #  black:   '0x000000'
-  #  red:     '0x8c3336'
+  # dim:
+   # black:   '0x000000'
+   # red:     '0x8c3336'
   #  green:   '0x7a8530'
   #  yellow:  '0x97822e'
   #  blue:    '0x506d8f'
