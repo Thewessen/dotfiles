@@ -10,35 +10,8 @@ fi
 
 export TERM="alacritty"
 
-# start with light backgroud
-# if [ -f ~/bin/toggle-bg ]; then
-#   ~/bin/toggle-bg
-# fi
-# some colors
-export BACKGROUND="light"
-export BG_FOREGROUND=230
-export BG_BACKGROUND=16
-export BG_RED=124
-export BG_GREEN=22
-export BG_BLUE=19
-export BG_BROWN=130
-export BG_YELLOW=166
-export BG_GRAY=240
-export BG_DARK_GRAY=233
-# dark
-# export BACKGROUND="dark"
-# export BG_BACKGROUND=0
-# export BG_RED=197
-# export BG_GREEN=148
-# export BG_BLUE=117
-# export BG_BROWN=144
-# export BG_YELLOW=178
-# export BG_GRAY=102
-# export BG_DARK_GRAY=242
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export HIGHLIGHT_STYLE="monokai"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -101,7 +74,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker docker-compose)
+plugins=(git tmux docker docker-compose z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,11 +100,7 @@ zman() {
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -232,9 +201,10 @@ fi
 # complete aliases before autocompletion
 unsetopt completealiases
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 
 alias luamake=/Users/samuelthewessen/.local/lua-language-server/3rd/luamake/luamake
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
