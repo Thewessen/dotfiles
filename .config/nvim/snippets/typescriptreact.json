@@ -1,0 +1,10 @@
+{
+  "useState": {
+    "prefix": "hs",
+    "body": "const [${1:state}, ${2:setState}] = useState<${3:any}>(${4:null})${0}"
+  },
+  "useEffect": {
+    "prefix": "he",
+    "body": "useEffect(() => {\n\t${1}\n},[${2}])${0}"
+  }
+}

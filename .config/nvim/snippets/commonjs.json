@@ -1,0 +1,49 @@
+{
+  "console.log": {
+    "prefix": "log",
+    "body": "console.log(${1})${0}"
+  },
+  "console.error": {
+    "prefix": "err",
+    "body": "console.error(${1})${0}"
+  },
+  "console.warn": {
+    "prefix": "warn",
+    "body": "console.warn(${1})${0}"
+  },
+  "constructor": {
+    "prefix": "con",
+    "body": "constructor () {\n\t${0}\n}"
+  },
+  "JSON.stringify()": {
+    "prefix": "js",
+    "body": "JSON.stringify($0)"
+  },
+  "JSON.parse()": {
+    "prefix": "jp",
+    "body": "JSON.parse($0)"
+  },
+  "arrow function": {
+    "prefix": "af",
+    "body": "(${1:arg}) => ${2:statement}"
+  },
+  "arrow function complete": {
+    "prefix": "aff",
+    "body": ["(${1:arg}) => {","  ${2}","}${0}"]
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": ["if (${1:condition}) {", "\t$0", "}"],
+    "description": "If Statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": ["if (${1:condition}) {", "\t$0", "} else {", "\t", "}"],
+    "description": "If-Else Statement"
+  },
+  "Try-Catch Statement": {
+    "prefix": "tc",
+    "body": ["try {", "\t$1", "} catch (${2:err}) {", "\t${2}", "}${0}"],
+    "description": "Try-Catch Statement"
+  }
+}
