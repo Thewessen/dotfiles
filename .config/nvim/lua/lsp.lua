@@ -1,6 +1,6 @@
 local lspconfig = require('lspconfig')
 local root_pattern = lspconfig.util.root_pattern
--- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('coq').lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local lsp_attach = function (client)
   local opt = {buffer = true, noremap = true, silent = false}
@@ -47,25 +47,20 @@ lspconfig.pylsp.setup{
 }
 
 -- lua
-local sumneko_path = vim.env.HOME .. '/.local/lua-language-server'
-lspconfig.sumneko_lua.setup{
-  cmd = {sumneko_path .. '/bin/macOs/lua-language-server', '-E', sumneko_path .. '/main.lua'},
+lspconfig.lua_ls.setup{
+  cmd = {"lua-language-server"},
   on_attach = lsp_attach,
   -- capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
         version = 'LuaJIT',
-        path = vim.split(package.path, ';')
       },
       diagnostics = {
-        globals = {'vim','hs','dump'},
+        globals = {'vim', 'hs', 'dump'},
       },
       workspace = {
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        }
+        library = vim.api.nvim_get_runtime_file("", true),
       },
       telemetry = {
         enable = false,
@@ -76,7 +71,7 @@ lspconfig.sumneko_lua.setup{
 
 -- json
 lspconfig.jsonls.setup{
-    cmd = { "vscode-json-language-server", "--stdio" },
+    cmd = { "vscode-json-languageserver", "--stdio" },
     on_attach = lsp_attach,
     filetypes = { "json" },
     init_options = {

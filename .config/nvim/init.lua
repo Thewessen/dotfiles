@@ -13,16 +13,24 @@ function _G.lsp_info()
   end
 end
 
+vim.loader.enable()
+
+-- Load .env file before plugins
+require('dotenv').setup({
+  verbose = true
+})
 require('plugins')
 require('plugin-options')
 require('options')
-require('colors')
 require('commands')
 require('autocommands')
+require('colors')
 require('leader-mappings')
 require('other-mappings')
 require('lsp')
 require('work-related')
+
+cmd('source ~/.config/nvim/linkcolors.vim')
 
 -- A vim.api for creating user command is on its way
 -- https://github.com/neovim/neovim/pull/11613

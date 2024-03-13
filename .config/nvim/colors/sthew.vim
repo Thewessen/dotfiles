@@ -22,6 +22,7 @@ hi IncSearch term=reverse cterm=reverse ctermfg=3 ctermbg=NONE
 hi PmenuSel ctermfg=NONE ctermbg=NONE cterm=reverse
 hi Underlined cterm=underline
 
+hi Normal ctermfg=8 ctermbg=NONE
 if &t_Co > 255
     hi Directory ctermfg=144
     hi Wildmenu ctermfg=232 ctermbg=214 cterm=NONE
@@ -97,15 +98,15 @@ if &t_Co > 255
         hi LspDiagnosticsDefaultWarning ctermfg=3
         hi LspDiagnosticsDefaultError ctermfg=1 cterm=bold
       " ---
-        hi Normal ctermfg=232 ctermbg=NONE
-        hi Label ctermfg=162
+        hi Normal ctermfg=232 guifg='#000' guibg=NONE
+        hi Label ctermfg=162 guifg='#E84998' guibg=NONE
         hi Visual ctermbg=252
-        hi Delimiter ctermfg=102
+        hi Delimiter ctermfg=102 guifg='#A2A2A2' guibg=NONE
         hi CursorLine ctermbg=255 cterm=underline
         hi CursorLineNr ctermfg=240 ctermbg=NONE
-        hi ColorColumn ctermbg=NONE
+        hi ColorColumn ctermbg=NONE guibg=NONE
         hi LineNr ctermfg=102 ctermbg=NONE cterm=NONE
-        hi StatusLine ctermfg=242 ctermbg=NONE cterm=underline
+        hi StatusLine ctermfg=242 ctermbg=NONE cterm=underline guifg='#A2A2A2' guibg=NONE
         hi StatusLineNC ctermfg=242 ctermbg=NONE cterm=underline
         hi VertSplit ctermfg=239 ctermbg=NONE cterm=NONE
         hi Title ctermfg=232 ctermbg=NONE cterm=bold

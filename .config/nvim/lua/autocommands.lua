@@ -54,7 +54,7 @@ autocmd('BufWritePost', {
 })
 autocmd('BufWritePost', {
   pattern = {'.aliases','.aliases_work','.zshrc'},
-  callback = (function() os.execute('source ~/.zshrc') end),
+  callback = (function() vim.cmd('!source ~/.zshrc') end),
   group = 'source'
 })
 

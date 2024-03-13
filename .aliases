@@ -6,8 +6,9 @@
 # ==================================================================
 
 # commit to dot repo
-alias dot='/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dss='dot branch --show-current && dot diff --compact-summary'
+alias dotdiff='dot branch --show-current && dot diff'
 alias dcm='dot commit -m'
 alias dotall='for file in $(dot diff --name-only); do; dot add $file; done'
 
@@ -17,6 +18,10 @@ alias vig='nvim +Gstatus -c ":only"'
 # =================================
 #             General
 # =================================
+
+# Use different TERM for ssh
+alias ssh='TERM=xterm-256color ssh'
+
 # For mac
 alias ctags='/usr/local/bin/ctags'
 alias pstree='pstree -aclp'

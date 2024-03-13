@@ -9,7 +9,7 @@ local bookmark = {
   node = '~/hypotheekbond/monorepo/yarn-workspace-packages/node_package',
   smoke = '~/hypotheekbond/monorepo/yarn-workspace-packages/storybook-smoke-test',
   workspaces = '~/hypotheekbond/monorepo/yarn-workspace-packages',
-  web = '~/hypotheekbond/monorepo/apps/web',
+  ['ins-api'] = '~/hypotheekbond/monorepo/apps/insurance-api',
   pdf = '~/hypotheekbond/monorepo/apps/pdf-service',
   duurzaam = '~/hypotheekbond/monorepo/apps/duurzaamheidsprofiel',
   munt = '~/hypotheekbond/monorepo/apps/munt-bespaarcheck',
@@ -48,7 +48,7 @@ cmd('YankFileLineNr', f.yankFileLineNumber, {desc = {'Copy current file and line
 -- use fzf to find and checkout a branch
 cmd('GCheckout', function()
   vim.fn['fzf#vim#grep'](
-    "git branch --remotes --sort=-committerdate --no-merged | sed 's#origin[^/]*/##'", 0,
+    "git branch --all --sort=-committerdate --no-merged", 0,
     { sink = f.checkoutBranchFzf }, 0)
 end, {nargs = 0, bang = true, desc = {'Use fzf to find and checkout a branch'}})
 

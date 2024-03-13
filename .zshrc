@@ -1,3 +1,9 @@
+# Add work aliases
+# These contain dir-hashes, so they go above instant prompt
+if [ -f ~/.aliases_work ]; then 
+  . ~/.aliases_work
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -8,7 +14,7 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export TERM="alacritty"
+# export TERM="alacritty"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -105,6 +111,9 @@ export EDITOR='nvim'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Add environment variables
+[ -f ~/.env ] && source ~/.env
+
 # Path to dotfiles bin
 PATH="$PATH:$HOME/bin"
 
@@ -119,6 +128,12 @@ export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 
 # Path to python3.9
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+
+# Path to python3.11
+export PATH="$PATH:$HOME/Library/Python/3.11/bin"
+
+# Path to postgresql
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 
 # cmd for reading file with <file (empty pipe)
 export READNULLCMD="bat"
@@ -177,6 +192,8 @@ export FZF_DEFAULT_OPTS="--color=light --preview-window=down"
 
 export NODE_OPTIONS="--max-old-space-size=8192"
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # source fzf extra commands
 [[ -e "$HOME/project/fzf-extras.sh" ]] \
   && source $HOME/project/fzf-extras.sh
@@ -195,8 +212,9 @@ if [ -f ~/.aliases ]; then
 elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-# Add work aliases
-[ -f ~/.aliases_work ] && \. ~/.aliases_work
+
+# bitwarden session
+export BW_SESSION="QTRWi/CDACsie4g0+YPzrdQnIBGWbq1qD7XRnwF8iTuL9w0LKvA/TTF3zJqzdNF37JYdbYpS6Fgz4775bMz6zQ=="
 
 # complete aliases before autocompletion
 unsetopt completealiases
@@ -205,6 +223,10 @@ export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 
 alias luamake=/Users/samuelthewessen/.local/lua-language-server/3rd/luamake/luamake
+
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+source /Users/sthewessen/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

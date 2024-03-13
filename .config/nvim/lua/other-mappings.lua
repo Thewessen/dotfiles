@@ -18,15 +18,11 @@ map('n', '<c-h>', '<c-w>W', { noremap = true })
 map('t', '<c-\\>', '<c-\\><c-n>', { noremap = true })
 map('n', '<c-d>', '<cmd>q<cr>', { noremap = true })
 map('n', '<F10>', '<cmd>TSHighlightCapturesUnderCursor<cr>', { noremap = true, silent = true })
+map('n', '<F11>', '<cmd>TSPlaygroundToggle<cr>', { noremap = true, silent = true })
 
 -- plugins
-map('v', 'c', '<Plug>(vsnip-cut-text)', { expr = false });
 map('n', '<c-p>', '<cmd>Files!<cr>', { noremap = true, silent = true })
 map('n', '\\', ':Abolish -search<space>', { noremap = true })
 map('n', '?', ':Abolish! -search<space>', { noremap = true })
 map('n', 'S', ':%S/', { noremap = true})
 map('v', 'S', ':S/', { noremap = true})
-map('i', '<c-t>', '<Plug>(vsnip-expand-or-jump)', {})
-map('s', '<c-t>', '<Plug>(vsnip-expand-or-jump)', {})
-map('x', '<c-t>', '<Plug>(vsnip-expand-or-jump)', {})
-

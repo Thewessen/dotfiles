@@ -49,6 +49,7 @@ end)
 -- ctrl+1
 hs.hotkey.bind(hyper, "1", function()
     hs.application.launchOrFocus("Alacritty")
+    -- hs.application.launchOrFocus("Microsoft Excel")
     lastKey = "1"
 end)
 
@@ -66,18 +67,21 @@ end)
 -- ctrl+3
 hs.hotkey.bind(hyper, "3", function()
     hs.application.launchOrFocus("Slack")
+    -- hs.application.launchOrFocus("Alacritty")
     lastKey = "3"
 end)
 
 -- ctrl+4
 hs.hotkey.bind(hyper, "4", function()
-    hs.application.launchOrFocus("Jira")
+    hs.application.launchOrFocus("Postman")
+    -- hs.application.launchOrFocus("Microsoft Excel")
     lastKey = "4"
 end)
 
 -- ctrl+5
 hs.hotkey.bind(hyper, "5", function()
-    hs.application.launchOrFocus("Postman")
+    -- hs.application.launchOrFocus("Postman")
+    hs.application.launchOrFocus("Docker Desktop")
     lastKey = "5"
 end)
 
@@ -101,7 +105,7 @@ end)
 
 -- ctrl+9
 hs.hotkey.bind(hyper, "9", function()
-    hs.application.launchOrFocus("Abstract")
+    hs.application.launchOrFocus("Notion")
     lastKey = "9"
 end)
 

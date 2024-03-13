@@ -1,5 +1,13 @@
 local set = vim.api.nvim_set_var
 
+-- completion
+-- set('coq_settings', {
+--   auto_start = 'shut-up',
+--   keymap = {
+--     jump_to_mark = '<c-t>'
+--   }
+-- })
+
 -- lsp
 set('lsp_log_verbose', true)
 set('lsp_log_file', '~/lsp.log')
@@ -37,18 +45,6 @@ set('ale_sign_warning',  '⚠')
 set('ale_php_cs_fixer_use_global', true)
 set('ale_php_cs_standard', 'PSR2')
 
-set('vsnip_snippet_dir', '$HOME/.config/nvim/snippets')
-set('vsnip_filetypes', {
-  javascriptreact = {'commonjs'},
-  typescriptreact = {'commonjs'},
-  javascript = {'commonjs'},
-  typescript = {'commonjs'},
-})
-
-set('user_emmet_leader_key', '<c-n>')
-set('user_emmet_mode', 'i')
-set('user_emmet_install_global', false)
-
 set('ranger_replace_netrw', 0)
 
 set('db_ui_show_database_icon', true)
@@ -59,70 +55,93 @@ set('db_ui_force_echo_notifications', true)
 
 set('netrw_browse_split', 0)
 
-local cmp = require'cmp'
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-    end,
+-- gitsigns config
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
   },
-  mapping = {
-    ['<c-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<c-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<c-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<c-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-    ['<c-n>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-    ['<c-p>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-    ['<cr>'] = cmp.mapping.confirm({ select = true }),
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    interval = 1000,
+    follow_files = true
   },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
-    { name = 'buffer' },
-  })
-})
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000, -- Disable if file is longer than this (in lines)
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
 
--- Use buffer source for `/`.
-cmp.setup.cmdline('/', {
-  sources = {
-    { name = 'buffer' }
-  }
-})
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
 
--- Use cmdline & path source for ':'
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+    -- -- Navigation
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    -- -- Actions
+    -- map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+    -- map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+    -- map('n', '<leader>hS', gs.stage_buffer)
+    -- map('n', '<leader>hu', gs.undo_stage_hunk)
+    -- map('n', '<leader>hR', gs.reset_buffer)
+    -- map('n', '<leader>hp', gs.preview_hunk)
+    -- map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    -- map('n', '<leader>tb', gs.toggle_current_line_blame)
+    -- map('n', '<leader>hd', gs.diffthis)
+    -- map('n', '<leader>hD', function() gs.diffthis('~') end)
+    -- map('n', '<leader>td', gs.toggle_deleted)
+
+    -- -- Text object
+    -- map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end
+}
+
 
 -- treesitter config
 require'nvim-treesitter.configs'.setup{
+  auto_install = false,
+  sync_install = false,
   playground = {
     enable = false,
     disable = {},
@@ -141,8 +160,16 @@ require'nvim-treesitter.configs'.setup{
       show_help = '?',
     },
   },
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["@parameter"] = "Normal",
+    },
+  },
   indent = { enable = true },
+  textobjects = { enable = true },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -153,24 +180,3 @@ require'nvim-treesitter.configs'.setup{
     },
   }
 }
-
-require'telescope'.setup{
-  defaults = {
-    layout_strategy = 'vertical',
-    layout_config = {
-      anchor = "S",
-      height = { padding = 1 },
-      preview_height = 0.65,
-      width = 0.9999,
-    },
-  },
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = 'smart_case',
-    }
-  }
-}
-require'telescope'.load_extension('fzf')

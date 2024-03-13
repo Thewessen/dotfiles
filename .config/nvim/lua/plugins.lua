@@ -4,6 +4,24 @@ return require('packer').startup(function(use)
 	-- package manager
 	use 'wbthomason/packer.nvim'
 
+  -- github copilot
+  use 'github/copilot.vim'
+  -- ChatGPT
+  use {
+     'dpayne/CodeGPT.nvim',
+     requires = {
+        'MunifTanjim/nui.nvim',
+        'nvim-lua/plenary.nvim',
+     },
+     config = function()
+        require('codegpt.config')
+
+        vim.g["codegpt_openai_api_key"] = vim.env['AZURE_OPENAI_KEY']
+        vim.g["codegpt_chat_completions_url"] = "https://devdiasopenai.openai.azure.com/openai/deployments/GPT-35-Turbo/chat/completions?api-version=2024-02-15-preview"
+        vim.g["codegpt_openai_api_provider"] = "Azure"
+     end
+  }
+
   -- lua helpers
   use 'nvim-lua/plenary.nvim'
 
@@ -12,19 +30,12 @@ return require('packer').startup(function(use)
   use 'nvim-treesitter/playground'
   use 'neovim/nvim-lspconfig'
 
-
 	-- file/buffer-browser
 	use {'junegunn/fzf.vim', requires = {'junegunn/fzf', run = function() vim.fn['fzf#intall']() end}}
-  use {'nvim-telescope/telescope.nvim', requires = {'nvim-lua/popup.nvim'}}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
   -- lsp
-  use {'hrsh7th/nvim-cmp', requires = {
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline'
-  }}
+  -- use 'ms-jpq/coq_nvim'
+  -- use 'ms-jpq/coq.artifacts'
 
 	-- tpope is king
 	use 'tpope/vim-dispatch'
@@ -36,17 +47,9 @@ return require('packer').startup(function(use)
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-vinegar'
 	use 'tpope/vim-ragtag'
+  use 'tpope/vim-dadbod'
 
 	-- coding helpers
-  use 'hrsh7th/vim-vsnip'
-  use 'hrsh7th/cmp-vsnip'
-
-	use {
-		'w0rp/ale',
-		cmd = 'ALEToggle',
-		config = 'vim.cmd[[ALEEnable]]'
-	}
-  -- use {'mattn/emmet-vim', ft = {'javascriptreact','typescriptreact','html'}, config = 'vim.cmd[[EmmetInstall]]'}
   use {
     'phpactor/phpactor',
     ft = {'php'},
@@ -57,7 +60,12 @@ return require('packer').startup(function(use)
   use 'vim-test/vim-test'
 
   -- databases
-  use 'tpope/vim-dadbod'
   use 'kristijanhusak/vim-dadbod-ui'
   use 'kristijanhusak/vim-dadbod-completion'
+
+  -- git
+  use 'lewis6991/gitsigns.nvim'
+
+  -- colors
+  use 'folke/tokyonight.nvim'
 end)

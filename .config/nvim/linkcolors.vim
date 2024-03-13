@@ -2,6 +2,18 @@
 " =============== S. Thewessen vim-color links =====================
 " ==================================================================
 
+hi! link @parameter Normal
+hi! link @property Normal
+hi! link @variable Normal
+hi! link @type Type
+hi! link @constructor Operator
+hi! link @tag.attribute Normal
+hi! link @tag.delimiter Noise
+
+hi! link @lsp.type.parameter Normal
+hi! link @lsp.type.property Normal
+hi! link @lsp.type.variable Normal
+
 " hi link typescriptObjectLabel Normal
 " hi link typescriptObjectMethod Normal
 hi link typescriptMember typescriptObjectLabel
@@ -21,6 +33,8 @@ hi link typescriptTemplateSB Noise
 hi link typescriptTypeReference Special
 
 hi link tsxTagName Operator
+hi link tsxAttrib Normal
+hi link tsxTag Noise
 
 hi link jsxAttrib Normal
 hi link jsxComponentName Operator

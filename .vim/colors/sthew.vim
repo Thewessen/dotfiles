@@ -3,6 +3,13 @@
 " ==================================================================
 " Color-scheme heavely inspired by Monokai colorscheme
 
+" You might have to force true color when using regular vim inside tmux as the
+" colorscheme can appear to be grayscale with "termguicolors" option enabled.
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\|xterm\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
 if v:version > 600
   hi clear
 endif
