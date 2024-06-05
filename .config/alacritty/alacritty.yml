@@ -84,6 +84,7 @@ window:
   # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
   # Set this to `None` to use the default theme variant.
   #gtk_theme_variant: None
+  decorations_theme_variant: "Light"
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -195,7 +196,7 @@ colors:
   primary:
    background: '0xfefeff'
    # background: '0x000000'
-   foreground: '0x000000'
+   # foreground: '0x000000'
    # foreground: '0xffffd7'
 
     # Bright and dim foreground colors
@@ -225,18 +226,18 @@ colors:
 
   # Normal colors
   normal:
-   black:   '0x000000'
-   red:     '0xd54e53'
+   # black:   '0x000000'
+   # red:     '0xffc2c4'
    # green:   '0xb9ca4a'
-   green:   '0x005f00'
+   # green:   '0x005f00'
   #  yellow:  '0xe6c547'
-   yellow:  '0xaf5f00'
+   # yellow:  '0xaf5f00'
    # blue:    '0x7aa6da'
-   blue:    '0x0000d7'
-   magenta: '0xc397d8'
-   cyan:    '0x70c0ba'
+   # blue:    '0x0000d7'
+   # magenta: '0xc397d8'
+   # cyan:    '0x70c0ba'
    # white:   '0xeaeaea'
-   white:   '0x878787'
+   # white:   '0x878787'
 
   # Bright colors
   # bright:

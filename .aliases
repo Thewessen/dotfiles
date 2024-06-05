@@ -61,17 +61,22 @@ alias dud='du -d 1 -h'
 alias duf='du -cksh *'
 
 # Brew install coreutils
-if type lsd >/dev/null; then
+if type eza >/dev/null; then
+  alias ls='eza --group-directories-first'
+elif type lsd >/dev/null; then
   alias ls='lsd --group-dirs first --color=never --date="+%d-%m-%y %H:%M:%S"'
 fi
 # ls on mac doesn't support long option format
-alias l='ls -lFh'
-alias ll='ls -l'
-alias la='ls -lAFh'
-alias lr='ls -tRFh'
-alias lt='ls -ltFh'
+alias l='ls -l'
+alias ll='ls -lh'
+alias la='ls -lA'
+alias lr='ls -tR'
+alias lt='ls -lt'
 alias ldot='ls -d .*'
-if type lsd >/dev/null; then
+if type eza >/dev/null; then
+  # for eza only
+  alias lt='eza -lhuU --changed --group-directories-first'
+elif type lsd >/dev/null; then
   # for lsd only
   alias l='lsd --blocks=name,date --date="+%d-%m-%y %H:%M:%S" --group-dirs=first --color=always'
   alias la='lsd -A --blocks=name,date --date="+%d-%m-%y %H:%M:%S" --group-dirs=first --color=always'

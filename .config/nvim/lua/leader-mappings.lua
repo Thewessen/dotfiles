@@ -18,7 +18,7 @@ map('n', '<leader>,', '<cmd>w<cr>', { noremap = true, silent = true })
 map('n', '<leader>D', '<cmd>DiffSaved<cr>', { noremap = true, silent = true })
 map('n', '<leader>R', '<cmd>luafile ~/.config/nvim/init.lua<cr><cmd>echo "config loaded..."<cr>', { noremap = true })
 map('n', '<leader>Y', '<cmd>YankFileLineNr<cr>', { noremap = true })
-map('n', '<leader><space>', ':Search<space>', { noremap = true })
+map('n', '<leader><space>', ':Chat<space>', { noremap = true })
 
 -- edit
 map('n', '<leader>e', '<cmd>Config<cr>', { noremap = true })

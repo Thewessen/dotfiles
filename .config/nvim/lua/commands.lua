@@ -69,3 +69,4 @@ cmd('FormatJSON', function() vim.cmd([[%!python3 -m json.tool]]) end, {desc = {'
 
 cmd('Htop', function() os.execute('tmux split-pane htop') end, {desc = {'Display `htop` in tmux split-pane'}})
 cmd('Search', f.searchWeb, {nargs = 1, desc = {'Browse the web with given query'}})
+cmd('Tabnew', [[Start nvim]], {desc = {'Open a new tab for nvim using tmux'}})

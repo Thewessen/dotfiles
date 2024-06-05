@@ -57,4 +57,8 @@ autocmd('BufWritePost', {
   callback = (function() vim.cmd('!source ~/.zshrc') end),
   group = 'source'
 })
-
+autocmd({'BufNewFile', 'BufRead'}, {
+  pattern = {'*.blade.php'},
+  callback = (function() vim.cmd('set ft=blade') end),
+  group = 'source'
+})

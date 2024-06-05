@@ -7,9 +7,9 @@ fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -23,7 +23,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="sthew"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -57,7 +57,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Remove RPROMTP after command execution
-# setopt TRANSIENT_RPROMPT
+setopt TRANSIENT_RPROMPT
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -80,7 +80,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker docker-compose z)
+plugins=(git tmux docker docker-compose z zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -88,8 +88,15 @@ source $ZSH/oh-my-zsh.sh
 
 # zsh autocmpl functions
 fpath+=~/.zsh_functions
+# fpath+=~/.oh-my-zsh/custom/plugins/vendor-completions
 
+# extra zsh-completions
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+
+# autoload all fpath functions
 autoload -Uz $HOME/.zsh_functions/[^_]*(:t)
+autoload -Uz compinit
+compinit -u
 
 # Use wildcard in history search
 bindkey "^R" history-incremental-pattern-search-backward
@@ -122,6 +129,9 @@ PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Path to other bin
 PATH="$PATH:$HOME/.local/bin"
+
+# Path to cargo
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # Path to python3.8
 export PATH="$PATH:$HOME/Library/Python/3.8/bin"
@@ -194,6 +204,9 @@ export NODE_OPTIONS="--max-old-space-size=8192"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+export DOCKER_SCOUT_SUGGEST=false
+export DOCKER_CLI_HINTS=false
+
 # source fzf extra commands
 [[ -e "$HOME/project/fzf-extras.sh" ]] \
   && source $HOME/project/fzf-extras.sh
@@ -213,9 +226,6 @@ elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# bitwarden session
-export BW_SESSION="QTRWi/CDACsie4g0+YPzrdQnIBGWbq1qD7XRnwF8iTuL9w0LKvA/TTF3zJqzdNF37JYdbYpS6Fgz4775bMz6zQ=="
-
 # complete aliases before autocompletion
 unsetopt completealiases
 
@@ -229,4 +239,4 @@ export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 source /Users/sthewessen/.docker/init-zsh.sh || true # Added by Docker Desktop
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

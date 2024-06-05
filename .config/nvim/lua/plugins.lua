@@ -1,9 +1,13 @@
 vim.cmd [[packadd packer.nvim]]
 
+package.path = package.path .. ';./plugin-configs/'
+
 return require('packer').startup(function(use)
 	-- package manager
 	use 'wbthomason/packer.nvim'
 
+  -- autocompletion
+  use {'neoclide/coc.nvim', branch = 'release'}
   -- github copilot
   use 'github/copilot.vim'
   -- ChatGPT
@@ -26,12 +30,21 @@ return require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   -- treesitter
-  use { 'nvim-treesitter/nvim-treesitter', run = [[:TSUpdate]] }
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = [[:TSUpdate]],
+  }
   use 'nvim-treesitter/playground'
   use 'neovim/nvim-lspconfig'
 
 	-- file/buffer-browser
-	use {'junegunn/fzf.vim', requires = {'junegunn/fzf', run = function() vim.fn['fzf#intall']() end}}
+	use {
+    'junegunn/fzf.vim',
+    requires = {
+      'junegunn/fzf',
+      run = function() vim.fn['fzf#intall']() end
+    }
+  }
 
   -- lsp
   -- use 'ms-jpq/coq_nvim'
@@ -52,20 +65,36 @@ return require('packer').startup(function(use)
 	-- coding helpers
   use {
     'phpactor/phpactor',
-    ft = {'php'},
+    ft = 'php',
     run = 'composer install --no-dev -o'
   }
 
   -- tests
-  use 'vim-test/vim-test'
+  use {
+    'vim-test/vim-test',
+    cmd = { 'TestFile' },
+    config = function()
+      vim.g['test#strategy'] = 'dispatch'
+      vim.g['test#php#phpunit#executable'] = 'dre ./vendor/bin/phpunit'
+      vim.g['test#javascript#jest#options'] = '--watch'
+      -- vim.api.nvim_set_var('test#strategy', 'dispatch')
+    end,
+    opt = true
+  }
 
   -- databases
-  use 'kristijanhusak/vim-dadbod-ui'
+  use {
+    'kristijanhusak/vim-dadbod-ui',
+    config = function()
+      vim.g.db_ui_show_database_icon = true
+      vim.g.db_ui_save_location = '~/db_ui_queries'
+      vim.g.db_ui_use_nerd_fonts = true
+      vim.g.db_ui_show_help = false
+      vim.g.db_ui_force_echo_notifications = true
+    end
+  }
   use 'kristijanhusak/vim-dadbod-completion'
 
   -- git
   use 'lewis6991/gitsigns.nvim'
-
-  -- colors
-  use 'folke/tokyonight.nvim'
 end)

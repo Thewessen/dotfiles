@@ -26,3 +26,8 @@ map('n', '\\', ':Abolish -search<space>', { noremap = true })
 map('n', '?', ':Abolish! -search<space>', { noremap = true })
 map('n', 'S', ':%S/', { noremap = true})
 map('v', 'S', ':S/', { noremap = true})
+-- map('i', '<c-k>', 'copilot#Accept("<CR>")', { noremap = true, silent = true, expr = true, script = true })
+map('i', '<c-j>', '<cmd>Copilot panel<CR>', { noremap = true, silent = true, expr = true, script = true })
+
+local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+map("i", "<C-k>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)

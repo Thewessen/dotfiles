@@ -100,7 +100,7 @@ if &t_Co > 255
       " ---
         hi Normal ctermfg=232 guifg='#000' guibg=NONE
         hi Label ctermfg=162 guifg='#E84998' guibg=NONE
-        hi Visual ctermbg=252
+        hi Visual ctermbg=252 ctermfg=NONE
         hi Delimiter ctermfg=102 guifg='#A2A2A2' guibg=NONE
         hi CursorLine ctermbg=255 cterm=underline
         hi CursorLineNr ctermfg=240 ctermbg=NONE

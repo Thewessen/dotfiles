@@ -78,7 +78,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Remove RPROMTP after command execution
-# setopt TRANSIENT_RPROMPT
+setopt TRANSIENT_RPROMPT
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -151,7 +151,8 @@ export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 # Path to python3.9
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
 
-export PROMPT="%{$fg[green]%}λ%{$reset_color%} "
+export RPROMPT="%{$fg[yellow]%}[%(4~|%-1~/.../%2~|%~)]%{$reset_color%}"
+export PROMPT=" %{$fg[green]%}λ%{$reset_color%} "
 
 # cmd for reading file with <file (empty pipe)
 export READNULLCMD="bat"

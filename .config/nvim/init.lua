@@ -4,21 +4,10 @@ function _G.dump(...)
   print(unpack(objects))
 end
 
--- TODO: create module for personal lua functions
-function _G.lsp_info()
-  local diag = vim.lsp.diagnostic.get_line_diagnostics()
-  if next(diag) ~= nil then
-    vim.cmd('3split new')
-    vim.api.nvim_buf_set_lines(0, 0, 0, { diag.message }, nil)
-  end
-end
-
 vim.loader.enable()
 
 -- Load .env file before plugins
-require('dotenv').setup({
-  verbose = true
-})
+require('dotenv').setup()
 require('plugins')
 require('plugin-options')
 require('options')
@@ -30,18 +19,14 @@ require('other-mappings')
 require('lsp')
 require('work-related')
 
-cmd('source ~/.config/nvim/linkcolors.vim')
-
--- A vim.api for creating user command is on its way
--- https://github.com/neovim/neovim/pull/11613
--- cmd('source ~/.config/nvim/commands.vim')
+cmd('source ~/.config/nvim/vimscript/linkcolors.vim')
 
 -- A vim.api for creating autocommand is on its way
 -- https://github.com/neovim/neovim/pull/11613
-cmd('source ~/.config/nvim/autocommands.vim')
+cmd('source ~/.config/nvim/vimscript/autocommands.vim')
 
 -- some more fancy custom commands (fzf)
-cmd('source ~/.config/nvim/docker.vim')
-cmd('source ~/.config/nvim/edit-config.vim')
-cmd('source ~/.config/nvim/start-queue.vim')
-cmd('source ~/.config/nvim/quickfix-fzf.vim')
+cmd('source ~/.config/nvim/vimscript/docker.vim')
+cmd('source ~/.config/nvim/vimscript/edit-config.vim')
+cmd('source ~/.config/nvim/vimscript/start-queue.vim')
+cmd('source ~/.config/nvim/vimscript/quickfix-fzf.vim')
