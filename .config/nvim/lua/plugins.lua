@@ -1,89 +1,153 @@
-vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-package.path = package.path .. ';./plugin-configs/'
-
-return require('packer').startup(function(use)
-	-- package manager
-	use 'wbthomason/packer.nvim'
-
-  -- autocompletion
-  use {'neoclide/coc.nvim', branch = 'release'}
-  -- github copilot
-  use 'github/copilot.vim'
-  -- ChatGPT
-  use {
-     'dpayne/CodeGPT.nvim',
-     requires = {
-        'MunifTanjim/nui.nvim',
-        'nvim-lua/plenary.nvim',
-     },
-     config = function()
-        require('codegpt.config')
-
-        vim.g["codegpt_openai_api_key"] = vim.env['AZURE_OPENAI_KEY']
-        vim.g["codegpt_chat_completions_url"] = "https://devdiasopenai.openai.azure.com/openai/deployments/GPT-35-Turbo/chat/completions?api-version=2024-02-15-preview"
-        vim.g["codegpt_openai_api_provider"] = "Azure"
-     end
-  }
-
-  -- lua helpers
-  use 'nvim-lua/plenary.nvim'
-
-  -- treesitter
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = [[:TSUpdate]],
-  }
-  use 'nvim-treesitter/playground'
-  use 'neovim/nvim-lspconfig'
-
-	-- file/buffer-browser
-	use {
-    'junegunn/fzf.vim',
-    requires = {
-      'junegunn/fzf',
-      run = function() vim.fn['fzf#intall']() end
-    }
-  }
+require('lazy').setup({
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+    config = true,
+  },
+   -- autocompletion
+   { 'neoclide/coc.nvim', branch = 'release' },
 
   -- lsp
-  -- use 'ms-jpq/coq_nvim'
-  -- use 'ms-jpq/coq.artifacts'
-
-	-- tpope is king
-	use 'tpope/vim-dispatch'
-	use 'tpope/vim-surround'
-	use 'tpope/vim-commentary'
-	use 'tpope/vim-fugitive'
-	-- use 'tpope/vim-repeat'
-	use 'tpope/vim-abolish'
-  use 'tpope/vim-unimpaired'
-  use 'tpope/vim-vinegar'
-	use 'tpope/vim-ragtag'
-  use 'tpope/vim-dadbod'
-
-	-- coding helpers
-  use {
+  'ms-jpq/coq_nvim',
+  'ms-jpq/coq.artifacts',
+  {
     'phpactor/phpactor',
     ft = 'php',
-    run = 'composer install --no-dev -o'
-  }
+    build = 'composer install --no-dev -o'
+  },
+  'EmranMR/tree-sitter-blade',
 
-  -- tests
-  use {
-    'vim-test/vim-test',
-    cmd = { 'TestFile' },
+   -- github copilot
+  'github/copilot.vim',
+
+  -- Cursor like AI
+  {
+    'harjotgill/CodeGPT.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+    },
     config = function()
-      vim.g['test#strategy'] = 'dispatch'
-      vim.g['test#php#phpunit#executable'] = 'dre ./vendor/bin/phpunit'
-      vim.g['test#javascript#jest#options'] = '--watch'
-      -- vim.api.nvim_set_var('test#strategy', 'dispatch')
-    end,
-    opt = true
-  }
+        require("codegpt.config")
+        vim.g["codegpt_openai_api_key"] = vim.env['AZURE_OPENAI_API_KEY']
+        vim.g["codegpt_chat_completions_url"] = "https://dev-sw-ao.openai.azure.com/openai/deployments/GPT-35-Turbo/chat/completions?api-version=2024-02-15-preview"
+        vim.g["codegpt_openai_api_provider"] = "Azure"
+    end
+  },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    opts = {
+      provider = "azure",
+      endpoint = "https://dev-sw-ao.openai.azure.com",
+      deployment = "GPT-4-32k",
+      api_version = "2024-05-01-preview",
+      timeout = 30000,
+      temperature = 0,
+      max_tokens = 4096,
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    behavior = {
+      auto_apply_diff_after_generation = true,
+    },
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      -- "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      -- "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      -- "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
+
+  -- treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+  },
+  'nvim-treesitter/playground',
+  'neovim/nvim-lspconfig',
+
+  -- lua helpers
+  'nvim-lua/plenary.nvim',
+
+  -- file/buffer-browser
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "echasnovski/mini.icons" },
+    opts = {}
+  },
+  -- {
+  --   'junegunn/fzf.vim',
+  --   dependencies = {
+  --     'junegunn/fzf',
+  --     build = "./install --all"
+  --   },
+  -- },
+
+  -- tpope is king
+  'tpope/vim-dispatch',
+  'tpope/vim-surround',
+  'tpope/vim-commentary',
+  'tpope/vim-fugitive',
+  -- 'tpope/vim-repeat'
+  'tpope/vim-abolish',
+  'tpope/vim-unimpaired',
+  'tpope/vim-vinegar',
+  'tpope/vim-ragtag',
+  'tpope/vim-dadbod',
 
   -- databases
-  use {
+  {
     'kristijanhusak/vim-dadbod-ui',
     config = function()
       vim.g.db_ui_show_database_icon = true
@@ -92,9 +156,92 @@ return require('packer').startup(function(use)
       vim.g.db_ui_show_help = false
       vim.g.db_ui_force_echo_notifications = true
     end
-  }
-  use 'kristijanhusak/vim-dadbod-completion'
+  },
+  'kristijanhusak/vim-dadbod-completion',
+  'pbogut/vim-dadbod-ssh',
 
   -- git
-  use 'lewis6991/gitsigns.nvim'
-end)
+  'lewis6991/gitsigns.nvim',
+
+  -- tests
+  {
+    'vim-test/vim-test',
+    cmd = { 'TestFile' },
+    config = function()
+      vim.g['test#strategy'] = 'dispatch'
+      vim.g['test#php#phpunit#executable'] = 'dre ./vendor/bin/phpunit'
+      vim.g['test#javascript#jest#options'] = '--watch'
+      -- vim.api.nvim_set_var('test#strategy', 'dispatch')
+    end,
+    optional = true
+  },
+
+  -- note-taking
+  {
+    "obsidian-nvim/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+    --   -- refer to `:h file-pattern` for more examples
+    --   "BufReadPre path/to/my-vault/*.md",
+    --   "BufNewFile path/to/my-vault/*.md",
+    -- },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+
+      -- see above for full list of optional dependencies ☝️
+    },
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/vaults/personal",
+        },
+        {
+          name = "work",
+          path = "~/vaults/work",
+        },
+      },
+    },
+  },
+  -- {
+  --   "nvim-neorg/neorg",
+  --   -- dependencies = { "luarocks.nvim" },
+  --   lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+  --   cmd = "Neorg",
+  --   ft = "norg",
+  --   version = "*", -- Pin Neorg to the latest stable release
+  --   config = function()
+  --     require('neorg').setup {
+  --       load = {
+  --         ["core.defaults"] = {},
+  --         ["core.concealer"] = {},
+  --         ["core.completion"] = {
+  --           config = {
+  --             engine = "coq_nvim"
+  --           }
+  --         },
+  --         ["core.dirman"] = {
+  --           config = {
+  --             workspaces = {
+  --               notes = "~/notes",
+  --             },
+  --             default_workspace = "notes",
+  --           },
+  --         },
+  --         ["core.integrations.coq_nvim"] = {},
+  --         ["core.integrations.treesitter"] = {},
+  --         ["core.dirman.utils"] = {},
+  --         ["core.esupports.hop"] = {},
+  --       },
+  --     }
+  --   end
+  -- }
+})

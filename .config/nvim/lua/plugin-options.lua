@@ -64,9 +64,6 @@ require('gitsigns').setup {
     row = 0,
     col = 1
   },
-  yadm = {
-    enable = false
-  },
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
@@ -110,7 +107,43 @@ require('gitsigns').setup {
 
 -- treesitter config
 require'nvim-treesitter.configs'.setup{
-  ensure_installed = {'blade'},
+  ensure_installed = {
+    'bash',
+    'blade',
+    'css',
+    'csv',
+    'dockerfile',
+    'git_config',
+    'git_rebase',
+    'gitattributes',
+    'gitcommit',
+    'gitignore',
+    'graphql',
+    'html',
+    'http',
+    'javascript',
+    'jsdoc',
+    'json',
+    'lua',
+    'luadoc',
+    'markdown',
+    'php',
+    'phpdoc',
+    'python',
+    'rust',
+    'scss',
+    'sql',
+    'ssh_config',
+    'tmux',
+    'tsx',
+    'twig',
+    'typescript',
+    'vim',
+    'vimdoc',
+    'vue',
+    'xml',
+    'yaml',
+  },
   ignore_install = {},
   auto_install = false,
   sync_install = false,
@@ -161,4 +194,13 @@ parser_config.blade = {
     branch = "main",
   },
   filetype = "blade"
+}
+
+require('fzf-lua').setup {
+  winopts = {
+    fullscreen = true,
+    preview = {
+      layout = 'center',
+    },
+  }
 }

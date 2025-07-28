@@ -122,11 +122,11 @@ if &t_Co > 255
         hi Number ctermfg=57
         hi Float ctermfg=57
         hi Comment ctermfg=240 cterm=italic
-        hi Noise ctermfg=102
+        hi Noise ctermfg=240
         hi NonText ctermfg=2
         hi Function ctermfg=22
         hi Operator ctermfg=88
-        hi Conditional ctermfg=88
+        hi Conditional ctermfg=197
         hi Identifier ctermfg=124
         hi PreProc ctermfg=54 cterm=italic
         hi Tag ctermfg=88

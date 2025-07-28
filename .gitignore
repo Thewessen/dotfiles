@@ -9,3 +9,6 @@ tags*
 
 # phpactor config
 .phpactor.json
+
+# php-cs-fixer
+.php-cs-fixer.cache

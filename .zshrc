@@ -7,9 +7,9 @@ fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -80,23 +80,29 @@ setopt TRANSIENT_RPROMPT
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker docker-compose z zsh-autosuggestions)
+# plugins=(git tmux docker docker-compose zsh-autosuggestions)
+plugins=(git tmux docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # zsh autocmpl functions
-fpath+=~/.zsh_functions
-# fpath+=~/.oh-my-zsh/custom/plugins/vendor-completions
-
 # extra zsh-completions
+
+fpath+=~/.zsh_functions
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+# fpath+=~/.oh-my-zsh/custom/plugins/vendor-completions
 
 # autoload all fpath functions
 autoload -Uz $HOME/.zsh_functions/[^_]*(:t)
-autoload -Uz compinit
-compinit -u
+
+# compile all autoloaded functions
+# zcompile -Uz $HOME/.zsh_functions/[^_]*(:t) $HOME/.zsh_functions/zsh_functions.zwc
+
+# This is already done in oh-my-zsh.sh
+# autoload -Uz compinit
+# compinit -C
 
 # Use wildcard in history search
 bindkey "^R" history-incremental-pattern-search-backward
@@ -122,28 +128,31 @@ export EDITOR='nvim'
 [ -f ~/.env ] && source ~/.env
 
 # Path to dotfiles bin
-PATH="$PATH:$HOME/bin"
+# PATH="$PATH:$HOME/bin"
 
 # Path to composer
-PATH="$PATH:$HOME/.composer/vendor/bin"
+# PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Path to other bin
-PATH="$PATH:$HOME/.local/bin"
+# PATH="$PATH:$HOME/.local/bin"
 
 # Path to cargo
-export PATH="$PATH:$HOME/.cargo/bin"
+# export PATH="$PATH:$HOME/.cargo/bin"
 
 # Path to python3.8
-export PATH="$PATH:$HOME/Library/Python/3.8/bin"
+# export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 
 # Path to python3.9
-export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+# export PATH="$PATH:$HOME/Library/Python/3.9/bin"
 
 # Path to python3.11
-export PATH="$PATH:$HOME/Library/Python/3.11/bin"
+# export PATH="$PATH:$HOME/Library/Python/3.11/bin"
 
 # Path to postgresql
-export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
+# export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
+
+# Add custom bin directories to PATH
+export PATH="$PATH:$HOME/bin:$HOME/.composer/vendor/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/Library/Python/3.8/bin:$HOME/Library/Python/3.9/bin:$HOME/Library/Python/3.11/bin:/Applications/Postgres.app/Contents/Versions/latest/bin:/opt/homebrew/opt/mysql/bin"
 
 # cmd for reading file with <file (empty pipe)
 export READNULLCMD="bat"
@@ -214,10 +223,33 @@ export DOCKER_CLI_HINTS=false
   && source $HOME/project/fzf-extras.zsh
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 
-# Node version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Node version manager (VERY SLOW)
+lazy_load_nvm() {
+  unset -f node nvm yarn
+  export NVM_DIR=~/.nvm
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+}
+
+node() {
+  lazy_load_nvm
+  node $@
+}
+
+nvm() {
+  lazy_load_nvm
+  node $@
+}
+
+yarn() {
+  lazy_load_nvm
+  yarn $@
+}
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 4); do /usr/bin/time $shell -i -c exit; done
+}
 
 # Add some aliases
 if [ -f ~/.aliases ]; then
@@ -225,6 +257,8 @@ if [ -f ~/.aliases ]; then
 elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+export AWS_PROFILE='nhb-ecr'
 
 # complete aliases before autocompletion
 unsetopt completealiases
@@ -236,7 +270,9 @@ alias luamake=/Users/samuelthewessen/.local/lua-language-server/3rd/luamake/luam
 
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-source /Users/sthewessen/.docker/init-zsh.sh || true # Added by Docker Desktop
+export SDKROOT="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+
+eval "$(zoxide init zsh)" # zoxide shell completions
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

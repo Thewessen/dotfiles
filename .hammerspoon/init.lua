@@ -100,7 +100,7 @@ end)
 
 -- ctrl+0
 hs.hotkey.bind(hyper, "0", function()
-    hs.application.launchOrFocus("TimeChimp Hypotheekbond")
+    hs.application.launchOrFocus("Cursor")
 end)
 
 hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", function(files) 

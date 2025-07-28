@@ -38,9 +38,9 @@ end, {
 });
 
 -- use fzf to browse through notes taken
-cmd('Notes', function()
-  vim.fn['fzf#vim#grep']('ls $HOME/notes', 0, { sink = {'edit $HOME/notes/'} }, 0)
-end, {nargs = 0, desc = {'Use fzf to browse through notes taken'}})
+-- cmd('Notes', function()
+--   vim.fn['fzf#vim#grep']('ls $HOME/notes', 0, { sink = {'edit $HOME/notes/'} }, 0)
+-- end, {nargs = 0, desc = {'Use fzf to browse through notes taken'}})
 
 -- copy current file and line number to clipboard
 cmd('YankFileLineNr', f.yankFileLineNumber, {desc = {'Copy current file and line number to clipboard'}})
@@ -55,8 +55,8 @@ end, {nargs = 0, bang = true, desc = {'Use fzf to find and checkout a branch'}})
 -- diff current buff with saved file on disc
 cmd('DiffSaved', f.diffSaved, {desc = {'Diff current buff with saved file on disc'}})
 
--- working with csv files
-cmd('FormatCSV', [[%!column -t -s ',']], {desc = {'Create columns from , seperated rows'}})
+-- working with csv files (requires csvkit)
+cmd('FormatCSV', [[%!csvlook -I]], {desc = {'Create columns from , seperated rows'}})
 cmd('JoinCSV', [[%s/ \{2,\}/,/g]], {desc = {'Reverses the CSVColumn command'}})
 
 -- working with xml

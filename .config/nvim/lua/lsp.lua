@@ -9,7 +9,6 @@ local lsp_attach = function (client)
   vim.keymap.set('v', 'F', vim.lsp.buf.format, opt)
   vim.keymap.set('n', '<c-k>', require'functions'.lsp_info, opt)
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
-  print('lsp attached: ' .. client.name)
 end
 
 -- vim
@@ -21,11 +20,14 @@ lspconfig.vimls.setup{
 }
 
 -- js/ts
-lspconfig.tsserver.setup{
+lspconfig.ts_ls.setup{
   cmd = { 'typescript-language-server', '--stdio' },
   on_attach = lsp_attach,
-  filetypes = {'javascript', 'typescript', 'javascriptreact', 'typescriptreact'},
+  filetypes = {'javascript', 'javascript.jsx', 'typescript', 'javascriptreact', 'typescriptreact', 'typescript.tsx'},
   root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+  init_options = {
+    hostInfo = 'neovim',
+  },
   -- capabilities = capabilities,
 }
 

@@ -18,15 +18,16 @@ require('leader-mappings')
 require('other-mappings')
 require('lsp')
 require('work-related')
+require('edit-config')
+require('edit-notes')
+require('docker')
+require('mermaid-export')
+require('md-export')
 
 cmd('source ~/.config/nvim/vimscript/linkcolors.vim')
 
--- A vim.api for creating autocommand is on its way
--- https://github.com/neovim/neovim/pull/11613
-cmd('source ~/.config/nvim/vimscript/autocommands.vim')
-
 -- some more fancy custom commands (fzf)
-cmd('source ~/.config/nvim/vimscript/docker.vim')
-cmd('source ~/.config/nvim/vimscript/edit-config.vim')
+-- cmd('source ~/.config/nvim/vimscript/docker.vim')
+-- cmd('source ~/.config/nvim/vimscript/edit-config.vim')
 cmd('source ~/.config/nvim/vimscript/start-queue.vim')
 cmd('source ~/.config/nvim/vimscript/quickfix-fzf.vim')

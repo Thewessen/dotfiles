@@ -14,6 +14,7 @@ cmd('sign define LspDiagnosticsSignHint text=> texthl=LspDiagnosticsSignHint lin
 -- cmd('hi Delimiter ctermfg=102')
 -- cmd('hi Normal ctermbg=NONE ctermfg=232')
 
+hl(0, "@punctation.special", { link = "Normal" })
 -- hl(0, "@property", { link = "Normal" })
 -- hl(0, "@object.key", { link = "Normal" })
 -- hl(0, "@parameter", { link = "Constant", default = true })

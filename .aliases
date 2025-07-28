@@ -52,6 +52,10 @@ else
   alias ff='find . -type f -name'
 fi
 
+if type bat >/dev/null; then
+  alias cat='bat'
+fi
+
 alias h='history'
 alias hgrep='fc -El 0 | grep'
 alias help='man'
@@ -94,7 +98,8 @@ alias vimrc="$EDITOR ~/.vimrc"
 alias gpi="git pimp"
 alias gmm="git merge origin/master"
 
-alias passwd='pwgen -ncsBv1'
+alias pswd='pwgen -ncsBv1'
+alias myip='curl ifconfig.co'
 
 # John the Ripper (Jumbo)
 # alias john="$HOME/.local/share/JohnTheRipper/run/john"
