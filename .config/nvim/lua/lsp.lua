@@ -1,6 +1,7 @@
 local lspconfig = require('lspconfig')
 local root_pattern = lspconfig.util.root_pattern
 -- local capabilities = require('coq').lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lsp_attach = function (client)
   local opt = {buffer = true, noremap = true, silent = false}
@@ -16,7 +17,7 @@ lspconfig.vimls.setup{
   cmd = {'vim-language-server', '--stdio'},
   on_attach = lsp_attach,
   filetypes = {'vim'},
-  -- capabilities = capabilities,
+  capabilities = capabilities,
 }
 
 -- js/ts
@@ -28,7 +29,7 @@ lspconfig.ts_ls.setup{
   init_options = {
     hostInfo = 'neovim',
   },
-  -- capabilities = capabilities,
+  capabilities = capabilities,
 }
 
 -- php
@@ -36,7 +37,7 @@ lspconfig.phpactor.setup{
   cmd = {'phpactor', 'language-server'},
   on_attach = lsp_attach,
   root_dir = root_pattern('composer.json', '.git'),
-  -- capabilities = capabilities,
+  capabilities = capabilities,
 }
 
 -- python
@@ -52,7 +53,7 @@ lspconfig.pylsp.setup{
 lspconfig.lua_ls.setup{
   cmd = {"lua-language-server"},
   on_attach = lsp_attach,
-  -- capabilities = capabilities,
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {

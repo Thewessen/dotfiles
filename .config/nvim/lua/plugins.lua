@@ -18,7 +18,42 @@ require('lazy').setup({
     config = true,
   },
    -- autocompletion
-   { 'neoclide/coc.nvim', branch = 'release' },
+  { 'neoclide/coc.nvim', branch = 'release' },
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'onsails/lspkind-nvim', -- for vscode-like icons
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+
+    },
+    config = function()
+      require('cmp').setup({
+        mapping = {
+          ['<C-d>'] = require('cmp').mapping.scroll_docs(-4),
+          ['<C-f>'] = require('cmp').mapping.scroll_docs(4),
+          ['<C-Space>'] = require('cmp').mapping.complete(),
+          ['<CR>'] = require('cmp').mapping.confirm({ select = true }),
+        },
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'cmdline' },
+        },
+        formatting = {
+          format = require('lspkind').cmp_format({
+            mode = 'symbol_text', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters
+            ellipsis_char = '...', -- when popup is longer than maxwidth, the text will be truncated and this will be appended at the end
+          }),
+        },
+      })
+    end,
+  },
 
   -- lsp
   'ms-jpq/coq_nvim',
@@ -74,7 +109,7 @@ require('lazy').setup({
       --- The below dependencies are optional,
       -- "echasnovski/mini.pick", -- for file_selector provider mini.pick
       -- "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       -- "zbirenbaum/copilot.lua", -- for providers='copilot'
@@ -201,47 +236,17 @@ require('lazy').setup({
     opts = {
       workspaces = {
         {
-          name = "personal",
-          path = "~/vaults/personal",
+          name = "notes",
+          path = "~/notes",
         },
-        {
-          name = "work",
-          path = "~/vaults/work",
-        },
+      },
+      picker = {
+        name = "fzf-lua",
+      },
+      legacy_commands = false,
+      completion = {
+        nvim_cmp = true, -- if you use nvim-cmp, set this to true
       },
     },
   },
-  -- {
-  --   "nvim-neorg/neorg",
-  --   -- dependencies = { "luarocks.nvim" },
-  --   lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-  --   cmd = "Neorg",
-  --   ft = "norg",
-  --   version = "*", -- Pin Neorg to the latest stable release
-  --   config = function()
-  --     require('neorg').setup {
-  --       load = {
-  --         ["core.defaults"] = {},
-  --         ["core.concealer"] = {},
-  --         ["core.completion"] = {
-  --           config = {
-  --             engine = "coq_nvim"
-  --           }
-  --         },
-  --         ["core.dirman"] = {
-  --           config = {
-  --             workspaces = {
-  --               notes = "~/notes",
-  --             },
-  --             default_workspace = "notes",
-  --           },
-  --         },
-  --         ["core.integrations.coq_nvim"] = {},
-  --         ["core.integrations.treesitter"] = {},
-  --         ["core.dirman.utils"] = {},
-  --         ["core.esupports.hop"] = {},
-  --       },
-  --     }
-  --   end
-  -- }
 })
