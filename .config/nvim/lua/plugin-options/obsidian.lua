@@ -95,4 +95,14 @@ require("obsidian").setup({
   },
 })
 
-require("obsidian").register_command("weekly", { nargs = "?" })
+require("obsidian").register_command("weekly", {
+  nargs = "?",
+  desc = "Create a weekly note",
+  complete = function() return { "-1", "0", "1", "2" } end,
+})
+
+require("obsidian").register_command("weeklies", {
+  nargs = "?",
+  desc = "Browse weekly notes",
+  complete = function() return { "-12 0", "-8 0", "-4 4", "-26 0", "0 12" } end,
+})
