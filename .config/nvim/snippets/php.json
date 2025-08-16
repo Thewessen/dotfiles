@@ -1,0 +1,32 @@
+{
+  "Constructor": {
+    "prefix": ["constructor", "fc", "con", "pfc"],
+    "body": [
+      "public function __construct(${1:PARAMS})",
+      "{",
+      "\t${0:TARGET}",
+      "}"
+    ],
+    "description": "PHP class constructor"
+  },
+  "Private Function": {
+    "prefix": ["private function", "prf", "privf"],
+    "body": [
+      "private function ${1:NAME}(${2:PARAMS})",
+      "{",
+      "\t${0:TARGET}",
+      "}"
+    ],
+    "description": "Private function declaration"
+  },
+  "Public Function": {
+    "prefix": ["public function", "puf", "pubf"],
+    "body": [
+      "public function ${1:NAME}(${2:PARAMS})",
+      "{",
+      "\t${0:TARGET}",
+      "}"
+    ],
+    "description": "Public function declaration"
+  }
+} 

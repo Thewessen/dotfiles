@@ -1,0 +1,579 @@
+{
+  "TODO Comment": {
+    "prefix": ["TODO", "td", "TD"],
+    "body": [
+      "// TODO: ${0:TARGET}"
+    ],
+    "description": "TODO comment"
+  },
+  "JSX TODO Comment": {
+    "prefix": ["JSX-TODO", "rtd", "rto", "RTODO"],
+    "body": [
+      "{/* TODO: ${0:TARGET} */}"
+    ],
+    "description": "JSX TODO comment"
+  },
+  "Console Log": {
+    "prefix": ["console.log", "cl", "log", "con"],
+    "body": [
+      "console.log(${0:TARGET});"
+    ],
+    "description": "Console log statement"
+  },
+  "Console Error": {
+    "prefix": ["console.error", "ce", "error"],
+    "body": [
+      "console.error(${0:TARGET});"
+    ],
+    "description": "Console error statement"
+  },
+  "Console Warn": {
+    "prefix": ["console.warn", "cw", "warn"],
+    "body": [
+      "console.warn(${0:TARGET});"
+    ],
+    "description": "Console warning statement"
+  },
+  "If Statement": {
+    "prefix": ["if"],
+    "body": [
+      "if (${1:#:condition}) {",
+      "\t${2:#:do_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "If statement"
+  },
+  "If Else": {
+    "prefix": ["if-else", "ife"],
+    "body": [
+      "if (${1:#:condition}) {",
+      "\t${2:#:do_stuff}",
+      "} else {",
+      "\t${3:#:do_more_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "If-else statement"
+  },
+  "If Else If": {
+    "prefix": ["if-else-if", "ifei"],
+    "body": [
+      "if (${1:#:condition}) {",
+      "\t${2:#:do_stuff}",
+      "} else if (${3:#:condition}) {",
+      "\t${4:#:do_more_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "If-else-if statement"
+  },
+  "For Loop": {
+    "prefix": ["for"],
+    "body": [
+      "for (let ${1:i} = 0; $1 < ${2:#:Things}.length; $1 += ${3:1}) {",
+      "\t${0:TARGET}",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "For In Loop": {
+    "prefix": ["for-in", "forin"],
+    "body": [
+      "for (const ${1:key} in ${2:obj}) {",
+      "\tif ($2.hasOwnProperty($1)) {",
+      "\t\t${0:TARGET}",
+      "\t};",
+      "};"
+    ],
+    "description": "For-in loop"
+  },
+  "For Of Loop": {
+    "prefix": ["for-of", "forof"],
+    "body": [
+      "for (const ${1:value} of ${2:#:iterable}) {",
+      "\t${0:TARGET}",
+      "};"
+    ],
+    "description": "For-of loop"
+  },
+  "Arrow Function": {
+    "prefix": ["arrow-function", "f"],
+    "body": [
+      "(${1:argument}) => {",
+      "\t${2:#:do_stuff}",
+      "}${0:TARGET}"
+    ],
+    "description": "Arrow function"
+  },
+  "Full Arrow Function": {
+    "prefix": ["full-arrow-function", "fa"],
+    "body": [
+      "const ${1:#:functionName} = (${2:#:argument}) => {",
+      "\t${3:#:do_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "Full arrow function declaration"
+  },
+  "Small Arrow Function": {
+    "prefix": ["small-arrow-function", "fs"],
+    "body": [
+      "${1:#:argument} => ${0:#:TARGET}"
+    ],
+    "description": "Small arrow function"
+  },
+  "Promise Chain": {
+    "prefix": ["promises", ".get", ".g"],
+    "body": [
+      ".get(${1:url})",
+      ".then(resp => ${2:resp})",
+      ".catch(err => ${3:err})",
+      "${0:target}"
+    ],
+    "description": "Promise chain"
+  },
+  "Try Catch": {
+    "prefix": ["try-catch", "tc"],
+    "body": [
+      "try {",
+      "\t${1:#:do_stuff}",
+      "} catch (${2:err}) {",
+      "\t${3:#:handle_error}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "Try-catch block"
+  },
+  "Try Finally": {
+    "prefix": ["try-finally", "tf"],
+    "body": [
+      "try {",
+      "\t${1:#:do_stuff}",
+      "} finally {",
+      "\t${2:#:do_more_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "Try-finally block"
+  },
+  "Try Catch Finally": {
+    "prefix": ["try-catch-finally", "tcf"],
+    "body": [
+      "try {",
+      "\t${1:#:do_stuff}",
+      "} catch (${2:err}) {",
+      "\t${3:#:handle_error}",
+      "} finally {",
+      "\t${4:#:do_more_stuff}",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "Try-catch-finally block"
+  },
+  "Functional Component": {
+    "prefix": ["functional-component", "cf"],
+    "body": [
+      "const ${1:MyComponent} = ${2:props} => {",
+      "\t${3}",
+      "",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t${4:#:JSX}",
+      "\t\t</>",
+      "\t);",
+      "};",
+      "${0:TARGET}"
+    ],
+    "description": "React functional component"
+  },
+  "Styled Component": {
+    "prefix": ["styled-component", "cs"],
+    "body": [
+      "const ${1:MyStyledComponent} = styled.${2:div}((${3:props}) => `",
+      "\t${4:#:styles}",
+      "`);",
+      "${0:TARGET}"
+    ],
+    "description": "Styled component"
+  },
+  "useState Hook": {
+    "prefix": ["hook-state", "hs"],
+    "body": [
+      "const [${1:state}, ${2:setState}] = useState(${3:false});",
+      "${0:TARGET}"
+    ],
+    "description": "useState hook"
+  },
+  "useEffect Hook": {
+    "prefix": ["hook-effect", "he"],
+    "body": [
+      "useEffect(() => {",
+      "\t${1:#:do_stuff}",
+      "}, [${2:#:dependencies}]);",
+      "${0:TARGET}"
+    ],
+    "description": "useEffect hook"
+  },
+  "useMemo Hook": {
+    "prefix": ["hook-memo", "hm"],
+    "body": [
+      "useMemo(() => {",
+      "\t${1:#:do_stuff}",
+      "}, [${2:#:dependencies}]);",
+      "${0:TARGET}"
+    ],
+    "description": "useMemo hook"
+  },
+  "useDispatch Hook": {
+    "prefix": ["hook-dispatch", "hd"],
+    "body": [
+      "const dispatch = useDispatch();",
+      "${0:TARGET}"
+    ],
+    "description": "useDispatch hook"
+  },
+  "useSelector Hook": {
+    "prefix": ["hook-selector", "hr"],
+    "body": [
+      "const {${1:#:state}} = useSelector(state => state);",
+      "${0:TARGET}"
+    ],
+    "description": "useSelector hook"
+  },
+  "React File Component": {
+    "prefix": ["react-file-functional-component", "rfc"],
+    "body": [
+      "import React from 'react';",
+      "",
+      "const ${1:ComponentName} = (${2:props}) => {",
+      "\t${3:#:constants}",
+      "",
+      "\treturn (",
+      "\t\t${0:TARGET}",
+      "\t);",
+      "};",
+      "",
+      "export default $1;"
+    ],
+    "description": "React functional component file"
+  },
+  "React Component with PropTypes": {
+    "prefix": ["react-functional-component-proptypes", "rfcp"],
+    "body": [
+      "import React from 'react';",
+      "import PropTypes from 'prop-types';",
+      "",
+      "const ${1:ComponentName} = (${2:props}) => {",
+      "\t${3:#:constants}",
+      "",
+      "\treturn (",
+      "\t\t${0:TARGET}",
+      "\t);",
+      "};",
+      "",
+      "$1.propTypes = {",
+      "\t",
+      "};",
+      "",
+      "$1.defaultProps = {",
+      "\t",
+      "};",
+      "",
+      "export default $1;"
+    ],
+    "description": "React functional component with PropTypes"
+  },
+  "PropTypes Array": {
+    "prefix": ["proptype-array", "pa"],
+    "body": [
+      "PropTypes.array,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes array"
+  },
+  "PropTypes Array Required": {
+    "prefix": ["proptype-array-required", "par"],
+    "body": [
+      "PropTypes.array.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes array required"
+  },
+  "PropTypes ArrayOf": {
+    "prefix": ["proptype-arrayOf", "pao"],
+    "body": [
+      "PropTypes.arrayOf([",
+      "\t${1:#:proptypes},",
+      "]),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes arrayOf"
+  },
+  "PropTypes ArrayOf Required": {
+    "prefix": ["proptype-arrayOf-required", "paor"],
+    "body": [
+      "PropTypes.arrayOf([",
+      "\t${1:#:proptypes},",
+      "]).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes arrayOf required"
+  },
+  "PropTypes Bool": {
+    "prefix": ["proptype-bool", "pb"],
+    "body": [
+      "PropTypes.bool,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes boolean"
+  },
+  "PropTypes Bool Required": {
+    "prefix": ["proptype-bool-required", "pbr"],
+    "body": [
+      "PropTypes.bool.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes boolean required"
+  },
+  "PropTypes Function": {
+    "prefix": ["proptype-function", "pf"],
+    "body": [
+      "PropTypes.func,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes function"
+  },
+  "PropTypes Function Required": {
+    "prefix": ["proptype-function-required", "pfr"],
+    "body": [
+      "PropTypes.func.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes function required"
+  },
+  "PropTypes Number": {
+    "prefix": ["proptype-number", "pn"],
+    "body": [
+      "PropTypes.number,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes number"
+  },
+  "PropTypes Number Required": {
+    "prefix": ["proptype-number-required", "pnr"],
+    "body": [
+      "PropTypes.number.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes number required"
+  },
+  "PropTypes Object": {
+    "prefix": ["proptype-object", "po"],
+    "body": [
+      "PropTypes.object,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes object"
+  },
+  "PropTypes Object Required": {
+    "prefix": ["proptype-object-required", "por"],
+    "body": [
+      "PropTypes.object.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes object required"
+  },
+  "PropTypes ObjectOf": {
+    "prefix": ["proptype-objectOf"],
+    "body": [
+      "PropTypes.objectOf([",
+      "\t${1:#:proptypes},",
+      "]),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes objectOf"
+  },
+  "PropTypes ObjectOf Required": {
+    "prefix": ["proptype-objectOf-required"],
+    "body": [
+      "PropTypes.objectOf([",
+      "\t${1:#:proptypes},",
+      "]).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes objectOf required"
+  },
+  "PropTypes Shape": {
+    "prefix": ["proptype-shape", "psh"],
+    "body": [
+      "PropTypes.shape({",
+      "\t${1:#:key}: ${2:#:proptype},",
+      "\t${3:#:more}",
+      "}),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes shape"
+  },
+  "PropTypes Shape Required": {
+    "prefix": ["proptype-shape-required", "pshr"],
+    "body": [
+      "PropTypes.shape({",
+      "\t${1:#:key}: ${2:#:proptype},",
+      "\t${3:#:more}",
+      "}).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes shape required"
+  },
+  "PropTypes Exact": {
+    "prefix": ["proptype-exact", "px"],
+    "body": [
+      "PropTypes.exact({",
+      "\t${1:#:key}: ${2:#:proptype},",
+      "\t${3:#:more}",
+      "}),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes exact"
+  },
+  "PropTypes Exact Required": {
+    "prefix": ["proptype-exact-required", "pxr"],
+    "body": [
+      "PropTypes.exact({",
+      "\t${1:#:key}: ${2:#:proptype},",
+      "\t${3:#:more}",
+      "}).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes exact required"
+  },
+  "PropTypes String": {
+    "prefix": ["proptype-string", "ps"],
+    "body": [
+      "PropTypes.string,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes string"
+  },
+  "PropTypes String Required": {
+    "prefix": ["proptype-string-required", "psr"],
+    "body": [
+      "PropTypes.string.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes string required"
+  },
+  "PropTypes Symbol": {
+    "prefix": ["proptype-symbol", "pS"],
+    "body": [
+      "PropTypes.symbol,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes symbol"
+  },
+  "PropTypes Symbol Required": {
+    "prefix": ["proptype-symbol-required", "pSr"],
+    "body": [
+      "PropTypes.symbol.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes symbol required"
+  },
+  "PropTypes Node": {
+    "prefix": ["proptype-node", "pN"],
+    "body": [
+      "PropTypes.node,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes node"
+  },
+  "PropTypes Node Required": {
+    "prefix": ["proptype-node-required", "pNr"],
+    "body": [
+      "PropTypes.node.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes node required"
+  },
+  "PropTypes Element": {
+    "prefix": ["proptype-element", "pE"],
+    "body": [
+      "PropTypes.element,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes element"
+  },
+  "PropTypes Element Required": {
+    "prefix": ["proptype-element-required", "pEr"],
+    "body": [
+      "PropTypes.element.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes element required"
+  },
+  "PropTypes InstanceOf": {
+    "prefix": ["proptype-instanceOf", "pio"],
+    "body": [
+      "PropTypes.instanceOf(${1:#:constructor}),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes instanceOf"
+  },
+  "PropTypes InstanceOf Required": {
+    "prefix": ["proptype-instanceOf-required", "pior"],
+    "body": [
+      "PropTypes.instanceOf(${1:#:constructor}).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes instanceOf required"
+  },
+  "PropTypes OneOf": {
+    "prefix": ["proptype-oneOf", "p1"],
+    "body": [
+      "PropTypes.oneOf([",
+      "\t${1:#:values}",
+      "]),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes oneOf"
+  },
+  "PropTypes OneOf Required": {
+    "prefix": ["proptype-oneOf-required", "p1r"],
+    "body": [
+      "PropTypes.oneOf([",
+      "\t${1:#:values}",
+      "]).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes oneOf required"
+  },
+  "PropTypes OneOfType": {
+    "prefix": ["proptype-oneOfType", "p1t"],
+    "body": [
+      "PropTypes.oneOfType([",
+      "\t${1:#:proptypes}",
+      "]),",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes oneOfType"
+  },
+  "PropTypes OneOfType Required": {
+    "prefix": ["proptype-oneOfType-required", "p1tr"],
+    "body": [
+      "PropTypes.oneOfType([",
+      "\t${1:#:proptypes}",
+      "]).isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes oneOfType required"
+  },
+  "PropTypes Any": {
+    "prefix": ["proptype-any", "pany"],
+    "body": [
+      "PropTypes.any.isRequired,",
+      "${0:TARGET}"
+    ],
+    "description": "PropTypes any required"
+  }
+} 

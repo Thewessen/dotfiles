@@ -1,0 +1,23 @@
+{
+  "Console Log": {
+    "prefix": ["console.log", "cl", "log", "con"],
+    "body": [
+      "console.log(${0:TARGET});"
+    ],
+    "description": "Console log statement"
+  },
+  "Console Error": {
+    "prefix": ["console.error", "ce", "error"],
+    "body": [
+      "console.error(${0:TARGET});"
+    ],
+    "description": "Console error statement"
+  },
+  "Console Warn": {
+    "prefix": ["console.warn", "cw", "warn"],
+    "body": [
+      "console.warn(${0:TARGET});"
+    ],
+    "description": "Console warning statement"
+  }
+}
