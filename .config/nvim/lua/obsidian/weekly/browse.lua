@@ -1,6 +1,7 @@
 -- lua/obsidian/weekly/browse.lua
 local M = {}
 
+-- ===== helpers ===============================================================
 local function monday_of_week(offset_weeks)
   local now  = os.time()
   local wday = tonumber(os.date("%w", now)) -- 0=zo..6=za
@@ -11,21 +12,19 @@ local function monday_of_week(offset_weeks)
 end
 
 local function week_entry(offset, root, W)
-  local ts    = monday_of_week(offset)
-  local id    = os.date(W.date_format  or "%G-W%V", ts)
-  local alias = os.date(W.alias_format or "Week %V, %G", ts)
+  local ts     = monday_of_week(offset)
+  local id     = os.date(W.date_format  or "%G-W%V", ts)
+  local alias  = os.date(W.alias_format or "Week %V, %G", ts)
   local folder = W.folder or "notes/weeklies"
   local path   = string.format("%s/%s/%s.md", root, folder, id)
   local exists = (vim.fn.filereadable(path) == 1)
   return {
-    offset   = offset,
-    id       = id,
-    alias    = alias,
-    path     = path,
-    exists   = exists,
-    display  = string.format("%s  —  %s%s",
-                 id, alias, exists and "" or "  [NEW]"),
-    ordinal  = string.format("%s %s %s", id, alias, exists and "1" or "0"),
+    offset  = offset,
+    id      = id,
+    alias   = alias,
+    path    = path,
+    exists  = exists,
+    display = string.format("%s  —  %s%s", id, alias, exists and "" or "  [NEW]"),
   }
 end
 
@@ -40,25 +39,69 @@ local function build_entries(root, W, from_o, to_o)
 end
 
 local function open_week_at_offset(offset)
-  -- hergebruik je bestaande open/create uit weekly module
   local ok, weekly = pcall(require, "obsidian.weekly")
   if ok and weekly and weekly.open then
     return weekly.open(offset)
   end
-  -- noodgreep: roep subcommand aan (werkt ook)
   vim.cmd(("Obsidian weekly %d"):format(offset))
 end
 
--- Telescope-variant met preview
+-- ===== picker preference =====================================================
+local function preferred_picker()
+  local o = Obsidian and Obsidian.opts or {}
+  -- volgorde: ui.picker > picker > weekly_notes.picker
+  return (o.ui and o.ui.picker)
+          or (o.picker and o.picker.name)
+          or (o.weekly_notes and o.weekly_notes.picker)
+end
+
+-- ===== fzf-lua backend (optioneel) ==========================================
+local function fzf_pick(items)
+  local ok, fzf = pcall(require, "fzf-lua")
+  if not ok then return false end
+
+  -- 2 kolommen: [1]=display (zichtbaar), [2]=pad (preview)
+  local lines = {}
+  for _, it in ipairs(items) do
+    table.insert(lines, it.display .. "\t" .. it.path)
+  end
+
+  local preview_cmd = [=[bash -lc 'if [[ -f "{2}" ]]; then (bat --style=plain --color=always "{2}" 2>/dev/null || sed -n "1,200p" "{2}"); else echo "Not created yet. Press <enter> to create."; fi']=]
+
+  fzf.fzf_exec(lines, {
+    prompt   = "Weeklies> ",
+    fzf_opts = {
+      ["--delimiter"]      = "\t",
+      ["--with-nth"]       = "1",
+      ["--preview-window"] = "right:60%",
+      ["--preview"]        = preview_cmd,
+    },
+    actions = {
+      ["default"] = function(selected)
+        if not selected or not selected[1] then return end
+        local line = selected[1]
+        local disp, path = line:match("^(.-)\t(.+)$")
+        local chosen
+        for _, it in ipairs(items) do
+          if it.path == path or it.display == disp then chosen = it; break end
+        end
+        if chosen then open_week_at_offset(chosen.offset) end
+      end,
+    },
+  })
+  return true
+end
+
+-- ===== Telescope backend (default) ==========================================
 local function telescope_pick(items)
   local ok, telescope = pcall(require, "telescope")
   if not ok then return false end
 
-  local pickers     = require("telescope.pickers")
-  local finders     = require("telescope.finders")
-  local conf        = require("telescope.config").values
-  local actions     = require("telescope.actions")
-  local action_state= require("telescope.actions.state")
+  local pickers       = require("telescope.pickers")
+  local finders       = require("telescope.finders")
+  local conf          = require("telescope.config").values
+  local actions       = require("telescope.actions")
+  local action_state  = require("telescope.actions.state")
 
   pickers.new({}, {
     prompt_title = "Weeklies",
@@ -68,13 +111,13 @@ local function telescope_pick(items)
         return {
           value    = it,
           display  = it.display,
-          ordinal  = it.ordinal,
+          ordinal  = it.display,
           filename = it.exists and it.path or nil, -- preview alleen als 'ie bestaat
         }
-      end
+      end,
     },
-    sorter   = conf.generic_sorter({}),
-    previewer= conf.file_previewer({}),
+    sorter    = conf.generic_sorter({}),
+    previewer = conf.file_previewer({}),
     attach_mappings = function(prompt_bufnr, _)
       actions.select_default:replace(function()
         local entry = action_state.get_selected_entry()
@@ -88,7 +131,7 @@ local function telescope_pick(items)
   return true
 end
 
--- Fallback: eenvoudige select zonder preview
+-- ===== Simpele fallback ======================================================
 local function ui_select(items)
   local choices = vim.tbl_map(function(it) return it.display end, items)
   vim.ui.select(choices, { prompt = "Weeklies" }, function(choice, idx)
@@ -99,16 +142,34 @@ local function ui_select(items)
   return true
 end
 
+-- ===== entrypoint ============================================================
 function M.run(args)
   local root = Obsidian.dir
   local W    = (Obsidian.opts and Obsidian.opts.weekly_notes) or {}
 
   local fargs = (args and args.fargs) or {}
   local from_o, to_o = fargs[1], fargs[2]
-  local items = build_entries(root, W, from_o or -12, to_o or 4) -- standaard venster: ~Q-jaar
+  local items = build_entries(root, W, from_o or -12, to_o or 4)
 
+  local want = preferred_picker()
+
+  -- 1) expliciet fzf-lua gevraagd
+  if want == "fzf-lua" or want == "fzf" then
+    if fzf_pick(items) then return end
+    if telescope_pick(items) then return end
+    ui_select(items); return
+  end
+
+  -- 2) expliciet telescope of géén voorkeur → Telescope is default
+  if want == "telescope" or not want then
+    if telescope_pick(items) then return end
+    if fzf_pick(items) then return end
+    ui_select(items); return
+  end
+
+  -- 3) onbekend: probeer telescope, dan fzf, dan fallback
   if telescope_pick(items) then return end
-  -- eventueel kun je hier fzf-lua/mini.pick/snacks toevoegen
+  if fzf_pick(items) then return end
   ui_select(items)
 end
 
