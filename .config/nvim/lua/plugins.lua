@@ -18,41 +18,18 @@ require('lazy').setup({
     config = true,
   },
    -- autocompletion
-  { 'neoclide/coc.nvim', branch = 'release' },
+  -- { 'neoclide/coc.nvim', branch = 'release' },
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
       'onsails/lspkind-nvim', -- for vscode-like icons
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
-
     },
-    config = function()
-      require('cmp').setup({
-        mapping = {
-          ['<C-d>'] = require('cmp').mapping.scroll_docs(-4),
-          ['<C-f>'] = require('cmp').mapping.scroll_docs(4),
-          ['<C-Space>'] = require('cmp').mapping.complete(),
-          ['<CR>'] = require('cmp').mapping.confirm({ select = true }),
-        },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'buffer' },
-          { name = 'path' },
-          { name = 'cmdline' },
-        },
-        formatting = {
-          format = require('lspkind').cmp_format({
-            mode = 'symbol_text', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters
-            ellipsis_char = '...', -- when popup is longer than maxwidth, the text will be truncated and this will be appended at the end
-          }),
-        },
-      })
-    end,
   },
 
   -- lsp
@@ -109,7 +86,7 @@ require('lazy').setup({
       --- The below dependencies are optional,
       -- "echasnovski/mini.pick", -- for file_selector provider mini.pick
       -- "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       -- "zbirenbaum/copilot.lua", -- for providers='copilot'
@@ -211,42 +188,19 @@ require('lazy').setup({
     optional = true
   },
 
+  -- snippets
+
+  'hrsh7th/vim-vsnip',
+
   -- note-taking
   {
     "obsidian-nvim/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
     lazy = true,
     ft = "markdown",
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    -- event = {
-    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-    --   -- refer to `:h file-pattern` for more examples
-    --   "BufReadPre path/to/my-vault/*.md",
-    --   "BufNewFile path/to/my-vault/*.md",
-    -- },
     dependencies = {
       -- Required.
       "nvim-lua/plenary.nvim",
-
-      -- see above for full list of optional dependencies ☝️
-    },
-    ---@module 'obsidian'
-    ---@type obsidian.config
-    opts = {
-      workspaces = {
-        {
-          name = "notes",
-          path = "~/notes",
-        },
-      },
-      picker = {
-        name = "fzf-lua",
-      },
-      legacy_commands = false,
-      completion = {
-        nvim_cmp = true, -- if you use nvim-cmp, set this to true
-      },
     },
   },
 })

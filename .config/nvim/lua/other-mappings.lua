@@ -29,5 +29,7 @@ map('v', 'S', ':S/', { noremap = true})
 -- map('i', '<c-k>', 'copilot#Accept("<CR>")', { noremap = true, silent = true, expr = true, script = true })
 map('i', '<c-j>', '<cmd>Copilot panel<CR>', { noremap = true, silent = true, expr = true, script = true })
 
+-- coc.nvim
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-map("i", "<C-k>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+-- map("i", "<C-k>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+map("i", "<C-l>", [[vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>']], opts)

@@ -9,17 +9,31 @@ function custom_list(A, C, P)
 end
 
 function search_config(args)
-  local config = args[1]
-  if config == nil or config == '' then
-    fzf.files({
+  local file = args['args']
+  if file == nil or file == '' then
+    -- Use a custom command that searches both filenames and content
+    local cmd = string.format(
+      'cd ~/notes && ag --md -u --files-with-matches'
+    )
+    
+    fzf.fzf_exec(cmd, {
       prompt = 'Notes> ',
-      cmd = configs,
-      toggle_hidden_flag = '',
-      cwd = '~/notes',
-      desc = 'Use fzf to browse through notes taken'
+      desc = 'Browse through notes and search content',
+      actions = {
+        ['default'] = function(selected)
+          if #selected > 0 then
+            vim.cmd("edit ~/notes/" .. selected[1])
+          end
+        end
+      },
+      fzf_opts = {
+        ['--preview-window'] = 'right:50%',
+        ['--preview'] = 'bat ~/notes/{}',
+        ['--bind'] = [[change:reload:ag --md -u --files-with-matches '{q}']],
+      }
     })
   else
-    vim.cmd("edit ~/notes/" .. config)
+    vim.cmd("edit ~/notes/" .. file)
   end
 end
 

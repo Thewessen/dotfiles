@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
 local root_pattern = lspconfig.util.root_pattern
+-- local capabilities = {}
 -- local capabilities = require('coq').lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
