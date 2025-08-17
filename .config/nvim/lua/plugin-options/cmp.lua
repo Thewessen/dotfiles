@@ -16,6 +16,7 @@ cmp.setup({
     ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
   },
   sources = {
+    { name = 'onedrive' }, -- Custom source for OneDrive
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },

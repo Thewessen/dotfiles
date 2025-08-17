@@ -3,14 +3,6 @@ local M = {}
 
 -- Helper: bereken maandag voor week met offset (in weken, mag negatief)
 
-local function monday_of_week(offset_weeks)
-  local now = os.time()
-  local wday = tonumber(os.date("%w", now)) -- 0=zo..6=za
-  local days_since_mon = (wday + 6) % 7
-  local monday = now - days_since_mon * 86400 + (offset_weeks or 0) * 7 * 86400
-  return monday
-end
-
 local function open_create_for_offset(offset)
   local root = Obsidian.dir
   local opts = Obsidian.opts

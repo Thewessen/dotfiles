@@ -15,6 +15,7 @@ local function week_entry(offset, root, W)
   local ts     = monday_of_week(offset)
   local id     = os.date(W.date_format  or "%G-W%V", ts)
   local alias  = os.date(W.alias_format or "Week %V, %G", ts)
+  local title  = os.date(W.title_format or "%Y-%m-%d", ts)
   local folder = W.folder or "notes/weeklies"
   local path   = string.format("%s/%s/%s.md", root, folder, id)
   local exists = (vim.fn.filereadable(path) == 1)
@@ -24,7 +25,7 @@ local function week_entry(offset, root, W)
     alias   = alias,
     path    = path,
     exists  = exists,
-    display = string.format("%s  —  %s%s", id, alias, exists and "" or "  [NEW]"),
+    display = string.format("%s  —  %s%s", title, alias, exists and "" or "  [NEW]"),
   }
 end
 
@@ -66,7 +67,7 @@ local function fzf_pick(items)
     table.insert(lines, it.display .. "\t" .. it.path)
   end
 
-  local preview_cmd = [=[bash -lc 'if [[ -f "{2}" ]]; then (bat --style=plain --color=always "{2}" 2>/dev/null || sed -n "1,200p" "{2}"); else echo "Not created yet. Press <enter> to create."; fi']=]
+  local preview_cmd = [[bash -lc 'if [ -f "{2}" ]; then (bat --style=plain --color=always "{2}" 2>/dev/null || sed -n "1,200p" "{2}"); else echo "Not created yet. Press <enter> to create."; fi']]
 
   fzf.fzf_exec(lines, {
     prompt   = "Weeklies> ",

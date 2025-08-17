@@ -2,6 +2,8 @@
 --   - `Obsidian weekly` om een weeknote te maken
 --      zie: lua/obsidian/commands/weekly.lua
 
+local subs = require("obsidian.templates.substitutions").make()
+
 require("obsidian").setup({
   workspaces = {
     {
@@ -20,15 +22,16 @@ require("obsidian").setup({
     folder = "daily",
     date_format = "%Y-%m-%d",
     alias_format = "%B %-d, %Y",
-    default_tags = { "daily" },
+    default_tags = { "todo" },
     template = nil,
     workdays_only = false,
   },
   weekly_notes = {
-    folder = "weekly",
-    date_format = "%Y-%m-%d",
+    -- Same folder for easier note creation
+    folder = "daily",
+    date_format = "%G-W%V",
     alias_format = "Week %V, %G",
-    default_tags = { "weekly" },
+    default_tags = { "lichamelijk", "mentaal", "spiritueel", "sociaal-emotioneel" },
     template = nil, -- Laat de template leeg om de standaard te gebruiken
   },
   templates = {
@@ -38,18 +41,7 @@ require("obsidian").setup({
     -- A map for custom variables, the key should be the variable and the value a function.
     -- Functions are called with obsidian.TemplateContext objects as their sole parameter.
     -- See: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Template#substitutions
-    substitutions = {
-      week_start = function() return os.date("%Y-%m-%d", (function()
-        local now = os.time()
-        local wday = tonumber(os.date("%w", now)) -- 0=Zo,1=Ma
-        local days_since_monday = (wday == 0) and 6 or (wday - 1)
-        local monday = now - (days_since_monday * 24 * 3600)
-        local mt = os.date("*t", monday)
-        mt.hour, mt.min, mt.sec = 0, 0, 0
-        return os.time(mt)
-      end)()) end,
-    },
-
+    substitutions = subs,
     -- A map for configuring unique directories and paths for specific templates
     --- See: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Template#customizations
     customizations = {},
