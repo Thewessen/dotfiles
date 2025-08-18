@@ -24,6 +24,13 @@ map('n', '<leader>c', '<cmd>copen<cr>', { noremap = true })
 map('n', '<leader>e', '<cmd>Config<cr>', { noremap = true })
 map('n', '<leader>E', '<cmd>VsnipOpen<cr>', { noremap = true })
 
+-- avante
+map('n', '<leader>aa', '<cmd>AvanteToggle<cr>', { noremap = true, silent = true })
+map('n', '<leader>an', '<cmd>AvanteChatNew<cr>', { noremap = true, silent = true })
+map('n', '<leader>a,', '<cmd>AvanteHistory<cr>', { noremap = true, silent = true })
+map('n', '<leader>am', '<cmd>AvanteModels<cr>', { noremap = true, silent = true })
+map('v', '<leader>ae', '<cmd>AvanteEdit<cr>', { noremap = true, silent = true })
+
 -- git
 map('n', '<leader>gb', '<cmd>Git blame<cr>', { noremap = true })
 map('n', '<leader>gc', '<cmd>Git commit -v<cr>', { noremap = true })

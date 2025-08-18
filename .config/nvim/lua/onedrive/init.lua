@@ -28,7 +28,7 @@ local defaults = {
 }
 
 -- === Auto-registratie voor nvim-cmp ===
-local function register_cmp_source()
+function M.register_cmp_source()
   local ok_cmp, cmp = pcall(require, "cmp")
   if not ok_cmp then return false, "cmp not loaded" end
   local src = require("onedrive.cmp")
@@ -102,16 +102,6 @@ function M.setup(opts)
     })
     cmp.register_source("onedrive", cmp_src.new())
   end
-end
-
--- probeer nu; anders retry na 500ms en op InsertEnter
-local ok_now = register_cmp_source()
-if not ok_now then
-  vim.defer_fn(function() register_cmp_source() end, 500)
-  vim.api.nvim_create_autocmd("InsertEnter", {
-    once = true,
-    callback = function() register_cmp_source() end,
-  })
 end
 
 -- === Debug tools ===

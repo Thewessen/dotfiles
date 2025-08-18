@@ -1,5 +1,8 @@
 local cmp = require'cmp'
 
+require("onedrive").register_cmp_source()
+require("zshbookmarks").register_cmp_source()
+
 -- Global setup.
 cmp.setup({
   snippet = {
@@ -36,8 +39,9 @@ cmp.setup.cmdline('/', {
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
+    { name = 'zshbookmarks', group_index = 1 }, -- Custom source for Zsh bookmarks
     { name = 'path' },
-    { name = 'cmdline' }
+    { name = 'cmdline', option = { ignore_cmds = require('zshbookmarks').ignore_cmds } },
   },
   matching = { disallow_symbol_nonprefix_matching = false }
 })
