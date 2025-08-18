@@ -1,41 +1,41 @@
 local cmd = vim.api.nvim_create_user_command
 local f = require'functions'
 
-local bookmark = {
-  web = '~/hypotheekbond/monorepo/apps/web',
-  devenv = '~/hypotheekbond/devenv',
-  ['devenv-docker'] = '~/hypotheekbond/devenv-docker',
-  mono = '~/hypotheekbond/monorepo',
-  node = '~/hypotheekbond/monorepo/yarn-workspace-packages/node_package',
-  smoke = '~/hypotheekbond/monorepo/yarn-workspace-packages/storybook-smoke-test',
-  workspaces = '~/hypotheekbond/monorepo/yarn-workspace-packages',
-  ['ins-api'] = '~/hypotheekbond/monorepo/apps/insurance-api',
-  pdf = '~/hypotheekbond/monorepo/apps/pdf-service',
-  duurzaam = '~/hypotheekbond/monorepo/apps/duurzaamheidsprofiel',
-  munt = '~/hypotheekbond/monorepo/apps/munt-bespaarcheck',
-  veh = '~/hypotheekbond/monorepo/apps/veh',
-  tools = '~/hypotheekbond/monorepo/apps/tools',
-  ['ufo-con'] = '~/hypotheekbond/monorepo/apps/ufo-consumer',
-  ['ufo-api'] = '~/hypotheekbond/monorepo/apps/ufo-api',
-  ['ufo-admin'] = '~/hypotheekbond/monorepo/apps/ufo-organization-admin',
-  ['ufo-org'] = '~/hypotheekbond/monorepo/apps/ufo-organization',
-  force = '~/hypotheekbond/monorepo/apps/workforce',
-  rente = '~/hypotheekbond/monorepo/apps/renteadministratie',
-}
+-- local bookmark = {
+--   web = '~/hypotheekbond/monorepo/apps/web',
+--   devenv = '~/hypotheekbond/devenv',
+--   ['devenv-docker'] = '~/hypotheekbond/devenv-docker',
+--   mono = '~/hypotheekbond/monorepo',
+--   node = '~/hypotheekbond/monorepo/yarn-workspace-packages/node_package',
+--   smoke = '~/hypotheekbond/monorepo/yarn-workspace-packages/storybook-smoke-test',
+--   workspaces = '~/hypotheekbond/monorepo/yarn-workspace-packages',
+--   ['ins-api'] = '~/hypotheekbond/monorepo/apps/insurance-api',
+--   pdf = '~/hypotheekbond/monorepo/apps/pdf-service',
+--   duurzaam = '~/hypotheekbond/monorepo/apps/duurzaamheidsprofiel',
+--   munt = '~/hypotheekbond/monorepo/apps/munt-bespaarcheck',
+--   veh = '~/hypotheekbond/monorepo/apps/veh',
+--   tools = '~/hypotheekbond/monorepo/apps/tools',
+--   ['ufo-con'] = '~/hypotheekbond/monorepo/apps/ufo-consumer',
+--   ['ufo-api'] = '~/hypotheekbond/monorepo/apps/ufo-api',
+--   ['ufo-admin'] = '~/hypotheekbond/monorepo/apps/ufo-organization-admin',
+--   ['ufo-org'] = '~/hypotheekbond/monorepo/apps/ufo-organization',
+--   force = '~/hypotheekbond/monorepo/apps/workforce',
+--   rente = '~/hypotheekbond/monorepo/apps/renteadministratie',
+-- }
 
-cmd('Cd', function(a)
-  vim.cmd('cd ' .. bookmark[a.args])
-end, {
-  nargs = 1,
-  desc = {'Cd to bookmarked directories'},
-  complete = function()
-    local bookmarks = {}
-    for k, v in pairs(bookmark) do
-      bookmarks[#bookmarks + 1] = k
-    end
-    return bookmarks
-  end
-});
+-- cmd('Cd', function(a)
+--   vim.cmd('cd ' .. bookmark[a.args])
+-- end, {
+--   nargs = 1,
+--   desc = {'Cd to bookmarked directories'},
+--   complete = function()
+--     local bookmarks = {}
+--     for k, v in pairs(bookmark) do
+--       bookmarks[#bookmarks + 1] = k
+--     end
+--     return bookmarks
+--   end
+-- });
 
 -- use fzf to browse through notes taken
 -- cmd('Notes', function()
