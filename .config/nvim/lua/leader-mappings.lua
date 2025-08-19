@@ -14,7 +14,7 @@ map('n', '<leader>z', [[<cmd>call system('tmux-popup')<cr>]], { noremap = true, 
 map('n', '<leader>.', '<c-^>', { noremap = true })
 map('n', '<leader>,', '<cmd>w<cr>', { noremap = true, silent = true })
 map('n', '<leader>D', '<cmd>DiffSaved<cr>', { noremap = true, silent = true })
-map('n', '<leader>N', '<cmd>Notes<cr>', { noremap = true, silent = true })
+map('n', '<leader>N', '<cmd>Obsidian search<cr>', { noremap = true, silent = true })
 map('n', '<leader>R', '<cmd>luafile ~/.config/nvim/init.lua<cr><cmd>echo "config loaded..."<cr>', { noremap = true })
 map('n', '<leader>Y', '<cmd>YankFileLineNr<cr>', { noremap = true })
 map('n', '<leader><space>', ':AvanteChat<cr>', { noremap = true })

@@ -21,8 +21,6 @@ require('work-related')
 require('edit-config')
 require('edit-notes')
 require('docker')
-require('mermaid-export')
-require('md-export')
 -- require('statusline')
 
 cmd('source ~/.config/nvim/vimscript/linkcolors.vim')

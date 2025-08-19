@@ -4,7 +4,7 @@ local M = {}
 M.opts = {
   file = vim.fn.expand("$HOME/.zsh_namedirs"),  -- gedeeld bestand
   -- fallback(s) kun je toevoegen, bv. "$HOME/.named_directories"
-  cmd_abbrevs = true,  -- maak command-abbreviations aan voor bookmarks
+  cmd_abbrevs = false,  -- maak command-abbreviations aan voor bookmarks
   debug = false,
 }
 
