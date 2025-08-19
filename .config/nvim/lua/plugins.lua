@@ -18,7 +18,7 @@ require('lazy').setup({
     config = true,
   },
    -- autocompletion
-  -- { 'neoclide/coc.nvim', branch = 'release' },
+  { 'neoclide/coc.nvim', branch = 'release' },
   {
     'hrsh7th/nvim-cmp',
     dependencies = {

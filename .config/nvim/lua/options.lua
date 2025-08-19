@@ -19,7 +19,8 @@ opt('g', 'background', 'light')
 opt('g', 'mouse', 'a')
 
 opt('g', 'completeopt', 'menu,menuone,noselect')
-opt('g', 'shortmess', vim.api.nvim_get_option('shortmess') .. 'cW')
+local shortmess = vim.api.nvim_get_option_value('shortmess', { scope = 'global' })
+opt('g', 'shortmess', shortmess .. 'cW')
 opt('g', 'clipboard', 'unnamedplus')
 opt('g', 'inccommand', 'split')
 

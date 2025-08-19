@@ -4,6 +4,7 @@ local M = {}
 M.opts = {
   file = vim.fn.expand("$HOME/.zsh_namedirs"),  -- gedeeld bestand
   -- fallback(s) kun je toevoegen, bv. "$HOME/.named_directories"
+  cmd_abbrevs = true,  -- maak command-abbreviations aan voor bookmarks
   debug = false,
 }
 
@@ -118,58 +119,18 @@ function M.expand(word)
   return expand_tilde(word)
 end
 
--- ======= commands =======
-local function complete_B(arglead, cmdline, _)
-  -- We willen 3 vormen: "~name", "~name/", "~name/sub..."
-  local before = cmdline:match("^%S+%s+(.*)$") or ""
-  if before == "" then
-    -- toon alleen "~name/"
-    local out = {}
-    for _, it in ipairs(M.bookmarks()) do table.insert(out, "~" .. it.name .. "/") end
-    return out
-  end
-  -- Als het "~name/<rest>" is: lijst subpaden onder die bookmark
-  local nm, tail = before:match("^~([%w_%-.]+)/(.*)$")
-  if nm then
-    local base = load_map()[nm]
-    if not base then return {} end
-    local dir, part = tail:match("^(.*[/])([^/]*)$")
-    dir, part = dir or "", part or tail
-    local root = base .. "/" .. dir
-    local out = {}
-    for entry, t in vim.fs.dir(root) do
-      if entry:sub(1, #part) == part then
-        if t == "directory" then
-          table.insert(out, "~" .. nm .. "/" .. dir .. entry .. "/")
-        else
-          table.insert(out, "~" .. nm .. "/" .. dir .. entry)
-        end
-      end
-    end
-    return out
-  end
-  -- Anders: filter op bookmark-namen
-  local out = {}
-  for _, it in ipairs(M.bookmarks()) do
-    if ("~"..it.name):sub(1, #before) == before then
-      table.insert(out, "~" .. it.name .. "/")
-    end
-  end
-  return out
-end
-
 function M.setup(user_opts)
   M.opts = vim.tbl_deep_extend("force", M.opts, user_opts or {})
 
-  vim.api.nvim_create_user_command("B", function(opts)
-    local target = expand_tilde(opts.args)
-    vim.cmd.edit(target)
-  end, { nargs = 1, complete = complete_B })
-
-  vim.api.nvim_create_user_command("Bcd", function(opts)
-    local target = expand_tilde(opts.args)
-    vim.cmd.cd(target)
-  end, { nargs = 1, complete = complete_B })
+  if M.opts.cmd_abbrevs then
+    for _, it in ipairs(M.bookmarks()) do
+      local name = it.name:gsub("[-_.]", "")  -- verwijder ongeldige karakters
+      vim.keymap.set("ca", name, it.path, {
+        nowait = true,
+        desc = "Zsh bookmark: " .. name .. " -> " .. it.path,
+      })
+    end
+  end
 end
 
 -- ======= nvim-cmp source for cmdline =======
