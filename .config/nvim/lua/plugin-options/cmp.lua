@@ -40,8 +40,8 @@ cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'zshbookmarks', group_index = 1 }, -- Custom source for Zsh bookmarks
-    { name = 'path' },
-    { name = 'cmdline', option = { ignore_cmds = require('zshbookmarks').ignore_cmds } },
+    { name = 'path', group_index = 1 },
+    { name = 'cmdline', group_index = 2, option = { ignore_cmds = require('zshbookmarks').ignore_cmds } },
   },
   matching = { disallow_symbol_nonprefix_matching = false }
 })
