@@ -183,6 +183,9 @@ require('lazy').setup({
 
   'hrsh7th/vim-vsnip',
 
+  -- macro management
+  'kr40/nvim-macros',
+
   -- note-taking
   {
     "obsidian-nvim/obsidian.nvim",
