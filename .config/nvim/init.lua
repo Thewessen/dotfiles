@@ -22,6 +22,7 @@ require('edit-config')
 require('edit-notes')
 require('docker')
 -- require('statusline')
+require('obsidian-tags')
 
 cmd('source ~/.config/nvim/vimscript/linkcolors.vim')
 

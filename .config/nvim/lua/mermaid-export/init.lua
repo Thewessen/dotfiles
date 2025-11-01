@@ -28,6 +28,17 @@ function M.setup(opts)
   )
 end
 
+function open_file(path)
+  local osname = (vim.loop.os_uname().sysname or ""):lower()
+  if osname:find("darwin") then
+    vim.cmd("!open " .. vim.fn.fnameescape(path))
+  elseif osname:find("linux") then
+    vim.cmd("!xdg-open " .. vim.fn.fnameescape(path))
+  elseif osname:find("windows") or osname:find("mingw") then
+    vim.cmd("!start " .. vim.fn.fnameescape(path))
+  end
+end
+
 --- Export a Mermaid diagram in the current buffer (or selection)
 -- @param opts table: options provided from the command
 function M.export(opts)
@@ -45,15 +56,8 @@ function M.export(opts)
   vim.cmd(cmd)
 
   -- auto_open logic
-  if not o.auto_open then
-    vim.notify('Mermaid exported: ' .. output)
-    return
-  end
-  if o.auto_open == 'buffer' then
-    vim.cmd('edit ' .. vim.fn.fnameescape(output))
-  end
-  if o.auto_open == 'mac' then
-    vim.cmd('!open ' .. vim.fn.fnameescape(output))
+  if o.auto_open then
+    open_file(output)
   end
 end
 

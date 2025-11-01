@@ -17,6 +17,15 @@ require('lazy').setup({
     priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
     config = true,
   },
+  -- file explorer
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   version = "*",
+  --   lazy = false,
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  -- },
    -- autocompletion
   { 'neoclide/coc.nvim', branch = 'release' },
   {
@@ -98,14 +107,6 @@ require('lazy').setup({
           },
         },
       },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
     },
   },
 
@@ -137,6 +138,16 @@ require('lazy').setup({
   --   },
   -- },
 
+  -- render markdown
+  {
+    -- Make sure to set this up properly if you have lazy=true
+    'MeanderingProgrammer/render-markdown.nvim',
+    opts = {
+      file_types = { "markdown", "Avante" },
+    },
+    ft = { "markdown", "Avante" },
+  },
+
   -- tpope is king
   'tpope/vim-dispatch',
   'tpope/vim-surround',
@@ -149,6 +160,17 @@ require('lazy').setup({
   'tpope/vim-ragtag',
   'tpope/vim-dadbod',
 
+  -- -- rest client
+  -- {
+  --   "rest-nvim/rest.nvim",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     opts = function (_, opts)
+  --       opts.ensure_installed = opts.ensure_installed or {}
+  --       table.insert(opts.ensure_installed, "http")
+  --     end,
+  --   }
+  -- },
   -- databases
   {
     'kristijanhusak/vim-dadbod-ui',

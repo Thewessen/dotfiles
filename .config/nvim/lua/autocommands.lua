@@ -1,38 +1,50 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local map = vim.keymap.set
 
 augroup('mappings', {clear = true})
 local function vim_diff_mapping()
-  vim.keymap.set('n', ']]', ']c', {buffer = true})
-  vim.keymap.set('n', '[[', '[c', {buffer = true})
-  vim.keymap.set('n', '<leader>[', ':diffget //2<CR>:diffupdate<CR>', {buffer = true})
-  vim.keymap.set('n', '<leader>]', ':diffget //3<CR>:diffupdate<CR>', {buffer = true})
+  map('n', ']]', ']c', {buffer = true})
+  map('n', '[[', '[c', {buffer = true})
+  map('n', '<leader>[', ':diffget //2<CR>:diffupdate<CR>', {buffer = true})
+  map('n', '<leader>]', ':diffget //3<CR>:diffupdate<CR>', {buffer = true})
 end
 
 local function npm_mapping()
-  vim.keymap.set('n', '<leader>nn', ':Start nvm exec<CR>', {silent = true})
-  vim.keymap.set('n', '<leader>nh', ':Start node<CR>', {silent = true})
+  map('n', '<leader>nn', ':Start nvm exec<CR>', {silent = true})
+  map('n', '<leader>nh', ':Start node<CR>', {silent = true})
 end
 
 local function shell_mapping()
-  vim.keymap.set('n', '<leader>nn', ':!sh %:p<CR>', {buffer = true})
-  vim.keymap.set('n', '<leader>nt', ':lcd %:p:h<CR>:exec \':tabe term://BATS_RUN_SKIPPED=true bats \'.expand(\'%:p:r\')..\'_test.sh\'<CR>', {buffer = true})
+  map('n', '<leader>nn', ':!sh %:p<CR>', {buffer = true})
+  map('n', '<leader>nt', ':lcd %:p:h<CR>:exec \':tabe term://BATS_RUN_SKIPPED=true bats \'.expand(\'%:p:r\')..\'_test.sh\'<CR>', {buffer = true})
 end
 
 -- PHP artisan commands
 local function php_mapping()
-  vim.keymap.set('n', '<leader>nn', ':Start psysh<CR>', {buffer = true})
+  map('n', '<leader>nn', ':Start psysh<CR>', {buffer = true})
   -- other mappings...
 end
 
 local function fugitive_mapping()
-  vim.keymap.set('n', '<leader>,', 'call termopen(\'git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"\')', {buffer = true})
+  map('n', '<leader>,', 'call termopen(\'git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"\')', {buffer = true})
+end
+
+local function md_mapping()
+  map('n', '<leader>nn', ':Md2PdfPreview<CR>', {buffer = true})
+  map('n', '<leader>nt', ':Obsidian template<CR>', {buffer = true})
+  map('n', '<leader>nb', ':Obsidian backlinks<CR>', {buffer = true})
+  map('n', '<leader>ne', ':Obsidian new<CR>', {buffer = true})
+  map('v', '<leader>ne', ':Obsidian extract_note<CR>', {buffer = true})
+  map('n', '<leader>ns', ':Obsidian save<CR>', {buffer = true})
+  map('n', '<leader>na', ':ObsidianFilteredTags<CR>', {buffer = true})
 end
 
 autocmd('BufWinEnter', {pattern = '*', command = 'if &diff | vim_diff_mapping() | endif', group = 'mappings', nested = true})
 autocmd('FileType', {pattern = 'sh', callback = shell_mapping, group = 'mappings', nested = true})
 autocmd('FileType', {pattern = 'php', callback = php_mapping, group = 'mappings', nested = true})
 autocmd('FileType', {pattern = 'fugitive', callback = fugitive_mapping, group = 'mappings', nested = true})
+autocmd('FileType', {pattern = 'md,markdown', callback = md_mapping, group = 'mappings', nested = true})
 autocmd('FileType', {pattern = 'js,javascript,ts,typescript,mjs,vue,jsx,tsx,reason,typescriptreact', callback = npm_mapping, group = 'mappings', nested = true})
 
 autocmd('FileType', {
@@ -55,27 +67,27 @@ autocmd('FileType', {
 })
 
 
-autocmd('FileType', {
-  pattern = {'fzf'},
-  callback = (function ()
-    local opt = vim.api.nvim_set_option
-    vim.keymap.set('i', '<ESC>', '<C-D>', {buffer = true})
-    opt('laststatus', 0)
-    opt('showmode', false)
-    opt('cmdheight', 1)
-    opt('ruler', false)
-    autocmd('BufLeave', {
-      pattern = {'<buffer>'},
-      callback = (function ()
-        local opt = vim.api.nvim_set_option
-        opt('laststatus', 2)
-        opt('showmode', true)
-        opt('cmdheight', 1)
-        opt('ruler', true)
-      end)
-    })
-  end),
-})
+-- autocmd('FileType', {
+--   pattern = {'fzf'},
+--   callback = (function ()
+--     local opt = vim.api.nvim_set_option
+--     map('i', '<ESC>', '<C-D>', {buffer = true})
+--     opt('laststatus', 0)
+--     opt('showmode', false)
+--     opt('cmdheight', 1)
+--     opt('ruler', false)
+--     autocmd('BufLeave', {
+--       pattern = {'<buffer>'},
+--       callback = (function ()
+--         local opt = vim.api.nvim_set_option
+--         opt('laststatus', 2)
+--         opt('showmode', true)
+--         opt('cmdheight', 1)
+--         opt('ruler', true)
+--       end)
+--     })
+--   end),
+-- })
 
 augroup('source', {clear = true})
 autocmd('BufWritePost', {

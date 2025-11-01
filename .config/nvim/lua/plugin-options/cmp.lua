@@ -20,6 +20,9 @@ cmp.setup({
   },
   sources = {
     { name = 'onedrive' }, -- Custom source for OneDrive
+    { name = 'obsidian' },
+    { name = 'obsidian_tags' },
+    { name = 'obsidian_new' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },

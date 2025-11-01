@@ -13,10 +13,12 @@ end
 opt('g', 'hidden', true)
 opt('g', 'updatetime', 500)
 opt('g', 'showmode', false)
-opt('g', 'showcmd', true)
+opt('g', 'showcmd', false)
 opt('g', 'autoread', true)
 opt('g', 'background', 'light')
 opt('g', 'mouse', 'a')
+opt('g', 'laststatus', 2)
+opt('g', 'cmdheight', 1)
 
 opt('g', 'completeopt', 'menu,menuone,noselect')
 local shortmess = vim.api.nvim_get_option_value('shortmess', { scope = 'global' })

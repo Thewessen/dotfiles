@@ -1,4 +1,4 @@
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local function t(str)
   -- replaces given str with '<Tab>' with '\42Tab\x10' (or something)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -19,6 +19,7 @@ map('t', '<c-\\>', '<c-\\><c-n>', { noremap = true })
 map('n', '<c-d>', '<cmd>q<cr>', { noremap = true })
 map('n', '<F10>', '<cmd>TSHighlightCapturesUnderCursor<cr>', { noremap = true, silent = true })
 map('n', '<F11>', '<cmd>TSPlaygroundToggle<cr>', { noremap = true, silent = true })
+-- map('n', '-', '<cmd>NvimTreeToggle<cr>', { noremap = true, silent = true })
 
 -- plugins
 map('n', '<c-p>', '<cmd>FzfLua files<cr>', { noremap = true, silent = true })

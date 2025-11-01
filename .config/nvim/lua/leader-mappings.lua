@@ -1,4 +1,4 @@
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -9,12 +9,14 @@ map('n', '<leader>d', '<cmd>tab DBUI<cr>', { noremap = true })
 map('n', '<leader>o', '<cmd>only<cr>', { noremap = true, silent = true })
 map('n', '<leader>q', '<cmd>qall<cr>', { noremap = true })
 map('n', '<leader>t', '<c-w>T', { noremap = true, silent = true })
+map('n', '<leader>u', '<cmd>Undotree<cr>', { noremap = true, silent = true })
 map('n', '<leader>w', '<cmd>wq<cr>', { noremap = true, silent = true })
 map('n', '<leader>z', [[<cmd>call system('tmux-popup')<cr>]], { noremap = true, silent = true })
 map('n', '<leader>.', '<c-^>', { noremap = true })
 map('n', '<leader>,', '<cmd>w<cr>', { noremap = true, silent = true })
 map('n', '<leader>D', '<cmd>DiffSaved<cr>', { noremap = true, silent = true })
-map('n', '<leader>N', '<cmd>Obsidian search<cr>', { noremap = true, silent = true })
+map('n', '<leader>N', '<cmd>Obsidian today<cr>', { noremap = true, silent = true })
+map('n', '<leader>O', '<cmd>Obsidian<cr>', { noremap = true, silent = true })
 map('n', '<leader>R', '<cmd>luafile ~/.config/nvim/init.lua<cr><cmd>echo "config loaded..."<cr>', { noremap = true })
 map('n', '<leader>Y', '<cmd>YankFileLineNr<cr>', { noremap = true })
 map('n', '<leader><space>', ':AvanteChat<cr>', { noremap = true })
@@ -51,7 +53,7 @@ map('n', '<leader>g,', '<cmd>Gwrite!<cr>', { noremap = true })
 map('n', '<leader>g.', '<cmd>GApply<cr>', { noremap = true })
 map('n', '<leader>g<space>', ':Git<space>', { noremap = true })
 
--- fzf-lua
+-- fzf-lua / obsidian
 map('n', '<leader>b', '<cmd>FzfLua buffers<cr>', { noremap = true, silent = true })
 map('n', '<leader>l', '<cmd>FzfLua grep_loclist<cr>', { noremap = true })
 map('n', '<leader>h', '<cmd>FzfLua history<cr>', { noremap = true, silent = true })
@@ -62,6 +64,7 @@ map('n', '<leader>fd', '<cmd>FzfLua git_bcommits<cr>', { noremap = true, silent 
 map('n', '<leader>ff', '<cmd>FzfLua git_files<cr>', { noremap = true, silent = true })
 map('n', '<leader>fg', '<cmd>FzfLua git_branches<cr>', { noremap = true, silent = true })
 map('n', '<leader>fm', '<cmd>FzfLua marks<cr>', { noremap = true, silent = true })
+map('n', '<leader>fn', '<cmd>Obsidian search<cr>', { noremap = true, silent = true })
 map('n', '<leader>ft', '<cmd>FzfLua tags<cr>', { noremap = true, silent = true })
 map('n', '<leader>fT', '<cmd>FzfLua filetypes<cr>', { noremap = true, silent = true })
 map('n', '<leader>fM', '<cmd>FzfLua keymaps<cr>', { noremap = true, silent = true })

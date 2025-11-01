@@ -1,5 +1,3 @@
-local lspconfig = require('lspconfig')
-local root_pattern = lspconfig.util.root_pattern
 -- local capabilities = {}
 -- local capabilities = require('coq').lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -14,44 +12,44 @@ local lsp_attach = function (client)
 end
 
 -- vim
-lspconfig.vimls.setup{
+vim.lsp.config('vimls', {
   cmd = {'vim-language-server', '--stdio'},
   on_attach = lsp_attach,
   filetypes = {'vim'},
   -- capabilities = capabilities,
-}
+})
 
 -- js/ts
-lspconfig.ts_ls.setup{
+vim.lsp.config('ts_ls', {
   cmd = { 'typescript-language-server', '--stdio' },
   on_attach = lsp_attach,
   filetypes = {'javascript', 'javascript.jsx', 'typescript', 'javascriptreact', 'typescriptreact', 'typescript.tsx'},
-  root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+  root_markers = {'package.json', 'tsconfig.json', '.git'},
   init_options = {
     hostInfo = 'neovim',
   },
   -- capabilities = capabilities,
-}
+})
 
 -- php
-lspconfig.phpactor.setup{
+vim.lsp.config('phpactor', {
   cmd = {'phpactor', 'language-server'},
   on_attach = lsp_attach,
-  root_dir = root_pattern('composer.json', '.git'),
+  root_dir = {'composer.json', '.git'},
   -- capabilities = capabilities,
-}
+})
 
 -- python
-lspconfig.pylsp.setup{
+vim.lsp.config('pylsp', {
   cmd = { "pylsp" },
   on_attach = lsp_attach,
   filetypes = { "python" },
-  root_dir = root_pattern('requirements.txt', '.git'),
+  root_dir = {'requirements.txt', '.git'},
   single_file_support = true,
-}
+})
 
 -- lua
-lspconfig.lua_ls.setup{
+vim.lsp.config('lua_ls', {
   cmd = {"lua-language-server"},
   on_attach = lsp_attach,
   -- capabilities = capabilities,
@@ -71,25 +69,34 @@ lspconfig.lua_ls.setup{
       }
     }
   }
-}
+})
 
 -- json
-lspconfig.jsonls.setup{
-    cmd = { "vscode-json-languageserver", "--stdio" },
-    on_attach = lsp_attach,
-    filetypes = { "json" },
-    init_options = {
-      provideFormatter = true
-    },
-    root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
-    single_file_support = true,
-}
+vim.lsp.config('jsonls', {
+  cmd = { "vscode-json-languageserver", "--stdio" },
+  on_attach = lsp_attach,
+  filetypes = { "json" },
+  init_options = {
+    provideFormatter = true
+  },
+  root_dir = {'package.json', 'tsconfig.json', '.git'},
+  single_file_support = true,
+})
 
 -- css
-lspconfig.cssls.setup{
+vim.lsp.config('cssls', {
   cmd = { 'vscode-css-language-server', '--stdio' },
   on_attach = lsp_attach,
   filetypes = { 'css', 'scss', 'less' },
-  root_dir = root_pattern('package.json', 'tsconfig.json', '.git'),
+  root_dir = {'package.json', 'tsconfig.json', '.git'},
   single_file_support = true,
-}
+})
+
+-- markdown (for Obsidian back references)
+vim.lsp.config('marksman', {
+  cmd = { 'marksman', 'server' },
+  on_attach = lsp_attach,
+  filetypes = { 'markdown', 'md' },
+  root_dir = {'.git', '.marksman.toml'},
+  single_file_support = true,
+})

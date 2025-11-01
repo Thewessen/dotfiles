@@ -15,12 +15,6 @@ local function bufname_no_ext()
   return vim.fn.expand("%:t:r") or ""   -- bv. "2025-08-18" of "2025-W33"
 end
 
-local function bufnr_path_no_ext()
-  -- volledige pad zonder extensie; handig als iemand submappen gebruikt
-  local p = vim.fn.expand("%:r")
-  return (p ~= nil and p ~= "") and p or ""
-end
-
 local function get_opts()
   -- gebruik live Obsidian.opts als die er is
   if _G.Obsidian and _G.Obsidian.opts then
@@ -60,13 +54,18 @@ local function parse_week_from_buf()
   return nil
 end
 
+-- Import helpers voor date parsing
+local helpers = require("obsidian.helpers")
+
 -- Probeer YYYY-MM-DD (of met / .) uit buffernaam te parsen
 local function parse_date_from_buf()
   local name = bufname_no_ext()
-  local y, m, d = name:match("^(%d%d%d%d)[%-%./](%d%d)[%-%./](%d%d)$")
-  if not y then y, m, d = name:match("(%d%d%d%d)[%-%./](%d%d)[%-%./](%d%d)") end
-  if y then
-    return os.time({ year = tonumber(y), month = tonumber(m), day = tonumber(d), hour = 0, min = 0, sec = 0 })
+  return helpers.parse_date_from_string(name)
+end
+
+local function parse_date_from_context(ctx)
+  if ctx and ctx.partial_note and ctx.partial_note.id then
+    return helpers.parse_date_from_string(ctx.partial_note.id)
   end
   return nil
 end
@@ -79,7 +78,7 @@ local function daily_id_and_path(ts, opts)
   local dn = opts.daily_notes or {}
   local fmt = dn.date_format or "%Y-%m-%d"
   local id  = os.date(fmt, ts)
-  local folder = dn.folder or ""
+  local folder = (dn.folder or "")
   local path = (folder ~= "" and (folder .. "/" .. id) or id)
 
   if type(dn.path_resolver) == "function" then
@@ -110,12 +109,12 @@ end
 -- - in weekly: parse uit buffernaam
 -- - in daily:  maandag van die dag
 -- - anders:    huidige week
-local function current_week_monday()
+local function current_week_monday(ctx)
   -- weekly?
   local wk = parse_week_from_buf()
   if wk then return wk end
   -- daily?
-  local dt = parse_date_from_buf()
+  local dt = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
   if dt then return monday_from_ts(dt) end
   -- fallback: nu
   return monday_from_ts(os.time())
@@ -131,33 +130,42 @@ local function wikilink(target, label, heading)
   end
 end
 
+local function google_calendar_link(format)
+  return function(ctx)
+    local ts = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
+    if format == 'week' then
+      -- Make sure week link is the same for each week
+      ts = monday_from_ts(ts)
+    end
+    if format == 'year' then
+      ts = os.time({ year = tonumber(os.date("%Y", ts)), month = 1, day = 1, hour = 0, min = 0, sec = 0 })
+    end
+    local path = os.date("%Y/%m/%d", ts)
+    return string.format("[Google Calendar](https://calendar.google.com/calendar/r/%s/%s)", format, path)
+  end
+end
 -- =============== public API =================================
 
 function M.make()
-  -- ‘Big 3’-heading instelbaar via config (weekly_notes.big3_heading)
-  local opts = get_opts()
-  local W = opts.weekly_notes or {}
-  local BIG3 = W.big3_heading or "Big 3"
-
-  local function week_start_ts()
-    return current_week_monday()
+  local function week_start_ts(ctx)
+    return current_week_monday(ctx)
   end
 
   local function day_target(day_offset)
     local ts = week_start_ts() + (day_offset or 0) * DAY
-    local _, path = daily_id_and_path(ts, opts)
+    local _, path = daily_id_and_path(ts)
     return path, ts
   end
 
   local function weekly_target_from_ts(ts)
     local mon = monday_from_ts(ts)
-    local _, title, path = weekly_id_title_and_path(mon, opts)
+    local _, title, path = weekly_id_title_and_path(mon)
     return path, title, mon
   end
 
   local function weekly_target_for_current_week()
     local mon = week_start_ts()
-    local _, title, path = weekly_id_title_and_path(mon, opts)
+    local _, title, path = weekly_id_title_and_path(mon)
     return path, title, mon
   end
 
@@ -167,9 +175,6 @@ function M.make()
     -- ====== Kop/metadata rond de week ======
     week_start = function()
       return os.date("%Y-%m-%d", week_start_ts())
-    end,
-    title = function()
-      return os.date("Week %V, %G", week_start_ts())
     end,
 
     -- ====== Links naar dailies (top) ======
@@ -181,37 +186,102 @@ function M.make()
     sat_link = function() return wikilink(day_target(5), "Zaterdag") end,
     sun_link = function() return wikilink(day_target(6), "Zondag") end,
 
+    today = function(ctx)
+      local dt = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
+      return os.date("%A %d %B", dt)
+    end,
+
+    yesterday_link = function(ctx)
+      local dt = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
+      local yest = dt - DAY
+      local _, path = daily_id_and_path(yest)
+      return wikilink(path, os.date("%d %B", yest))
+    end,
+
+    tomorrow_link = function(ctx)
+      local dt = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
+      local tomo = dt + DAY
+      local _, path = daily_id_and_path(tomo)
+      return wikilink(path, os.date("%d %B", tomo))
+    end,
+
     -- ====== Big-3 deeplinks naar dailies ======
-    mon_big3 = function() local t=day_target(0); return wikilink(t, "Big 3 (ma)", BIG3) end,
-    tue_big3 = function() local t=day_target(1); return wikilink(t, "Big 3 (di)", BIG3) end,
-    wed_big3 = function() local t=day_target(2); return wikilink(t, "Big 3 (wo)", BIG3) end,
-    thu_big3 = function() local t=day_target(3); return wikilink(t, "Big 3 (do)", BIG3) end,
-    fri_big3 = function() local t=day_target(4); return wikilink(t, "Big 3 (vr)", BIG3) end,
-    sat_big3 = function() local t=day_target(5); return wikilink(t, "Big 3 (za)", BIG3) end,
-    sun_big3 = function() local t=day_target(6); return wikilink(t, "Big 3 (zo)", BIG3) end,
+    mon_big3 = function()
+      local t = day_target(0)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (ma)", BIG3)
+    end,
+    tue_big3 = function()
+      local t = day_target(1)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (di)", BIG3)
+    end,
+    wed_big3 = function()
+      local t = day_target(2)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (wo)", BIG3)
+    end,
+    thu_big3 = function()
+      local t = day_target(3)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (do)", BIG3)
+    end,
+    fri_big3 = function()
+      local t = day_target(4)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (vr)", BIG3)
+    end,
+    sat_big3 = function()
+      local t = day_target(5)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (za)", BIG3)
+    end,
+    sun_big3 = function()
+      local t = day_target(6)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
+      local BIG3 = W.big3_heading or "Big 3"
+      return wikilink(t, "Big 3 (zo)", BIG3)
+    end,
 
     -- ====== Daily → Weekly backlink ======
-    weekly_link = function()
-      -- bepaal dag-ts uit huidige buffernaam (daily of anders nu)
-      local ts = parse_date_from_buf() or os.time()
+    weekly_link = function(ctx)
+      -- bepaal dag-ts uit context of huidige buffernaam (daily of anders nu)
+      local ts = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
       local path, title = weekly_target_from_ts(ts)
       return string.format("[[%s|%s]]", path, title)
     end,
 
-    weekly_id = function()
-      local ts = parse_date_from_buf() or os.time()
+    weekly_id = function(ctx)
+      local ts = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
       local mon = monday_from_ts(ts)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
       return os.date(W.id_format or "%G-W%V", mon)
     end,
 
-    weekly_title = function()
-      local ts = parse_date_from_buf() or os.time()
+    weekly_title = function(ctx)
+      local ts = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
       local mon = monday_from_ts(ts)
+      local opts = get_opts()
+      local W = opts.weekly_notes or {}
       return os.date(W.alias_format or "Week %V, %G", mon)
     end,
 
-    weekly_big_rocks = function()
-      local ts = parse_date_from_buf() or os.time()
+    weekly_big_rocks = function(ctx)
+      local ts = parse_date_from_context(ctx) or parse_date_from_buf() or os.time()
       local path, title = weekly_target_from_ts(ts)
       return string.format("[[%s#Grote Stenen|%s – Grote Stenen]]", path, title)
     end,
@@ -222,12 +292,9 @@ function M.make()
       return type(path) == "table" and path[1] or path
     end,
 
-    google_calendar_link = function()
-      local ts = parse_date_from_buf() or os.time()
-      local mon = monday_from_ts(ts)
-      local path = os.date("%Y/%m/%d", mon)
-      return string.format("[Google Calendar](https://calendar.google.com/calendar/r/week/%s)", path)
-    end,
+    google_calendar_day_link = google_calendar_link("day"),
+    google_calendar_week_link = google_calendar_link("week"),
+    google_calendar_year_link = google_calendar_link("year"),
   }
 
   return subs
