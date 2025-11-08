@@ -152,9 +152,20 @@ autocmd('FileType', {
       -- Start servers if any found
       if #servers > 0 then
         local bufname = vim.api.nvim_buf_get_name(0)
+        -- Ensure buffer has a valid file name and URI
         if bufname and bufname ~= '' then
-          -- Try vim.lsp.enable first
-          vim.lsp.enable(servers)
+          -- Verify the buffer URI is valid
+          local uri = vim.uri_from_bufnr(0)
+          if uri and uri ~= '' then
+            -- Use pcall to catch any errors during enable
+            local ok, err = pcall(function()
+              vim.lsp.enable(servers)
+            end)
+            if not ok then
+              -- Silently fail if there's an error (e.g., no valid root_dir)
+              -- This can happen when switching between files quickly
+            end
+          end
         end
       end
     end)

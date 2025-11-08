@@ -38,9 +38,14 @@ local function phpactor_before_init(initialize_params, config)
   local root_dir = config.root_dir
   if type(root_dir) == 'function' then
     local bufname = vim.api.nvim_buf_get_name(0)
-    root_dir = bufname and bufname ~= '' and root_dir(bufname) or nil
+    if bufname and bufname ~= '' then
+      root_dir = root_dir(bufname)
+    else
+      root_dir = nil
+    end
   end
-  if root_dir then
+  -- Only set rootUri if we have a valid root_dir
+  if root_dir and root_dir ~= '' then
     initialize_params.rootUri = vim.uri_from_fname(root_dir)
   end
 end
