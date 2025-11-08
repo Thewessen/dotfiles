@@ -31,22 +31,38 @@ vim.lsp.config('ts_ls', {
 })
 
 -- php
+-- phpactor requires rootUri in initialize request
+-- Use root_markers in config to avoid avante.nvim inspection issues
+-- Add root_dir function and before_init in on_new_config
+local function phpactor_before_init(initialize_params, config)
+  local root_dir = config.root_dir
+  if type(root_dir) == 'function' then
+    local bufname = vim.api.nvim_buf_get_name(0)
+    root_dir = bufname and bufname ~= '' and root_dir(bufname) or nil
+  end
+  if root_dir then
+    initialize_params.rootUri = vim.uri_from_fname(root_dir)
+  end
+end
+
+local function phpactor_root_dir(fname)
+  local actual_fname = type(fname) == 'number' and vim.api.nvim_buf_get_name(fname) or fname
+  if not actual_fname or actual_fname == '' then
+    return nil
+  end
+  local util = require('lspconfig.util')
+  return util.root_pattern('.phpactor.json', 'composer.json', '.git')(actual_fname)
+end
+
 vim.lsp.config('phpactor', {
   cmd = {'phpactor', 'language-server'},
   filetypes = {'php'},
   on_attach = lsp_attach,
-  root_dir = function(fname)
-    -- fname can be a buffer number or a file path
-    local actual_fname = fname
-    if type(fname) == 'number' then
-      actual_fname = vim.api.nvim_buf_get_name(fname)
-    end
-    -- Return nil if no valid file name
-    if not actual_fname or actual_fname == '' then
-      return nil
-    end
-    local util = require('lspconfig.util')
-    return util.root_pattern('.phpactor.json', 'composer.json', '.git')(actual_fname)
+  root_markers = {'.phpactor.json', 'composer.json', '.git'},
+  on_new_config = function(new_config, new_root_dir)
+    new_config.before_init = phpactor_before_init
+    new_config.root_dir = phpactor_root_dir
+    new_config.root_markers = nil
   end,
   capabilities = capabilities,
 })

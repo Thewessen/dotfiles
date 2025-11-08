@@ -111,5 +111,53 @@ autocmd({'BufNewFile', 'BufRead'}, {
   group = 'source'
 })
 
--- LSP servers are automatically started by Neovim 0.10+ when configured with vim.lsp.config()
--- No manual start logic needed
+-- Auto-start LSP servers when opening files
+-- Neovim 0.10+ with vim.lsp.config() should auto-start, but we ensure it happens
+augroup('lsp', {clear = true})
+autocmd('FileType', {
+  pattern = {'php', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'python', 'lua', 'json', 'css', 'scss', 'less', 'markdown', 'md', 'vim'},
+  callback = function()
+    -- Skip if buffer is not a file
+    if vim.bo.buftype ~= '' or vim.fn.expand('%') == '' then
+      return
+    end
+    
+    local filetype = vim.bo.filetype
+    if filetype == '' then
+      return
+    end
+    
+    -- Use buffer-local variable to prevent multiple starts
+    if vim.b.lsp_started then
+      return
+    end
+    vim.b.lsp_started = true
+    
+    -- Find matching servers for this filetype and enable them
+    vim.schedule(function()
+      local servers = {}
+      if vim.lsp.config._configs then
+        for name, config in pairs(vim.lsp.config._configs) do
+          local filetypes = config.filetypes
+          if filetypes and vim.tbl_contains(filetypes, filetype) then
+            -- Check if server is already attached to this buffer
+            local clients = vim.lsp.get_clients({ bufnr = 0, name = name })
+            if #clients == 0 then
+              table.insert(servers, name)
+            end
+          end
+        end
+      end
+      
+      -- Start servers if any found
+      if #servers > 0 then
+        local bufname = vim.api.nvim_buf_get_name(0)
+        if bufname and bufname ~= '' then
+          -- Try vim.lsp.enable first
+          vim.lsp.enable(servers)
+        end
+      end
+    end)
+  end,
+  group = 'lsp'
+})
