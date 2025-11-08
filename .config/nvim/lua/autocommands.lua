@@ -110,3 +110,6 @@ autocmd({'BufNewFile', 'BufRead'}, {
   callback = (function() vim.cmd('set ft=blade') end),
   group = 'source'
 })
+
+-- LSP servers are automatically started by Neovim 0.10+ when configured with vim.lsp.config()
+-- No manual start logic needed

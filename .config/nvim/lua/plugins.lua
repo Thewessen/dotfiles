@@ -27,7 +27,6 @@ require('lazy').setup({
   --   },
   -- },
    -- autocompletion
-  { 'neoclide/coc.nvim', branch = 'release' },
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -42,8 +41,6 @@ require('lazy').setup({
   },
 
   -- lsp
-  'ms-jpq/coq_nvim',
-  'ms-jpq/coq.artifacts',
   {
     'phpactor/phpactor',
     ft = 'php',

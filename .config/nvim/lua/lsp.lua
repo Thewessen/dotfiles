@@ -1,6 +1,5 @@
--- local capabilities = {}
--- local capabilities = require('coq').lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Use nvim-cmp capabilities for better completion integration
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lsp_attach = function (client)
   local opt = {buffer = true, noremap = true, silent = false}
@@ -16,7 +15,7 @@ vim.lsp.config('vimls', {
   cmd = {'vim-language-server', '--stdio'},
   on_attach = lsp_attach,
   filetypes = {'vim'},
-  -- capabilities = capabilities,
+  capabilities = capabilities,
 })
 
 -- js/ts
@@ -28,15 +27,28 @@ vim.lsp.config('ts_ls', {
   init_options = {
     hostInfo = 'neovim',
   },
-  -- capabilities = capabilities,
+  capabilities = capabilities,
 })
 
 -- php
 vim.lsp.config('phpactor', {
   cmd = {'phpactor', 'language-server'},
+  filetypes = {'php'},
   on_attach = lsp_attach,
-  root_dir = {'composer.json', '.git'},
-  -- capabilities = capabilities,
+  root_dir = function(fname)
+    -- fname can be a buffer number or a file path
+    local actual_fname = fname
+    if type(fname) == 'number' then
+      actual_fname = vim.api.nvim_buf_get_name(fname)
+    end
+    -- Return nil if no valid file name
+    if not actual_fname or actual_fname == '' then
+      return nil
+    end
+    local util = require('lspconfig.util')
+    return util.root_pattern('.phpactor.json', 'composer.json', '.git')(actual_fname)
+  end,
+  capabilities = capabilities,
 })
 
 -- python
@@ -46,13 +58,14 @@ vim.lsp.config('pylsp', {
   filetypes = { "python" },
   root_dir = {'requirements.txt', '.git'},
   single_file_support = true,
+  capabilities = capabilities,
 })
 
 -- lua
 vim.lsp.config('lua_ls', {
   cmd = {"lua-language-server"},
   on_attach = lsp_attach,
-  -- capabilities = capabilities,
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -81,6 +94,7 @@ vim.lsp.config('jsonls', {
   },
   root_dir = {'package.json', 'tsconfig.json', '.git'},
   single_file_support = true,
+  capabilities = capabilities,
 })
 
 -- css
@@ -90,6 +104,7 @@ vim.lsp.config('cssls', {
   filetypes = { 'css', 'scss', 'less' },
   root_dir = {'package.json', 'tsconfig.json', '.git'},
   single_file_support = true,
+  capabilities = capabilities,
 })
 
 -- markdown (for Obsidian back references)
@@ -99,4 +114,5 @@ vim.lsp.config('marksman', {
   filetypes = { 'markdown', 'md' },
   root_dir = {'.git', '.marksman.toml'},
   single_file_support = true,
+  capabilities = capabilities,
 })

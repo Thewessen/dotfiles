@@ -95,12 +95,37 @@ require("obsidian").setup({
   },
   frontmatter = {
     func = function(note)
+      local now = os.time()
+
       -- Add the title of the note as an alias.
       if note.title then
         note:add_alias(note.title)
       end
 
       local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+
+      -- Created at timestamp if its a new note
+      -- Probeer file creation time uit OS metadata te halen
+      if note.metadata ~= nil and not note.metadata.created_at then
+        local created_time = now -- fallback naar huidige tijd
+
+        -- Gebruik note.path om file stats op te halen
+        if note.path then
+          local file_path = tostring(note.path)
+          local stat = vim.loop.fs_stat(file_path)
+          if stat then
+            -- Op macOS hebben we birthtime voor creation time
+            -- Op andere systemen gebruiken we mtime als fallback
+            if stat.birthtime and stat.birthtime.sec then
+              created_time = stat.birthtime.sec
+            elseif stat.mtime and stat.mtime.sec then
+              created_time = stat.mtime.sec
+            end
+          end
+        end
+
+        out.created_at = os.date("%d-%m-%YT%H:%M:%S", created_time)
+      end
 
       -- For daily notes: parse date from note.id and add various date formats
       local date_ts = helpers.parse_date_from_string(note.id)
@@ -139,9 +164,12 @@ require("obsidian").setup({
         end
       end
 
+      -- Updated at timestamp
+      out.updated_at = os.date("%d-%m-%YT%H:%M:%S", now)
+
       return out
     end,
-  }
+  },
 })
 
 require("obsidian").register_command("weekly", {
@@ -159,5 +187,17 @@ require("obsidian").register_command("weeklies", {
 require("obsidian").register_command("save", {
   nargs = "?",
   desc = "Save current buffer to Obsidian vault",
+  complete = function() return {} end,
+})
+
+require("obsidian").register_command("ai-search", {
+  nargs = "*",
+  desc = "Zoek door notities met AI",
+  complete = function() return {} end,
+})
+
+require("obsidian").register_command("text-search", {
+  nargs = "*",
+  desc = "Zoek door notities met text search (rg)",
   complete = function() return {} end,
 })
