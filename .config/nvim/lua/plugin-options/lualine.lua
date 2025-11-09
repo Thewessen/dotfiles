@@ -59,39 +59,6 @@ local function get_mode_color()
   return { fg = 'NONE', bg = 'NONE', gui = 'underline' }
 end
 
-local function get_file_flags()
-  local flags = {}
-  local buf = vim.api.nvim_get_current_buf()
-  
-  if vim.bo[buf].readonly then
-    table.insert(flags, 'RO')
-  end
-  if vim.bo[buf].filetype == 'help' then
-    table.insert(flags, 'h')
-  end
-  if vim.wo.previewwindow then
-    table.insert(flags, 'PREVIEW')
-  end
-  if vim.b.gzflag then
-    table.insert(flags, '[GZ]')
-  end
-  if vim.bo[buf].buftype == 'quickfix' then
-    table.insert(flags, 'q')
-  end
-  
-  return table.concat(flags, ' ')
-end
-
-local function has_file_flags()
-  local buf = vim.api.nvim_get_current_buf()
-  return vim.bo[buf].modified
-      or vim.bo[buf].readonly
-      or vim.bo[buf].filetype == 'help'
-      or vim.wo.previewwindow
-      or vim.b.gzflag
-      or vim.bo[buf].buftype == 'quickfix'
-end
-
 local function get_git_status()
   if vim.fn.exists('g:loaded_fugitive') == 1 then
     local ok, status = pcall(function()
@@ -164,14 +131,6 @@ lualine.setup({
     },
     lualine_b = { 'filename' },
     lualine_c = {
-      {
-        get_file_flags,
-        cond = has_file_flags,
-      },
-      {
-        get_git_status,
-        cond = has_git_status,
-      },
     },
     lualine_x = {
       {
@@ -181,10 +140,15 @@ lualine.setup({
     },
     lualine_y = {
       {
+        get_git_status,
+        cond = has_git_status,
+      },
+    },
+    lualine_z = {
+      {
         get_location,
       },
     },
-    lualine_z = {},
   },
   inactive_sections = {
     lualine_a = {

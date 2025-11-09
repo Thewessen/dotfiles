@@ -1,72 +1,127 @@
 local cmd = vim.api.nvim_create_user_command
 local f = require'functions'
 
--- local bookmark = {
---   web = '~/hypotheekbond/monorepo/apps/web',
---   devenv = '~/hypotheekbond/devenv',
---   ['devenv-docker'] = '~/hypotheekbond/devenv-docker',
---   mono = '~/hypotheekbond/monorepo',
---   node = '~/hypotheekbond/monorepo/yarn-workspace-packages/node_package',
---   smoke = '~/hypotheekbond/monorepo/yarn-workspace-packages/storybook-smoke-test',
---   workspaces = '~/hypotheekbond/monorepo/yarn-workspace-packages',
---   ['ins-api'] = '~/hypotheekbond/monorepo/apps/insurance-api',
---   pdf = '~/hypotheekbond/monorepo/apps/pdf-service',
---   duurzaam = '~/hypotheekbond/monorepo/apps/duurzaamheidsprofiel',
---   munt = '~/hypotheekbond/monorepo/apps/munt-bespaarcheck',
---   veh = '~/hypotheekbond/monorepo/apps/veh',
---   tools = '~/hypotheekbond/monorepo/apps/tools',
---   ['ufo-con'] = '~/hypotheekbond/monorepo/apps/ufo-consumer',
---   ['ufo-api'] = '~/hypotheekbond/monorepo/apps/ufo-api',
---   ['ufo-admin'] = '~/hypotheekbond/monorepo/apps/ufo-organization-admin',
---   ['ufo-org'] = '~/hypotheekbond/monorepo/apps/ufo-organization',
---   force = '~/hypotheekbond/monorepo/apps/workforce',
---   rente = '~/hypotheekbond/monorepo/apps/renteadministratie',
--- }
+-- ============================================================================
+-- Constants
+-- ============================================================================
 
--- cmd('Cd', function(a)
---   vim.cmd('cd ' .. bookmark[a.args])
--- end, {
---   nargs = 1,
---   desc = {'Cd to bookmarked directories'},
---   complete = function()
---     local bookmarks = {}
---     for k, v in pairs(bookmark) do
---       bookmarks[#bookmarks + 1] = k
---     end
---     return bookmarks
---   end
--- });
+local QUEUE_NAMES = {
+  'snelberekenen',
+  'ufo-connect',
+  'aflosvrij',
+  'mail',
+  'signalmail',
+  'lifeinsurance',
+  'hypotheekcheck',
+  'refinancing',
+  'risk-class-reduction',
+  'test-fastlane',
+  'client-deleter',
+  'legacy'
+}
 
--- use fzf to browse through notes taken
--- cmd('Notes', function()
---   vim.fn['fzf#vim#grep']('ls $HOME/notes', 0, { sink = {'edit $HOME/notes/'} }, 0)
--- end, {nargs = 0, desc = {'Use fzf to browse through notes taken'}})
+-- ============================================================================
+-- Helper Functions
+-- ============================================================================
 
--- copy current file and line number to clipboard
-cmd('YankFileLineNr', f.yankFileLineNumber, {desc = {'Copy current file and line number to clipboard'}})
-
--- use fzf to find and checkout a branch
-cmd('GCheckout', function()
+local function checkout_branch_with_fzf()
   vim.fn['fzf#vim#grep'](
-    "git branch --all --sort=-committerdate --no-merged", 0,
-    { sink = f.checkoutBranchFzf }, 0)
-end, {nargs = 0, bang = true, desc = {'Use fzf to find and checkout a branch'}})
+    "git branch --all --sort=-committerdate --no-merged",
+    0,
+    { sink = f.checkoutBranchFzf },
+    0
+  )
+end
 
--- diff current buff with saved file on disc
-cmd('DiffSaved', f.diffSaved, {desc = {'Diff current buff with saved file on disc'}})
-
--- working with csv files (requires csvkit)
-cmd('FormatCSV', [[%!csvlook -I]], {desc = {'Create columns from , seperated rows'}})
-cmd('JoinCSV', [[%s/ \{2,\}/,/g]], {desc = {'Reverses the CSVColumn command'}})
-
--- working with xml
-cmd('FormatXML', function()
+local function format_xml()
   vim.cmd([[%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())]])
-end, {desc = {'Format XML using python'}})
+end
 
--- working with json
-cmd('FormatJSON', function() vim.cmd([[%!python3 -m json.tool]]) end, {desc = {'Format JSON using python'}})
+local function format_json()
+  vim.cmd([[%!python3 -m json.tool]])
+end
 
-cmd('Htop', function() os.execute('tmux split-pane htop') end, {desc = {'Display `htop` in tmux split-pane'}})
-cmd('Search', f.searchWeb, {nargs = 1, desc = {'Browse the web with given query'}})
-cmd('Tabnew', [[Start nvim]], {desc = {'Open a new tab for nvim using tmux'}})
+local function run_htop()
+  os.execute('tmux split-pane htop')
+end
+
+local function start_queue(args)
+  local queue_name = args.args ~= '' and args.args or ''
+  os.execute('start-queue ' .. queue_name)
+end
+
+local function queue_complete()
+  return QUEUE_NAMES
+end
+
+-- ============================================================================
+-- File Operations
+-- ============================================================================
+
+cmd('YankFileLineNr', f.yankFileLineNumber, {
+  desc = 'Copy current file and line number to clipboard'
+})
+
+cmd('DiffSaved', f.diffSaved, {
+  desc = 'Diff current buffer with saved file on disk'
+})
+
+-- ============================================================================
+-- Git Operations
+-- ============================================================================
+
+cmd('GCheckout', checkout_branch_with_fzf, {
+  nargs = 0,
+  bang = true,
+  desc = 'Use fzf to find and checkout a branch'
+})
+
+-- ============================================================================
+-- File Formatting
+-- ============================================================================
+
+-- CSV formatting (requires csvkit)
+cmd('FormatCSV', [[%!csvlook -I]], {
+  desc = 'Create columns from comma-separated rows'
+})
+
+cmd('JoinCSV', [[%s/ \{2,\}/,/g]], {
+  desc = 'Reverse the CSVColumn command'
+})
+
+-- XML formatting
+cmd('FormatXML', format_xml, {
+  desc = 'Format XML using python'
+})
+
+-- JSON formatting
+cmd('FormatJSON', format_json, {
+  desc = 'Format JSON using python'
+})
+
+-- ============================================================================
+-- System & External Tools
+-- ============================================================================
+
+cmd('Htop', run_htop, {
+  desc = 'Display htop in tmux split-pane'
+})
+
+cmd('Search', f.searchWeb, {
+  nargs = 1,
+  desc = 'Browse the web with given query'
+})
+
+cmd('Tabnew', [[Start nvim]], {
+  desc = 'Open a new tab for nvim using tmux'
+})
+
+-- ============================================================================
+-- Queue Management
+-- ============================================================================
+
+cmd('Queue', start_queue, {
+  nargs = '?',
+  desc = 'Start queue with optional queue name',
+  complete = queue_complete
+})

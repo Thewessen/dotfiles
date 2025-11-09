@@ -22,13 +22,4 @@ require('work-related')
 require('edit-config')
 require('edit-notes')
 require('docker')
--- require('statusline') -- Vervangen door lualine.nvim (zie plugin-options/lualine.lua)
 require('obsidian-tags')
-
--- linkcolors.vim is nu geconverteerd naar lua/linkcolors.lua
-
--- some more fancy custom commands (fzf)
--- cmd('source ~/.config/nvim/vimscript/docker.vim')
--- cmd('source ~/.config/nvim/vimscript/edit-config.vim')
-cmd('source ~/.config/nvim/vimscript/start-queue.vim')
-cmd('source ~/.config/nvim/vimscript/quickfix-fzf.vim')
