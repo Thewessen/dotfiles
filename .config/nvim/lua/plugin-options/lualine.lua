@@ -63,9 +63,6 @@ local function get_file_flags()
   local flags = {}
   local buf = vim.api.nvim_get_current_buf()
   
-  if vim.bo[buf].modified then
-    table.insert(flags, '+')
-  end
   if vim.bo[buf].readonly then
     table.insert(flags, 'RO')
   end

@@ -14,6 +14,7 @@ require('options')
 require('commands')
 require('autocommands')
 require('colors')
+require('linkcolors')
 require('leader-mappings')
 require('other-mappings')
 require('lsp')
@@ -24,7 +25,7 @@ require('docker')
 -- require('statusline') -- Vervangen door lualine.nvim (zie plugin-options/lualine.lua)
 require('obsidian-tags')
 
-cmd('source ~/.config/nvim/vimscript/linkcolors.vim')
+-- linkcolors.vim is nu geconverteerd naar lua/linkcolors.lua
 
 -- some more fancy custom commands (fzf)
 -- cmd('source ~/.config/nvim/vimscript/docker.vim')
