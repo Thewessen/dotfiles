@@ -21,7 +21,7 @@ require('work-related')
 require('edit-config')
 require('edit-notes')
 require('docker')
--- require('statusline')
+-- require('statusline') -- Vervangen door lualine.nvim (zie plugin-options/lualine.lua)
 require('obsidian-tags')
 
 cmd('source ~/.config/nvim/vimscript/linkcolors.vim')

@@ -60,3 +60,49 @@ hi link RenderMarkdownH3Bg Title
 hi link RenderMarkdownH4Bg Title
 hi link RenderMarkdownH5Bg Title
 hi link RenderMarkdownCode Visual
+
+" lualine.nvim highlight links
+" Link alle lualine highlight groups naar StatusLine kleuren uit sthew.vim
+" Actieve statusline secties
+hi! link lualine_a_normal StatusLine
+hi! link lualine_b_normal StatusLine
+hi! link lualine_c_normal StatusLine
+hi! link lualine_x_normal StatusLine
+hi! link lualine_y_normal StatusLine
+hi! link lualine_z_normal StatusLine
+
+hi! link lualine_a_insert StatusLine
+hi! link lualine_b_insert StatusLine
+hi! link lualine_c_insert StatusLine
+hi! link lualine_x_insert StatusLine
+hi! link lualine_y_insert StatusLine
+hi! link lualine_z_insert StatusLine
+
+hi! link lualine_a_visual StatusLine
+hi! link lualine_b_visual StatusLine
+hi! link lualine_c_visual StatusLine
+hi! link lualine_x_visual StatusLine
+hi! link lualine_y_visual StatusLine
+hi! link lualine_z_visual StatusLine
+
+hi! link lualine_a_replace StatusLine
+hi! link lualine_b_replace StatusLine
+hi! link lualine_c_replace StatusLine
+hi! link lualine_x_replace StatusLine
+hi! link lualine_y_replace StatusLine
+hi! link lualine_z_replace StatusLine
+
+hi! link lualine_a_command StatusLine
+hi! link lualine_b_command StatusLine
+hi! link lualine_c_command StatusLine
+hi! link lualine_x_command StatusLine
+hi! link lualine_y_command StatusLine
+hi! link lualine_z_command StatusLine
+
+" Inactieve statusline secties
+hi! link lualine_a_inactive StatusLineNC
+hi! link lualine_b_inactive StatusLineNC
+hi! link lualine_c_inactive StatusLineNC
+hi! link lualine_x_inactive StatusLineNC
+hi! link lualine_y_inactive StatusLineNC
+hi! link lualine_z_inactive StatusLineNC

@@ -185,6 +185,13 @@ require('lazy').setup({
   -- git
   'lewis6991/gitsigns.nvim',
 
+  -- statusline
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    lazy = false, -- Altijd laden, statusline is essentieel
+  },
+
   -- tests
   {
     'vim-test/vim-test',
