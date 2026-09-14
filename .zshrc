@@ -103,7 +103,7 @@ source $HOME/.cargo/env
 export DOTFILES="$HOME/.dotfiles"
 
 # Path to dotfiles bin
-PATH="$PATH:$DOTFILES/bin"
+PATH="$PATH:$HOME/bin"
 
 # Path to composer
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
