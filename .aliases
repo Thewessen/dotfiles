@@ -80,18 +80,4 @@ alias -g NUL="> /dev/null 2>&1"
 # =================================
 
 alias vi='nvim'
-alias vig='nvim +Gstatus -c ":only"' 
-alias viplug='nvim +PlugInstall +qall'
-alias viplug-clean='nvim +PluginClean +qall'
-
-# Start neovim with Obsession
-function nvim() {
-  if test $# -gt 0; then
-    env nvim "$@"
-  elif test -f Session.vim; then
-    env nvim -S
-  else
-    env nvim -c Obsession
-  fi
-}
 
