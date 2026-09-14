@@ -6,3 +6,11 @@ tags
 
 # module
 fzf/
+
+# Add vim acceptions
+*~
+.*.sw?
+
+# For Mac-os
+.DS_Store
+Thumbs.db
