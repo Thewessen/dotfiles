@@ -5,7 +5,7 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
-source "$DOTFILES/fzf-extras.sh"
+[ -f "$HOME/fzf-extras.sh" ] && source "$HOME/fzf-extras.sh"
 
 # Simple watch filechange and run file command (needs notify-tools)
 notify() {
@@ -69,7 +69,7 @@ alias ldot='ls -d .* --group-directories-first'
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.dotfiles/vim/.vimrc ~/.vimrc ~/.dotfiles/vim/*"
+alias vimrc="$EDITOR ~/.vimrc"
 
 #read documents on Linux Mint/Ubuntu from commandline
 if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
