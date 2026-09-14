@@ -21,25 +21,11 @@ notify() {
 # =================================
 #             General
 # =================================
-# John the Ripper (Jumbo)
-alias john="$HOME/.local/share/JohnTheRipper/run/john"
-alias zip2john="$HOME/.local/share/JohnTheRipper/run/zip2john"
-alias rar2john="$HOME/.local/share/JohnTheRipper/run/rar2john"
-
 # List processes
 alias pstree='pstree -aclp'
 
-# Copy to clipboard
-alias xclip='xclip -selection clipboard'
-
 # Dir STACK, zsh and csh only
 alias dh='dirs -v'
-
-# http-server
-alias http='live-server -V'
-
-# NPM
-alias npm-update="sudo $HOME/.dotfiles/npm/npm-upgrade.sh"
 
 alias c='clear' # Clear the screen
 alias j='jobs' # Current running jobs
@@ -73,25 +59,6 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
 alias vimrc="$EDITOR ~/.vimrc"
-
-#read documents on Linux Mint/Ubuntu from commandline
-if [[ -n "$(uname -v | grep Ubuntu)" ]]; then
-    alias o="xdg-open 2> /dev/null"
-
-    _www_fts=(html de org net com at io nl se dk)
-    _img_fts=(jpg JPG jpeg JPEG mjpg MJPG mjpeg MJPEG gif GIF bmp BMP pbm PBM pgm PGM ppm PPM tga TGA xbm XBM xpm XPM tif TIF tiff TIFF png PNG svg SVG svgz SVGZ mng MNG pcx PCX mov MOV mpg MPG mpeg MPEG m2v M2V mkv MKV webm WEBM ogm OGM mp4 MP4 m4v M4V mp4v MP4V vob VOB qt QT nuv NUV wmv WMV asf ASF rm RM rmvb RMVB flc FLC avi AVI fli FLI flv FLV gl GL dl DL xcf XCF xwd XWD yuv YUV cgm CGM emf EMF 3gp 3GP ogv OGV ogx OGX heic HEIC heif HEIF)
-    _aud_fts=(aac AAC au AU flac FLAC m4a M4A mid MID midi MIDI mka MKA mp3 MP3 mpc MPC ogg OGG ra RA wav WAV oga OGA opus OPUS spx SPX xspf XSPF)
-    _pres_fts=(dvi DVI pdf PDF ppt PPT pptx PPTX)
-    _doc_fts=(doc DOC docx DOCX odt ODT ott OTT)
-    _sht_fts=(ods ODS xls XLS xlsm XLSM)
-
-    for ft in $_www_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_img_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_aud_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_pres_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_doc_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-    for ft in $_sht_fts; do alias -s $ft="xdg-open 2> /dev/null"; done
-fi
 
 # =================================
 #               Pipes
