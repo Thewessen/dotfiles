@@ -4,8 +4,11 @@ export LSCOLORS=dxFxCxDxBxegedabagacad
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 
-PROMPT="%{$fg[green]%}╭─%{$fg[yellow]%} %/%{$fg[green]%} ─ ${git_branch}
-%{$fg[green]%}╰\$ %{$reset_color%}"
+# user@host: λ              ─ [path]
+# Bold blue and bold green, like the bash prompt (01;34 and 01;32).
+# Right side: from 4 levels deep, first/../last-two, as on the Mac.
+PROMPT="%{$fg_bold[blue]%}%n@%m: %{$fg_bold[green]%}λ%{$reset_color%} "
+RPROMPT="%{$fg_bold[green]%}─ %{$fg_bold[blue]%}[%(4~|%-1~/../%2~|%~)]%{$reset_color%}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[blue]%})"
