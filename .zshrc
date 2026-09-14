@@ -97,7 +97,7 @@ fi
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # rust
-source $HOME/.cargo/env
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 # Path to dotfiles
 export DOTFILES="$HOME/.dotfiles"
