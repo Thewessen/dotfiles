@@ -5,6 +5,9 @@
 #       Last modified: Mo 28 Jan 2019
 # ==================================================================
 
+# Dotfiles (bare repo, branch pi)
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 [ -f "$HOME/fzf-extras.sh" ] && source "$HOME/fzf-extras.sh"
 
 # Simple watch filechange and run file command (needs notify-tools)
