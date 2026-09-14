@@ -7,7 +7,7 @@ the `pi` branch.
 ## Setup on a new Pi
 
 ```sh
-sudo apt install git zsh curl
+sudo apt install git zsh tmux fzf curl
 
 # oh-my-zsh first: its installer refuses to run when ~/.oh-my-zsh already exists
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
