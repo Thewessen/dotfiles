@@ -3,10 +3,7 @@
 # Make sure this directory is in your $PATH
 # Run all updatecommands
 
-sudo
-upgrade_oh_my_zsh
-nvim +PlugUpdate +qall
+sudo -v
+ZSH="$HOME/.oh-my-zsh" zsh -f "$HOME/.oh-my-zsh/tools/upgrade.sh"
 update-git-pull
-upgrade-npm
 update-apt
-update-pip
