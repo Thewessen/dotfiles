@@ -397,7 +397,7 @@ nno <leader>f/ :History/<CR>
 " In current window
 nmap <leader>ev :vsplit ~/.vimrc<CR>
 nmap <leader>ec :vsplit ~/.vim/colors/sthew.vim<CR>
-nmap <leader>el :vsplit ~/.dotfiles/vim/sthew_link_color_groups.vim<CR>
+nmap <leader>el :vsplit ~/.vim/scripts/sthew_link_color_groups.vim<CR>
 nmap <leader>eg :vsplit ~/.gitconfig<CR>
 nmap <leader>et :vsplit ~/.tmux.conf<CR>
 nmap <leader>ez :vsplit ~/.zshrc<CR>
@@ -410,14 +410,14 @@ nmap <leader>en :tabnew<CR>
 " =================================
 
 " Source statusline and tabline
-source $HOME/.dotfiles/vim/sthew_custom_tabline.vim
-source $HOME/.dotfiles/vim/sthew_custom_statusline.vim
+source $HOME/.vim/scripts/sthew_custom_tabline.vim
+source $HOME/.vim/scripts/sthew_custom_statusline.vim
 
 " Source color links (from Plugins syntax)
-source $HOME/.dotfiles/vim/sthew_link_color_groups.vim
+source $HOME/.vim/scripts/sthew_link_color_groups.vim
 
 " Source statusline toggle mode
-source $HOME/.dotfiles/vim/sthew_mode_echo.vim
+source $HOME/.vim/scripts/sthew_mode_echo.vim
 autocmd VimEnter * call timer_start(10,'MyHandler',{'repeat': -1})
 
 "==================================================================
