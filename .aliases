@@ -58,7 +58,7 @@ alias ldot='ls -d .* --group-directories-first'
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 alias tmuxrc="$EDITOR ~/.tmux.conf"
-alias vimrc="$EDITOR ~/.vimrc"
+alias vimrc="$EDITOR ~/.config/nvim/init.lua"
 
 # =================================
 #               Pipes
