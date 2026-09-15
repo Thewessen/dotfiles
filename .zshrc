@@ -69,7 +69,6 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Use wildcard in history search
-bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
 # Use zman for the manualpage of zsh and search
@@ -142,4 +141,10 @@ fi
   # done
 # fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf: Ctrl-R searches the shell history with fzf. Ctrl-T (file picker) and
+# Alt-C (cd into a directory) are switched off; remove these two lines to get them
+if command -v fzf >/dev/null; then
+  FZF_CTRL_T_COMMAND=''
+  FZF_ALT_C_COMMAND=''
+  source <(fzf --zsh)
+fi
