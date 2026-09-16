@@ -1,0 +1,7 @@
+[Unit]
+Description=Report a failed restic unit (%i)
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/restic/notify.env
+ExecStart=/usr/local/bin/restic-notify %i

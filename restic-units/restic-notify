@@ -1,0 +1,22 @@
+#!/bin/sh
+# Called by restic-failure@.service with the failed unit name as $1.
+# Config: /etc/restic/notify.env with NTFY_URL and, if the server requires auth,
+# either NTFY_TOKEN (ntfy access token) or NTFY_USER and NTFY_PASS.
+unit="$1"
+body="$(journalctl -u "$unit" -n 20 --no-pager -o cat 2>/dev/null)"
+logger -t restic-notify "FAILED: $unit"
+[ -n "$NTFY_URL" ] || exit 0
+
+set -- -fsS -m 20 \
+  -H "Title: Backup failed on pi5" \
+  -H "Priority: high" \
+  -H "Tags: warning,floppy_disk"
+if [ -n "$NTFY_TOKEN" ]; then
+  set -- "$@" -H "Authorization: Bearer $NTFY_TOKEN"
+elif [ -n "$NTFY_USER" ]; then
+  set -- "$@" -u "$NTFY_USER:$NTFY_PASS"
+fi
+
+curl "$@" -d "$unit
+
+$body" "$NTFY_URL" >/dev/null || logger -t restic-notify "ntfy notification failed"

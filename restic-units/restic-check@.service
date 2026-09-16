@@ -1,0 +1,15 @@
+[Unit]
+Description=restic check with data sample (%i)
+After=network-online.target
+Wants=network-online.target
+OnFailure=restic-failure@%n.service
+
+[Service]
+Type=oneshot
+User=sthewessen
+Group=sthewessen
+EnvironmentFile=/etc/restic/%i.env
+Nice=15
+IOSchedulingClass=idle
+TimeoutStartSec=6h
+ExecStart=/usr/bin/restic check --retry-lock=30m --read-data-subset=5%%

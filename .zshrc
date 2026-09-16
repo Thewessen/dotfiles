@@ -148,3 +148,6 @@ if command -v fzf >/dev/null; then
   FZF_ALT_C_COMMAND=''
   source <(fzf --zsh)
 fi
+
+# Created by `pipx` on 2026-09-16 13:06:30
+export PATH="$PATH:/home/sthewessen/.local/bin"
