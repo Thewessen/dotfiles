@@ -151,3 +151,10 @@ fi
 
 # Created by `pipx` on 2026-09-16 13:06:30
 export PATH="$PATH:/home/sthewessen/.local/bin"
+
+restic-scaleway() {
+  sudo systemd-run --pty --wait --collect --same-dir \
+    --unit=restic-manual --property=User=$USER \
+    --property=EnvironmentFile=/etc/restic/scaleway.env \
+    /usr/bin/restic "$@"
+}
