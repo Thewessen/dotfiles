@@ -1,0 +1,38 @@
+directory: /mnt/sandisk-ssd/music
+library: /srv/data/beets/beets-library.db
+
+import:
+  copy: yes
+  move: no
+  write: yes
+  incremental: yes
+  incremental_skip_later: yes
+  resume: yes
+  quiet_fallback: asis
+  duplicate_action: upgrade
+  log: ~/beets-import.log
+
+paths:
+  default: $albumartist/$album%aunique{}/$track $title
+  singleton: Non-Album/$artist/$title
+  comp: Various Artists/$album%aunique{}/$track $title
+
+plugins: edit musicbrainz duplicates info missing fromfilename fetchart
+
+match:
+  preferred:
+    media: ["Digital Media", "CD"]
+
+edit:
+  itemfields: track title artist composers album
+  albumfields: album albumartist
+
+fetchart:
+  minwidth: 300
+  maxwidth: 1200
+  quality: 75
+
+ui:
+  color: yes
+
+threading: yes
