@@ -44,6 +44,8 @@ opt.inccommand = 'split'        -- Preview :s in a split
 
 local map = vim.keymap.set
 
+map('n', '+', '<C-a>', { desc = 'Increment number' })
+
 map('n', '<leader>,', '<cmd>w<CR>', { desc = 'Write' })
 map('n', '<leader>w', '<cmd>x<CR>', { desc = 'Write and close' })
 map('n', '<leader>q', '<cmd>qall!<CR>', { desc = 'Quit all, discard changes' })

@@ -14,7 +14,7 @@ import:
 
 paths:
   default: $albumartist/$album%aunique{}/$track $title
-  singleton: Non-Album/$artist/$title
+  singleton: "# Singletons/$artist/$title"
   comp: Various Artists/$album%aunique{}/$track $title
 
 plugins: edit musicbrainz duplicates info missing fromfilename fetchart

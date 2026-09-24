@@ -85,8 +85,10 @@ export LC_ALL='en_GB.UTF-8'
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
+  export SYSTEMD_EDITOR=/usr/local/bin/nvim
 else
   export EDITOR='nvim'
+  export SYSTEMD_EDITOR=/usr/local/bin/nvim
 fi
 
 # Compilation flags
@@ -158,3 +160,13 @@ restic-scaleway() {
     --property=EnvironmentFile=/etc/restic/scaleway.env \
     /usr/bin/restic "$@"
 }
+
+restic-passport() {
+  sudo systemd-run --pty --wait --collect --same-dir \
+    --unit=restic-manual --property=User=$USER \
+    --property=EnvironmentFile=/etc/restic/passport.env \
+    /usr/bin/restic "$@"
+}
+
+tags() { find "$1" -type f \( -iname '*.mp3' -o -iname '*.flac' -o -iname '*.m4a' \) -print0 \
+    | xargs -0 ~/.local/bin/beet info -s -i "albumartist,artist,album,year,tracktotal,disctotal,mb_albumid,format,bitrate"; }
