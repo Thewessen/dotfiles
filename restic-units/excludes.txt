@@ -1,0 +1,2 @@
+/srv/data/immich/postgres
+/srv/data/postgres-shared/18/docker
