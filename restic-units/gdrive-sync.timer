@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly Google Drive copy
+
+[Timer]
+OnCalendar=*-*-* 02:45:00
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
