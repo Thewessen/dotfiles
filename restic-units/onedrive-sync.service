@@ -1,5 +1,5 @@
 [Unit]
-Description=One-way copy of OneDrive to /srv/data/documents/OneDrive
+Description=One-way copy of OneDrive to /srv/data/onedrive
 After=network-online.target
 Wants=network-online.target
 RequiresMountsFor=/srv/data
@@ -12,4 +12,4 @@ Group=sthewessen
 Nice=10
 IOSchedulingClass=idle
 TimeoutStartSec=2h
-ExecStart=/usr/bin/rclone copy onedrive: /srv/data/documents/OneDrive --exclude ".*" --exclude ".*/**" --exclude "~$$*" --exclude "/Personal Vault/**" --log-level INFO
+ExecStart=/usr/bin/rclone copy onedrive: /srv/data/onedrive --exclude ".*" --exclude ".*/**" --exclude "~$$*" --exclude "/Personal Vault/**" --log-level INFO
